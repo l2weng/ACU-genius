@@ -1,0 +1,33 @@
+.iiif {
+  contain: strict;
+  transform-origin: center;
+
+  &.rot-90 {
+    transform: rotate(90deg);
+  }
+
+  &.rot-180 {
+    transform: rotate(180deg);
+  }
+
+  &.rot-270 {
+    transform: rotate(270deg);
+  }
+
+  &.rot-x0 {
+    transform: scale(-1, 1);
+  }
+
+  &.rot-x90 {
+    transform: scale(-1, 1) rotate(270deg);
+  }
+
+  &.rot-x180 {
+    transform: scale(-1, 1) rotate(180deg);
+  }
+
+  &.rot-x270 {
+    transform: scale(-1, 1) rotate(90deg);
+  }
+
+}

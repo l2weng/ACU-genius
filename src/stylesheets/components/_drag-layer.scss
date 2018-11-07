@@ -1,0 +1,38 @@
+//
+// Drag Layer
+// --------------------------------------------------
+
+.drag-layer {
+  position: fixed;
+  pointer-events: none;
+  z-index: $zindex-drag-layer;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.drag-preview {
+  opacity: $drag-preview-opacity;
+  position: absolute; // Collapse width
+
+  &.center {
+    transform: translate(-50%, -50%);
+  }
+
+  &.list {
+    display: flex;
+    align-items: center;
+    height: $line-height-large;
+
+    .icon {
+      margin-right: $space-xs;
+    }
+  }
+
+  .thumbnail {
+    opacity: $drag-preview-thumbnail-opacity;
+    width: $drag-preview-size;
+    height: $drag-preview-size;
+  }
+}

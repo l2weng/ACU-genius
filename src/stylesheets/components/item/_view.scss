@@ -1,0 +1,57 @@
+//
+// Item view
+// --------------------------------------------------
+
+.item-view {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: $zindex-item;
+  display: flex;
+  background: $body-bg;
+  contain: size layout style;
+  will-change: transform;
+
+  .item-mode-enter &,
+  .item-mode-leave & {
+    transition: transform $mode-transition;
+  }
+
+  @if $platform == darwin {
+    .panel-group-header {
+      .toolbar-left {
+        .item-mode &,
+        .item-mode-enter-active & {
+          margin-left: (
+            $window-controls-width
+            + $window-controls-offset-x
+            - $window-controls-margin);
+        }
+
+        .project-mode-enter-active & {
+          margin-left: 0;
+        }
+      }
+    }
+  }
+
+  .icon-chevron16 {
+    transform: rotate(-90deg);
+  }
+}
+
+.item-container {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  padding-left: $space-min;
+  min-width: 0; // Needed to get horizontal scrollbars in the editor’s scroll-container
+
+  > .resizable {
+    // Temporary insurance to make sure the notepad is visible when upgrading to 1.1.2
+    // See #221
+    max-height: calc(100% - 38px);
+  }
+}

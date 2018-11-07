@@ -1,0 +1,32 @@
+//
+// Base
+// --------------------------------------------------
+
+* {
+  box-sizing: border-box;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+html,
+body,
+main,
+.main-container {
+  height: 100%;
+}
+
+html {
+  // Fix #item-view positioning bug on window resize.
+  // Remove this fix when it is not needed anymore.
+  position: relative;
+}
+
+body {
+  color: $text-color;
+  background: $body-bg;
+  overflow: hidden;
+  cursor: default;
+  user-select: none;
+}

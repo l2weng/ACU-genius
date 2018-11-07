@@ -1,0 +1,76 @@
+//
+// Legacy OS X window controls
+// --------------------------------------------------
+
+.window-controls {
+  position: absolute;
+  left: $window-controls-offset-x;
+  top: $window-controls-offset-y;
+  width: $window-controls-width;
+  z-index: $zindex-window-controls;
+
+  &:hover {
+    button {
+      background-position-y: -12px;
+    }
+
+    .maximize {
+      .is-maximized & {
+        background-position-y: -48px;
+
+        &:active {
+          background-position-y: -60px;
+        }
+      }
+    }
+  }
+
+  button {
+    width: 12px;
+    height: 12px;
+    border: 0;
+    background: {
+      repeat: no-repeat;
+      position: 0 0;
+      size: 12px auto;
+      color: transparent;
+    }
+    margin: $window-controls-margin;
+    vertical-align: top;
+    padding: 0;
+
+    &:active {
+      background-position-y: -24px;
+    }
+
+    .is-blurred & {
+      background-position-y: -36px;
+    }
+  }
+
+  .minimize {
+    .not-minimizable & {
+      background-position-y: -36px;
+    }
+  }
+
+  .maximize {
+    .not-maximizable & {
+      background-position-y: -36px;
+    }
+  }
+
+  @each $aqua in blue, graphite {
+    .#{$aqua} & {
+
+      @each $action in close, minimize, maximize {
+        .#{$action} {
+          background-image:
+            -webkit-image-set(
+              image-url("application-frame/#{$aqua}/#{$action}@1x.svg") 1x,
+              image-url("application-frame/#{$aqua}/#{$action}@2x.svg") 2x);
+        }
+      }
+    }
+  }
+}

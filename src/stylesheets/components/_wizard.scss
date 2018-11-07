@@ -1,0 +1,82 @@
+//
+// Wizard
+// --------------------------------------------------
+
+.wizard {
+  height: 100%;
+  text-align: center;
+  padding: 0 $space-xxl;
+  background:
+    if(
+      $theme == "dark",
+      image-url("wizard/key-visual-dark.svg") no-repeat center bottom / auto 131px,
+      image-url("wizard/key-visual-light.svg") no-repeat center bottom / auto 131px
+    );
+
+  .tropy-icon {
+    display: inline-block;
+    width: 202px;
+    height: 174px;
+    margin: $wizard-spacing-top 0 22px;
+    background:
+      if(
+        $theme == "dark",
+        image-url("wizard/tropy-icon-dark.svg") no-repeat 0 0,
+        image-url("wizard/tropy-icon-light.svg") no-repeat 0 0
+      );
+  }
+
+  h1 {
+    font: {
+      family: "HelveticaNeue-Thin", $font-family-base;
+      weight: 200;
+      size: 32px;
+    }
+    line-height: 1.1;
+    color: $wizard-heading-color;
+    margin-bottom: 26px;
+  }
+
+  a {
+    text-decoration: none;
+    color: $wizard-link-color;
+  }
+
+  .save-as {
+    height: $input-height-large;
+
+    &.custom {
+      .save-as-link {
+        display: none;
+      }
+
+      .save-as-controls {
+        display: flex;
+      }
+    }
+  }
+
+  .save-as-link-container {
+    margin-top: 11px;
+  }
+
+  .save-as-controls {
+    display: none;
+
+    .form-control {
+      flex: 1 1 0;
+    }
+
+    .btn {
+      flex: 0 0 auto;
+      margin-left: $space-min;
+    }
+  }
+
+  .btn {
+    &[disabled],
+    &.disabled {
+      cursor: not-allowed;
+    }
+  }
+}

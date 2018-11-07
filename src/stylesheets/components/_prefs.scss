@@ -1,0 +1,80 @@
+//
+// Preferences
+// --------------------------------------------------
+
+.prefs {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: $prefs-bg;
+
+  .prefs-header {
+    flex: 0 0 auto;
+    border-bottom: 1px solid $prefs-header-border;
+
+    &.draggable {
+      .frameless & {
+        -webkit-app-region: drag;
+        position: relative;
+        z-index: $zindex-draggable;
+      }
+    }
+  }
+
+  .prefs-nav {
+    ul {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  .pane-toggle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 0;
+    background: transparent;
+    font-size: 11px;
+    line-height: 22px;
+    padding: 7px $space-sm 0;
+    -webkit-font-smoothing: subpixel-antialiased;
+
+    .frameless & {
+      padding-top: 1px;
+    }
+
+    &.active {
+      .line {
+        display: none;
+      }
+
+      .block {
+        display: block;
+      }
+    }
+  }
+
+  .prefs-body {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pane {
+    display: none;
+
+    &.active {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .scroll-container {
+    padding: $space-lg $space-lg 0;
+
+    .scrollbar-style-old-school & {
+      padding-right: ($space-lg - $scrollbar-size);
+    }
+  }
+}

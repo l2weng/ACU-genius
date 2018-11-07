@@ -1,0 +1,13 @@
+node_modules
+dist
+lib
+coverage
+.nyc_output
+doc
+tmp
+npm-debug.log
+db/*.db
+*.tpy
+.vimrc
+scripts/appimagetool
+_book

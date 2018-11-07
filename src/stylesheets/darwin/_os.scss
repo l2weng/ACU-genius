@@ -1,0 +1,22 @@
+//
+// Operating system specific styles
+// --------------------------------------------------
+
+// Lighter font rendering
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+.el-capitan {
+  font-family: system-ui, $font-family-base;
+
+  // Reset San Francisco
+  #wizard,
+  #items .no-items,
+  .no-project,
+  .about {
+    h1 {
+      font-family: system-ui, "HelveticaNeue-Thin", $font-family-base;
+    }
+  }
+}

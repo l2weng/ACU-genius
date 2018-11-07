@@ -1,0 +1,45 @@
+//
+// Tabs
+// --------------------------------------------------
+
+.tabs {
+  display: flex;
+
+  li {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: $tabs-height;
+    color: $tab-inactive-color;
+    background: $tab-bg;
+    padding: 0 $tabs-padding-horizontal;
+
+    .icon {
+      margin-right: $space-xs;
+    }
+
+    &:hover {
+      color: $tab-active-color;
+    }
+
+    &.active {
+      color: $tab-active-color;
+      background: $tab-active-bg;
+    }
+
+    &:not(.active) {
+      .nested-tab-focus & {
+        background: $tab-nested-focus-bg;
+      }
+    }
+  }
+
+  &.justified {
+    width: 100%;
+
+    li {
+      flex: 1 1 0;
+    }
+  }
+}

@@ -1,0 +1,90 @@
+//
+// Template editor
+// --------------------------------------------------
+
+.template-editor {
+  .template-header {
+    padding: 0 54px 0 $space-xs;
+  }
+
+  .select-template {
+    .form-control {
+      flex: 1 1 auto;
+    }
+
+    .btn-group {
+      flex: 0 0 auto;
+      margin-left: $space-xs;
+
+      .btn-icon {
+        padding: {
+          left: $space-min;
+          right: $space-min;
+        }
+      }
+    }
+
+    .icon-new {
+      margin: -1px 0;
+    }
+  }
+
+  .template-field-list {
+    margin: $space-lg 0;
+  }
+
+  .template-field {
+    display: flex;
+    align-items: center;
+    margin-bottom: $space-min;
+    position: relative;
+
+    fieldset {
+      @include form-shading-level(2);
+
+      margin-right: 6px;
+    }
+
+    &.dragging {
+      opacity: 0;
+    }
+
+    .checkbox {
+      span {
+        pointer-events: none; // Prevent dragging
+      }
+    }
+
+    .btn-group {
+      flex: 0 0 auto;
+      width: 2 * ($space-md + $space-min);
+    }
+
+    .btn-icon {
+      flex: 0 0 auto;
+      padding: {
+        left: 2px;
+        right: 2px;
+      }
+    }
+  }
+
+  .icon-grip {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: (2 * $space-xs + 1.5 * $space-min);
+
+    svg {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: 16px;
+      height: 18px;
+      margin: auto;
+    }
+  }
+}

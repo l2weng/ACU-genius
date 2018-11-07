@@ -1,0 +1,19 @@
+//
+// Badge
+// --------------------------------------------------
+
+.badge {
+  color: $badge-color;
+  background: $badge-bg;
+  font-size: 11px;
+  text-align: center;
+  padding: 1px 6px 2px;
+  border-radius: 9px;
+  min-width: 18px;
+
+  .drag-preview & {
+    position: absolute;
+    top: 100%;
+    left: 100%;
+  }
+}

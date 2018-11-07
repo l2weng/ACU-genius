@@ -1,0 +1,154 @@
+// sass-lint:disable nesting-depth
+
+
+// Sidebar
+// --------------------------------------------------
+
+#sidebar {
+  background: $sidebar-bg;
+  color: $sidebar-text-color;
+  height: 100%;
+  line-height: $line-height-large;
+  display: flex;
+  flex-direction: column;
+
+  .sidebar-body {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding-top: $space-xs;
+
+    .frameless & {
+      padding-top: 0;
+    }
+  }
+
+  h2,
+  h3 {
+    color: $sidebar-headings-color;
+    padding: 0 $default-padding-horizontal 0 $list-tree-padding-left;
+  }
+
+  nav {
+    li {
+      position: relative;
+
+      &.over {
+        @extend %drop-target;
+        background: transparent; // Remove background from %list-active
+      }
+
+      > .list-node-container {
+        // sass-lint:disable-block mixins-before-declarations
+        display: flex;
+        align-items: center;
+        height: $line-height-large;
+        padding-right: $default-padding-horizontal;
+        position: relative;
+
+        @include state("li.active", "li.over") {
+          @extend %list-active; // sass-lint:disable-line space-around-operator
+        }
+
+        @include state("li.active") {
+          @include state("#sidebar :focus") {
+            @extend %list-focus; // sass-lint:disable-line space-around-operator
+          }
+        }
+
+        &.over:not(.before):not(.after) {
+          @extend %drop-target;
+        }
+
+        .icon-triangle {
+          margin-right: 0;
+          transform: rotate(90deg);
+
+          @include state("li.expanded") {
+            transform: scaleY(-1);
+          }
+        }
+
+        .icon-folder {
+          @include state("li.holding:not(.active)") {
+            position: relative;
+
+            &::after {
+              content: "";
+              box-sizing: border-box;
+              position: absolute;
+              right: -3px;
+              bottom: -1px;
+              width: 7px;
+              height: 7px;
+              background-color: $sidebar-bg;
+              border: 1px solid $icon-color;
+            }
+
+            .alt-key & {
+              .line {
+                display: none;
+              }
+
+              .block {
+                display: block;
+              }
+
+              &::after {
+                width: 8px;
+                height: 8px;
+                right: -4px;
+                bottom: -2px;
+                background-color: $icon-color;
+                border-color: $sidebar-bg;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .icon-truncate {
+      display: flex;
+      align-items: center;
+      height: $line-height-large; // Prevent clipped holding indicator
+      overflow: hidden;
+
+      &.folder {
+        flex: 0 10000 auto;
+      }
+    }
+
+    .icon {
+      flex: 0 0 auto;
+      margin-right: $space-xs;
+    }
+
+    .btn-icon {
+      padding: 0;
+      margin-left: -$space-md;
+    }
+
+    .name {
+      flex: 1 100000000 auto;
+      display: flex;
+      min-width: 0; // Fix truncation
+
+      span {
+        @include css-truncation;
+      }
+    }
+  }
+
+  @for $i from 1 through $list-tree-max-levels {
+    $sel: if($i == 1, "ol", selector-nest($sel, "ol"));
+
+    #{$sel} {
+    	.list-node-container {
+    		padding-left:
+    			$list-tree-padding-left
+    				+ $list-tree-indent
+    				* ($i - 1);
+    	}
+    }
+  }
+}

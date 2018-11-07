@@ -1,0 +1,108 @@
+//
+// Button
+// --------------------------------------------------
+
+.btn {
+  font: {
+    family: inherit;
+    size: inherit;
+  }
+  line-height: inherit;
+  color: inherit;
+  border: 0;
+  border-radius: $border-radius-small;
+  padding: ($padding-base-vertical + 1px) $padding-base-horizontal;
+  display: inline-block; // For span as btn
+  text-align: center;
+  transition: border-color $input-btn-transition, box-shadow $input-btn-transition;
+
+  &[disabled],
+  &.disabled {
+    opacity: $btn-disabled-opacity;
+  }
+
+  .window-draggable & {
+    .frameless & {
+      -webkit-app-region: no-drag;
+    }
+  }
+
+  &.min-width {
+    min-width: 80px;
+  }
+}
+
+.btn-lg {
+  font-size: $font-size-large;
+  height: $input-height-large;
+  padding: 0 $padding-large-horizontal;
+}
+
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+.btn-default {
+  color: $btn-default-color;
+  background: $btn-default-bg;
+  border: 1px solid $btn-default-border;
+  padding: $padding-base-vertical $padding-base-horizontal;
+
+  @include input-btn-focus(".tab-focus");
+
+  &:active {
+    background: $btn-default-active-bg;
+  }
+
+  .overlay-mode & {
+    background: $btn-default-overlay-bg;
+    border-color: transparent;
+
+    @include input-btn-focus(".tab-focus", $input-btn-overlay-focus-color);
+
+    &:active {
+      background: $btn-default-overlay-active-bg;
+    }
+
+    &[disabled],
+    &.disabled {
+      background: $btn-default-overlay-bg;
+    }
+  }
+}
+
+.btn-primary {
+  color: $btn-primary-color;
+  background: $btn-primary-bg;
+
+  @include input-btn-focus(".tab-focus");
+
+  &:active {
+    background: $btn-primary-active-bg;
+  }
+}
+
+.btn-icon {
+  background: $btn-icon-bg;
+  padding: $btn-icon-padding;
+  line-height: 1;
+
+  .icon,
+  svg {
+    vertical-align: top;
+  }
+
+  &:active {
+    .icon {
+      color: $icon-active-color;
+    }
+
+    &[disabled],
+    &.disabled {
+      .icon {
+        color: $icon-color;
+      }
+    }
+  }
+}

@@ -1,0 +1,133 @@
+//
+// Popup
+// --------------------------------------------------
+
+$popup-focus-animations: (
+  popup-fade-in: $input-btn-focus-color,
+  popup-invalid-fade-in: $input-btn-invalid-color
+);
+
+@each $name, $color in $popup-focus-animations {
+  @keyframes #{$name} {
+    0% {
+      border-color: $input-border;
+      box-shadow: none;
+    }
+
+    100% {
+      border-color: $color;
+      box-shadow: 0 0 0 2px $color;
+    }
+  }
+}
+
+#popup-root {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: $zindex-popup;
+  pointer-events: auto; // Reset
+
+  &:not(:empty) {
+    right: 0;
+    bottom: 0;
+  }
+
+  .popup-container {
+    width: 100%;
+    height: 100%;
+  }
+
+  .popup {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    background: $popup-bg;
+    border: $input-border-width solid $input-btn-focus-color;
+    box-shadow: 0 0 0 $popup-focus-shadow-width $input-btn-focus-color;
+    border-radius: $input-border-radius-small;
+
+    &.invalid {
+      @include input-btn-focus("", $input-btn-invalid-color);
+    }
+
+    &.fade-in {
+      animation: popup-fade-in $input-btn-transition both;
+
+      &.invalid {
+        animation: popup-invalid-fade-in $input-btn-transition both;
+      }
+    }
+
+    @each $alignment in "top", "bottom" {
+      &.#{$alignment} {
+        border-#{$alignment}: 0;
+        padding-#{$alignment}: $popup-padding;
+        border-#{$alignment}-left-radius: 0;
+        border-#{$alignment}-right-radius: 0;
+      }
+    }
+
+    &.top {
+      margin-top: (-$input-border-width - $popup-focus-shadow-width);
+      clip-path: inset(#{0 (-$popup-focus-shadow-width)
+        (-$popup-focus-shadow-width) (-$popup-focus-shadow-width)});
+
+      .option-list {
+        margin-bottom: $option-list-margin;
+      }
+    }
+
+    &.bottom {
+      margin-top: ($input-border-width + $popup-focus-shadow-width);
+      clip-path: inset(#{(-$popup-focus-shadow-width) (-$popup-focus-shadow-width)
+        0 (-$popup-focus-shadow-width)});
+
+      .option-list {
+        margin-top: $option-list-margin;
+      }
+    }
+
+    &.editable-control-completions {
+      border: ($input-border-width + $popup-focus-shadow-width) solid $editable-border-color;
+      box-shadow: none;
+      background-clip: padding-box;
+
+      &::before,
+      &::after {
+        content: "";
+        position: absolute;
+        width: ($input-border-width + $popup-focus-shadow-width);
+        height: ($input-border-width + $popup-focus-shadow-width);
+        background-color: $panel-bg;
+        box-shadow: inset 0 0 0 ($input-border-width + $popup-focus-shadow-width) $editable-border-color;
+      }
+
+      &::before {
+        left: -3px;
+      }
+
+      &::after {
+        right: -3px;
+      }
+
+      &.top {
+        border-top: 0;
+
+        &::before,
+        &::after {
+          top: 0;
+        }
+      }
+
+      &.bottom {
+        border-bottom: 0;
+
+        &::before,
+        &::after {
+          bottom: 0;
+        }
+      }
+    }
+  }
+}

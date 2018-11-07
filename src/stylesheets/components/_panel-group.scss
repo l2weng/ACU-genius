@@ -1,0 +1,29 @@
+//
+// Panels
+// --------------------------------------------------
+
+.panel-group {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+
+  .panel-group-header {
+    .toolbar {
+      background: $panels-bg;
+    }
+  }
+
+  .panel-group-body {
+    flex: 1 1 0;
+    height: calc(100% - #{$toolbar-height + $space-min});
+  }
+
+  .panel {
+    margin-bottom: $space-min;
+  }
+
+  > .panel:last-child,
+  .resizable:last-child .panel {
+    margin-bottom: 0;
+  }
+}

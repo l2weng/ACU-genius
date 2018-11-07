@@ -1,0 +1,73 @@
+//
+// Editor toolbar
+// --------------------------------------------------
+
+.editor {
+  &.is-blurred {
+    .toolbar-context {
+      opacity: 0.6;
+
+      &.link {
+        opacity: initial;
+      }
+    }
+  }
+
+  .toolbar {
+    box-sizing: content-box;
+    padding-top: 0;
+    border-bottom: 1px solid $editor-toolbar-border;
+    margin-bottom: 0; // Dev
+    cursor: default;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    //display: none;
+
+    .tool-group {
+      & + .tool-group {
+        margin-left: $space-lg;
+      }
+    }
+
+    .btn-icon {
+      &:hover {
+        background: $editor-btn-hover-bg;
+
+        &[disabled],
+        &.disabled {
+          background: $btn-icon-bg;
+        }
+      }
+
+      &:active {
+        .icon {
+          color: $icon-color;
+        }
+      }
+
+      &.active {
+        background: $editor-btn-active-bg;
+
+        .icon {
+          color: $editor-btn-active-color;
+        }
+      }
+
+      & + .btn-icon {
+        margin-left: $space-min / 2;
+      }
+    }
+  }
+
+  //&:hover {
+  //  .toolbar {
+  //    display: flex;
+  //  }
+  //}
+
+  .link-target {
+    width: $link-target-width;
+  }
+}

@@ -1,0 +1,59 @@
+//
+// Panel
+// --------------------------------------------------
+
+.panel {
+  flex: 1 1 auto;
+  background: $panel-bg;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  contain: content;
+
+  &.nested-tab-focus {
+    background-color: $panel-focus-bg;
+  }
+
+  .panel-header {
+    flex: 0 0 $panel-header-height;
+    display: flex;
+    color: $panel-header-color;
+    position: relative;
+    z-index: 1;
+    contain: strict;
+
+    nav {
+      width: 100%;
+    }
+  }
+
+  .panel-header-container {
+    padding: 0 $default-padding-horizontal;
+    min-width: 0;
+
+    > .icon {
+      margin-right: $space-xs;
+    }
+  }
+
+  .panel-heading {
+    flex: 1 1 auto;
+
+    &.truncate {
+      @include css-truncation;
+    }
+  }
+
+  .panel-body {
+    flex: 1 1 auto;
+    position: relative;
+    height: 100%;
+    display: flex; // Prevent overflow
+    flex-direction: column;
+    contain: content;
+
+    &.over {
+      @extend %drop-target;
+    }
+  }
+}

@@ -1,0 +1,65 @@
+//
+// Vocab
+// --------------------------------------------------
+
+.vocab {
+  a {
+    color: $vocab-link-color;
+  }
+
+  .panel {
+    @include form-shading-level(2);
+    background-color: $vocab-panel-bg;
+
+    &.active {
+      @at-root #{
+        selector-replace(&, ".vocab", ".vocab .tab-focus")
+      } {
+        @include form-shading-level(3);
+      }
+    }
+  }
+
+  .panel-body {
+    padding: $space-sm $default-padding-horizontal;
+  }
+
+  .vocab-header {
+    margin-bottom: $space-sm;
+    padding: 0 $space-xs;
+  }
+
+  .vocab-heading {
+    font-size: $font-size-small;
+    color: $panel-heading-color;
+    line-height: $line-height-large;
+    padding-left: $space-xs;
+  }
+
+  .control-label {
+    color: $vocab-label-color;
+  }
+
+  .resource {
+    margin-bottom: $space-min;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    fieldset {
+      @include form-shading-level(3);
+
+      @at-root #{
+        selector-replace(&, ".vocab", ".vocab .tab-focus .panel.active")
+      } {
+        @include form-shading-level(4);
+      }
+    }
+  }
+
+  .vocab-footer {
+    flex: 0 0 auto;
+    padding: $space-xs ($space-lg + $space-sm - $btn-icon-padding);
+  }
+}

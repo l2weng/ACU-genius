@@ -1,0 +1,84 @@
+//
+// Note list
+// --------------------------------------------------
+
+$panel-separator-color: #ddd !default;
+
+.note-list {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+
+  .scroll-container {
+    position: relative;
+    z-index: 0;
+  }
+
+  .runway {
+    contain: strict;
+  }
+
+  .viewport {
+    contain: content;
+    will-change: transform;
+  }
+
+  .note {
+    padding: $note-padding-top $default-padding-horizontal $note-padding-bottom;
+    position: relative;
+    contain: content;
+
+    &::before {
+      content: " ";
+      position: absolute;
+      top: 0;
+      right: $default-padding-horizontal;
+      left: $default-padding-horizontal;
+      height: 1px;
+      background: $panel-separator-color;
+    }
+
+    &:first-child {
+      &::before {
+        content: none;
+      }
+    }
+
+    &.active {
+      color: $note-list-active-color;
+      background: $note-list-active-bg;
+
+      @at-root #{
+        selector-replace(&, ".note-list", ".note-list .scroll-container:focus")
+      } {
+        color: $note-list-focus-color;
+        background: $note-list-focus-bg;
+      }
+
+      &::before {
+        content: none;
+      }
+
+      & + .note {
+        border-top: 1px solid $note-list-active-bg;
+        padding-top: ($note-padding-top - 1px);
+
+        @at-root #{
+          selector-replace(&, ".note-list",
+          ".note-list .scroll-container:focus")
+        } {
+          border-top-color: $note-list-focus-bg;
+        }
+
+        &::before {
+          content: none;
+        }
+      }
+    }
+
+    // CSS multiline truncate
+    .css-multiline-truncate {
+      @include css-multiline-truncate($note-lines);
+    }
+  }
+}

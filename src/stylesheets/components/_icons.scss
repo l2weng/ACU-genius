@@ -1,0 +1,87 @@
+//
+// Icons
+// --------------------------------------------------
+
+.icon {
+  display: inline-block;
+  color: $icon-color;
+
+  svg {
+    display: block;
+  }
+
+  @if $icon-style == "line" {
+    .block {
+      display: none;
+    }
+  } @else {
+    .line {
+      display: none;
+    }
+  }
+}
+
+.icon-item {
+  width: $thumbnail-size;
+  height: $thumbnail-size;
+  color: $thumbnail-color;
+  background: $thumbnail-bg;
+}
+
+.icon-spin {
+  @keyframes spin {
+    0% {
+      transform: rotate(0);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  color: $icon-spin-color;
+  animation: spin 1.2s linear infinite;
+}
+
+.icon-tag {
+  @if $theme == "light" {
+    @each $key, $val in $tag-colors {
+      &.#{$key} {
+        .color {
+          color: map-get($val, "color-base");
+        }
+
+        .border {
+          color: map-get($val, "color-dark");
+        }
+      }
+    }
+  } @else {
+    @each $key, $val in $tag-colors {
+      &.#{$key} {
+        .color,
+        .border {
+          color: map-get($val, "color-dark");
+        }
+      }
+    }
+  }
+}
+
+.icon-arrow {
+  margin: -2px; // Special treat 20 x 20 arrow icon
+}
+
+.icon-container {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  margin-left: $space-xs;
+
+  .icon + .icon,
+  .icon + .btn,
+  .btn + .icon,
+  .btn + .btn {
+    margin-left: $space-min;
+  }
+}

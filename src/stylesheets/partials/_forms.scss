@@ -1,0 +1,286 @@
+//
+// Forms
+// --------------------------------------------------
+
+::-webkit-input-placeholder,
+.placeholder {
+  color: $input-color-placeholder;
+  user-select: none;
+}
+
+input {
+  pointer-events: auto; // Reset
+}
+
+.form-inline {
+  > * + * {
+    margin-left: $space-min;
+  }
+}
+
+fieldset {
+  flex: 1 1 auto;
+  border: 0;
+  margin: 0;
+  padding: 5px $space-xs;
+  background: $fieldset-bg;
+  border-radius: $border-radius-small;
+  min-width: 0; // Fix truncation
+}
+
+.form-group {
+  margin-bottom: $space-sm;
+
+  &.compact {
+    margin-bottom: $space-min;
+  }
+
+  .form-horizontal & {
+    display: flex;
+    margin: {
+      left: (-$grid-gutter-width / 2);
+      right: (-$grid-gutter-width / 2);
+    }
+  }
+
+  &.align-right {
+    justify-content: flex-end;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.control-label {
+  .form-horizontal & {
+    text-align: right;
+    padding-top: 3px;
+  }
+}
+
+.input-group {
+  display: flex;
+}
+
+.form-control {
+  flex: 1 1 auto; // Inside input-group
+  display: block; // Without input-group
+  width: 100%; // Without input-group
+  height: $input-height-base;
+  padding: 0 $padding-base-horizontal;
+  font-family: inherit;
+  font-size: $font-size-base;
+  color: $input-color;
+  background-color: $input-bg;
+  border: 1px solid $input-border;
+  border-radius: $input-border-radius-small;
+  box-shadow: none;
+  transition: border-color $input-btn-transition, box-shadow $input-btn-transition;
+
+  @include input-btn-focus;
+
+  &[readonly],
+  &[disabled],
+  &.disabled {
+    background-color: $input-bg-readonly;
+  }
+}
+
+.input-lg {
+  font-size: $font-size-large;
+  height: $input-height-large;
+  padding: 0 $padding-large-horizontal;
+}
+
+.form-text {
+  display: flex;
+  align-items: center;
+  padding: (($input-height-base - $line-height-computed) / 2) $padding-base-horizontal;
+}
+
+.help-text {
+  font-size: 11px;
+  line-height: 16px;
+
+  .form-text + & {
+    padding: 0 $padding-base-horizontal;
+    margin-top: -2px;
+  }
+}
+
+.form-link {
+  word-break: break-word;
+}
+
+.checkbox,
+.radio {
+  display: flex;
+
+  &:first-child {
+    padding-top: ($input-height-base - $line-height-computed) / 2;
+  }
+
+  &:last-child {
+    padding-bottom: ($input-height-base - $line-height-computed) / 2;
+  }
+
+  label {
+    flex: 1 1 auto;
+    display: flex;
+    padding-right: $padding-base-horizontal;
+  }
+
+  [type] {
+    flex: 0 0 auto;
+    -webkit-appearance: none;
+    width: $checkbox-size;
+    height: $checkbox-size;
+    background: $checkbox-bg;
+    border: 1px solid $input-border;
+    margin: 3px ($space-min * 1.5) 0 0;
+    position: relative;
+    transition: border-color ease 0.15s, box-shadow ease 0.15s;
+
+    &:active {
+      background: $checkbox-checked-bg;
+      border-color: $checkbox-checked-border;
+    }
+
+    &[disabled] {
+      background: $input-bg-readonly;
+      border-color: $input-border;
+
+      // Soften labels of disabled checkboxes/radios
+      & + span {
+        opacity: 0.5;
+      }
+    }
+
+    &:checked {
+      background: $checkbox-checked-bg;
+      border-color: $checkbox-checked-border;
+
+      &:active {
+        background: $checkbox-checked-active-bg;
+        border-color: $checkbox-checked-active-border;
+      }
+
+      &[disabled] {
+        background: $input-bg-readonly;
+        border-color: $input-border;
+
+        &::before,
+        &::after {
+          background: $checkbox-checked-bg;
+        }
+      }
+    }
+
+    .overlay-mode & {
+      background: $input-overlay-bg;
+      border-color: transparent;
+
+      &:active {
+        background: $checkbox-overlay-checked-bg;
+      }
+
+      &[disabled] {
+        background: $input-overlay-bg-readonly;
+        border-color: $checkbox-overlay-disabled-border;
+      }
+
+      &:checked {
+        background: $checkbox-overlay-checked-bg;
+
+        &:active {
+          background: $checkbox-overlay-checked-active-bg;
+          border-color: transparent;
+        }
+
+        &[disabled] {
+          background: $input-overlay-bg-readonly;
+          border-color: $checkbox-overlay-disabled-border;
+
+          &::before,
+          &::after {
+            background: $checkbox-overlay-checked-bg;
+          }
+        }
+      }
+    }
+  }
+}
+
+@each $input in checkbox, radio {
+  .#{$input}.tab {
+    [type="#{$input}"] {
+      border-color: $input-btn-focus-color !important; // sass-lint:disable-line no-important
+      box-shadow: 0 0 0 2px $input-btn-focus-color !important; // sass-lint:disable-line no-important
+
+      .overlay-mode & {
+        border-color: $input-overlay-focus-color !important; // sass-lint:disable-line no-important
+        box-shadow: 0 0 0 2px $input-overlay-focus-color !important; // sass-lint:disable-line no-important
+      }
+
+      &:checked {
+        border-color: $input-btn-focus-color !important; // sass-lint:disable-line no-important
+        box-shadow: 0 0 0 2px $input-btn-focus-color !important; // sass-lint:disable-line no-important
+
+        .overlay-mode & {
+          border-color: $input-overlay-focus-color !important; // sass-lint:disable-line no-important
+          box-shadow: 0 0 0 2px $input-overlay-focus-color !important; // sass-lint:disable-line no-important
+        }
+      }
+    }
+  }
+}
+
+.checkbox {
+  [type="checkbox"] {
+    border-radius: $border-radius-small;
+
+    &:checked {
+      &:before,
+      &:after {
+        content: "";
+        position: absolute;
+        left: 4px;
+        top: 8px;
+        height: 2px;
+        border-radius: 1px;
+        background: $tick-color;
+        transform-origin: 1px 1px;
+      }
+
+      &:before {
+        width: 5px;
+        transform: translateX(-0.75px) rotate(-135deg) scaleY(0.75);
+      }
+
+      &:after {
+        width: 10px;
+        transform: translateX(-0.25px) rotate(-50.19deg) scaleY(0.75);
+      }
+    }
+  }
+}
+
+.radio {
+  [type="radio"] {
+    border-radius: 50%;
+
+    &:checked {
+      &:before {
+        content: "";
+        position: absolute;
+        top: 3px;
+        right: 3px;
+        bottom: 3px;
+        left: 3px;
+        background: $tick-color;
+        border-radius: 50%;
+      }
+    }
+  }
+}

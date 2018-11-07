@@ -1,0 +1,459 @@
+// sass-lint:disable no-mergeable-selectors, no-color-literals
+
+
+// Light theme
+// --------------------------------------------------
+
+$theme: "light";
+
+
+// Colors
+// --------------------------------------------------
+
+$blue:       #5c93e5;
+$blue-light: #cedef7;
+$red:        #e62e2e;
+$green:      #3abd57;
+
+$brand-primary:       $blue;
+$brand-primary-light: $blue-light;
+
+:root {
+  #{--brand-primary}:          $brand-primary;
+  #{--brand-primary-light}:    $brand-primary-light;
+  #{--brand-primary-30}:       rgba($brand-primary, 0.3);
+  #{--brand-primary-tint-40}:  mix(#fff, $brand-primary, 40%);
+  #{--brand-primary-dark}:     mix(#222, $brand-primary, 60%);
+  #{--brand-primary-darken-4}: darken($brand-primary, 4%);
+  #{--red}:                    $red;
+  #{--green}:                  $green;
+}
+
+
+// Grays
+// --------------------------------------------------
+
+$transparent: transparent;
+
+$shade-0:  #fff; // Body
+$shade-1:  if($platform == win32, #f0f0f0, #f6f6f6); // Sidebar bg, panel bg
+$shade-2:  #e6e6e6; // Inactive tab, Esper bg, tile expansion
+$shade-3:  #ddd; // Active state bg/border
+$shade-4:  #ccc; // Slider track
+$shade-5:  #bbb; // Panel heading, mixed color
+$shade-6:  #777; // Icon color
+$shade-7:  #555; // Sidebar active icon
+$shade-8:  #444; // Softened text
+$shade-9:  #222; // Text color, icon active state
+$shade-10: #000; // Black
+
+:root {
+  #{--transparent}:        $transparent;
+  #{--shade-0}:            $shade-0;
+  #{--shade-0-40}:         rgba($shade-0, 0.4);
+  #{--shade-0-50}:         rgba($shade-0, 0.5);
+  #{--shade-0-60}:         rgba($shade-0, 0.6);
+  #{--shade-0-80}:         rgba($shade-0, 0.8);
+  #{--shade-1}:            $shade-1;
+  #{--shade-1-darken-4}:   darken($shade-1, 4%); // 8% Fieldset bg
+  #{--shade-1-darken-8}:   darken($shade-1, 8%); // 12% Vocab property bg
+  #{--shade-1-darken-14}:  darken($shade-1, 14%); // 18% Vocab property input border
+  #{--shade-1-darken-12}:  darken($shade-1, 12%);
+  #{--shade-1-darken-16}:  darken($shade-1, 16%);
+  #{--shade-1-darken-18}:  darken($shade-1, 18%); // 22% Vocab property input border
+  #{--shade-1-darken-22}:  darken($shade-1, 22%);
+  #{--shade-2}:            $shade-2;
+  #{--shade-2-lighten-4}:  lighten($shade-2, 4%); // Esper slider handle bg
+  #{--shade-2-darken-4}:   darken($shade-2, 4%); // Esper checkbox diabled bg
+  #{--shade-2-darken-10}:  darken($shade-2, 10%); // Esper panel checkbox border
+  #{--shade-3}:            $shade-3;
+  #{--shade-3-darken-4}:   darken($shade-3, 4%);
+  #{--shade-3-darken-8}:   darken($shade-3, 8%);
+  #{--shade-3-darken-5}:   darken($shade-3, 5%); // Thumbnail bg
+  #{--shade-4}:            $shade-4;
+  #{--shade-4-darken-4}:   darken($shade-4, 4%);
+  #{--shade-4-darken-14}:  darken($shade-4, 14%);
+  #{--shade-5}:            $shade-5;
+  #{--shade-5-darken-4}:   darken($shade-5, 4%);
+  #{--shade-6}:            $shade-6;
+  #{--shade-6-50}:         rgba($shade-6, 0.5);
+  #{--shade-6-lighten-13}: lighten($shade-6, 13.5%);
+  #{--shade-6-lighten-8}:  lighten($shade-6, 8%);
+  #{--shade-7}:            $shade-7;
+  #{--shade-7-darken-5}:   darken($shade-7, 5%);
+  #{--shade-8}:            $shade-8;
+  #{--shade-9}:            $shade-9;
+  #{--shade-10}:           $shade-10;
+  #{--shade-10-4}:         rgba($shade-10, 0.04);
+  #{--shade-10-10}:        rgba($shade-10, 0.1);
+  #{--shade-10-20}:        rgba($shade-10, 0.2);
+  #{--shade-10-24}:        rgba($shade-10, 0.24);
+  #{--shade-10-60}:        rgba($shade-10, 0.6);
+  #{--shade-10-65}:        rgba($shade-10, 0.65);
+}
+
+
+// Tag colors
+// --------------------------------------------------
+
+$tag-colors: (
+  color-red:    #f66,
+  color-orange: #ff8c19,
+  color-yellow: #ffc200,
+  color-green:  #5fb236,
+  color-blue:   #576dd9,
+  color-purple: #a6507b,
+  color-gray:   #999
+);
+
+@each $key, $val in $tag-colors {
+  :root {
+    #{--#{$key}}: $val;
+    #{--#{$key}-dark}: mix(#000, $val, 8%);
+  }
+
+  $tag-colors: map-merge(
+    $tag-colors,
+    (
+      $key: (
+        color-base: var(--#{$key}),
+        color-dark: var(--#{$key}-dark)
+      )
+    )
+  );
+}
+
+
+// Scaffolding
+// --------------------------------------------------
+
+$body-bg:                  var(--shade-0);
+$text-color:               var(--shade-9);
+$soft-text-color:          var(--shade-8);
+$muted-text-color:         var(--shade-6);
+$project-closing-backdrop: var(--shade-0-60);
+
+
+// Typography
+// --------------------------------------------------
+
+$link-color:       var(--brand-primary);
+$link-hover-color: var(--brand-primary);
+
+$text-selection-color: inherit;
+$text-selection-bg:    var(--brand-primary-light);
+
+$hr-border: var(--shade-3);
+
+
+// Partials
+// --------------------------------------------------
+
+// Forms & buttons
+$input-btn-focus-color: var(--brand-primary-tint-40);
+$input-btn-invalid-color: var(--red);
+$input-btn-overlay-focus-color: var(--brand-primary);
+
+// Forms
+$input-color:                            var(--shade-9);
+$input-bg:                               var(--shade-0); // Transparent causes border/box-shadow issue
+$input-overlay-bg:                       var(--shade-10-20);
+$input-bg-readonly:                      var(--shade-1-darken-4);
+$input-overlay-bg-readonly:              var(--shade-10-10);
+$input-border:                           var(--shade-3);
+$input-overlay-focus-color:              var(--brand-primary);
+$input-color-placeholder:                var(--shade-5);
+$fieldset-bg:                            var(--shade-1-darken-4);
+$checkbox-bg:                            var(--shade-0);
+$checkbox-overlay-disabled-border:       var(--shade-10-10);
+$checkbox-checked-bg:                    var(--shade-6-lighten-13);
+$checkbox-overlay-checked-bg:            var(--shade-10-60);
+$checkbox-checked-border:                var(--shade-6-lighten-13);
+$checkbox-overlay-checked-border:        var(--shade-7);
+$checkbox-checked-active-bg:             var(--shade-6-lighten-8);
+$checkbox-overlay-checked-active-bg:     var(--shade-10-65);
+$checkbox-checked-active-border:         var(--shade-6-lighten-8);
+$checkbox-overlay-checked-active-border: var(--shade-7-darken-5);
+$tick-color:                             var(--shade-0);
+
+:root {
+
+  // Level 2
+  #{--level-2-border}:                var(--shade-1-darken-14);
+  #{--level-2-bg}:                    $input-bg;
+  #{--level-2-input-bg-readonly}:     var(--shade-1-darken-8);
+  #{--level-2-fieldset-bg}:           var(--shade-1-darken-8);
+  #{--level-2-btn-default-active-bg}: var(--shade-1);
+
+  // Level 3
+  #{--level-3-border}:                var(--shade-1-darken-18);
+  #{--level-3-bg}:                    $input-bg;
+  #{--level-3-input-bg-readonly}:     var(--shade-1-darken-12);
+  #{--level-3-fieldset-bg}:           var(--shade-1-darken-12);
+  #{--level-3-btn-default-active-bg}: var(--shade-1);
+
+  // Level 4
+  #{--level-4-border}:                var(--shade-1-darken-22);
+  #{--level-4-bg}:                    $input-bg;
+  #{--level-4-input-bg-readonly}:     var(--shade-1-darken-16);
+  #{--level-4-fieldset-bg}:           var(--shade-1-darken-16);
+  #{--level-4-btn-default-active-bg}: var(--shade-1);
+}
+
+// Badge
+$badge-color: var(--shade-0);
+$badge-bg:    var(--red);
+
+// Drop target
+$drop-target-color: var(--brand-primary-30);
+
+// Sort indicator
+$sort-indicator: var(--shade-9);
+
+// Tile
+$tile-focus-color:          var(--brand-primary);
+$tile-active-color:         var(--shade-4);
+$tile-expansion-bg:         var(--shade-2);
+$tile-expansion-focus-bg:   var(--shade-3);
+$tile-selection-icon-color: var(--shade-0);
+
+// Stack
+$stack-color:             var(--shade-6);
+$stack-bg:                $body-bg;
+$stack-focus-color:       var(--shade-0);
+$stack-line-gap-color:    var(--shade-0);
+$stack-line-tint-color:   var(--shade-0);
+$stack-line-tint-opacity: 0.5;
+
+// Scrollbar
+$scrollbar-bg:            var(--transparent);
+$scrollbar-color:         var(--shade-4);
+$scrollbar-overlay-color: var(--shade-10-20);
+
+// List states
+$list-focus-color:       var(--shade-0);
+$list-focus-bg:          var(--brand-primary);
+$list-active-color:      var(--shade-9);
+$list-active-bg:         var(--shade-3);
+$list-active-icon-color: var(--shade-7);
+
+// Accordion
+$accordion-bg:           var(--shade-1-darken-4);
+$accordion-active-bg:    var(--shade-1-darken-8);
+
+
+// Components
+// --------------------------------------------------
+
+// Icons
+$icon-style:        "line";
+$icon-color:        var(--shade-6);
+$icon-active-color: var(--shade-9);
+
+$icon-spin-color: var(--brand-primary);
+
+$icon-warning: var(--red);
+
+// Project
+$project-darken-color:  var(--shade-10-10);
+$project-heading-color: var(--shade-8);
+$item-count-color:      var(--shade-5);
+
+// Sidebar
+$sidebar-bg:                var(--shade-1);
+$sidebar-text-color:        var(--shade-8);
+$sidebar-headings-color:    var(--shade-6);
+$activity-border-color:     var(--shade-3);
+
+// Items
+$item-table-header-color:        var(--shade-8);
+$item-table-header-sort-color:   var(--shade-9);
+$item-table-header-bg:           var(--shade-0-50);
+$item-table-header-active-bg:    var(--shade-1);
+$item-table-header-border-color: var(--shade-2);
+$item-table-column-border-color: var(--shade-10-10);
+$items-odd-bg:                   var(--shade-1);
+$items-focus-color:              var(--shade-0);
+$items-focus-bg:                 var(--brand-primary);
+$items-active-color:             var(--shade-9);
+$items-active-bg:                var(--shade-3);
+
+// Panel group
+$panels-bg: var(--shade-1);
+
+// Panel
+$panel-bg:                           var(--shade-1);
+$panel-focus-bg:                     var(--shade-1-darken-4);
+$panel-header-color:                 var(--shade-8);
+$panel-separator-color:              var(--shade-3);
+$panel-nested-focus-separator-color: var(--shade-3-darken-4);
+$panel-heading-color:                var(--shade-5);
+$panel-nested-focus-heading-color:   var(--shade-5-darken-4);
+
+// Tabs
+$tab-bg:              var(--shade-2);
+$tab-nested-focus-bg: var(--shade-3);
+$tab-active-color:    var(--shade-9);
+$tab-active-bg:       var(--transparent);
+$tab-inactive-color:  var(--shade-6);
+
+// Metadata
+$label-color:                         var(--shade-6);
+$template-select-border:              var(--shade-3);
+$template-select-nested-focus-border: var(--shade-3-darken-4);
+$template-select-bg:                  var(--shade-1);
+$template-select-nested-focus-bg:     var(--shade-1-darken-4);
+$metadata-field-mixed-color:          var(--shade-5);
+
+// Tag list
+$tag-list-focus-color:              var(--shade-0);
+$tag-list-focus-bg:                 var(--brand-primary);
+$tag-list-active-border:            var(--shade-4-darken-14);
+$tag-list-active-bg:                var(--shade-3);
+$mixed-color:                       var(--shade-5);
+$add-tag-default-bg:                $panel-bg;
+$add-tag-focus-bg:                  var(--shade-0);
+$add-tag-nested-focus-bg:           var(--shade-1-darken-4);
+$add-tag-placeholder-color-default: $text-color;
+$add-tag-nested-focus-border-color: var(--shade-3-darken-4);
+$icon-tag-color:                    var(--shade-1);
+$icon-tag-nested-focus-color:       var(--shade-1-darken-4);
+$icon-tag-border:                   var(--shade-5);
+$icon-tag-nested-focus-border:      var(--shade-5-darken-4);
+
+// Note list
+$note-list-focus-color:  var(--shade-0);
+$note-list-focus-bg:     var(--brand-primary);
+$note-list-active-color: var(--shade-9);
+$note-list-active-bg:    var(--shade-3);
+
+// Editable
+$editable-color:        $text-color;
+$editable-bg:           var(--shade-0);
+$editable-border-color: var(--shade-10-10);
+
+// Wizard
+$wizard-heading-color: var(--shade-8);
+$wizard-link-color:    $link-color;
+
+// Button
+$btn-default-color:             var(--shade-9);
+$btn-default-bg:                var(--shade-0);
+$btn-default-overlay-bg:        var(--shade-10-20);
+$btn-default-border:            var(--shade-3);
+$btn-default-active-bg:         var(--shade-1);
+$btn-default-overlay-active-bg: var(--shade-10-24);
+$btn-primary-color:             var(--shade-0);
+$btn-primary-bg:                var(--brand-primary);
+$btn-primary-active-bg:         var(--brand-primary-darken-4);
+$btn-icon-bg:                   var(--transparent);
+
+// Slider
+$slider-track-bg:              var(--shade-4);
+$slider-overlay-track-bg:      var(--shade-10-20);
+$slider-range-bg:              var(--shade-6);
+$slider-overlay-range-bg:      var(--shade-7);
+$slider-handle-bg:             var(--shade-0);
+$slider-overlay-handle-bg:     var(--shade-7);
+$slider-handle-border:         var(--shade-10-20);
+$slider-overlay-handle-border: var(--transparent);
+$slider-value-color:           var(--shade-8);
+$slider-overlay-value-color:   var(--shade-7);
+$slider-overlay-icon-color:    var(--shade-7);
+$slider-focus-bg:              var(--brand-primary);
+$slider-overlay-focus-bg:      var(--brand-primary);
+
+// Esper
+$esper-bg:                               var(--shade-2);
+$esper-overlay-color:                    var(--shade-9);
+$esper-toolbar-solid-bg:                 var(--shade-1);
+$esper-shadow:                           var(--shade-10-10);
+$esper-btn-icon-active-color:            var(--shade-7);
+$esper-btn-icon-active-bg:               var(--shade-4);
+$esper-slider-handle-bg:                 var(--shade-2-lighten-4);
+$esper-slider-value-color:               var(--shade-6);
+$esper-overlay-bg:                       var(--shade-0-80);
+$esper-toolbar-overlay-btn-active-color: var(--shade-0);
+$esper-toolbar-overlay-btn-active-bg:    var(--shade-10-60);
+$esper-overlay-icon-color:               var(--shade-7);
+$esper-checkbox-bg:                      $input-bg;
+$esper-input-border:                     var(--shade-2-darken-10);
+$esper-checkbox-checked-bg:              $checkbox-checked-bg;
+$esper-checkbox-checked-border:          $checkbox-checked-border;
+$esper-checkbox-disabled-bg:             var(--shade-2-darken-4);
+$esper-checkbox-disabled-border:         $esper-input-border;
+$esper-checkbox-checked-active-bg:       $checkbox-checked-active-bg;
+$esper-checkbox-checked-active-border:   $checkbox-checked-active-border;
+$esper-btn-default-bg:                   $esper-bg;
+$esper-btn-default-border:               var(--shade-2-darken-10);
+$esper-btn-default-active-bg:            var(--shade-2-darken-4);
+
+// Drag preview
+$drag-preview-opacity:           0.8;
+$drag-preview-thumbnail-opacity: 0.8;
+
+// Thumbnail
+$thumbnail-color: var(--shade-6-50);
+$thumbnail-bg:    var(--shade-3-darken-5);
+
+// Progress bar
+$progress-bar-bg:       var(--shade-3);
+$progress-bar-color:    var(--brand-primary);
+$progress-cancel-color: var(--shade-1);
+$progress-cancel-bg:    var(--shade-6);
+
+// Editor
+$editor-toolbar-border:      var(--shade-2);
+$editor-btn-hover-bg:        var(--shade-1);
+$editor-btn-active-color:    var(--shade-7);
+$editor-btn-active-bg:       var(--shade-2);
+$editor-placeholder-color:   var(--shade-5);
+$editor-pseudo-selection-bg: var(--shade-3);
+
+$blockquote-border-color: var(--shade-2);
+$selected-node-color:     var(--brand-primary-tint-40);
+$editor-hr-border-color:  var(--shade-2);
+$line-number-color:       var(--shade-5);
+
+// Preferences
+$prefs-bg:            var(--shade-1);
+$prefs-header-border: var(--shade-3);
+
+// Vocab
+$vocab-panel-bg:        var(--shade-1-darken-4);
+$vocab-label-color:     var(--shade-6);
+$vocab-link-color:      var(--brand-primary-dark);
+
+// Plugins
+$plugin-instance-bg:               var(--shade-1-darken-8);
+$no-info-color:                    var(--shade-5-darken-4);
+$hook-color:                       var(--shade-6);
+$hook-bg:                          var(--shade-10-4);
+$plugin-border-color:              var(--shade-3-darken-4);
+$plugin-active-border-color:       var(--shade-3-darken-8);
+$plugin-indicator:                 var(--green);
+$plugin-disabled-indicator:        var(--shade-4);
+$plugin-active-disabled-indicator: var(--shade-4-darken-4);
+
+// Colors
+$colors-focus-border-table: var(--shade-0);
+$colors-focus-border-grid:  var(--shade-0);
+
+// Flash
+$flash-bg:               var(--brand-primary-light);
+$flash-color:            var(--brand-primary);
+$flash-close-icon-color: var(--brand-primary);
+$flash-shadow-color:     var(--brand-primary-30);
+
+// Search
+$clear-search-color: var(--shade-0);
+
+// Popup
+$popup-bg:           var(--shade-0);
+$popup-border-color: $input-btn-focus-color;
+
+// Option list
+$option-active-bg:        var(--shade-1);
+$option-selected-bg:      var(--shade-2);
+$option-no-matches-color: var(--shade-5);
+$option-separator-color:  var(--shade-2);

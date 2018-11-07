@@ -1,0 +1,9 @@
+--reporter dot
+--recursive
+--require @babel/register
+--require test/support/mode
+--require test/support/src
+--require test/support/chai
+--require test/support/enzyme
+--require test/support/args
+--require test/support/fixtures

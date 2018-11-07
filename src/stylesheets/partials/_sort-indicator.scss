@@ -1,0 +1,166 @@
+//
+// Sort indicator
+// --------------------------------------------------
+
+.photo,
+.selection {
+  &::before,
+  &::after {
+    position: absolute;
+    outline: 1px solid $sort-indicator;
+  }
+
+  &.before {
+    &::before {
+      content: "";
+    }
+  }
+
+  &.after {
+    &::after {
+      content: "";
+    }
+  }
+
+  &.over {
+    position: relative;
+    z-index: 1;
+  }
+
+  .vertical & {
+    &::before,
+    &::after {
+      left: 0;
+      width: 100%;
+    }
+
+    &:first-child {
+      &::before {
+        bottom: calc(100% - 1px);
+      }
+    }
+
+    &::before {
+      bottom: 100%;
+    }
+
+    &::after {
+      top: 100%;
+    }
+
+    &:last-child {
+      &::after {
+        top: calc(100% - 1px);
+      }
+    }
+  }
+
+  .horizontal & {
+    &::before,
+    &::after {
+      top: 50%;
+      height: 100%;
+      transform: translateY(-50%);
+    }
+
+    &::before {
+      right: 100%;
+    }
+
+    &::after {
+      left: 100%;
+    }
+  }
+}
+
+.photo {
+  &.last {
+    .photo-list.over &,
+    .photo-grid.over & {
+      &::after {
+        content: "";
+      }
+    }
+  }
+}
+
+.list-node-container {
+  &.before,
+  &.after {
+    z-index: 1;
+
+    &::before,
+    &::after {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      outline: 1px solid $sort-indicator;
+    }
+  }
+
+  &.before {
+    &::before {
+      content: "";
+      top: 0;
+    }
+  }
+
+  &.after {
+    &::after {
+      content: "";
+      top: 100%;
+    }
+  }
+}
+
+@for $i from 1 through $list-tree-max-levels {
+  $sel: if($i == 1, "ol", selector-nest($sel, "ol"));
+
+  #{$sel} {
+  	.list-node-container {
+    	&.before,
+    	&.after {
+      	&::before,
+      	&::after {
+          @if ($i == 1) {
+            left: $list-tree-padding-left + 1px;
+          }
+
+          @if ($i == 2) {
+            left: $list-tree-padding-left + $list-tree-indent + 1px;
+          }
+
+          @if ($i > 2) {
+            left: $list-tree-padding-left + $list-tree-indent * ($i - 1) + 1px;
+          }
+      	}
+    	}
+  	}
+
+  	.expanded {
+    	> .list-node-container {
+      	&.after {
+        	&::after {
+            @if ($i == 1) {
+              left: $list-tree-padding-left + $list-tree-indent + 1px;
+            }
+
+            @if ($i > 1) {
+              left: $list-tree-padding-left + $list-tree-indent * $i + 1px;
+            }
+          }
+      	}
+    	}
+  	}
+  }
+
+  .list-node-container {
+    &.after {
+      &.depth-#{$i} {
+        &::after {
+          margin-left: -1 * $i * $list-tree-indent;
+        }
+      }
+    }
+  }
+}

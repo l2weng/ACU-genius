@@ -1,0 +1,43 @@
+//
+// Item grid
+// --------------------------------------------------
+
+.item-grid {
+  flex: 1 1 0;
+  border-top: 1px solid $item-table-header-border-color;
+  position: relative;
+  display: flex; // Prevent overflow
+  flex-direction: column; // Strech scroll-container
+
+  .scrollbar-style-old-school & {
+    border-top-color: transparent;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      right: $space-min;
+      left: 0;
+      height: 1px;
+      background: $item-table-header-border-color;
+    }
+  }
+
+  .scroll-container {
+    padding: $space-min $space-min 0;
+  }
+
+  .runway {
+    contain: strict;
+  }
+
+  .viewport {
+    display: grid;
+    contain: content;
+    will-change: transform;
+  }
+
+  &.over {
+    @extend %drop-target;
+  }
+}

@@ -1,0 +1,194 @@
+//
+// Cover image
+// --------------------------------------------------
+
+.cover-image {
+  box-sizing: content-box;
+  position: relative;
+
+  .tag-colors {
+    position: absolute;
+    right: $space-min;
+    bottom: $space-min;
+
+    .icon-circle,
+    .icon-crescentcircle {
+      @if $theme == "light" {
+        @each $key, $val in $tag-colors {
+          &.#{$key} {
+            .color {
+              color: map-get($val, "color-base");
+            }
+
+            .border {
+              color: $colors-focus-border-grid;
+            }
+          }
+        }
+      } @else {
+        @each $key, $val in $tag-colors {
+          &.#{$key} {
+            .color {
+              color: map-get($val, "color-dark");
+            }
+
+            .border {
+              color: $colors-focus-border-grid;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.stack-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+
+  .line {
+    background: $stack-color;
+    position: relative;
+  }
+}
+
+.item-grid {
+  .stack-lines {
+    background: $stack-bg;
+
+    .line {
+      overflow: hidden; // Prevent rendering bug on high-density displays
+
+      &::before,
+      &::after {
+        content: "";
+        position: absolute;
+        left: -1px; // …
+        right: -1px; // …
+      }
+
+      &::before {
+        top: -1px; // …
+        bottom: -1px; // …
+        background: $stack-line-tint-color;
+        opacity: 0;
+      }
+
+      &::after {
+        top: 100%;
+        height: 1px;
+        box-shadow: 0 -1px 0 $stack-line-gap-color;
+
+        @if $theme == "light" {
+          @media (min-resolution: 2dppx) {
+            box-shadow: 0 -0.5px 0 $stack-line-gap-color;
+          }
+        }
+      }
+    }
+  }
+
+  @each $size in $tile-thumbnail-sizes {
+    &[data-size="#{$size}"] {
+      .stack-lines {
+        .line {
+
+          // Stack line height
+          height: #{round($size / 32)}px;
+
+          // Stack line widths
+          @for $i from 1 through $stack-size-max {
+            &.line-#{$i} {
+              margin-left: #{round($size * $i / 16)}px;
+              margin-right: #{round($size * $i / 16)}px;
+            }
+          }
+
+          // Tinting and gap
+          $tint-opacity: $stack-line-tint-opacity;
+          $gap-opacity: 0;
+          $range: $tile-thumbnail-size-max - $tile-thumbnail-size-min;
+
+          @if ($size - $tile-thumbnail-size-min) < ($range / 2.25) {
+            $tint-opacity:
+              ($stack-line-tint-opacity
+                * (($size - $tile-thumbnail-size-min)
+                * 2.25 / $range));
+
+            $gap-opacity: (1 - ($size - $tile-thumbnail-size-min) * 2.25 / $range);
+          }
+
+          &.line-1 {
+            &::before {
+              opacity: $tint-opacity;
+            }
+          }
+
+          &.line-2 {
+            &::before {
+              opacity: $tint-opacity + $tint-opacity * 0.5;
+            }
+          }
+
+          &::after {
+            opacity: $gap-opacity;
+          }
+        }
+      }
+    }
+  }
+}
+
+.item-table {
+  .cover-image {
+    position: absolute;
+    left: $space-xs;
+    top: ($row-height - $thumbnail-size) / 2;
+
+
+
+    .stack-lines {
+      .line {
+        height: 1px;
+        border: 0;
+        margin-bottom: 1px;
+      }
+
+      @for $i from 1 through $stack-size-max {
+        .line-#{$i} {
+          margin-left: $i * 2px;
+          margin-right: $i * 2px;
+        }
+      }
+
+      & + .thumbnail {
+        -webkit-clip-path: inset(4px 0 0 0);
+
+        .icon-photo {
+          g {
+            transform: translateY(2px);
+          }
+        }
+      }
+    }
+  }
+
+  td:first-child {
+    .cover-image {
+      left: $default-padding-horizontal;
+    }
+  }
+
+  .scroll-container:focus {
+    .active {
+      .cover-image {
+        .line {
+          background: $stack-focus-color;
+        }
+      }
+    }
+  }
+}

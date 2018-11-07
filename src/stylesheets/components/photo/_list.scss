@@ -1,0 +1,107 @@
+//
+// Photo list
+// --------------------------------------------------
+
+.photo-list {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: $space-min;
+
+  .scroll-container {
+    position: relative;
+    z-index: 0;
+  }
+
+  .runway {
+    contain: strict;
+  }
+
+  .viewport {
+    contain: content;
+    will-change: transform;
+  }
+
+  .photo {
+    align-items: center;
+    position: relative;
+
+    &.active {
+      .photo-container {
+        @extend %list-active;
+        contain: strict;
+
+        @at-root #{
+          selector-replace(&, ".photo-list",
+            ".photo-list .scroll-container:focus")
+        } {
+          @extend %list-focus;
+        }
+      }
+    }
+
+    &:not(.expandable) {
+      .photo-container {
+        padding-left: $default-padding-horizontal + $space-md + $space-min;
+      }
+    }
+
+    &.expanded {
+      .btn {
+        .icon {
+          transform: scaleY(-1);
+        }
+      }
+    }
+
+    .photo-container {
+      display: flex;
+      align-items: center;
+      padding: 0 $default-padding-horizontal;
+      height: $row-height;
+    }
+  }
+
+  .btn {
+    flex: 0 0 auto;
+    padding: 0;
+    border-radius: 0;
+    margin-right: $space-min;
+
+    .icon {
+      transform: rotate(90deg);
+    }
+  }
+
+  .thumbnail {
+    margin-right: $space-xs;
+  }
+
+  .title {
+    flex: 1 1 0;
+    min-width: 0; // Fix truncation
+    display: flex;
+  }
+
+  .selection-list {
+    .selection {
+      display: flex;
+      align-items: center;
+      padding-left: $default-padding-horizontal + $space-md + $space-sm
+        + $space-min;
+      padding-right: $default-padding-horizontal;
+      height: $row-height;
+
+      &.active {
+        @extend %list-active;
+
+        @at-root #{
+          selector-replace(&, ".photo-list",
+            ".photo-list .scroll-container:focus")
+        } {
+          @extend %list-focus;
+        }
+      }
+    }
+  }
+}

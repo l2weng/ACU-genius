@@ -1,0 +1,122 @@
+//
+// Metadata
+// --------------------------------------------------
+
+$default-padding-horizontal: 12px !default;
+
+.metadata-heading {
+  font-size: $font-size-small;
+  color: $panel-heading-color;
+  line-height: $metadata-line-height;
+  margin: ($font-size-base / 2) $default-padding-horizontal 0;
+
+  .scrollbar-style-old-school & {
+    margin-right: ($default-padding-horizontal - $scrollbar-size / 3);
+  }
+
+  &.separator {
+    margin-bottom: (($metadata-line-height - 10px) / 2); // 10px: Caps height
+    border-bottom: 1px solid $panel-separator-color;
+
+    .nested-tab-focus & {
+      border-bottom-color: $panel-nested-focus-separator-color;
+    }
+  }
+
+  .nested-tab-focus & {
+    color: $panel-nested-focus-heading-color;
+  }
+}
+
+.form-control {
+  &.template-select {
+    width: calc(100% - 2 * #{$default-padding-horizontal});
+    margin: auto;
+    border-color: $template-select-border;
+    margin-bottom: (($metadata-line-height - 10px) / 2);
+    background-color: $template-select-bg; // 'Transparent' causes border/box-shadow issue
+
+    &.focus {
+      background-color: $input-bg;
+    }
+
+    &.mixed {
+      color: $metadata-field-mixed-color;
+      background-image: if($theme == "light",
+        image-url("project/icon-chevron7-mixed-light-theme.svg"),
+        image-url("project/icon-chevron7-mixed-dark-theme.svg"));
+    }
+
+    .scrollbar-style-old-school & {
+      width: calc(100% - 2 * #{$default-padding-horizontal}
+        + #{$scrollbar-size} / 3);
+      margin-left: $default-padding-horizontal;
+    }
+
+    .nested-tab-focus & {
+      background-color: $template-select-nested-focus-bg;
+      border-color: $template-select-nested-focus-border;
+    }
+  }
+}
+
+.metadata-fields {
+  .metadata-field {
+    display: flex;
+    line-height: $metadata-line-height;
+
+    &.extra {
+      label {
+        font-style: italic;
+      }
+    }
+
+    &.mixed {
+      color: $metadata-field-mixed-color;
+    }
+  }
+
+  label,
+  .static {
+    @include css-truncation;
+  }
+
+  label {
+    flex: 0 0 $metadata-horizontal-offset;
+    text-align: right;
+    padding-left: $default-padding-horizontal;
+    padding-right: ($metadata-gutter / 2);
+    color: $label-color;
+  }
+
+  .value {
+    flex: 0 0 calc(100% - #{$metadata-horizontal-offset});
+    display: flex;
+    align-items: center;
+    padding-left: $metadata-gutter / 2;
+    padding-right: $default-padding-horizontal;
+    min-width: 0; // Fix truncation
+
+    .scrollbar-style-old-school & {
+      padding-right: ($default-padding-horizontal - $scrollbar-size / 3);
+    }
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .icon {
+    flex: 0 0 auto;
+    margin-left: $space-xs;
+
+    & + .icon {
+      margin-left: $space-min;
+    }
+  }
+
+  .icon-warningsm {
+    color: $icon-warning;
+  }
+}

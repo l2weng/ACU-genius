@@ -1,0 +1,17 @@
+//
+// Flex
+// --------------------------------------------------
+
+.flex-row {
+  flex-grow: 1; // Do not set flex-basis as it conflicts with grid classes
+  display: flex;
+  min-width: 0; // Fix truncation
+
+  &.center {
+    align-items: center;
+  }
+
+  &.justify-content-between {
+    justify-content: space-between;
+  }
+}
