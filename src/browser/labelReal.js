@@ -46,7 +46,7 @@ const T = new WeakMap()
 const ZOOM = { STEP: 0.25, MAX: 2, MIN: 0.75 }
 
 
-class Tropy extends EventEmitter {
+class LabelReal extends EventEmitter {
   static defaults = {
     frameless: darwin,
     debug: false,
@@ -61,8 +61,8 @@ class Tropy extends EventEmitter {
   constructor() {
     super()
 
-    if (Tropy.instance) return Tropy.instance
-    Tropy.instance = this
+    if (LabelReal.instance) return LabelReal.instance
+    LabelReal.instance = this
 
     this.menu = new AppMenu(this)
     this.ctx = new ContextMenu(this)
@@ -294,8 +294,8 @@ class Tropy extends EventEmitter {
     return all([
       this.store.load('state.json')
     ])
-      .then(([state]) => ({ ...Tropy.defaults, ...state }))
-      .catch({ code: 'ENOENT' }, () => Tropy.defaults)
+      .then(([state]) => ({ ...LabelReal.defaults, ...state }))
+      .catch({ code: 'ENOENT' }, () => LabelReal.defaults)
 
       .then(state => this.migrate(state))
 
@@ -812,4 +812,4 @@ class Tropy extends EventEmitter {
   }
 }
 
-module.exports = Tropy
+module.exports = LabelReal

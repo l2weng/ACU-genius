@@ -67,10 +67,10 @@ if (process.env.TROPY_RUN_UNIT_TESTS === 'true') {
     verbose(`started in ${opts.env} mode`)
     verbose(`using ${app.getPath('userData')}`)
 
-    var tropy = new (require('./tropy'))()
+    var labelReal = new (require('./labelReal'))()
 
-    tropy.listen()
-    tropy.restore()
+    labelReal.listen()
+    labelReal.restore()
 
     if (darwin) {
       app.on('open-file', (event, file) => {
@@ -78,15 +78,15 @@ if (process.env.TROPY_RUN_UNIT_TESTS === 'true') {
           case '.tpy':
             event.preventDefault()
             if (!READY) opts._ = [file]
-            else tropy.open(file)
+            else labelReal.open(file)
             break
           case '.jpg':
           case '.jpeg':
           case '.png':
           case '.svg':
-            if (READY && tropy.win) {
+            if (READY && labelReal.win) {
               event.preventDefault()
-              tropy.import([file])
+              labelReal.import([file])
             }
             break
         }
@@ -95,7 +95,7 @@ if (process.env.TROPY_RUN_UNIT_TESTS === 'true') {
 
     all([
       once(app, 'ready'),
-      once(tropy, 'app:restored')
+      once(labelReal, 'app:restored')
 
     ]).then(() => {
       session.defaultSession.webRequest.onHeadersReceived((res, cb) => {
@@ -114,11 +114,11 @@ if (process.env.TROPY_RUN_UNIT_TESTS === 'true') {
 
       READY = Date.now()
       info('ready after %sms', READY - START)
-      tropy.open(...opts._)
+      labelReal.open(...opts._)
     })
 
     app.on('second-instance', (_, argv) => {
-      tropy.open(...args.parse(argv.slice(1))._)
+      labelReal.open(...args.parse(argv.slice(1))._)
     })
 
     app.on('quit', (_, code) => {
