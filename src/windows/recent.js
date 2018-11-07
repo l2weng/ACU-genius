@@ -6,7 +6,7 @@ const { all } = require('bluebird')
 const { ready, $ } = require('../dom')
 const { create } = require('../stores/about')
 const { Main } = require('../components/main')
-const { About } = require('../components/about')
+const { Recent } = require('../components/recent')
 const act = require('../actions')
 
 const store = create()
@@ -17,7 +17,7 @@ all([
   ready
 ])
   .then(() => {
-    render(<Main store={store}><About/></Main>, $('main'))
+    render(<Main store={store}><Recent/></Main>, $('main'))
   })
 
 if (ARGS.dev || ARGS.debug) {
