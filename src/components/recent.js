@@ -7,6 +7,8 @@ const { ipcRenderer: ipc } = require('electron')
 const { bool, array } = require('prop-types')
 const { Toolbar } = require('./toolbar')
 const { PROJECT } = require('../constants')
+const { fail } = require('../dialog')
+const { debug, warn } = require('../common/log')
 
 class Recent extends PureComponent {
 
@@ -23,8 +25,11 @@ class Recent extends PureComponent {
     try {
       let file = projectFile
       ipc.send(PROJECT.CREATED, { file })
-    } catch (e) {
-      console.log(e)
+    } catch (error) {
+      warn(`failed to create project: ${error.message}`)
+      debug(error.stack)
+
+      fail(error, PROJECT.CREATED)
     }
   }
 

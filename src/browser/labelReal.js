@@ -377,8 +377,10 @@ class LabelReal extends EventEmitter {
     this.on('app:guideline', () =>
       this.showGuideline())
 
-    this.on('app:create-project', () =>
-      this.showWizard())
+    this.on('app:create-project', () =>{
+      console.log('cp')
+      this.showWizard()
+    })
 
     this.on('app:close-project', () =>
       this.dispatch(act.project.close(), this.win))
@@ -710,7 +712,10 @@ class LabelReal extends EventEmitter {
     })
 
     ipc.on(PROJECT.OPENED, (_, project) => this.hasOpened(project))
-    ipc.on(PROJECT.CREATE, () => this.showWizard())
+    ipc.on(PROJECT.CREATE, () => {
+      if (this.gdl) this.gdl.close()
+      this.showWizard()
+    })
     ipc.on(PROJECT.CREATED, (_, { file }) => {
       if (this.recent) this.recent.close()
       this.open(file)
