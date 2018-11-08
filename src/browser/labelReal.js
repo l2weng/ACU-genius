@@ -89,6 +89,7 @@ class LabelReal extends EventEmitter {
 
   open(file) {
     if (!file) {
+      return this.showGuideline()
       if (this.win) return this.win.show(), this
 
       if (this.state.recent.length > 0) {
@@ -269,7 +270,7 @@ class LabelReal extends EventEmitter {
     if (this.prefs) this.prefs.close()
     if (this.gdl) return this.gdl.show(), this
 
-    this.wiz = open('guideline', this.hash, {
+    this.gdl = open('guideline', this.hash, {
       title: this.dict.windows.wizard.title,
       width: GDL.WIDTH * this.state.zoom,
       height: GDL.HEIGHT * this.state.zoom,
@@ -283,7 +284,7 @@ class LabelReal extends EventEmitter {
       darkTheme: (this.state.theme === 'dark'),
       frame: !this.hash.frameless,
     }, this.state.zoom)
-    .once('closed', () => { this.wiz = undefined })
+    .once('closed', () => { this.gdl = undefined })
 
     return this
   }
@@ -372,6 +373,9 @@ class LabelReal extends EventEmitter {
 
     this.on('app:recent', () =>
       this.showRecent())
+
+    this.on('app:guideline', () =>
+      this.showGuideline())
 
     this.on('app:create-project', () =>
       this.showWizard())
