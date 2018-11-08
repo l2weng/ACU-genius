@@ -51,7 +51,7 @@ class Guideline extends PureComponent {
             <FormattedMessage id="about.version" values={{ version }}/>
           </p>
           <div>
-            <h2>I am guideline</h2>
+            <h2>I am guideline!!!!</h2>
             <button onClick={() => this.goCreateProject()}>Create project</button>
           </div>
         </div>
