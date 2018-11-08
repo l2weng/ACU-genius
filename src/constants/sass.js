@@ -17,6 +17,11 @@ const RECENT = {
   HEIGHT: 400
 }
 
+const GUIDELINE = {
+  WIDTH: 600,
+  HEIGHT: 400
+}
+
 const COLUMN = {
   MIN: 48,
   POSITION: 54,
@@ -237,6 +242,7 @@ module.exports =  {
   ESPER,
   FONTSIZE,
   GRID,
+  GUIDELINE,
   ICON,
   INPUT,
   ITEM,

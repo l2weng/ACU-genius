@@ -39,6 +39,7 @@ const WIZ = SASS.WIZARD
 const ABT = SASS.ABOUT
 const PREFS = SASS.PREFS
 const RCT = SASS.RECENT
+const GDL = SASS.GUIDELINE
 
 const H = new WeakMap()
 const T = new WeakMap()
@@ -98,7 +99,7 @@ class LabelReal extends EventEmitter {
           file = recent
           break
         }
-        if (!file) return this.showWizard()
+        if (!file) return this.showGuideline()
       }
     }
 
@@ -221,6 +222,7 @@ class LabelReal extends EventEmitter {
   showRecent() {
     if (this.prefs) this.prefs.close()
     if (this.recent) return this.recent.show(), this
+
     this.recent = open('recent', this.hash, {
       title: this.dict.windows.wizard.title,
       width: RCT.WIDTH * this.state.zoom,
@@ -259,6 +261,29 @@ class LabelReal extends EventEmitter {
       frame: !this.hash.frameless,
     }, this.state.zoom)
       .once('closed', () => { this.wiz = undefined })
+
+    return this
+  }
+
+  showGuideline() {
+    if (this.prefs) this.prefs.close()
+    if (this.gdl) return this.gdl.show(), this
+
+    this.wiz = open('guideline', this.hash, {
+      title: this.dict.windows.wizard.title,
+      width: GDL.WIDTH * this.state.zoom,
+      height: GDL.HEIGHT * this.state.zoom,
+      parent: darwin ? null : this.win,
+      modal: !darwin && !!this.win,
+      autoHideMenuBar: true,
+      resizable: false,
+      minimizable: false,
+      maximizable: false,
+      fullscreenable: false,
+      darkTheme: (this.state.theme === 'dark'),
+      frame: !this.hash.frameless,
+    }, this.state.zoom)
+    .once('closed', () => { this.wiz = undefined })
 
     return this
   }
