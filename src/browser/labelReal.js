@@ -7,7 +7,7 @@ const {
   app, shell, ipcMain: ipc, BrowserWindow, systemPreferences: pref
 } = require('electron')
 
-const { verbose, warn, log } = require('../common/log')
+const { verbose, warn } = require('../common/log')
 const { open, hasOverlayScrollBars } = require('./window')
 const { all } = require('bluebird')
 const { existsSync: exists } = require('fs')
@@ -221,7 +221,6 @@ class LabelReal extends EventEmitter {
   showRecent() {
     if (this.prefs) this.prefs.close()
     if (this.recent) return this.recent.show(), this
-
     this.recent = open('recent', this.hash, {
       title: this.dict.windows.wizard.title,
       width: RCT.WIDTH * this.state.zoom,
@@ -683,7 +682,10 @@ class LabelReal extends EventEmitter {
 
     ipc.on(PROJECT.OPENED, (_, project) => this.hasOpened(project))
     ipc.on(PROJECT.CREATE, () => this.showWizard())
-    ipc.on(PROJECT.CREATED, (_, { file }) => this.open(file))
+    ipc.on(PROJECT.CREATED, (_, { file }) => {
+      if (this.recent) this.recent.close()
+      this.open(file)
+    })
 
     ipc.on(FLASH.HIDE, (_, { id, confirm }) => {
       if (id === 'update.ready' && confirm) {
@@ -730,6 +732,7 @@ class LabelReal extends EventEmitter {
       locale: this.state.locale,
       uuid: this.state.uuid,
       update: this.updater.release,
+      recent: this.state.recent,
       version,
       webgl: this.state.webgl
     }
