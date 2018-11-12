@@ -2,20 +2,21 @@
 
 const React = require('react')
 const { PureComponent } = React
-const { FormattedMessage, injectIntl, intlShape } = require('react-intl')
-const { ipcRenderer: ipc  } = require('electron')
-const { product, version } = require('../common/release')
+const { injectIntl, intlShape } = require('react-intl')
 const { bool } = require('prop-types')
 const { Toolbar } = require('./toolbar')
-const { PROJECT } = require('../constants')
-const { fail } = require('../dialog')
-const { debug, warn } = require('../common/log')
-
+const { Tab, Tabs } = require('./tabs')
 
 class DataSet extends PureComponent {
 
   renderToolbar() {
     return this.props.showToolbar && <Toolbar/>
+  }
+
+  handleAddNewPhotos = () => {
+  }
+
+  handleSelectOwnPhotos = () => {
   }
 
   render() {
@@ -25,7 +26,25 @@ class DataSet extends PureComponent {
         <figure className="app-icon"/>
         <div className="flex-row center">
           <div>
-            <h2>添加图片库</h2>
+            <h5>添加图片</h5>
+            <div>
+              <button>选择图片/文件夹</button>
+            </div>
+            <div>
+              输入URL <input type="text"/>
+            </div>
+          </div>
+          <hr/>
+          <div>
+            <h5>选择已有图片</h5>
+            <div>
+              <input type="checkbox" id="scales" name="scales"/>
+              <label htmlFor="scales">cola</label>
+            </div>
+            <div>
+              <input type="checkbox" id="horns" name="horns"/>
+              <label htmlFor="horns">北美</label>
+            </div>
           </div>
         </div>
       </div>
