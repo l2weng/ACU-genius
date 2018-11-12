@@ -18,30 +18,14 @@ class DataSet extends PureComponent {
     return this.props.showToolbar && <Toolbar/>
   }
 
-  goCreateProject = () =>{
-    try {
-      ipc.send(PROJECT.CREATE)
-    } catch (error) {
-      warn(`failed to create project: ${error.message}`)
-      debug(error.stack)
-
-      fail(error, PROJECT.CREATE)
-    }
-  }
-
   render() {
     return (
       <div className="about-view">
         {this.renderToolbar()}
         <figure className="app-icon"/>
         <div className="flex-row center">
-          <h1><span className="product">{product}</span></h1>
-          <p className="version">
-            <FormattedMessage id="about.version" values={{ version }}/>
-          </p>
           <div>
-            <h2>I am guideline!!!!</h2>
-            <button onClick={() => this.goCreateProject()}>Create project</button>
+            <h2>添加图片库</h2>
           </div>
         </div>
       </div>

@@ -268,6 +268,7 @@ class LabelReal extends EventEmitter {
 
   showDataSet() {
     if (this.prefs) this.prefs.close()
+    if (this.dts) return this.dts.show(), this
 
     this.dts = open('dataset', this.hash, {
       title: this.dict.windows.wizard.title,
