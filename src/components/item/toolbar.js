@@ -16,6 +16,7 @@ class ItemToolbar extends PureComponent {
     this.props.onModeChange(MODE.PROJECT)
   }
 
+  //Todo login module
   render() {
     return (
       <Toolbar onDoubleClick={ARGS.frameless ? this.props.onMaximize : null}>
@@ -25,6 +26,8 @@ class ItemToolbar extends PureComponent {
               <Button
                 icon={<IconChevron16/>}
                 onClick={this.handleModeChange}/>}
+            <button>登录</button>
+            <button>刷新</button>
           </ToolGroup>
         </div>
       </Toolbar>

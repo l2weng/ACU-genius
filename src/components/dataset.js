@@ -5,8 +5,8 @@ const { PureComponent } = React
 const { injectIntl, intlShape } = require('react-intl')
 const { bool } = require('prop-types')
 const { Toolbar } = require('./toolbar')
-const { Tab, Tabs } = require('./tabs')
 
+//Todo data set module
 class DataSet extends PureComponent {
 
   renderToolbar() {
