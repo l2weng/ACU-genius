@@ -7,10 +7,12 @@ const { ProjectView } = require('./view')
 const { ItemView } = require('../item')
 const { DragLayer } = require('../drag-layer')
 const { DropTarget } = require('react-dnd')
+const { ipcRenderer: ipc  } = require('electron')
 const { NativeTypes } = require('react-dnd-electron-backend')
 const { NoProject } = require('./none')
 const { extname } = require('path')
 const { MODE } = require('../../constants/project')
+const { DATASET } = require('../../constants')
 const { emit, on, off, ensure, reflow } = require('../../dom')
 const { win } = require('../../window')
 const cx = require('classnames')
@@ -463,6 +465,10 @@ module.exports = {
 
       onItemCreate() {
         dispatch(actions.item.create())
+      },
+
+      onDataSetsCreate() {
+        ipc.send(DATASET.CREATE)
       },
 
       onItemSave(...args) {

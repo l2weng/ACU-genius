@@ -22,6 +22,7 @@ module.exports = {
   PHOTO: require('./photo'),
   PREFS: require('./prefs'),
   PROJECT: require('./project'),
+  DATASET: require('./dataset'),
   QR: require('./qr'),
   SASS: require('./sass'),
   SELECTION: require('./selection'),

@@ -31,7 +31,7 @@ const { channel, product, version } = require('../common/release')
 const { restrict } = require('../common/util')
 
 const {
-  FLASH, HISTORY, TAG, PROJECT, CONTEXT, SASS, LOCALE
+  FLASH, HISTORY, TAG, PROJECT, CONTEXT, SASS, LOCALE, DATASET
 } = require('../constants')
 
 const WIN = SASS.PROJECT
@@ -40,6 +40,7 @@ const ABT = SASS.ABOUT
 const PREFS = SASS.PREFS
 const RCT = SASS.RECENT
 const GDL = SASS.GUIDELINE
+const DTS = SASS.DATASET
 
 const H = new WeakMap()
 const T = new WeakMap()
@@ -261,6 +262,28 @@ class LabelReal extends EventEmitter {
       frame: !this.hash.frameless,
     }, this.state.zoom)
       .once('closed', () => { this.wiz = undefined })
+
+    return this
+  }
+
+  showDataSet() {
+    if (this.prefs) this.prefs.close()
+
+    this.dts = open('dataset', this.hash, {
+      title: this.dict.windows.wizard.title,
+      width: DTS.WIDTH * this.state.zoom,
+      height: DTS.HEIGHT * this.state.zoom,
+      parent: darwin ? null : this.win,
+      modal: !darwin && !!this.win,
+      autoHideMenuBar: true,
+      resizable: false,
+      minimizable: false,
+      maximizable: false,
+      fullscreenable: false,
+      darkTheme: (this.state.theme === 'dark'),
+      frame: !this.hash.frameless,
+    }, this.state.zoom)
+    .once('closed', () => { this.dts = undefined })
 
     return this
   }
@@ -719,7 +742,9 @@ class LabelReal extends EventEmitter {
       if (this.recent) this.recent.close()
       this.open(file)
     })
-
+    ipc.on(DATASET.CREATE, () => {
+      this.showDataSet()
+    })
     ipc.on(FLASH.HIDE, (_, { id, confirm }) => {
       if (id === 'update.ready' && confirm) {
         this.updater.install()

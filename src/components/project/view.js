@@ -46,6 +46,10 @@ class ProjectView extends Component {
     return this.props.onItemImport({ list: this.props.nav.list })
   }
 
+  handleDataSetsCreate = () => {
+    return this.props.onDataSetsCreate()
+  }
+
   handleSort = (sort) => {
     this.props.onSort({
       ...sort, list: this.props.nav.list || 0
@@ -87,6 +91,7 @@ class ProjectView extends Component {
                 canCreateItems={!nav.trash}
                 isDisabled={!isActive}
                 onItemCreate={this.handleItemImport}
+                onDataSetsCreate={this.handleDataSetsCreate}
                 onDoubleClick={ARGS.frameless ? onMaximize : null}
                 onSearch={onSearch}
                 onZoomChange={this.handleZoomChange}/>
@@ -129,6 +134,7 @@ class ProjectView extends Component {
     dt: func.isRequired,
     zoom: number.isRequired,
     onItemCreate: func.isRequired,
+    onDataSetsCreate: func.isRequired,
     onItemImport: func.isRequired,
     onItemSelect: func.isRequired,
     onItemTagAdd: func.isRequired,

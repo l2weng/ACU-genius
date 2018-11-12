@@ -49,6 +49,13 @@ class ProjectToolbar extends PureComponent {
               title="toolbar.import"
               onClick={this.props.onItemCreate}/>
           </div>
+          <div className="tool-group">
+            <Button
+              icon={<IconPlus/>}
+              isDisabled={isDisabled || !canCreateItems}
+              title="toolbar.import"
+              onClick={this.props.onDataSetsCreate}/>
+          </div>
         </div>
         <div className="toolbar-center">
           <div className="item-count">
@@ -75,6 +82,7 @@ class ProjectToolbar extends PureComponent {
     zoom: number.isRequired,
     onDoubleClick: func,
     onItemCreate: func.isRequired,
+    onDataSetsCreate: func.isRequired,
     onSearch: func.isRequired,
     onZoomChange: func.isRequired
   }

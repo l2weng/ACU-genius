@@ -12,7 +12,7 @@ const { fail } = require('../dialog')
 const { debug, warn } = require('../common/log')
 
 
-class Guideline extends PureComponent {
+class DataSet extends PureComponent {
 
   renderToolbar() {
     return this.props.showToolbar && <Toolbar/>
@@ -59,5 +59,5 @@ class Guideline extends PureComponent {
 }
 
 module.exports = {
-  Guideline: injectIntl(Guideline)
+  DataSet: injectIntl(DataSet)
 }

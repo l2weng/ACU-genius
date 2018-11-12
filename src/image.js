@@ -14,7 +14,9 @@ const MIME = require('./constants/mime')
 
 class Image {
   static read(path) {
-    return (new Image(path)).read()
+    let read = (new Image(path)).read()
+    console.log(read)
+    return read
   }
 
   static async check({
