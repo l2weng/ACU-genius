@@ -15,6 +15,12 @@ class ItemToolbar extends PureComponent {
   handleModeChange = () => {
     this.props.onModeChange(MODE.PROJECT)
   }
+  handleLogin = () => {
+    this.props.onHandleLogin()
+  }
+  handleRefresh = () => {
+
+  }
 
   //Todo login module
   render() {
@@ -26,8 +32,8 @@ class ItemToolbar extends PureComponent {
               <Button
                 icon={<IconChevron16/>}
                 onClick={this.handleModeChange}/>}
-            <button>登录</button>
-            <button>刷新</button>
+            <button onClick={this.handleLogin}>登录</button>
+            <button onClick={this.handleRefresh}>刷新</button>
           </ToolGroup>
         </div>
       </Toolbar>
@@ -37,6 +43,7 @@ class ItemToolbar extends PureComponent {
   static propTypes = {
     isItemOpen: bool.isRequired,
     onMaximize: func.isRequired,
+    onHandleLogin:func.isRequired,
     onModeChange: func.isRequired
   }
 }
