@@ -31,7 +31,7 @@ const { channel, product, version } = require('../common/release')
 const { restrict } = require('../common/util')
 
 const {
-  FLASH, HISTORY, TAG, PROJECT, CONTEXT, SASS, LOCALE, DATASET
+  FLASH, HISTORY, TAG, PROJECT, CONTEXT, SASS, LOCALE, DATASET, USER
 } = require('../constants')
 
 const WIN = SASS.PROJECT
@@ -41,6 +41,7 @@ const PREFS = SASS.PREFS
 const RCT = SASS.RECENT
 const GDL = SASS.GUIDELINE
 const DTS = SASS.DATASET
+const USR = SASS.LOGIN
 
 const H = new WeakMap()
 const T = new WeakMap()
@@ -268,6 +269,7 @@ class LabelReal extends EventEmitter {
 
   showDataSet() {
     if (this.prefs) this.prefs.close()
+    if (this.login) this.login.close()
     if (this.dts) return this.dts.show(), this
 
     this.dts = open('dataset', this.hash, {
@@ -285,6 +287,30 @@ class LabelReal extends EventEmitter {
       frame: !this.hash.frameless,
     }, this.state.zoom)
     .once('closed', () => { this.dts = undefined })
+
+    return this
+  }
+
+  showLogin() {
+    if (this.prefs) this.prefs.close()
+    if (this.recent) this.recent.close()
+    if (this.login) return this.login.show(), this
+
+    this.login = open('login', this.hash, {
+      title: this.dict.windows.wizard.title,
+      width: USR.WIDTH * this.state.zoom,
+      height: USR.HEIGHT * this.state.zoom,
+      parent: darwin ? null : this.win,
+      modal: !darwin && !!this.win,
+      autoHideMenuBar: true,
+      resizable: false,
+      minimizable: false,
+      maximizable: false,
+      fullscreenable: false,
+      darkTheme: (this.state.theme === 'dark'),
+      frame: !this.hash.frameless,
+    }, this.state.zoom)
+    .once('closed', () => { this.login = undefined })
 
     return this
   }
@@ -735,17 +761,25 @@ class LabelReal extends EventEmitter {
     })
 
     ipc.on(PROJECT.OPENED, (_, project) => this.hasOpened(project))
+
     ipc.on(PROJECT.CREATE, () => {
       if (this.gdl) this.gdl.close()
       this.showWizard()
     })
+
     ipc.on(PROJECT.CREATED, (_, { file }) => {
       if (this.recent) this.recent.close()
       this.open(file)
     })
+
     ipc.on(DATASET.CREATE, () => {
       this.showDataSet()
     })
+
+    ipc.on(USER.LOGIN, () => {
+      this.showLogin()
+    })
+
     ipc.on(FLASH.HIDE, (_, { id, confirm }) => {
       if (id === 'update.ready' && confirm) {
         this.updater.install()

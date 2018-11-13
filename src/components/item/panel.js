@@ -60,6 +60,7 @@ class ItemPanel extends PureComponent {
       <ItemToolbar
         isItemOpen={this.props.isItemOpen}
         onMaximize={this.props.onMaximize}
+        onHandleLogin={this.props.onHandleLogin}
         onModeChange={this.props.onModeChange}/>
     )
   }
@@ -188,6 +189,7 @@ class ItemPanel extends PureComponent {
     onMaximize: func.isRequired,
     onMetadataSave: func.isRequired,
     onModeChange: func.isRequired,
+    onHandleLogin: func.isRequired,
     onNoteCreate: func.isRequired,
     onNoteSelect: func.isRequired,
     onOpenInFolder: func.isRequired,

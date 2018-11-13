@@ -17,6 +17,12 @@ const RECENT = {
   HEIGHT: 400
 }
 
+//Login and register with the same view
+const LOGIN = {
+  WIDTH: 600,
+  HEIGHT: 400
+}
+
 const GUIDELINE = {
   WIDTH: 600,
   HEIGHT: 400
@@ -255,6 +261,7 @@ module.exports =  {
   INPUT,
   ITEM,
   LIST,
+  LOGIN,
   NOTE,
   OPTION,
   PANEL,

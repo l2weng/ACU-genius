@@ -23,6 +23,7 @@ module.exports = {
   PREFS: require('./prefs'),
   PROJECT: require('./project'),
   DATASET: require('./dataset'),
+  USER: require('./user'),
   QR: require('./qr'),
   SASS: require('./sass'),
   SELECTION: require('./selection'),

@@ -12,7 +12,7 @@ const { NativeTypes } = require('react-dnd-electron-backend')
 const { NoProject } = require('./none')
 const { extname } = require('path')
 const { MODE } = require('../../constants/project')
-const { DATASET } = require('../../constants')
+const { DATASET, USER } = require('../../constants')
 const { emit, on, off, ensure, reflow } = require('../../dom')
 const { win } = require('../../window')
 const cx = require('classnames')
@@ -328,6 +328,7 @@ class ProjectContainer extends Component {
     onProjectOpen: func.isRequired,
     onMaximize: func.isRequired,
     onModeChange: func.isRequired,
+    onHandleLogin: func.isRequired,
     onMetadataSave: func.isRequired,
     onSort: func.isRequired,
     onTemplateImport: func.isRequired,
@@ -413,6 +414,10 @@ module.exports = {
 
       onModeChange(mode) {
         dispatch(actions.nav.update({ mode }))
+      },
+
+      onHandleLogin() {
+        ipc.send(USER.LOGIN)
       },
 
       onOpenInFolder(...args) {

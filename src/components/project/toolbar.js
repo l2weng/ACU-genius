@@ -50,11 +50,7 @@ class ProjectToolbar extends PureComponent {
               onClick={this.props.onItemCreate}/>
           </div>
           <div className="tool-group">
-            <Button
-              icon={<IconPlus/>}
-              isDisabled={isDisabled || !canCreateItems}
-              title="toolbar.import"
-              onClick={this.props.onDataSetsCreate}/>
+            <button onClick={this.props.onDataSetsCreate}>导入图片</button>
           </div>
         </div>
         <div className="toolbar-center">
