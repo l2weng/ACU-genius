@@ -14,6 +14,7 @@ const { Selection  } = require('./selection')
 const TWEEN = require('@tweenjs/tween.js')
 const { TOOL } = require('../../constants/esper')
 const debounce = require('lodash.debounce')
+const { PI, floor, round } = Math
 
 const {
   ESPER: {
@@ -23,6 +24,7 @@ const {
   }
 } = require('../../constants/sass')
 
+PIXI.settings.RETINA_PREFIX = /@2x!/
 
 class EsperView extends Component {
   componentDidMount() {
@@ -36,7 +38,7 @@ class EsperView extends Component {
       antialias: false,
       forceCanvas: !ARGS.webgl,
       roundPixels: false,
-      resolution: devicePixelRatio,
+      resolution: round(devicePixelRatio),
       transparent: true,
       width,
       height
@@ -216,8 +218,8 @@ class EsperView extends Component {
   }
 
   resize({ width, height, zoom, mirror }) {
-    width = Math.round(width)
-    height = Math.round(height)
+    width = round(width)
+    height = round(height)
 
     this.pixi.renderer.resize(width, height)
     this.pixi.render()
@@ -286,7 +288,7 @@ class EsperView extends Component {
       const tgt = rad(angle)
 
       // Always rotate counter-clockwise!
-      const tmp = (tgt > cur) ? cur - (2 * Math.PI - tgt) : tgt
+      const tmp = (tgt > cur) ? cur - (2 * PI - tgt) : tgt
 
       this.animate(this.image, 'rotate', {
         done: () => {
@@ -407,13 +409,13 @@ class EsperView extends Component {
   // On low-res screens, we render at 2x resolution
   // when zooming out to improve quality. See #218
   shouldResolutionChange(scale) {
-    let dppx = devicePixelRatio
+    let dppx = round(devicePixelRatio)
     let res = this.pixi.renderer.resolution
     return (dppx === 1) && (scale < 1 ? res === 1 : res === 2)
   }
 
   handleResolutionChange = () => {
-    let dppx = devicePixelRatio
+    let dppx = round(devicePixelRatio)
     let { image } = this
 
     if (dppx === 1 && image != null && image.scale.y < 1) dppx = 2
@@ -528,8 +530,8 @@ class EsperView extends Component {
     const { pos, mov } = origin
     const { top, right, bottom, left } = limit
     const { x, y } = data.getLocalPosition(target.parent)
-    target.x = restrict(pos.x + (x - mov.x), left, right)
-    target.y = restrict(pos.y + (y - mov.y), top, bottom)
+    target.x = floor(restrict(pos.x + (x - mov.x), left, right))
+    target.y = floor(restrict(pos.y + (y - mov.y), top, bottom))
   }
 
   handlePanStop() {
@@ -561,10 +563,10 @@ class EsperView extends Component {
     }
 
     this.props.onSelectionCreate({
-      x: Math.round(x),
-      y: Math.round(y),
-      width: Math.round(width),
-      height: Math.round(height)
+      x: round(x),
+      y: round(y),
+      width: round(width),
+      height: round(height)
     })
   }
 
