@@ -9,6 +9,7 @@ const { IconPlus, IconList, IconGrid } = require('../icons')
 const { Slider } = require('../slider')
 const { SearchField } = require('../search')
 const { Button } = require('../button')
+const { Button: ButtonAnt, Tooltip } = require('antd')
 
 
 class ProjectToolbar extends PureComponent {
@@ -50,7 +51,9 @@ class ProjectToolbar extends PureComponent {
               onClick={this.props.onItemCreate}/>
           </div>
           <div className="tool-group">
-            <button onClick={this.props.onDataSetsCreate}>导入图片</button>
+            <Tooltip placement="right" title="导入资源">
+              <ButtonAnt icon="picture" onClick={this.props.onDataSetsCreate} size="small"/>
+            </Tooltip>
           </div>
         </div>
         <div className="toolbar-center">
