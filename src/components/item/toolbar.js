@@ -32,8 +32,6 @@ class ItemToolbar extends PureComponent {
               <Button
                 icon={<IconChevron16/>}
                 onClick={this.handleModeChange}/>}
-            <button onClick={this.handleLogin}>用户</button>
-            <button onClick={this.handleRefresh}>刷新</button>
           </ToolGroup>
         </div>
       </Toolbar>

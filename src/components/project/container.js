@@ -21,6 +21,7 @@ const actions = require('../../actions')
 const debounce = require('lodash.debounce')
 const { match } = require('../../keymap')
 const { IconSpin } = require('../icons')
+const { HeaderView } = require('../header')
 
 const {
   getCachePrefix,
@@ -234,7 +235,12 @@ class ProjectContainer extends Component {
         className={cx(this.classes)}
         ref={this.setContainer}
         onContextMenu={this.handleContextMenu}>
-
+        <HeaderView
+          offset={this.state.offset}
+          isActive={this.state.mode === MODE.PROJECT && !this.isClosing()}
+          zoom={ui.zoom}
+          onUiUpdate={this.props.onUiUpdate}
+          onMaximize={this.props.onMaximize}/>
         <ProjectView {...props}
           nav={nav}
           items={items}
