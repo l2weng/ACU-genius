@@ -79,7 +79,7 @@ class ProjectView extends Component {
     return (
       <div id="project-view">
         <ProjectSidebar {...pick(this.props, ProjectSidebar.props)}
-          isDisabled={!isActive}/>
+          isDisabled={!isActive} hasToolbar={false}/>
         <div className="main">
           <section id="items" style={this.style}>
             <header>

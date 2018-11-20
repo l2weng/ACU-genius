@@ -241,6 +241,7 @@ class ProjectContainer extends Component {
           zoom={ui.zoom}
           onUiUpdate={this.props.onUiUpdate}
           onMaximize={this.props.onMaximize}/>
+
         <ProjectView {...props}
           nav={nav}
           items={items}
