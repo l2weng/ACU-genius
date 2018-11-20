@@ -104,7 +104,7 @@
 
 #project-view {
   display: flex;
-  height: 100%;
+  height: calc(100% - 43px);
   position: relative;
   transform: translate3d(0, 0, 0);
   z-index: $zindex-project;
