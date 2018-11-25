@@ -22,7 +22,7 @@ const debounce = require('lodash.debounce')
 const { match } = require('../../keymap')
 const { IconSpin } = require('../icons')
 const { Tabs, Button: ButtonAnt, Icon } = require('antd')
-const { Workplace } = require('../Workplace')
+const { Workplace } = require('../workplace')
 
 const TabPane = Tabs.TabPane
 
