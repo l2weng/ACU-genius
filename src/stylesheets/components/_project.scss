@@ -104,7 +104,10 @@
 
 #project-view {
   display: flex;
-  height: calc(100% - 43px);
+  height: 100%;
+  height: -moz-available;          /* WebKit-based browsers will ignore this. */
+  height: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
+  width: fill-available;
   position: relative;
   transform: translate3d(0, 0, 0);
   z-index: $zindex-project;
@@ -134,7 +137,7 @@
 
   .item-mode &,
   .project-mode-leave-active & {
-    transform: translate3d(-25%, 0, 0);
+    transform: translate3d(-10%, 0, 0);
 
     &::after {
       opacity: 1;
@@ -213,6 +216,13 @@
     }
   }
 }
+
+.ant-tabs-bar{
+  @extend .window-draggable;
+  margin: 0 0 0;
+  text-align: center;
+}
+
 
 .fake-gap {
   position: absolute;

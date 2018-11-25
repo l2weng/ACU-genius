@@ -14,6 +14,7 @@ module.exports = {
   UPDATE: 'project.update',
 
   MODE: {
+    HOME: 'home',
     PROJECT: 'project',
     ITEM: 'item'
   },

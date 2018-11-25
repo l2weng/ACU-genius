@@ -21,7 +21,9 @@ const actions = require('../../actions')
 const debounce = require('lodash.debounce')
 const { match } = require('../../keymap')
 const { IconSpin } = require('../icons')
-const { HeaderView } = require('../header')
+const { Tabs, Button: ButtonAnt, Icon } = require('antd')
+
+const TabPane = Tabs.TabPane
 
 const {
   getCachePrefix,
@@ -229,59 +231,60 @@ class ProjectContainer extends Component {
       ui,
       ...props
     } = this.props
+    const userInfo = <div style={{ paddingRight: '12px' }}><ButtonAnt icon="user" size="small" >用户</ButtonAnt></div>
 
     return dt(
       <div
         className={cx(this.classes)}
         ref={this.setContainer}
         onContextMenu={this.handleContextMenu}>
-        <HeaderView
-          offset={this.state.offset}
-          isActive={this.state.mode === MODE.PROJECT && !this.isClosing()}
-          zoom={ui.zoom}
-          onUiUpdate={this.props.onUiUpdate}
-          onMaximize={this.props.onMaximize}/>
+        <Tabs tabBarExtraContent={userInfo} defaultActiveKey="2">
+          <TabPane tab={<span><Icon type="car" size="small"/>首页</span>} key="1">
+            content 1
+          </TabPane>
+          <TabPane tab={<span><Icon type="project" size="small"/>项目</span>} key="2">
+            <ProjectView {...props}
+              nav={nav}
+              items={items}
+              data={data}
+              isActive={this.state.mode === MODE.PROJECT && !this.isClosing()}
+              isEmpty={this.isEmpty}
+              columns={columns}
+              offset={this.state.offset}
+              photos={photos}
+              zoom={ui.zoom}
+              onMetadataSave={this.handleMetadataSave}/>
 
-        <ProjectView {...props}
-          nav={nav}
-          items={items}
-          data={data}
-          isActive={this.state.mode === MODE.PROJECT && !this.isClosing()}
-          isEmpty={this.isEmpty}
-          columns={columns}
-          offset={this.state.offset}
-          photos={photos}
-          zoom={ui.zoom}
-          onMetadataSave={this.handleMetadataSave}/>
+            <ItemView {...props}
+              items={selection}
+              data={data}
+              expanded={expanded}
+              activeSelection={nav.selection}
+              selections={selections}
+              note={note}
+              notes={notes}
+              photo={photo}
+              photos={visiblePhotos}
+              panel={ui.panel}
+              offset={this.state.offset}
+              mode={this.state.mode}
+              isModeChanging={this.state.isModeChanging}
+              isTrashSelected={!!nav.trash}
+              isProjectClosing={this.isClosing()}
+              onPanelResize={this.handlePanelResize}
+              onPanelDragStop={this.handlePanelDragStop}
+              onMetadataSave={this.handleMetadataSave}/>
 
-        <ItemView {...props}
-          items={selection}
-          data={data}
-          expanded={expanded}
-          activeSelection={nav.selection}
-          selections={selections}
-          note={note}
-          notes={notes}
-          photo={photo}
-          photos={visiblePhotos}
-          panel={ui.panel}
-          offset={this.state.offset}
-          mode={this.state.mode}
-          isModeChanging={this.state.isModeChanging}
-          isTrashSelected={!!nav.trash}
-          isProjectClosing={this.isClosing()}
-          onPanelResize={this.handlePanelResize}
-          onPanelDragStop={this.handlePanelDragStop}
-          onMetadataSave={this.handleMetadataSave}/>
-
-        <DragLayer
-          cache={props.cache}
-          photos={photos}
-          tags={props.tags}
-          onPhotoError={props.onPhotoError}/>
-        <div className="closing-backdrop">
-          <IconSpin/>
-        </div>
+            <DragLayer
+              cache={props.cache}
+              photos={photos}
+              tags={props.tags}
+              onPhotoError={props.onPhotoError}/>
+            <div className="closing-backdrop">
+              <IconSpin/>
+            </div></TabPane>
+          <TabPane tab={<span><Icon type="contacts" size="small"/>联系人</span>}  key="3">Content of tab 3</TabPane>
+        </Tabs>
       </div>
     )
   }
