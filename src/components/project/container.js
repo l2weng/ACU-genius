@@ -22,6 +22,7 @@ const debounce = require('lodash.debounce')
 const { match } = require('../../keymap')
 const { IconSpin } = require('../icons')
 const { Tabs, Button: ButtonAnt, Icon } = require('antd')
+const { Workplace } = require('../Workplace')
 
 const TabPane = Tabs.TabPane
 
@@ -238,9 +239,9 @@ class ProjectContainer extends Component {
         className={cx(this.classes)}
         ref={this.setContainer}
         onContextMenu={this.handleContextMenu}>
-        <Tabs tabBarExtraContent={userInfo} defaultActiveKey="2">
+        <Tabs tabBarExtraContent={userInfo} defaultActiveKey="1">
           <TabPane tab={<span><Icon type="car" size="small"/>首页</span>} key="1">
-            content 1
+            <Workplace/>
           </TabPane>
           <TabPane tab={<span><Icon type="project" size="small"/>项目</span>} key="2">
             <ProjectView {...props}
