@@ -72,52 +72,54 @@ class Workplace extends PureComponent {
     }]
 
     return (
-      <div style={{ overflow: 'scroll' }}>
+      <div>
         <Row gutter={24}>
           <Col span={24}>
             <Card
               title="进行中的项目"
               extra={<a href="#">全部项目</a>}>
-              <Col span={6}>
-                <Card
-                  hoverable
-                  style={{ width: 240 }}
-                  cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}>
-                  <Meta
-                    title="Europe Street beat"
-                    description="服装标注"/>
-                </Card>
-              </Col>
-              <Col span={6}>
-                <Card
-                  hoverable
-                  style={{ width: 240 }}
-                  cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}>
-                  <Meta
-                    title="Europe Street beat"
-                    description="服装标注"/>
-                </Card>
-              </Col>
-              <Col span={6}>
-                <Card
-                  hoverable
-                  style={{ width: 240 }}
-                  cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}>
-                  <Meta
-                    title="Europe Street beat"
-                    description="服装标注"/>
-                </Card>
-              </Col>
-              <Col span={6}>
-                <Card
-                  hoverable
-                  style={{ width: 240 }}
-                  cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}>
-                  <Meta
-                    title="Europe Street beat"
-                    description="服装标注"/>
-                </Card>
-              </Col>
+              <Row gutter={16}>
+                <Col span={6}>
+                  <Card
+                    hoverable
+                    style={{ width: 240 }}
+                    cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}>
+                    <Meta
+                      title="Europe Street beat"
+                      description="服装标注"/>
+                  </Card>
+                </Col>
+                <Col span={6}>
+                  <Card
+                    hoverable
+                    style={{ width: 240 }}
+                    cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}>
+                    <Meta
+                      title="Europe Street beat"
+                      description="服装标注"/>
+                  </Card>
+                </Col>
+                <Col span={6}>
+                  <Card
+                    hoverable
+                    style={{ width: 240 }}
+                    cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}>
+                    <Meta
+                      title="Europe Street beat"
+                      description="服装标注"/>
+                  </Card>
+                </Col>
+                <Col span={6}>
+                  <Card
+                    hoverable
+                    style={{ width: 240 }}
+                    cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}>
+                    <Meta
+                      title="Europe Street beat"
+                      description="服装标注"/>
+                  </Card>
+                </Col>
+              </Row>
             </Card>
             <Card
               title="进行中的任务"

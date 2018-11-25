@@ -23,6 +23,7 @@ const { match } = require('../../keymap')
 const { IconSpin } = require('../icons')
 const { Tabs, Button: ButtonAnt, Icon } = require('antd')
 const { Workplace } = require('../workplace')
+const { Contacts } = require('../contacts')
 
 const TabPane = Tabs.TabPane
 
@@ -238,7 +239,7 @@ class ProjectContainer extends Component {
       <div
         className={cx(this.classes)}
         ref={this.setContainer}
-        onContextMenu={this.handleContextMenu}>
+        onContextMenu={this.handleContextMenu} >
         <Tabs tabBarExtraContent={userInfo} defaultActiveKey="1">
           <TabPane tab={<span><Icon type="car" size="small"/>首页</span>} key="1">
             <Workplace/>
@@ -284,7 +285,7 @@ class ProjectContainer extends Component {
             <div className="closing-backdrop">
               <IconSpin/>
             </div></TabPane>
-          <TabPane tab={<span><Icon type="contacts" size="small"/>联系人</span>}  key="3">Content of tab 3</TabPane>
+          <TabPane tab={<span><Icon type="contacts" size="small"/>联系人</span>}  key="3"><Contacts/></TabPane>
         </Tabs>
       </div>
     )
