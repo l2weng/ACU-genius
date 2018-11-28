@@ -76,6 +76,7 @@ class Workplace extends PureComponent {
         <Row gutter={24}>
           <Col span={24}>
             <Card
+              bordered={false}
               title="进行中的项目"
               extra={<a href="#">全部项目</a>}>
               <Row gutter={16}>
@@ -122,6 +123,7 @@ class Workplace extends PureComponent {
               </Row>
             </Card>
             <Card
+              bordered={false}
               title="进行中的任务"
               extra={<a href="#">全部任务</a>}>
               <Table columns={columns} dataSource={data} />
