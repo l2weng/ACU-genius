@@ -769,6 +769,7 @@ class LabelReal extends EventEmitter {
 
     ipc.on(PROJECT.CREATED, (_, { file }) => {
       if (this.recent) this.recent.close()
+      if (this.wiz) this.wiz.close()
       this.open(file)
     })
 
