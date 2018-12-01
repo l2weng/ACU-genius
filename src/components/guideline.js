@@ -10,6 +10,7 @@ const { Toolbar } = require('./toolbar')
 const { PROJECT } = require('../constants')
 const { fail } = require('../dialog')
 const { debug, warn } = require('../common/log')
+const { Button } = require('antd')
 
 
 class Guideline extends PureComponent {
@@ -40,8 +41,8 @@ class Guideline extends PureComponent {
             <FormattedMessage id="about.version" values={{ version }}/>
           </p>
           <div>
-            <h2>I am guideline!!!!</h2>
-            <button onClick={() => this.goCreateProject()}>Create project</button>
+            <h3>I am guideline!!!!</h3>
+            <Button icon="project" onClick={() => this.goCreateProject()}>创建项目</Button>
           </div>
         </div>
       </div>

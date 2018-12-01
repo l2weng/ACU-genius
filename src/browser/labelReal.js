@@ -279,7 +279,7 @@ class LabelReal extends EventEmitter {
       parent: darwin ? null : this.win,
       modal: !darwin && !!this.win,
       autoHideMenuBar: true,
-      resizable: false,
+      resizable: true,
       minimizable: false,
       maximizable: false,
       fullscreenable: false,
