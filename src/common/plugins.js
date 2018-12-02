@@ -133,18 +133,18 @@ class Plugins extends EventEmitter {
   }
 
   async reload(autosave = false) {
-    try {
-      this.reset()
-      this.config = await load(this.configFile)
-    } catch (error) {
-      if (error.code !== 'ENOENT') {
-        warn(`failed to load plugin config: ${error.message}`)
-      } else {
-        if (autosave) await this.save()
-      }
-    }
-    this.spec = await this.scan()
-    verbose(`plugins scanned: ${keys(this.spec).length}`)
+    // try {
+    //   this.reset()
+    //   this.config = await load(this.configFile)
+    // } catch (error) {
+    //   if (error.code !== 'ENOENT') {
+    //     warn(`failed to load plugin config: ${error.message}`)
+    //   } else {
+    //     if (autosave) await this.save()
+    //   }
+    // }
+    // this.spec = await this.scan()
+    // verbose(`plugins scanned: ${keys(this.spec).length}`)
     return this
   }
 

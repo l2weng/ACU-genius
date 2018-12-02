@@ -31,16 +31,16 @@ class Window extends EventEmitter {
       aqua, frameless, scrollbars, theme
     }
 
-    this.plugins = new Plugins(ARGS.plugins)
+    // this.plugins = new Plugins(ARGS.plugins)
     this.unloader = 'close'
     this.unloaders = []
     this.hasFinishedUnloading = false
   }
 
   init(done) {
-    this.plugins.reload()
-      .then(plugins => plugins.create().emit('change'))
-    this.unloaders.push(this.plugins.flush)
+    // this.plugins.reload()
+    //   .then(plugins => plugins.create().emit('change'))
+    // this.unloaders.push(this.plugins.flush)
 
     this.handleUnload()
     this.handleTabFocus()
@@ -138,10 +138,10 @@ class Window extends EventEmitter {
         this.reload()
       })
       .on('plugins-reload', async () => {
-        this.plugins.clearModuleCache()
-        await this.plugins.reload()
-        this.plugins.create()
-        this.plugins.emit('change')
+        // this.plugins.clearModuleCache()
+        // await this.plugins.reload()
+        // this.plugins.create()
+        // this.plugins.emit('change')
       })
       .on('toggle-perf-tools', () => {
         const { search, hash } = location
