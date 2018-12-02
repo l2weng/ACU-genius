@@ -203,6 +203,10 @@ class ProjectContainer extends Component {
     this.container = container
   }
 
+  handleLogin = ()=>{
+    ipc.send(USER.LOGIN)
+  }
+
   renderNoProject() {
     return (
       <NoProject
@@ -233,7 +237,7 @@ class ProjectContainer extends Component {
       ui,
       ...props
     } = this.props
-    const userInfo = <div style={{ paddingRight: '12px' }}><ButtonAnt icon="user" size="small" >用户</ButtonAnt></div>
+    const userInfo = <div style={{ paddingRight: '12px' }}><ButtonAnt icon="user" size="small" onClick={this.handleLogin}>用户</ButtonAnt></div>
 
     return dt(
       <div
