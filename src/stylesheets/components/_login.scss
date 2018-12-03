@@ -20,18 +20,6 @@
     }
   }
 
-  .app-icon {
-    flex: 0 0 auto;
-    width: 180px;
-    height: 180px;
-    background:
-      if(
-        $theme == "dark",
-        image-url("about/app-icon-dark.svg") no-repeat 0 0,
-        image-url("about/app-icon-light.svg") no-repeat 0 0
-      );
-    margin-right: 40px;
-  }
 
   .login-form {
     max-width: 300px;

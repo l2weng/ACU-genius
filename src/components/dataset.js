@@ -4,8 +4,9 @@ const React = require('react')
 const { PureComponent } = React
 const { injectIntl, intlShape } = require('react-intl')
 const { bool } = require('prop-types')
-const { Tabs, Alert, List, Checkbox } = require('antd')
+const { Tabs, Alert, List, Checkbox, Row, Col } = require('antd')
 const TabPane = Tabs.TabPane
+const { Toolbar } = require('./toolbar')
 
 //Todo data set module
 class DataSet extends PureComponent {
@@ -18,6 +19,10 @@ class DataSet extends PureComponent {
   }
 
   handleSelectOwnPhotos = () => {
+  }
+
+  renderToolbar() {
+    return this.props.showToolbar && <Toolbar/>
   }
 
   render() {
@@ -42,7 +47,7 @@ class DataSet extends PureComponent {
     ]
 
     return (
-      <div className="about-view">
+      <div className="dataset-view">
         <Tabs defaultActiveKey="1" onChange={()=>this.callback} style={{ textAlign: 'center' }}>
           <TabPane tab="添加图片" key="1">
             <div style={{ padding: '0px 16px 16px' }}>
@@ -65,18 +70,6 @@ class DataSet extends PureComponent {
             </div>
           </TabPane>
         </Tabs>
-        <div className="flex-row center">
-          <div>
-            <h5>添加图片</h5>
-            <div>
-              <button>选择图片/文件夹</button>
-            </div>
-            <div>
-              输入URL <input type="text"/>
-            </div>
-          </div>
-          <hr/>
-        </div>
       </div>
     )
   }
