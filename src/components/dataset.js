@@ -4,47 +4,42 @@ const React = require('react')
 const { PureComponent } = React
 const { injectIntl, intlShape } = require('react-intl')
 const { bool } = require('prop-types')
-const { Tabs, Alert, List, Checkbox, Row, Col } = require('antd')
+const { Tabs, Alert, Checkbox } = require('antd')
 const TabPane = Tabs.TabPane
-const { Toolbar } = require('./toolbar')
+const CheckboxGroup = Checkbox.Group
+const plainOptions = ['特斯拉model S', '无人驾驶[道路]', '零售灌装330ML可乐']
+const defaultCheckedList = ['Apple', 'Orange']
 
 //Todo data set module
 class DataSet extends PureComponent {
+
+  state = {
+    checkedList: defaultCheckedList,
+    indeterminate: true,
+    checkAll: false,
+  }
 
   callback = (key) => {
     console.log(key)
   }
 
-  handleAddNewPhotos = () => {
+  onChange = (checkedList) => {
+    this.setState({
+      checkedList,
+      indeterminate: !!checkedList.length && (checkedList.length < plainOptions.length),
+      checkAll: checkedList.length === plainOptions.length,
+    })
   }
 
-  handleSelectOwnPhotos = () => {
-  }
-
-  renderToolbar() {
-    return this.props.showToolbar && <Toolbar/>
+  onCheckAllChange = (e) => {
+    this.setState({
+      checkedList: e.target.checked ? plainOptions : [],
+      indeterminate: false,
+      checkAll: e.target.checked,
+    })
   }
 
   render() {
-
-    const data = [
-      {
-        title: '可乐中国',
-        desc: '330ml 可乐,660ml可乐, 330ml 美汁源',
-      },
-      {
-        title: '智能驾驶上海',
-        desc: '蔚来汽车, 小鹏汽车',
-      },
-      {
-        title: '智能驾驶北京',
-        desc: '特斯拉model3, tesla Model X',
-      },
-      {
-        title: '能量型饮料',
-        desc: 'Monstar, 魔抓',
-      },
-    ]
 
     return (
       <div className="dataset-view">
@@ -55,18 +50,17 @@ class DataSet extends PureComponent {
             </div>
           </TabPane>
           <TabPane tab="已有图片" key="2">
-            <div style={{ padding: '0px 16px 16px' }}>
-              <List
-                itemLayout="horizontal"
-                dataSource={data}
-                renderItem={item => (
-                  <List.Item>
-                    <List.Item.Meta
-                      avatar={<Checkbox/>}
-                      title={<a href="https://ant.design">{item.title}</a>}
-                      description={item.desc}/>
-                  </List.Item>
-              )}/>
+            <div style={{ padding: '0px 40px 40px'}}>
+              <div>
+                <Checkbox
+                  indeterminate={this.state.indeterminate}
+                  onChange={this.onCheckAllChange}
+                  checked={this.state.checkAll}>
+                    全选
+                </Checkbox>
+              </div>
+              <br />
+              <CheckboxGroup options={plainOptions} value={this.state.checkedList} onChange={this.onChange} />
             </div>
           </TabPane>
         </Tabs>
