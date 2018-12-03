@@ -240,55 +240,55 @@ class ProjectContainer extends Component {
     const userInfo = <div style={{ paddingRight: '12px' }}><ButtonAnt icon="user" size="small" onClick={this.handleLogin}>用户</ButtonAnt></div>
 
     return dt(
-      <div
-        className={cx(this.classes)}
+      <div style={{ height: '100%' }}
         ref={this.setContainer}
         onContextMenu={this.handleContextMenu} >
-        <Tabs tabBarExtraContent={userInfo} defaultActiveKey="1">
-          <TabPane tab={<span><Icon type="car" size="small"/>首页</span>} key="1">
+        <Tabs tabBarExtraContent={userInfo} defaultActiveKey="1" style={{ height: '100%' }}>
+          <TabPane tab={<span><Icon type="car" size="small"/>首页</span>} key="1" className="workplace">
             <Workplace/>
           </TabPane>
           <TabPane tab={<span><Icon type="project" size="small"/>项目</span>} key="2">
-            <ProjectView {...props}
-              nav={nav}
-              items={items}
-              data={data}
-              isActive={this.state.mode === MODE.PROJECT && !this.isClosing()}
-              isEmpty={this.isEmpty}
-              columns={columns}
-              offset={this.state.offset}
-              photos={photos}
-              zoom={ui.zoom}
-              onMetadataSave={this.handleMetadataSave}/>
+            <div className={cx(this.classes)}>
+              <ProjectView {...props}
+                nav={nav}
+                items={items}
+                data={data}
+                isActive={this.state.mode === MODE.PROJECT && !this.isClosing()}
+                isEmpty={this.isEmpty}
+                columns={columns}
+                offset={this.state.offset}
+                photos={photos}
+                zoom={ui.zoom}
+                onMetadataSave={this.handleMetadataSave}/>
 
-            <ItemView {...props}
-              items={selection}
-              data={data}
-              expanded={expanded}
-              activeSelection={nav.selection}
-              selections={selections}
-              note={note}
-              notes={notes}
-              photo={photo}
-              photos={visiblePhotos}
-              panel={ui.panel}
-              offset={this.state.offset}
-              mode={this.state.mode}
-              isModeChanging={this.state.isModeChanging}
-              isTrashSelected={!!nav.trash}
-              isProjectClosing={this.isClosing()}
-              onPanelResize={this.handlePanelResize}
-              onPanelDragStop={this.handlePanelDragStop}
-              onMetadataSave={this.handleMetadataSave}/>
+              <ItemView {...props}
+                items={selection}
+                data={data}
+                expanded={expanded}
+                activeSelection={nav.selection}
+                selections={selections}
+                note={note}
+                notes={notes}
+                photo={photo}
+                photos={visiblePhotos}
+                panel={ui.panel}
+                offset={this.state.offset}
+                mode={this.state.mode}
+                isModeChanging={this.state.isModeChanging}
+                isTrashSelected={!!nav.trash}
+                isProjectClosing={this.isClosing()}
+                onPanelResize={this.handlePanelResize}
+                onPanelDragStop={this.handlePanelDragStop}
+                onMetadataSave={this.handleMetadataSave}/>
 
-            <DragLayer
-              cache={props.cache}
-              photos={photos}
-              tags={props.tags}
-              onPhotoError={props.onPhotoError}/>
-            <div className="closing-backdrop">
-              <IconSpin/>
-            </div></TabPane>
+              <DragLayer
+                cache={props.cache}
+                photos={photos}
+                tags={props.tags}
+                onPhotoError={props.onPhotoError}/>
+              <div className="closing-backdrop">
+                <IconSpin/>
+              </div></div></TabPane>
           <TabPane tab={<span><Icon type="contacts" size="small"/>联系人</span>}  key="3"><Contacts/></TabPane>
         </Tabs>
       </div>
