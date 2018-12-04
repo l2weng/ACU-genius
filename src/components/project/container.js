@@ -23,6 +23,7 @@ const { match } = require('../../keymap')
 const { IconSpin } = require('../icons')
 const { Tabs, Button: ButtonAnt, Icon } = require('antd')
 const { Workplace } = require('../workplace')
+const { ProjectSummary } = require('../projectSummary')
 const { Contacts } = require('../contacts')
 
 const TabPane = Tabs.TabPane
@@ -244,10 +245,13 @@ class ProjectContainer extends Component {
         ref={this.setContainer}
         onContextMenu={this.handleContextMenu} >
         <Tabs tabBarExtraContent={userInfo} defaultActiveKey="1" style={{ height: '100%' }}>
-          <TabPane tab={<span><Icon type="car" size="small"/>首页</span>} key="1" className="workplace">
+          <TabPane tab={<span><Icon type="home" size="small"/>首页</span>} key="1" className="workplace">
             <Workplace/>
           </TabPane>
-          <TabPane tab={<span><Icon type="project" size="small"/>项目</span>} key="2">
+          <TabPane tab={<span><Icon type="project" size="small"/>项目</span>} key="2" className="workplace">
+            <ProjectSummary/>
+          </TabPane>
+          <TabPane tab={<span><Icon type="form" size="small"/>工作台</span>} key="3">
             <div className={cx(this.classes)}>
               <ProjectView {...props}
                 nav={nav}
@@ -289,7 +293,7 @@ class ProjectContainer extends Component {
               <div className="closing-backdrop">
                 <IconSpin/>
               </div></div></TabPane>
-          <TabPane tab={<span><Icon type="contacts" size="small"/>联系人</span>}  key="3"><Contacts/></TabPane>
+          <TabPane tab={<span><Icon type="contacts" size="small"/>联系人</span>}  key="4"><Contacts/></TabPane>
         </Tabs>
       </div>
     )
