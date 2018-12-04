@@ -250,4 +250,23 @@
   }
 }
 
+.project-summary {
+  .title{
+      font-size: 18px;
+      color: rgb(193, 193, 193);
+      margin-bottom: 5px;
+  }
+  .details{
+    display: flex; flex-direction: row; justify-content: space-between;
+  }
+  .summary-progress{
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    .label{
+      color: rgb(33, 149, 243); font-size: 20px;
+    }
+    .val{
+      font-size: 12px; color: rgb(193, 193, 193)
+    }
+  }
+}
 

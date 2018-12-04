@@ -3,6 +3,7 @@
 const React = require('react')
 const { PureComponent } = React
 const { Row, Col, Card, Tabs } = require('antd')
+const { Summary } = require('./summary')
 const TabPane = Tabs.TabPane
 
 class ProjectSummary extends PureComponent {
@@ -23,7 +24,7 @@ class ProjectSummary extends PureComponent {
               <Tabs style={{ textAlign: 'left' }}
                 defaultActiveKey="1"
                 tabPosition="left">
-                <TabPane tab="项目概述" key="1">Content of Tab Pane 1</TabPane>
+                <TabPane tab="项目概述" key="1"><Summary/></TabPane>
                 <TabPane tab="图片数据" key="2">Content of Tab Pane 2</TabPane>
                 <TabPane tab="项目参与者" key="3">Content of Tab Pane 3</TabPane>
                 <TabPane tab="任务列表" key="4">Content of Tab Pane 3</TabPane>
@@ -38,6 +39,4 @@ class ProjectSummary extends PureComponent {
   }
 }
 
-module.exports = {
-  ProjectSummary: ProjectSummary
-}
+module.exports = { ProjectSummary }

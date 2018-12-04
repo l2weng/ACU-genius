@@ -1,5 +1,6 @@
 'use strict'
 
 module.exports = {
-  ...require('./projectSummary')
+  ...require('./projectSummary'),
+  ...require('./summary')
 }
