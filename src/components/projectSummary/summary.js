@@ -3,12 +3,8 @@
 const React = require('react')
 const { PureComponent } = React
 const { Row, Col } = require('antd')
-const {
-  Chart,
-  Geom,
-  Axis,
-  Tooltip,
-} = require('bizcharts')
+const { Chart, Geom, Axis, Tooltip, Coord } = require('bizcharts')
+
 class Summary extends PureComponent {
   componentDidMount() {
 
@@ -28,6 +24,13 @@ class Summary extends PureComponent {
       { year: '10 Dec 2018', value: 7 },
       { year: '11 Dec 2018', value: 9 },
       { year: '12 Dec 2018', value: 13 }
+    ]
+    const data2 = [
+      { country: '中国', population: 101744 },
+      { country: '印度', population: 74970 },
+      { country: '美国', population: 29034 },
+      { country: '印尼', population: 23489 },
+      { country: '巴西', population: 18203 }
     ]
     const cols = {
       value: { min: 0 },
@@ -58,7 +61,16 @@ class Summary extends PureComponent {
             </div>
           </Col>
           <Col span={12}>
-            右边
+            <div>
+              <div className="title">Skus:</div>
+              <Chart height={400} data={data2} forceFit>
+                <Coord transpose />
+                <Axis name="country" label={{ offset: 12 }} />
+                <Axis name="population" />
+                <Tooltip />
+                <Geom type="interval" position="country*population" />
+              </Chart>
+            </div>
           </Col>
         </Row>
       </div>
