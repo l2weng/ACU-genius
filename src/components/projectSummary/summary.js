@@ -26,11 +26,18 @@ class Summary extends PureComponent {
       { year: '12 Dec 2018', value: 13 }
     ]
     const data2 = [
-      { country: '中国', population: 101744 },
-      { country: '印度', population: 74970 },
-      { country: '美国', population: 29034 },
-      { country: '印尼', population: 23489 },
-      { country: '巴西', population: 18203 }
+      { country: '中国', count: 101744 },
+      { country: '印度', count: 74970 },
+      { country: '美国', count: 29034 },
+      { country: '印尼', count: 23489 },
+      { country: '巴西', count: 18203 }
+    ]
+    const data3 = [
+      { name: '鲁班', count: 30 },
+      { name: '韩信', count: 89 },
+      { name: '张亮', count: 80 },
+      { name: '孙尚香', count: 99 },
+      { name: '孙悟空', count: 66 }
     ]
     const cols = {
       value: { min: 0 },
@@ -63,12 +70,22 @@ class Summary extends PureComponent {
           <Col span={12}>
             <div>
               <div className="title">Skus:</div>
-              <Chart height={400} data={data2} forceFit>
+              <Chart height={300} data={data2} forceFit>
                 <Coord transpose />
                 <Axis name="country" label={{ offset: 12 }} />
-                <Axis name="population" />
+                <Axis name="count" />
                 <Tooltip />
-                <Geom type="interval" position="country*population" />
+                <Geom type="interval" position="country*count" />
+              </Chart>
+            </div>
+            <div>
+              <div className="title">任务完成率:</div>
+              <Chart height={300} data={data3} forceFit>
+                <Coord transpose />
+                <Axis name="name" label={{ offset: 12 }} />
+                <Axis name="count" />
+                <Tooltip />
+                <Geom type="interval" position="name*count" />
               </Chart>
             </div>
           </Col>
