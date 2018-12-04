@@ -2,8 +2,8 @@
 
 const React = require('react')
 const { PureComponent } = React
-const { Row, Col, Card, Table, Divider, Tag } = require('antd')
-const { Meta } = Card
+const { Row, Col, Card, Tabs } = require('antd')
+const TabPane = Tabs.TabPane
 
 class ProjectSummary extends PureComponent {
   componentDidMount() {
@@ -13,120 +13,23 @@ class ProjectSummary extends PureComponent {
   componentWillUnmount() {
 
   }
-
-
   render() {
-
-    const columns = [{
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-      render: text => <a href="javascript:;">{text}</a>,
-    }, {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
-    }, {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
-    }, {
-      title: 'Tags',
-      key: 'tags',
-      dataIndex: 'tags',
-      render: tags => (
-        <span>
-          {tags.map(tag => <Tag color="blue" key={tag}>{tag}</Tag>)}
-        </span>
-      ),
-    }, {
-      title: 'Action',
-      key: 'action',
-      render: (text, record) => (
-        <span>
-          <a href="javascript:;">Invite {record.name}</a>
-          <Divider type="vertical" />
-          <a href="javascript:;">Delete</a>
-        </span>
-      ),
-    }]
-
-    const data = [{
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-      tags: ['nice', 'developer'],
-    }, {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-      tags: ['loser'],
-    }, {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    }]
 
     return (
       <div>
         <Row gutter={24}>
           <Col span={24}>
-            <Card
-              bordered={false}
-              title="进行中的项目"
-              extra={<a href="#">全部项目</a>}>
-              <Row gutter={16}>
-                <Col span={6}>
-                  <Card
-                    hoverable
-                    style={{ width: 240 }}
-                    cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}>
-                    <Meta
-                      title="Europe Street beat"
-                      description="服装标注"/>
-                  </Card>
-                </Col>
-                <Col span={6}>
-                  <Card
-                    hoverable
-                    style={{ width: 240 }}
-                    cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}>
-                    <Meta
-                      title="Europe Street beat"
-                      description="服装标注"/>
-                  </Card>
-                </Col>
-                <Col span={6}>
-                  <Card
-                    hoverable
-                    style={{ width: 240 }}
-                    cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}>
-                    <Meta
-                      title="Europe Street beat"
-                      description="服装标注"/>
-                  </Card>
-                </Col>
-                <Col span={6}>
-                  <Card
-                    hoverable
-                    style={{ width: 240 }}
-                    cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}>
-                    <Meta
-                      title="Europe Street beat"
-                      description="服装标注"/>
-                  </Card>
-                </Col>
-              </Row>
-            </Card>
-            <Card
-              bordered={false}
-              title="进行中的任务"
-              extra={<a href="#">全部任务</a>}>
-              <Table columns={columns} dataSource={data} />
+            <Card title="Telsa Project" bordered={false}>
+              <Tabs style={{ textAlign: 'left' }}
+                defaultActiveKey="1"
+                tabPosition="left">
+                <TabPane tab="项目概述" key="1">Content of Tab Pane 1</TabPane>
+                <TabPane tab="图片数据" key="2">Content of Tab Pane 2</TabPane>
+                <TabPane tab="项目参与者" key="3">Content of Tab Pane 3</TabPane>
+                <TabPane tab="任务列表" key="4">Content of Tab Pane 3</TabPane>
+                <TabPane tab="工作日志" key="5">Content of Tab Pane 3</TabPane>
+                <TabPane tab="数据导出" key="6">Content of Tab Pane 3</TabPane>
+              </Tabs>
             </Card>
           </Col>
         </Row>
