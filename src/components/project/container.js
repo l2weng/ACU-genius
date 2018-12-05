@@ -21,11 +21,11 @@ const actions = require('../../actions')
 const debounce = require('lodash.debounce')
 const { match } = require('../../keymap')
 const { IconSpin } = require('../icons')
-const { Tabs, Button: ButtonAnt, Icon } = require('antd')
+const { Tabs, Button: ButtonAnt, Modal, Form, Icon, Input, Button, Checkbox, } = require('antd')
 const { Workplace } = require('../workplace')
 const { ProjectSummary } = require('../projectSummary')
 const { Contacts } = require('../contacts')
-
+const FormItem = Form.Item
 const TabPane = Tabs.TabPane
 
 const {
@@ -45,6 +45,51 @@ const {
   arrayOf, oneOf, shape, bool, object, func, string, number
 } = require('prop-types')
 
+class LoginForm extends Component {
+  handleSubmit = (e) => {
+    e.preventDefault()
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        console.log('Received values of form: ', values)
+      }
+    })
+  }
+
+  render() {
+    const { getFieldDecorator } = this.props.form
+    return (
+      <Form onSubmit={this.handleSubmit} className="login-form">
+        <FormItem>
+          {getFieldDecorator('userName', {
+            rules: [{ required: true, message: 'Please input your username!' }],
+          })(
+            <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
+          )}
+        </FormItem>
+        <FormItem>
+          {getFieldDecorator('password', {
+            rules: [{ required: true, message: 'Please input your Password!' }],
+          })(
+            <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
+          )}
+        </FormItem>
+        <FormItem>
+          {getFieldDecorator('remember', {
+            valuePropName: 'checked',
+            initialValue: true,
+          })(
+            <Checkbox>Remember me</Checkbox>
+          )}
+          <a className="login-form-forgot" href="">Forgot password</a>
+          <Button type="primary" htmlType="submit" className="login-form-button">
+            Log in
+          </Button>
+          Or <a href="">register now!</a>
+        </FormItem>
+      </Form>
+    )
+  }
+}
 
 class ProjectContainer extends Component {
   constructor(props) {
@@ -205,7 +250,23 @@ class ProjectContainer extends Component {
   }
 
   handleLogin = ()=>{
-    ipc.send(USER.LOGIN)
+    // ipc.send(USER.LOGIN)
+    this.setState({
+      visible: true,
+    });
+  }
+  handleOk = (e) => {
+    console.log(e)
+    this.setState({
+      visible: false,
+    })
+  }
+
+  handleCancel = (e) => {
+    console.log(e)
+    this.setState({
+      visible: false,
+    })
   }
 
   renderNoProject() {
@@ -220,6 +281,7 @@ class ProjectContainer extends Component {
   }
   render() {
     if (this.state.isClosed) return this.renderNoProject()
+    const WrappedNormalLoginForm = Form.create()(LoginForm)
 
     const {
       columns,
@@ -238,7 +300,14 @@ class ProjectContainer extends Component {
       ui,
       ...props
     } = this.props
-    const userInfo = <div style={{ paddingRight: '12px' }}><ButtonAnt icon="user" size="small" onClick={this.handleLogin}>用户</ButtonAnt></div>
+    const userInfo = (<div style={{ paddingRight: '12px' }}><ButtonAnt icon="user" size="small" onClick={this.handleLogin}>用户</ButtonAnt>
+      <Modal
+        title="登录"
+        visible={this.state.visible}
+        onOk={this.handleOk}
+        onCancel={this.handleCancel}>
+        <WrappedNormalLoginForm/>
+      </Modal></div>)
 
     return dt(
       <div style={{ height: '100%' }}
