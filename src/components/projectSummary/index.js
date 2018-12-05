@@ -2,5 +2,4 @@
 
 module.exports = {
   ...require('./projectSummary'),
-  ...require('./summary')
 }
