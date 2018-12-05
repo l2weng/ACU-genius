@@ -2,33 +2,7 @@
 
 const React = require('react')
 const { PureComponent } = React
-const { Drawer, List, Avatar, Divider, Col, Row, Card } = require('antd')
-
-const data = [{
-  key: '1',
-  name: 'John Brown',
-  role: '所有者',
-  level: '王者',
-  joinTime: '11/12/2018',
-}, {
-  key: '2',
-  name: 'Jim Green',
-  role: '参与者',
-  level: '钻石',
-  joinTime: '12/01/2018',
-}, {
-  key: '3',
-  name: 'Joe Black',
-  role: '参与者',
-  level: '黄金',
-  joinTime: '12/19/2018',
-}, {
-  key: '4',
-  name: 'Freedom Forever',
-  role: '组长',
-  level: '荣耀王者',
-  joinTime: '12/31/2018',
-}]
+const { Drawer, List, Avatar, Divider, Col, Row, Card, Button } = require('antd')
 
 const pStyle = {
   fontSize: 16,
@@ -84,6 +58,7 @@ class Members extends PureComponent {
   render() {
     return (
       <div>
+        <div style={{ paddingBottom: '12px' }}><Button type="primary" icon="user-add">添加参与者</Button></div>
         <List
           dataSource={[
             {
