@@ -23,7 +23,7 @@ const columns = [{
   title: '截止日期',
   dataIndex: 'endTime',
 }, {
-  title: 'Action', dataIndex: '', key: 'x', render: () => <a href="javascript:;">审核</a>,
+  title: '操作', dataIndex: '', key: 'x', render: () => <a href="javascript:;">审核</a>,
 }]
 const data = [{
   key: '1',
