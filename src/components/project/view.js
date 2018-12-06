@@ -75,7 +75,7 @@ class ProjectView extends Component {
     } = this.props
 
     const { size, maxZoom, ItemIterator, isEmpty } = this
-    console.log(keymap.ItemIterator)
+
     return (
       <div id="project-view">
         <ProjectSidebar {...pick(this.props, ProjectSidebar.props)}

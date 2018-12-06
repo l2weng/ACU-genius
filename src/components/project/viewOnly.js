@@ -62,6 +62,7 @@ class ProjectViewOnly extends Component {
     })
   }
   handleMyContext = () => {}
+  onItemOpen = () => {}
 
   render() {
     const {
@@ -76,7 +77,6 @@ class ProjectViewOnly extends Component {
       tags,
       onMaximize,
       onItemCreate,
-      onItemSelect,
       onSearch,
     } = this.props
 
@@ -115,8 +115,8 @@ class ProjectViewOnly extends Component {
               isDisabled={nav.trash}
               isOver={isOver && canDrop}
               onCreate={onItemCreate}
-              onSelect={onItemSelect}
-                          onContextMenu={this.handleMyContext}
+              onItemOpen={this.onItemOpen}
+              onContextMenu={this.handleMyContext}
               onSort={this.handleSort}/>
             <div className="fake-gap"/>
           </section>

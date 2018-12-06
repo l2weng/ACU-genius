@@ -26,6 +26,7 @@ class ProjectSummary extends PureComponent {
       items,
       nav,
       photos,
+      isEmpty,
       ...props
     } = this.props
     return (
@@ -42,7 +43,7 @@ class ProjectSummary extends PureComponent {
                   items={items}
                   data={data}
                   isActive
-                  isEmpty={this.isEmpty}
+                  isEmpty={isEmpty}
                   columns={columns}
                   photos={photos}/></TabPane>
                 <TabPane tab="项目参与者" key="3"><Members/></TabPane>
@@ -67,7 +68,6 @@ class ProjectSummary extends PureComponent {
     nav: object.isRequired,
     photos: object.isRequired,
     tags: object.isRequired,
-    dt: func.isRequired,
     onItemCreate: func.isRequired,
     onDataSetsCreate: func.isRequired,
     onItemImport: func.isRequired,
