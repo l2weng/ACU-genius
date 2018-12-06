@@ -4,8 +4,10 @@ const React = require('react')
 const { PureComponent } = React
 const { Row, Col, Card, Tabs } = require('antd')
 const { Summary } = require('./summary')
+const { PhotoData } = require('./photoData')
 const { TaskList } = require('./taskList')
 const { Members } = require('./members')
+const { array, bool, func, object, number } = require('prop-types')
 const TabPane = Tabs.TabPane
 
 class ProjectSummary extends PureComponent {
@@ -16,8 +18,16 @@ class ProjectSummary extends PureComponent {
   componentWillUnmount() {
 
   }
-  render() {
 
+  render() {
+    const {
+      columns,
+      data,
+      items,
+      nav,
+      photos,
+      ...props
+    } = this.props
     return (
       <div>
         <Row gutter={24}>
@@ -27,7 +37,14 @@ class ProjectSummary extends PureComponent {
                 defaultActiveKey="1"
                 tabPosition="left">
                 <TabPane tab="项目概述" key="1"><Summary/></TabPane>
-                <TabPane tab="图片数据" key="2">Content of Tab Pane 2</TabPane>
+                <TabPane tab="图片数据" key="2"><PhotoData {...props}
+                  nav={nav}
+                  items={items}
+                  data={data}
+                  isActive
+                  isEmpty={this.isEmpty}
+                  columns={columns}
+                  photos={photos}/></TabPane>
                 <TabPane tab="项目参与者" key="3"><Members/></TabPane>
                 <TabPane tab="任务列表" key="4"><TaskList/></TabPane>
                 <TabPane tab="工作日志" key="5">Content of Tab Pane 5</TabPane>
@@ -38,6 +55,28 @@ class ProjectSummary extends PureComponent {
         </Row>
       </div>
     )
+  }
+  static propTypes = {
+    canDrop: bool,
+    edit: object.isRequired,
+    isActive: bool,
+    isEmpty: bool.isRequired,
+    isOver: bool,
+    items: array.isRequired,
+    keymap: object.isRequired,
+    nav: object.isRequired,
+    photos: object.isRequired,
+    tags: object.isRequired,
+    dt: func.isRequired,
+    onItemCreate: func.isRequired,
+    onDataSetsCreate: func.isRequired,
+    onItemImport: func.isRequired,
+    onItemSelect: func.isRequired,
+    onItemTagAdd: func.isRequired,
+    onMaximize: func.isRequired,
+    onSearch: func.isRequired,
+    onSort: func.isRequired,
+    onUiUpdate: func.isRequired
   }
 }
 

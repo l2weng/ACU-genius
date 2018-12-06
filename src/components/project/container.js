@@ -4,6 +4,7 @@ const React = require('react')
 const { Component } = React
 const { connect } = require('react-redux')
 const { ProjectView } = require('./view')
+const { ProjectViewOnly } = require('./viewOnly')
 const { ItemView } = require('../item')
 const { DragLayer } = require('../drag-layer')
 const { DropTarget } = require('react-dnd')
@@ -249,7 +250,15 @@ class ProjectContainer extends Component {
             <Workplace/>
           </TabPane>
           <TabPane tab={<span><Icon type="project" size="small"/>项目</span>} key="2" className="workplace">
-            <ProjectSummary/>
+            <ProjectSummary {...props}
+              nav={nav}
+              items={items}
+              data={data}
+              isActive
+              isEmpty={this.isEmpty}
+              columns={columns}
+              offset={this.state.offset}
+              photos={photos}/>
           </TabPane>
           <TabPane tab={<span><Icon type="form" size="small"/>工作台</span>} key="3">
             <div className={cx(this.classes)}>

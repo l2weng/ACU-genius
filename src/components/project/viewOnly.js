@@ -5,7 +5,6 @@ const { Component } = React
 const { DropTarget } = require('react-dnd')
 const { NativeTypes } = require('react-dnd-electron-backend')
 const { ItemGrid, ItemTable } = require('../item')
-const { ProjectSidebar } = require('./sidebar')
 const { ProjectToolbar } = require('./toolbar')
 const { isValidImage } = require('../../image')
 const { pick, } = require('../../common/util')
