@@ -6,8 +6,9 @@ const { Row, Col, Card, Tabs } = require('antd')
 const { Summary } = require('./summary')
 const { PhotoData } = require('./photoData')
 const { TaskList } = require('./taskList')
+const { WorkLog } = require('./WorkLog')
 const { Members } = require('./members')
-const { array, bool, func, object, number } = require('prop-types')
+const { array, bool, func, object, } = require('prop-types')
 const TabPane = Tabs.TabPane
 
 class ProjectSummary extends PureComponent {
@@ -48,7 +49,7 @@ class ProjectSummary extends PureComponent {
                   photos={photos}/></TabPane>
                 <TabPane tab="项目参与者" key="3"><Members/></TabPane>
                 <TabPane tab="任务列表" key="4"><TaskList/></TabPane>
-                <TabPane tab="工作日志" key="5">Content of Tab Pane 5</TabPane>
+                <TabPane tab="工作日志" key="5"><WorkLog/></TabPane>
                 <TabPane tab="数据导出" key="6">Content of Tab Pane 6</TabPane>
               </Tabs>
             </Card>
