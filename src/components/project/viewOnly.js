@@ -13,9 +13,16 @@ const { array, bool, func, object, number } = require('prop-types')
 const { ITEM } = require('../../constants/sass')
 
 
-class ProjectView extends Component {
+class ProjectViewOnly extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      zoom: 0
+    }
+  }
   get size() {
-    return ITEM.ZOOM[this.props.zoom]
+    return ITEM.ZOOM[this.state.zoom]
   }
 
   get isEmpty() {
@@ -29,7 +36,7 @@ class ProjectView extends Component {
   }
 
   get ItemIterator() {
-    return this.props.zoom ? ItemGrid : ItemTable
+    return this.state.zoom ? ItemGrid : ItemTable
   }
 
   get style() {
@@ -39,7 +46,7 @@ class ProjectView extends Component {
   }
 
   handleZoomChange = (zoom) => {
-    this.props.onUiUpdate({ zoom })
+    this.setState({ zoom: zoom })
   }
 
   handleItemImport = () => {
@@ -55,6 +62,7 @@ class ProjectView extends Component {
       ...sort, list: this.props.nav.list || 0
     })
   }
+  handleMyContext = () => {}
 
   render() {
     const {
@@ -67,19 +75,17 @@ class ProjectView extends Component {
       nav,
       photos,
       tags,
-      zoom,
       onMaximize,
       onItemCreate,
       onItemSelect,
       onSearch,
     } = this.props
 
+    let { zoom } = this.state
     const { size, maxZoom, ItemIterator, isEmpty } = this
-    console.log(keymap.ItemIterator)
+
     return (
       <div id="project-view">
-        <ProjectSidebar {...pick(this.props, ProjectSidebar.props)}
-          isDisabled={!isActive} hasToolbar={false}/>
         <div className="main">
           <section id="items" style={this.style}>
             <header>
@@ -90,7 +96,6 @@ class ProjectView extends Component {
                 maxZoom={maxZoom}
                 canCreateItems={!nav.trash}
                 isDisabled={!isActive}
-                isDisplay
                 onItemCreate={this.handleItemImport}
                 onDataSetsCreate={this.handleDataSetsCreate}
                 onDoubleClick={ARGS.frameless ? onMaximize : null}
@@ -112,6 +117,7 @@ class ProjectView extends Component {
               isOver={isOver && canDrop}
               onCreate={onItemCreate}
               onSelect={onItemSelect}
+                          onContextMenu={this.handleMyContext}
               onSort={this.handleSort}/>
             <div className="fake-gap"/>
           </section>
@@ -133,7 +139,6 @@ class ProjectView extends Component {
     photos: object.isRequired,
     tags: object.isRequired,
     dt: func.isRequired,
-    zoom: number.isRequired,
     onItemCreate: func.isRequired,
     onDataSetsCreate: func.isRequired,
     onItemImport: func.isRequired,
@@ -170,5 +175,5 @@ const collect = (connect, monitor) => ({
 })
 
 module.exports = {
-  ProjectView: DropTarget(NativeTypes.FILE, spec, collect)(ProjectView)
+  ProjectViewOnly: DropTarget(NativeTypes.FILE, spec, collect)(ProjectViewOnly)
 }

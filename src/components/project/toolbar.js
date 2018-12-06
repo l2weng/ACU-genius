@@ -29,6 +29,7 @@ class ProjectToolbar extends PureComponent {
       onDoubleClick,
       onSearch,
       onZoomChange,
+      isDisplay,
     } = this.props
 
     return (
@@ -43,18 +44,18 @@ class ProjectToolbar extends PureComponent {
               minIcon={<IconList/>}
               maxIcon={<IconGrid/>}/>
           </div>
-          <div className="tool-group">
+          {isDisplay ? <div className="tool-group">
             <Button
               icon={<IconPlus/>}
               isDisabled={isDisabled || !canCreateItems}
               title="toolbar.import"
               onClick={this.props.onItemCreate}/>
-          </div>
-          <div className="tool-group" onClick={this.props.onDataSetsCreate}>
+          </div> : ''}
+          {isDisplay ? <div className="tool-group" onClick={this.props.onDataSetsCreate}>
             <Tooltip placement="right" title="导入资源">
               <Icon type="picture" size="small"/>
             </Tooltip>
-          </div>
+          </div> : ''}
         </div>
         <div className="toolbar-center">
           <div className="item-count">
@@ -83,7 +84,8 @@ class ProjectToolbar extends PureComponent {
     onItemCreate: func.isRequired,
     onDataSetsCreate: func.isRequired,
     onSearch: func.isRequired,
-    onZoomChange: func.isRequired
+    onZoomChange: func.isRequired,
+    isDisplay: bool,
   }
 
   static defaultProps = {
