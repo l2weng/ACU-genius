@@ -64,7 +64,6 @@ class PhotoData extends PureComponent {
                 items={items}
                 data={data}
                 isActive
-                isEmpty={this.isEmpty}
                 columns={columns}
                 offset={44}
                 photos={photos}/></div>
@@ -77,14 +76,12 @@ class PhotoData extends PureComponent {
     canDrop: bool,
     edit: object.isRequired,
     isActive: bool,
-    isEmpty: bool.isRequired,
     isOver: bool,
     items: array.isRequired,
     keymap: object.isRequired,
     nav: object.isRequired,
     photos: object.isRequired,
     tags: object.isRequired,
-    dt: func.isRequired,
     onItemCreate: func.isRequired,
     onDataSetsCreate: func.isRequired,
     onItemImport: func.isRequired,
