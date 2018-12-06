@@ -37,12 +37,12 @@ class Contacts extends PureComponent {
                   title="全部联系人"
                   extra={<a href="#">添加联系人</a>}
                   style={{ width: '95%' }}>
-                  <p><Avatar style={{ backgroundColor: '#4e72ab' }} icon="user" />
-                    <Avatar style={{ backgroundColor: '#c32964' }}>Terry</Avatar>
-                    <Avatar style={{ backgroundColor: '#ffd6a6' }}>Louis</Avatar>
-                    <Badge count={1}><Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" /></Badge>
-                    <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>U</Avatar>
-                    <Avatar style={{ backgroundColor: '#87d068' }} icon="user" /></p>
+                  <Avatar style={{ backgroundColor: '#4e72ab' }} icon="user" />
+                  <Avatar style={{ backgroundColor: '#c32964' }}>Terry</Avatar>
+                  <Avatar style={{ backgroundColor: '#ffd6a6' }}>Louis</Avatar>
+                  <Badge count={1}><Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" /></Badge>
+                  <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>U</Avatar>
+                  <Avatar style={{ backgroundColor: '#87d068' }} icon="user" />
                 </Card>
               </TabPane>
               <TabPane tab="我的团队" key="2">
