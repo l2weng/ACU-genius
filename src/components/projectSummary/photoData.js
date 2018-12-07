@@ -7,7 +7,7 @@ const { ProjectViewOnly } = require('../project/viewOnly')
 const DirectoryTree = Tree.DirectoryTree
 const { TreeNode } = Tree
 const cx = require('classnames')
-const { array, bool, func, object, number } = require('prop-types')
+const { array, bool, func, object } = require('prop-types')
 
 class PhotoData extends PureComponent {
   componentDidMount() {
