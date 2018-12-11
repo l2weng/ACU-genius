@@ -4,7 +4,6 @@ const React = require('react')
 const { Component } = React
 const { connect } = require('react-redux')
 const { ProjectView } = require('./view')
-const { ProjectViewOnly } = require('./viewOnly')
 const { ItemView } = require('../item')
 const { DragLayer } = require('../drag-layer')
 const { DropTarget } = require('react-dnd')

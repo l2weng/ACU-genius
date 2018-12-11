@@ -3,11 +3,8 @@
 const React = require('react')
 const { PureComponent } = React
 const { ItemToolbar } = require('./toolbar')
-const { ItemTabHeader, ItemTabBody } = require('./tab')
-const { NotePanel } = require('../note')
-const { PanelGroup, Panel } = require('../panel')
+const { PanelGroup } = require('../panel')
 const { PhotoPanel } = require('../photo')
-const cx = require('classnames')
 const { get } = require('../../common/util')
 const { keys } = Object
 
@@ -24,10 +21,6 @@ class ItemPanel extends PureComponent {
     }
   }
 
-  setPanel = (panel) => {
-    this.first = panel
-  }
-
   handlePhotoCreate = (dropped) => {
     this.props.onPhotoCreate({
       item: get(this.props.items, [0, 'id']),
@@ -39,20 +32,8 @@ class ItemPanel extends PureComponent {
     this.props.onUiUpdate({ panel: { slots } })
   }
 
-  handleTabChange = (tab) => {
-    this.props.onUiUpdate({ panel: { tab } })
-  }
-
   handleZoomChange = (zoom) => {
     this.props.onUiUpdate({ panel: { zoom } })
-  }
-
-  handleFirstPanelFocus = () => {
-    this.setState({ hasFirstPanelFocus: true })
-  }
-
-  handleFirstPanelBlur = () => {
-    this.setState({ hasFirstPanelFocus: false })
   }
 
   renderItemToolbar() {
@@ -71,16 +52,12 @@ class ItemPanel extends PureComponent {
       expanded,
       activeSelection,
       keymap,
-      note,
-      notes,
       panel,
       photo,
       selections,
       isDisabled,
       isItemOpen,
       onItemPreview,
-      onNoteCreate,
-      onNoteSelect,
       onPhotoContract,
       onPhotoDelete,
       onPhotoError,
@@ -99,22 +76,6 @@ class ItemPanel extends PureComponent {
         slots={panel.slots}
         onResize={this.handleResize}
         header={this.renderItemToolbar()}>
-
-        <Panel className={cx('item', 'panel', {
-          'nested-tab-focus': this.state.hasFirstPanelFocus
-        })}>
-          <ItemTabHeader
-            tab={panel.tab}
-            onChange={this.handleTabChange}/>
-          <ItemTabBody {...props}
-            tab={panel.tab}
-            isDisabled={isDisabled}
-            isItemOpen={isItemOpen}
-            keymap={keymap}
-            setPanel={this.setPanel}
-            onBlur={this.handleFirstPanelBlur}
-            onFocus={this.handleFirstPanelFocus}/>
-        </Panel>
 
         <PhotoPanel {...props}
           isDisabled={isDisabled || !item || hasMultipleItems}
@@ -137,16 +98,26 @@ class ItemPanel extends PureComponent {
           onSelectionSort={onSelectionSort}
           onZoomChange={this.handleZoomChange}/>
 
-        <NotePanel {...props}
-          isDisabled={isDisabled || !photo || !item || hasMultipleItems}
+        <PhotoPanel {...props}
+          isDisabled={isDisabled || !item || hasMultipleItems}
           isItemOpen={isItemOpen}
-          item={item && item.id}
-          keymap={keymap.NoteList}
-          photo={photo && photo.id}
-          notes={notes}
-          selection={note}
-          onCreate={onNoteCreate}
-          onSelect={onNoteSelect}/>
+          edit={edit}
+          expanded={expanded}
+          keymap={keymap}
+          zoom={panel.zoom}
+          current={photo && photo.id}
+          selection={activeSelection}
+          selections={selections}
+          onContract={onPhotoContract}
+          onCreate={this.handlePhotoCreate}
+          onDelete={onPhotoDelete}
+          onError={onPhotoError}
+          onExpand={onPhotoExpand}
+          onItemPreview={onItemPreview}
+          onSelect={onPhotoSelect}
+          onSort={onPhotoSort}
+          onSelectionSort={onSelectionSort}
+          onZoomChange={this.handleZoomChange}/>
       </PanelGroup>
     )
   }

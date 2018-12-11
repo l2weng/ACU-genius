@@ -88,7 +88,6 @@ function *setup(db, project) {
 
   yield all([
     call(storage.restore, 'nav', project.id),
-    call(storage.restore, 'notepad', project.id),
     call(storage.restore, 'esper', project.id),
     call(storage.restore, 'imports', project.id),
     call(storage.restore, 'sidebar', project.id)
@@ -97,12 +96,9 @@ function *setup(db, project) {
   yield all([
     put(act.history.drop()),
     put(act.list.load()),
-    put(act.tag.load()),
     put(act.item.load()),
     put(act.photo.load()),
-    put(act.metadata.load()),
     put(act.selection.load()),
-    put(act.note.load())
   ])
 
   yield call(search, db)
@@ -116,7 +112,6 @@ function *close(db, project, access) {
 
   yield all([
     call(storage.persist, 'nav', project.id),
-    call(storage.persist, 'notepad', project.id),
     call(storage.persist, 'esper', project.id),
     call(storage.persist, 'imports', project.id),
     call(storage.persist, 'sidebar', project.id)
@@ -127,7 +122,6 @@ function *close(db, project, access) {
   yield call(mod.value.prune, db)
   yield call(mod.photo.prune, db)
   yield call(mod.selection.prune, db)
-  yield call(mod.note.prune, db)
   yield call(mod.access.prune, db)
 }
 

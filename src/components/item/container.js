@@ -4,7 +4,6 @@ const React = require('react')
 const { connect } = require('react-redux')
 const { BufferedResizable } = require('../resizable')
 const { Esper } = require('../esper')
-const { NotePad } = require('../note')
 const act = require('../../actions')
 const { SASS: { ESPER } } = require('../../constants')
 
@@ -14,16 +13,12 @@ const {
 
 const {
   getEsperViewState,
-  getNotePadState,
   getActiveSelection,
   getPhotoSelections
 } = require('../../selectors')
 
 
 class ItemContainer extends React.PureComponent {
-  setNotePad = (notepad) => {
-    this.notepad = notepad
-  }
 
   handleEsperChange = ({ photo, selection, image, esper }) => {
     if (esper != null) {
@@ -52,7 +47,6 @@ class ItemContainer extends React.PureComponent {
           value={this.props.esper.height}
           isRelative
           onChange={this.handleEsperResize}
-          margin={38}
           min={ESPER.MIN_HEIGHT}>
           <Esper {...this.props.view}
             mode={this.props.view.mode || this.props.settings.zoomMode}
@@ -72,15 +66,7 @@ class ItemContainer extends React.PureComponent {
             onSelect={this.props.onPhotoSelect}
             onSelectionCreate={this.props.onSelectionCreate}/>
         </BufferedResizable>
-        <NotePad {...this.props.notepad}
-          ref={this.setNotePad}
-          note={this.props.note}
-          isDisabled={this.props.isDisabled || !this.props.photo}
-          isItemOpen={this.props.isOpen}
-          keymap={this.props.keymap.NotePad}
-          onChange={this.props.onNoteChange}
-          onCommit={this.props.onNoteCommit}
-          onContextMenu={this.props.onContextMenu}/>
+
       </div>
     )
   }
@@ -95,16 +81,12 @@ class ItemContainer extends React.PureComponent {
     isDisabled: bool.isRequired,
     isOpen: bool.isRequired,
     keymap: object.isRequired,
-    note: object,
-    notepad: object.isRequired,
     photo: object,
     selection: object,
     selections: arrayOf(object).isRequired,
     settings: object.isRequired,
     onContextMenu: func.isRequired,
     onEsperChange: func.isRequired,
-    onNoteChange: func.isRequired,
-    onNoteCommit: func.isRequired,
     onPhotoError: func.isRequired,
     onPhotoSave: func.isRequired,
     onPhotoSelect: func.isRequired,
@@ -119,7 +101,6 @@ module.exports = {
     state => ({
       esper: state.ui.esper,
       view: getEsperViewState(state),
-      notepad: getNotePadState(state),
       keymap: state.keymap,
       selection: getActiveSelection(state),
       selections: getPhotoSelections(state),
