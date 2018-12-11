@@ -1,80 +1,56 @@
 'use strict'
 
 const React = require('react')
-const { PureComponent } = React
-const { Table } = require('antd')
-const columns = [{
-  title: '工作人员',
-  dataIndex: 'name',
-  render: text => <a href="javascript:;">{text}</a>,
-}, {
-  title: '角色',
-  dataIndex: 'role',
-}, {
-  title: '类型',
-  dataIndex: 'type',
-}, {
-  title: '图片地址',
-  dataIndex: 'address',
-}, {
-  title: '标注数',
-  dataIndex: 'labelCount',
-}, {
-  title: '耗时',
-  dataIndex: 'spendTime',
-}, {
-  title: '完成日期',
-  dataIndex: 'endTime',
-}, {
-  title: '操作', dataIndex: '', key: 'x', render: () => <a href="javascript:;">详情</a>,
-}]
-const data = [{
-  key: '1',
-  name: '韦伯',
-  role: '员工',
-  type: '图片',
-  address: 'DSC_7897',
-  labelCount: 6,
-  spendTime: '180s',
-  endTime: '11/12/2018',
-}, {
-  key: '2',
-  name: '小陈',
-  role: '员工',
-  type: '图片',
-  address: 'DSC_7888',
-  labelCount: 7,
-  spendTime: '180s',
-  endTime: '11/12/2018',
-}, {
-  key: '3',
-  name: 'Lynn',
-  role: '员工',
-  type: '图片',
-  address: 'DSC_7899',
-  labelCount: 30,
-  spendTime: '214s',
-  endTime: '11/12/2018',
-}, {
-  key: '4',
-  name: 'Freedom Forever',
-  role: 'Vendor',
-  type: '图片',
-  address: 'DSC_7908',
-  labelCount: 44,
-  spendTime: '1888s',
-  endTime: '11/13/2018',
-}]
+const { PureComponent, Component } = React
+const { Row, Col, Form, Button, Slider, InputNumber, Switch } = require('antd')
+const FormItem = Form.Item
 
-// rowSelection object indicates the need for row selection
-const rowSelection = {
-  onChange: (selectedRowKeys, selectedRows) => {
-    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
-  },
-  getCheckboxProps: record => ({
-    disabled: record.name === 'Disabled User', // Column configuration not to be checked
-    name: record.name,
-  }),
+class QualityForm extends Component {
+  handleSubmit = (e) => {
+    e.preventDefault()
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        console.log('Received values of form: ', values)
+      }
+    })
+  }
+
+  render() {
+    const formItemLayout = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 8 },
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 16 },
+      },
+    }
+    const { getFieldDecorator } = this.props.form
+    return (
+      <Form>
+        <FormItem style={{ textAlign: 'left' }} label="重复率:" {...formItemLayout} extra="随机分发给协同合作者多次标记的数据行">
+          <Switch checkedChildren="开" unCheckedChildren="关" defaultChecked />
+        </FormItem>
+        <FormItem label="一张图片需要标注次数:"{...formItemLayout}>
+          {getFieldDecorator('labelCount', { initialValue: 3 })(
+            <InputNumber min={1} max={10} />
+          )}
+          <span className="ant-form-text"> 张</span>
+        </FormItem>
+        <FormItem label="多少百分比图片需要重复被标注:"{...formItemLayout}>
+          {getFieldDecorator('labelPercent', { initialValue: 10 })(
+            <InputNumber min={0} max={100} />
+            )}
+          <span className="ant-form-text">%</span>
+        </FormItem>
+        <FormItem
+          wrapperCol={{ span: 12, offset: 6 }}>
+          <Button type="primary" htmlType="submit">提交</Button>
+        </FormItem>
+      </Form>
+    )
+  }
 }
 
 class QualitySetting extends PureComponent {
@@ -86,9 +62,14 @@ class QualitySetting extends PureComponent {
 
   }
   render() {
+    const WrappedQualityForm = Form.create()(QualityForm)
     return (
       <div>
-        <Table rowSelection={rowSelection} columns={columns} dataSource={data} />
+        <Row>
+          <Col span={18} offset={3}>
+            <WrappedQualityForm/>
+          </Col>
+        </Row>
       </div>
     )
   }
