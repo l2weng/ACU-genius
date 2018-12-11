@@ -7,7 +7,7 @@
   align-items: center;
   height: 100%;
   color: $soft-text-color;
-  padding: 0 40px;
+  padding: 0 140px;
   font-size: 11px;
   line-height: 19px;
 
@@ -31,4 +31,26 @@
     width: 100%;
   }
 
+}
+.register-view {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  color: $soft-text-color;
+  padding: 0 20px;
+  font-size: 11px;
+  line-height: 19px;
+
+  .toolbar.window-draggable {
+    .frameless & {
+      position: fixed;
+      left: 0;
+      top: 0;
+      right: 0;
+    }
+  }
+
+  .ant-form-item {
+    margin-bottom:12px;
+  }
 }

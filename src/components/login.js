@@ -3,12 +3,12 @@
 const React = require('react')
 const { PureComponent, Component } = React
 const { injectIntl, intlShape } = require('react-intl')
-const { shell } = require('electron')
 const { bool } = require('prop-types')
 const { Toolbar } = require('./toolbar')
 const {
   Form, Icon, Input, Button, Checkbox,
 } = require('antd')
+const { RegistrationForm } = require('./user/RegistrationForm')
 
 const FormItem = Form.Item
 
@@ -78,11 +78,12 @@ class Login extends PureComponent {
   render() {
     const { visible } = this.state
     const WrappedNormalLoginForm = Form.create()(LoginForm)
+    const WrappedRegistrationForm = Form.create()(RegistrationForm)
     return (
-      <div className="login-view">
+      <div className={!visible ? 'login-view' : 'register-view'}>
         {this.renderToolbar()}
         <div className="flex-row center">
-          {!visible ? <WrappedNormalLoginForm/> : <div>register</div>}
+          {!visible ? <WrappedNormalLoginForm/> : <WrappedRegistrationForm/>}
           {!visible ? <FormItem>
             <a onClick={this.needRegister}>register now!</a>
           </FormItem> : <FormItem>
