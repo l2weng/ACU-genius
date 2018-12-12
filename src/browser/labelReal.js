@@ -376,7 +376,6 @@ class LabelReal extends EventEmitter {
       .tap(() => all([
         this.load(),
         this.cache.init(),
-      // Todo version 2 will support it
         this.plugins.init()
       ]))
 
