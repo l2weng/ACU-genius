@@ -1,4 +1,4 @@
-en:
+zh:
   sidebar:
     lists: DataSet
     tags: Tags
@@ -48,7 +48,7 @@ en:
   about:
       version: Version {version}
       rrchnm:
-        title: Label Real AI tech
+        title: 雷博睿尔科技有限公司
         url: https://www.labelreal.com
       cds:
         title: Corporation for Digital Scholarship
@@ -78,7 +78,7 @@ en:
       save_as: Change file name and location
       change: Change
   prefs:
-    title: Label Real Preferences
+    title: Tropy Preferences
     app:
       label: Settings
       style:
@@ -89,8 +89,10 @@ en:
       locale:
         locale: Locale
         locales:
-          zh: 中文
+          de: Deutsch
           en: English
+          fr: Français
+          ja: 日本語
       template: Default Template
       debug: Enable Developer Mode
       dup:

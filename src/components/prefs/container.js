@@ -45,7 +45,7 @@ class PrefsContainer extends PureComponent {
               <li>
                 <PrefPaneToggle
                   name="app"
-                  icon="IconTropy"
+                  icon="IconLabelReal"
                   isActive={this.isActive('app')}
                   onClick={this.toggle}/>
               </li>
@@ -57,27 +57,27 @@ class PrefsContainer extends PureComponent {
                   isDisabled
                   onClick={this.toggle}/>
               </li>*/}
-              <li>
-                <PrefPaneToggle
-                  name="template"
-                  icon="IconTemplate"
-                  isActive={this.isActive('template')}
-                  onClick={this.toggle}/>
-              </li>
-              <li>
-                <PrefPaneToggle
-                  name="vocab"
-                  icon="IconBook"
-                  isActive={this.isActive('vocab')}
-                  onClick={this.toggle}/>
-              </li>
-              <li>
-                <PrefPaneToggle
-                  name="plugins"
-                  icon="IconPlugin"
-                  isActive={this.isActive('plugins')}
-                  onClick={this.toggle}/>
-              </li>
+              {/*<li>*/}
+                {/*<PrefPaneToggle*/}
+                  {/*name="template"*/}
+                  {/*icon="IconTemplate"*/}
+                  {/*isActive={this.isActive('template')}*/}
+                  {/*onClick={this.toggle}/>*/}
+              {/*</li>*/}
+              {/*<li>*/}
+                {/*<PrefPaneToggle*/}
+                  {/*name="vocab"*/}
+                  {/*icon="IconBook"*/}
+                  {/*isActive={this.isActive('vocab')}*/}
+                  {/*onClick={this.toggle}/>*/}
+              {/*</li>*/}
+              {/*<li>*/}
+                {/*<PrefPaneToggle*/}
+                  {/*name="plugins"*/}
+                  {/*icon="IconPlugin"*/}
+                  {/*isActive={this.isActive('plugins')}*/}
+                  {/*onClick={this.toggle}/>*/}
+              {/*</li>*/}
             </ul>
           </nav>
         </header>
