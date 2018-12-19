@@ -48,25 +48,24 @@ en:
   about:
       version: Version {version}
       rrchnm:
-        title: Roy Rosenzweig Center for History and New Media
-        url: https://rrchnm.org
+        title: Label Real AI tech
+        url: https://www.labelreal.com
       cds:
         title: Corporation for Digital Scholarship
         url: http://digitalscholar.org
       text: >
-        Tropy is designed by the {rrchnm}, a team that develops
-        historical teaching resources, digital exhibits, and
-        open-source software.
-      trademark: The Tropy name is a registered trademark of the {cds}.
+        Label Real is designed by the {rrchnm}, a team that develops
+        historical teaching resources, digital exhibits.
+      trademark: The Label name is a registered trademark of the {cds}.
       release:
         title: Release Notes
-        url: https://github.com/tropy/tropy/releases/tag/{version}
+        url: https://www.labelreal.com/{version}
       license:
         title: Licensing Information
-        url: https://tropy.org/license
+        url: https://www.labelreal.com/license
       credits:
         title: Credits
-        url: https://tropy.org/credits
+        url: https://www.labelreal.com/credits
   project:
     none: Drop a project file here or create a {newProject}
     empty: Drop your photos into Tropy to get started
