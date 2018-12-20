@@ -63,7 +63,7 @@ class DataSet extends PureComponent {
         <Tabs defaultActiveKey="1" onChange={()=>this.callback} style={{ textAlign: 'center' }}>
           <TabPane tab="添加图片" key="1">
             <div style={{ padding: '0 40px 40px' }}>
-              <Alert message="请使用一下方式添加图片" />
+              <Alert message="请使用以下方式添加图片" />
               <Tabs style={{ textAlign: 'left', paddingTop: '16px' }}
                 defaultActiveKey="1"
                 tabPosition="left">
