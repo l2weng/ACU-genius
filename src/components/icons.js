@@ -366,9 +366,16 @@ i('ListSmall', (
 ))
 
 i('Maze', (
-  <svg width="16" height="16">
-    <g className="line" fill="currentColor">
-      <path d="M16,0v15H9v-1h4v-2h1v2h1v-3h-3v2h-1V8h1v2h3V5h-4V4h4V1h-5v1h4v1H9V0H16z M5,13h5V8H5v1h4v3H6v-1h2v-1H4V7h9v2h1V6h-4V4H8V0H1v15h7v-1H4v-2H3v2H2V1h5v3H6V2H5v3h4v1H4V2H3v9h2V13L5,13z"/>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 73.38 95.84" width="16" height="16">
+    <g id="lrLine2">
+      <rect fill="#ec6519" x="8.7" y="22.77" width="4.25" height="73.07"  rx="2.13"/>
+      <rect fill="#e71f1b" width="48.23" height="4.6" rx="2.3"/>
+      <rect fill="#e71f1b" width="4.02" height="95.84" rx="2.01"/>
+      <rect fill="#486aad" x="9.05" y="10.41" width="64.33" height="4.51" rx="2.26"/>
+      <rect fill="#486aad" x="19.6" y="30.74" width="62.2" height="4.69" rx="2.35" transform="translate(-8.55 45.54) rotate(-45)"/>
+      <rect fill="#486aad" x="19.81" y="70.76" width="60.69" height="4.69" rx="2.31" transform="translate(66.38 -14.05) rotate(45)"/>
+      <rect fill="#8da7d6" x="18.29" y="29.21" width="36.43" height="4.77" rx="2.38" transform="translate(-11.65 35.07) rotate(-45)"/>
+      <rect fill="#9ab8d6" x="40.11" y="65.98" width="36.43" height="4.77" rx="2.38" transform="translate(65.42 -21.21) rotate(45)"/>
     </g>
   </svg>
 ))

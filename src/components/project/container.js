@@ -195,12 +195,7 @@ class ProjectContainer extends Component {
   }
 
   setContainer = (container) => {
-    console.log('xx')
     this.container = container
-  }
-
-  handleLogin = ()=>{
-    ipc.send(USER.LOGIN)
   }
 
   renderNoProject() {
@@ -231,14 +226,14 @@ class ProjectContainer extends Component {
       selection,
       selections,
       ui,
+      showProject,
       ...props
     } = this.props
-
-    return dt(
+    const mainProject = dt(
       <div style={{ height: '100%' }}
         className={cx(this.classes)}
         ref={this.setContainer}
-        onContextMenu={this.handleContextMenu}>
+        onContextMenu={this.handleContextMenu} >
         <ProjectView {...props}
           nav={nav}
           items={items}
@@ -280,11 +275,25 @@ class ProjectContainer extends Component {
           <IconSpin/>
         </div>
       </div>)
+    const projectSummary = dt(<div style={{ height: '100%' }}
+      className={cx(this.classes)}
+      ref={this.setContainer}
+      onContextMenu={this.handleContextMenu} ><ProjectSummary {...props}
+        nav={nav}
+        items={items}
+        data={data}
+        isActive
+        isEmpty={this.isEmpty}
+        columns={columns}
+        offset={this.state.offset}
+        photos={photos}/></div>)
+    return showProject ? mainProject : projectSummary
   }
 
 
   static propTypes = {
     expanded: arrayOf(object).isRequired,
+    showProject: bool.isRequired,
     project: shape({
       file: string
     }).isRequired,
