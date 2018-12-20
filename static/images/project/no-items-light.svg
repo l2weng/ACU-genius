@@ -1,22 +1,34 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
-  <g>
-    <g>
-      <rect x="10.571" y="10.571" width="107" height="107" transform="matrix(0.156, -0.988, 0.988, 0.156, -9.234, 117.33)" fill="#5c93e5"/>
-      <path d="M21.677,5.721,122.421,21.677,106.465,122.421,5.721,106.465,21.677,5.721M17.521,0,0,110.621l110.621,17.521L128.142,17.521,17.521,0Z" fill="#cedef7"/>
-    </g>
-    <g>
-      <rect x="90.5" y="43.5" width="107" height="107" fill="#6c9ee8"/>
-      <path d="M93,46H195V148H93V46m-5-5V153H200V41Z" fill="#cedef7"/>
-    </g>
-    <g>
-      <g>
-        <rect x="47.385" y="82.429" width="107" height="107" transform="translate(-20.022 17.456) rotate(-9)" fill="#7ca9eb"/>
-        <path d="M143.279,77.579l15.956,100.744L58.491,194.28,42.535,93.535,143.279,77.579m4.156-5.721L36.814,89.379,54.335,200,164.956,182.48,147.435,71.859Z" fill="#cedef7"/>
+
+<svg width="200px" height="200px" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+  <desc>Created with Sketch.</desc>
+  <defs></defs>
+  <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g id="no-items-light">
+      <g id="Group" fill-rule="nonzero">
+        <rect id="Rectangle-path" fill="#5C93E5" transform="translate(64.063224, 64.022928) rotate(-81.027373) translate(-64.063224, -64.022928) " x="10.5503855" y="10.5100895" width="107.025677" height="107.025677"></rect>
+        <path d="M21.677,5.721 L122.421,21.677 L106.465,122.421 L5.721,106.465 L21.677,5.721 Z M17.521,0 L0,110.621 L110.621,128.142 L128.142,17.521 L17.521,0 Z" id="Shape" fill="#CEDEF7"></path>
       </g>
-      <g>
-        <rect x="49.126" y="84.171" width="103.517" height="103.517" transform="translate(-20.022 17.455) rotate(-9)" fill="none"/>
-        <path d="M117.033,107.251h0a6.471,6.471,0,0,1,1,12.862,6.576,6.576,0,0,1-1.025.081,6.471,6.471,0,0,1-1-12.862,6.583,6.583,0,0,1,1.026-.081m0-4.313a10.784,10.784,0,1,0,10.637,9.1,10.87,10.87,0,0,0-10.637-9.1Z" fill="#fff"/>
-        <path d="M88.015,128.2l13.654,16.862,3.537,4.368,3.3-4.548,4.464-6.144L127.38,149.2l-12.436,1.97-22.721,3.6L76.882,157.2l11.133-29m-1.349-8.52L70.178,162.628l22.721-3.6,22.721-3.6,22.721-3.6L112.021,132.71l-7,9.634L86.665,119.676Z" fill="#fff"/>
+      <g id="Group" transform="translate(88.000000, 41.000000)" fill-rule="nonzero">
+        <rect id="Rectangle-path" fill="#6C9EE8" x="2.5" y="2.5" width="107" height="107"></rect>
+        <path d="M5,5 L107,5 L107,107 L5,107 L5,5 Z M0,0 L0,112 L112,112 L112,0 L0,0 Z" id="Shape" fill="#CEDEF7"></path>
+      </g>
+      <g id="Group" transform="translate(36.000000, 71.000000)">
+        <g fill-rule="nonzero">
+          <rect id="Rectangle-path" fill="#FFF" transform="translate(64.884919, 64.929597) rotate(-9.000000) translate(-64.884919, -64.929597) " x="11.3849186" y="11.4295974" width="107" height="107"></rect>
+          <path d="M107.279,6.579 L123.235,107.323 L22.491,123.28 L6.535,22.535 L107.279,6.579 Z M111.435,0.858 L0.814,18.379 L18.335,129 L128.956,111.48 L111.435,0.859 L111.435,0.858 Z" id="Shape" fill="#CEDEF7"></path>
+        </g>
+        <g transform="translate(64.634079, 64.634079) rotate(-9.000000) translate(-64.634079, -64.634079) translate(15.134079, 15.134079)" id="Rectangle-path">
+          <rect transform="translate(49.461954, 49.498846) rotate(-9.000000) translate(-49.461954, -49.498846) " x="6.71171947" y="6.74861202" width="85.5004685" height="85.5004685"></rect>
+          <rect fill="#EC6519" fill-rule="nonzero" x="28.9084536" y="28.0824978" width="3.51031223" height="60.3525917" rx="1.75515611"></rect>
+          <rect fill="#E71F1B" fill-rule="nonzero" x="22.3008071" y="9.91146982" width="39.8358491" height="3.79939676" rx="1.89969838"></rect>
+          <rect fill="#E71F1B" fill-rule="nonzero" x="22.3008071" y="9.91146982" width="3.32034239" height="79.1596056" rx="1.6601712"></rect>
+          <rect fill="#486AAD" fill-rule="nonzero" x="29.7344095" y="18.171028" width="53.1337378" height="3.72506074" rx="1.86253037"></rect>
+          <rect fill="#486AAD" fill-rule="nonzero" transform="translate(63.852836, 37.283943) rotate(-45.000000) translate(-63.852836, -37.283943) " x="38.1656098" y="35.3470764" width="51.3744519" height="3.87373279" rx="1.93686639"></rect>
+          <rect fill="#486AAD" fill-rule="nonzero" transform="translate(63.425770, 69.993867) rotate(45.000000) translate(-63.425770, -69.993867) " x="38.3621411" y="68.0570005" width="50.1272586" height="3.87373279" rx="1.93686639"></rect>
+          <rect fill="#8DA7D6" fill-rule="nonzero" transform="translate(51.890127, 35.930262) rotate(-45.000000) translate(-51.890127, -35.930262) " x="36.8453421" y="33.9603569" width="30.0895705" height="3.93980925" rx="1.96990463"></rect>
+          <rect fill="#9AB8D6" fill-rule="nonzero" transform="translate(70.075842, 65.964944) rotate(45.000000) translate(-70.075842, -65.964944) " x="55.0310565" y="63.9950392" width="30.0895705" height="3.93980925" rx="1.96990463"></rect>
+        </g>
       </g>
     </g>
   </g>

@@ -68,7 +68,7 @@ de:
       url: https://www.labelreal.com/credits
   project:
     none: Drop a project file here or create a {newProject}
-    empty: Drop your photos into Tropy to get started
+    empty: 拖入图片到LabelReal开始
     new: new project
   wizard:
     project:
@@ -153,7 +153,7 @@ de:
       noInfo: Unknown author
       homepage: More
   item:
-    created: Date Added
+    created: 导入时间
     modified: Modified
   photo:
     file: File
