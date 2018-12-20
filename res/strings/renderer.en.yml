@@ -89,7 +89,7 @@ en:
       locale:
         locale: Locale
         locales:
-          zh: 中文
+          de: 中文
           en: English
       template: Default Template
       debug: Enable Developer Mode

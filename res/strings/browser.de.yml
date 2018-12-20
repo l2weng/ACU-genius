@@ -2,23 +2,23 @@ de:
   dialogs:
     crashed:
       buttons:
-      - Fenster schließen
-      - Neu laden
-      - Geöffnet lassen
-      message: Tropy ist leider abgestürzt
-      detail: Fehler melden auf https://github.com/tropy/tropy
+      - Close Window
+      - Reload
+      - Keep It Open
+      message: Tropy has crashed
+      detail: Please report this issue at https://github.com/tropy/tropy
     unresponsive:
       buttons:
-      - Beenden
-      - Warten
-      message: Tropy reagiert nicht mehr
+      - Close
+      - Keep Waiting
+      message: Tropy is not responding
       detail: >
-          Tropy reagiert nicht mehr. Soll es beendet werden oder möchten Sie noch
-          warten?
+        Tropy is not responding.
+        Would you like to force close it or just keep waiting?
   windows:
     prefs:
-      title: Voreinstellungen
+      title: Tropy Preferences
     wizard:
-      title: Willkommen bei Tropy
+      title: Welcome to Tropy
     about:
-      title: Über Tropy
+      title: About Tropy

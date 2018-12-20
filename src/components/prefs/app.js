@@ -125,7 +125,7 @@ class AppPrefs extends PureComponent {
 
   static defaultProps = {
     themes: ['light', 'dark'],
-    locales: ['de', 'en', 'fr', 'ja'],
+    locales: ['de', 'en'],
     dupOptions: ['skip', 'import', 'prompt'],
     zoomModes: [ESPER.MODE.FIT, ESPER.MODE.FILL]
   }

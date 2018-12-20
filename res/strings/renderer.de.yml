@@ -1,517 +1,508 @@
 de:
   sidebar:
-    lists: Listen
+    lists: DataSet
     tags: Tags
-    imports: Zuletzt importiert
-    trash: Gelöscht
+    imports: Last Import
+    trash: Deleted Items
   toolbar:
-    import: Fotos importieren
+    import: Import Photos
     items: >
-        {count, plural,
-
-        =0 {Keine Objekte in dieser Ansicht}
-
-        one {1 Objekt in dieser Ansicht}
-
-        other {# Objekte in dieser Ansicht}}
+      {count, plural,
+        =0 {No items in this view}
+        one {1 item in this view}
+        other {# items in this view}}
     search:
-      placeholder: Suche
+      placeholder: Search
   panel:
     metadata:
-      tab: Metadaten
-      photo: Foto
+      tab: Metadata
+      photo:  Photo
       item: >
-          {count, plural,
-
+        {count, plural,
           =0 {}
-
-          one {Objekt}
-
-          other {# Objekte}}
-      selection: Ausschnitt
+          one {Item}
+          other {# Items}}
+      selection: Selection
     tags:
       tab: Tags
       add: >
-          {count, plural,
-
-          =0 {Tag hinzufügen}
-
-          one {Tag zu Objekt hinzufügen}
-
-          other {Tag zu # Objekten hinzufügen}}
+        {count, plural,
+          =0 {Add Tag}
+          one {Add Tag to 1 Item}
+          other {Add Tag to # Items}}
     photo:
       title: >
-          {count, plural,
-
-          =0 {Keine Fotos}
-
-          one {1 Foto}
-
-          other {# Fotos}}
-      create: Fotos hinzufügen
-      selection: Ausschnitt
+        {count, plural,
+          =0 {No Photos}
+          one {1 Photo}
+          other {# Photos}}
+      create: Add Photos
+      selection: Selection
     note:
       title: >
-          {count, plural,
-
-          =0 {Keine Notizen}
-
-          one {1 Notiz}
-
-          other {# Notizen}}
-      create: Notiz hinzufügen
+        {count, plural,
+          =0 {No Notes}
+          one {1 Note}
+          other {# Notes}}
+      create: Add Note
   about:
     version: Version {version}
     rrchnm:
-      title: Roy Rosenzweig Center for History and New Media
-      url: https://rrchnm.org
+      title: 雷博睿尔科技有限公司
+      url: https://www.labelreal.com
     cds:
       title: Corporation for Digital Scholarship
       url: http://digitalscholar.org
     text: >
-        Tropy wird vom {rrchnm} erstellt, einem Team, das Ressourcen zur Geschichtsvermittlung,
-        digitale Ausstellungen und Open-Source-Software entwickelt.
-    trademark: Tropy ist eine geschützte Marke der {cds}.
+      Label Real is designed by the {rrchnm}, a team that develops
+      historical teaching resources, digital exhibits.
+    trademark: The Label name is a registered trademark of the {cds}.
     release:
-      title: Versionshinweise
-      url: https://github.com/tropy/tropy/releases/tag/{version}
+      title: Release Notes
+      url: https://www.labelreal.com/{version}
     license:
-      title: Lizenzinformationen
-      url: https://tropy.org/license
+      title: Licensing Information
+      url: https://www.labelreal.com/license
     credits:
       title: Credits
-      url: https://tropy.org/credits
+      url: https://www.labelreal.com/credits
   project:
-    none: Ziehen Sie eine Projektdatei hierher oder erstellen Sie ein {newProject}
-    empty: Fotos ins Tropy Fenster ziehen und los geht’s!
-    new: neues Projekt
+    none: Drop a project file here or create a {newProject}
+    empty: Drop your photos into Tropy to get started
+    new: new project
   wizard:
     project:
-      title: Neues Projekt erstellen
-      submit: Projekt erstellen
-      name: Projektname
-      save_as: Datei und Verzeichnis anpassen
-      change: Anpassen
+      title: Create a new project
+      submit: Create project
+      name: Name
+      save_as: Change file name and location
+      change: Change
   prefs:
-    title: Voreinstellungen
+    title: Label Real Preferences
     app:
-      label: Einstellungen
+      label: Settings
       style:
-        theme: Erscheinungsbild
+        theme: Theme
         themes:
-          light: Hell
-          dark: Dunkel
+          light: Light
+          dark: Dark
       locale:
-        locale: Sprache
+        locale: Locale
         locales:
-          de: Deutsch
+          de: 中文
           en: English
-          fr: Français
-          ja: 日本語
-      template: Standardvorlage
-      debug: Entwicklermodus aktivieren
+      template: Default Template
+      debug: Enable Developer Mode
       dup:
-        label: Beim Importieren
+        label: During Import
         option:
-          skip: Zuvor importiere Fotos überspringen
-          import: Zuvor importierte Fotos nochmals importieren
-          prompt: Jedes Mal nachfragen
+          skip: Skip duplicate photos
+          import: Accept duplicate photos
+          prompt: Ask me every time
       ui:
-        label: Benutzeroberfläche
+        label: Interface
         option:
-          invertScroll: Richtung beim Scrollen in Fotos umkehren
-          invertZoom: Richtung beim Zoomen in Fotos umkehren
-          overlayToolbars: Werkzeugleisten automatisch ein- und ausblenden
+          invertScroll: Invert direction when scrolling in photos
+          invertZoom: Invert direction when zooming in photos
+          overlayToolbars: Automatically hide and show toolbars
       zoomMode:
-        label: Standardmäßig
+        label: By default
         option:
-          fit: Format mit Fotos füllen
-          fill: Fotos an das Format anpassen
+          fit: Zoom photos to fit
+          fill: Zoom photos to fill
+
     project:
-      label: Projekt
+      label: Project
     template:
-      label: Vorlagen
-      new: Neue Vorlage …
-      create: Erstellen
-      select: Vorlage
+      label: Templates
+      new: New Template …
+      create: Create
+      select: Template
       tools:
-        new: Neu
-        copy: Duplizieren
-        delete: Löschen
-        import: Importieren
-        export: Exportieren
+        new: New
+        copy: Duplicate
+        delete: Delete
+        import: Import
+        export: Export
     vocab:
-      label: Vokabulare
-      export: Exportieren
+      label: Vocabularies
+      export: Export
       classes: >
-          {count, plural,
-
-          =0 {Keine Klassen}
-
-          one {# Klasse}
-
-          other {# Klassen}
-
-          }
+        {count, plural,
+          =0 {No Classes}
+          one {# Class}
+          other {# Classes}
+        }
       datatypes: >
-          {count, plural,
-
-          =0 {Keine Datentypen}
-
-          one {# Datentyp}
-
-          other {# Datentypen}
-
-          }
+        {count, plural,
+          =0 {No Datatypes} one {# Datatype}
+          other {# Datatypes}
+        }
       properties: >
-          {count, plural,
-
-          =0 {Keine Eigenschaft}
-
-          one {# Eigenschaft}
-
-          other {# Eigenschaften}
-
-          }
+        {count, plural,
+          =0 {No Properties}
+          one {# Property}
+          other {# Properties}
+        }
     plugins:
       label: Plugins
-      enable: Aktivieren
-      disable: Deaktivieren
-      install: Plugin Installieren
-      uninstall: Deinstallieren
-      noInfo: Autor anonym
-      homepage: Mehr
+      enable: Enable
+      disable: Disable
+      install: Install Plugin
+      uninstall: Uninstall
+      noInfo: Unknown author
+      homepage: More
   item:
-    created: Hinzugefügt
-    modified: Bearbeitet
+    created: Date Added
+    modified: Modified
   photo:
-    file: Datei
-    size: Größe
-    type: Typ
-    created: Hinzugefügt
-    modified: Bearbeitet
+    file: File
+    size: Size
+    type: Type
+    created: Date Added
+    modified: Modified
   selection:
-    size: Größe
-    created: Hinzugefügt
-    modified: Bearbeitet
+    size: Size
+    created: Date Added
+    modified: Modified
   esper:
     tool:
-      pan: Verschieben
-      select: Ausschnitt-Werkzeug
-      rotate: Drehen
-      mirror: Spiegeln
-      edit: Foto bearbeiten
+      pan: Pan Tool
+      select: Selection Tool
+      rotate: Rotate
+      mirror: Mirror
+      edit: Edit Photo
     mode:
-      fill: Füllen
-      fit: Einpassen
+      fill: Fill
+      fit: Fit
       zoom: Zoom
     panel:
-      negative: Farben invertieren
-      revert: Originalzustand
+      negative: Invert colors
+      revert: Revert to Original
       brightness:
-        label: Helligkeit
+        label: Brightness
         value: "{value, number}"
       contrast:
-        label: Kontrast
+        label: Contrast
         value: "{value, number}"
       hue:
-        label: Farbton
+        label: Hue
         value: "{value, number}°"
       saturation:
-        label: Sättigung
+        label: Saturation
         value: "{value, number}"
   notepad:
-    placeholder: Notizen hier eintragen …
+    placeholder: Add your notes here …
   completions:
-    empty: Keine Optionen vorhanden
-    noMatches: Keine passenden Optionen gefunden
+    empty: No options available
+    noMatches: No matches found
   select:
     column:
-      placeholder: Suche
+      placeholder: Search
   template:
     id: URI
     name: Name
-    type: Typ
-    creator: Autor
-    description: Beschreibung
+    type: Type
+    creator: Creator
+    description: Description
     types:
-      https://tropy.org/v1/tropy#Item: Objektvorlage
-      https://tropy.org/v1/tropy#Photo: Fotovorlage
-      https://tropy.org/v1/tropy#Selection: Ausschnittvorlage
+      "https://tropy.org/v1/tropy#Item": Item Template
+      "https://tropy.org/v1/tropy#Photo": Photo Template
+      "https://tropy.org/v1/tropy#Selection": Photo Selection Template
     field:
-      property: Eigenschaft
-      label: Bezeichnung
-      datatype: Datentyp
-      isRequired: Ist ein Pflichtfeld
-      hint: Hinweis
-      value: Standardwert
-      isConstant: Ist schreibgeschützt
+      property: Property
+      label: Label
+      datatype: Datatype
+      isRequired: Is mandatory field
+      hint: Hint
+      value: Default Value
+      isConstant: Is read-only
+
   vocab:
     id: URI
-    prefix: Präfix
+    prefix: Prefix
     title: Name
-    description: Beschreibung
-    properties: Eigenschaften
-    seeAlso: Siehe
+    description: Description
+    properties: Properties
+    seeAlso: See Also
   property:
-    select: Eigenschaft auswählen …
+    select: Select a Property …
   datatype:
-    select: Datentyp auswählen …
+    select: Select a Datatype …
   resource:
-    select: Ressource auswählen …
+    select: Select a Resource …
     id: URI
-    label: Bezeichnung
-    description: Beschreibung
-    comment: Kommentar
-  ok: OK
-  cancel: Abbrechen
+    label: Label
+    description: Description
+    comment: Comment
+
+  ok: Yes
+  cancel: Cancel
   dialog:
     prompt:
       item:
-        destroy:
-          ok: Löschen
-          cancel: Abbrechen
+        destroy:en:
+          dialogs:
+            crashed:
+              buttons:
+              - Close Window
+              - Reload
+              - Keep It Open
+              message: Tropy has crashed
+              detail: Please report this issue at https://github.com/tropy/tropy
+            unresponsive:
+              buttons:
+              - Close
+              - Keep Waiting
+              message: Tropy is not responding
+              detail: >
+                Tropy is not responding.
+                Would you like to force close it or just keep waiting?
+          windows:
+            prefs:
+              title: Tropy Preferences
+            wizard:
+              title: Welcome to Tropy
+            about:
+              title: About Tropy
+
+          ok: Delete
+          cancel: Cancel
           message: >
-              Objekte vollständig löschen? Dies kann nicht mehr rückgängig gemacht
-              werden.
+            Are your sure you want to permanently delete items?
+            This action cannot be undone.
       dup:
         message: >
-            Dieses Foto ist bereits im Projekt vorhanden. Nochmals importieren?
-        checkbox: Auswahl merken
-        cancel: Überspringen
-        ok: Nochmals importieren
+          This photo already exists in your project. Are you sure
+          you want to import it again?
+        checkbox: Remember this choice
+        cancel: Skip
+        ok: Import Anyway
       plugin:
         uninstall:
-          ok: Löschen
-          cancel: Abbrechen
+          ok: Delete
+          cancel: Cancel
           message: >
-              Diesen Plugin samt Konfiguration vollständig entfernen? Dies kann nicht
-              mehr rückgängig gemacht werden.
+            Are you sure you want to delete the plugin?
+            This will permanently remove the plugin and its configuration.
     filter:
-      templates: Tropy-Vorlagen
-      images: Bilder
-      projects: Tropy-Projekte
-      rdf: RDF-Vokabular
+      templates: Tropy Templates
+      images: Images
+      projects: Tropy Projects
+      rdf: RDF Vocabularies
       jsonld: JSON-LD
+
   action:
     project:
-      save: Projekt speichern
+      save: Save Project
     list:
-      create: Liste erstellen
-      delete: Liste löschen
+      create: Create List
+      delete: Delete List
       item:
-        add: Objekte zu Liste hinzufügen
-        merge: Objekte zusammenfügen
-        remove: Objekt aus Liste entfernen
-        restore: Objekt zu Liste hinzufügen
-      order: Liste sortieren
-      restore: Liste wiederherstellen
-      save: Liste speichern
+        add: Add Items To List
+        merge: Merge Items
+        remove: Remove Item From List
+        restore: Add Item To List
+      order: Sort List
+      restore: Restore List
+      save: Save List
     item:
-      create: Objekte erstellen
-      delete: Objekte löschen
-      explode: Objektfotos aufsplitten
-      implode: Objekte zusammenfügen
-      merge: Objekte zusammenfügen
-      split: Objekte auftrennen
-      import: Objekte importieren
-      restore: Objekte wiederherstellen
-      save: Objekte speichern
+      create: Create Items
+      delete: Delete Items
+      explode: Explode Item
+      implode: Merge Items
+      merge: Merge Items
+      split: Split Items
+      import: Import Items
+      restore: Restore Items
+      save: Save Item
       tag:
         create: Tag
         toggle: Tag
-        clear: Tags entfernen
+        clear: Clear Tags
     metadata:
-      save: Metadaten speichern
+      save: Save Metadata
     ontology:
-      import: Vokabular importieren
+      import: Import Vocabularies
       vocab:
-        save: Vokabular speichern
+        save: Save Vocabulary
       label:
-        save: Bezeichnung speichern
+        save: Save Label
       template:
-        import: Vorlage importieren
+        import: Import Template
     photo:
-      create: Foto importieren
-      delete: Foto löschen
-      duplicate: Foto duplizieren
-      move: Foto verschieben
-      order: Foto sortieren
-      restore: Foto wiederherstellen
-      save: Foto speichern
+      create: Import Photo
+      delete: Delete Photo
+      duplicate: Duplicate Photo
+      move: Moving Photo
+      order: Sort Photos
+      restore: Restore Photo
+      save: Save Photo
     note:
-      create: Notiz erstellen
-      delete: Notiz löschen
-      order: Notiz sortieren
-      restore: Notiz wiederherstellen
-      save: Notiz speichern
+      create: Create Note
+      delete: Delete Note
+      order: Sort Notes
+      restore: Restore Note
+      save: Save Note
     tag:
-      create: Tag erstellen
-      delete: Tag löschen
-      restore: Tag erstellen
-      save: Tag speichern
+      create: Create Tag
+      delete: Delete Tag
+      restore: Create Tag
+      save: Save Tag
     selection:
-      create: Ausschnitt erstellen
-      delete: Ausschnitt löschen
-      restore: Ausschnitt erstellen
-      save: Ausschnitt speichern
-      order: Ausschnitte sortieren
+      create: Create Selection
+      delete: Delete Selection
+      restore: Create Selection
+      save: Save Selection
+      order: Sort Selections
+
   activity:
     project:
-      save: Speichern …
+      save: Saving …
     list:
-      create: Liste erstellen …
-      delete: Liste löschen …
+      create: Creating list …
+      delete: Deleting list …
       item:
-        add: Objekte zu Liste hinzufügen …
-        merge: Objekte zusammenfügen …
-        remove: Objekte von Liste entfernen …
-        restore: Objekte wiederherstellen …
-      load: Listen laden …
-      order: Liste sortieren …
-      restore: Liste wiederherstellen …
-      save: Liste speichern …
+        add: Adding items to list …
+        merge: Merging items …
+        remove: Removing items from list …
+        restore: Restoring items to list …
+      load: Loading lists …
+      order: Sorting list …
+      restore: Restoring list …
+      save: Saving list …
     tag:
-      create: Tag erstellen …
-      delete: Tag löschen …
-      load: Tags laden …
-      restore: Tags wiederherstellen …
-      save: Tags speichern …
+      create: Creating tag …
+      delete: Deleting tag …
+      load: Loading tags …
+      restore: Restoring tag …
+      save: Saving tag …
     item:
-      create: Objekt erstellen …
-      delete: Objekt löschen …
-      destroy: Objekte vollständig löschen …
-      explode: Objekt zerteilen …
-      export: Objekt exportieren …
-      implode: Objekt wiederherstellen
+      create: Creating item …
+      delete: Deleteing item …
+      destroy: Deleting items permanently …
+      explode: Exploding item …
+      export: Exporting item …
+      implode: Restoring item …
       import: >
-          {hasProgressBar, select,
-
-          true {Objekt {progress, number} von {total, number} importieren …}
-
-          other {Objekte importieren …}
-
-          }
-      load: Objekte laden …
-      merge: Objekte zusammenführen …
-      restore: Objekt wiederherstellen …
-      save: Objekte speichern …
+        {hasProgressBar, select,
+          true {Importing items {progress, number} of {total, number} …}
+          other {Importing items …}
+        }
+      load: Loading items …
+      merge: Merging item …
+      restore: Restoring item …
+      save: Saving items …
       tag:
-        create: Objekt taggen
-        toggle: Objekt taggen …
-        clear: Objekt-Tags entfernen …
+        create: Tagging item
+        toggle: Tagging item …
+        clear: Clearing item tags …
     metadata:
-      load: Metadaten laden …
-      save: Metadaten speichern …
+      load: Loading metadata …
+      save: Saving metadata …
     ontology:
-      load: Ontologie laden …
-      import: Vokabular importieren …
+      load: Loading ontology …
+      import: Importing vocabularies …
       vocab:
-        save: Vokabular speichern …
+        save: Saving vocabulary …
       label:
-        save: Bezeichnung speichern …
+        save: Saving label …
       template:
-        import: Vorlagen importieren …
+        import: Importing templates …
     photo:
       consolidate: >
-          {hasProgressBar, select,
-
-          true {Foto {progress, number} von {total, number} konsolidieren …}
-
-          other {Fotos konsolidieren …}
-
-          }
+        {hasProgressBar, select,
+          true {Consolidating photos {progress, number} of {total, number} …}
+          other {Consolidating photos …}
+        }
       create: >
-          {hasProgressBar, select,
-
-          true {Fotos {progress, number} von {total, number} importieren …}
-
-          other {Fotos importieren …}
-
-          }
-      delete: Foto löschen …
+        {hasProgressBar, select,
+          true {Importing photos {progress, number} of {total, number} …}
+          other {Importing photos …}
+        }
+      delete: Deleting photo …
       duplicate: >
-          {hasProgressBar, select,
-
-          true {Foto {progress, number} von {total, number} duplizieren …}
-
-          other {Fotos duplizieren …}
-
-          }
-      load: Fotos laden …
-      move: Fotos verschieben …
-      order: Fotos sortieren …
-      save: Fotos speichern …
-      restore: Fotos wiederherstellen …
+        {hasProgressBar, select,
+          true {Duplicating photos {progress, number} of {total, number} …}
+          other {Duplicating photos …}
+        }
+      load: Loading photos …
+      move: Moving photos …
+      order: Sorting photos …
+      save: Saving photo …
+      restore: Restoring photos …
     note:
-      create: Notiz erstellen …
-      delete: Notiz löschen …
-      load: Notizen laden …
-      order: Notizen sortieren …
-      restore: Notizen wiederherstellen …
+      create: Creating note …
+      delete: Deleting note …
+      load: Loading notes …
+      order: Sorting notes …
+      restore: Restoring notes …
     selection:
-      load: Ausschnitte laden …
+      load: Loading photo selections …
   editor:
     commands:
-      bold: Fett
-      italic: Kursiv
-      underline: Unterstreichen
-      overline: Überstreichen
-      strikethrough: Durchstreichen
-      subscript: Tiefstellen
-      superscript: Hochstellen
-      blockquote: Zitatblock einfügen
-      ol: Nummerierte Liste einfügen
-      ul: Liste einfügen
+      bold: Bold
+      italic: Italic
+      underline: Underline
+      overline: Overline
+      strikethrough: Strikethrough
+      subscript: Subscript
+      superscript: Superscript
+      blockquote: Insert Blockquote
+      ol: Insert Numbered List
+      ul: Insert Bulleted List
       link:
-        button: Link
-        target: Ziel des Links
-        title: Titel des Links
-      left: Links
-      center: Zentriert
-      right: Rechts
-      sinkListItem: Eine Ebene tiefer
-      liftListItem: Eine Ebene höher
+        button: Toggle Link
+        target: Link target
+        title: Link title
+      left: Align Left
+      center: Center
+      right: Align Right
+      sinkListItem: Sink list item
+      liftListItem: Lift list item
   error:
     project:
-      created: Projekt konnte nicht erstellt werden.
+      created: Project creation failed.
     item:
-      export: Objekte konnten nicht exportiert werden.
-      merge: Objekte konnten nicht zusammengefügt werden.
-      import: Objekt konnte nicht importiert werden.
+      export: Failed to export items.
+      merge: Failed to merge items.
+      import: Failed to import item.
       tag:
-        save: Tag konnte nicht gespeichert werden.
-        create: Objekt konnte nicht getaggt werden.
+        save: Failed to save tag.
+        create: Failed to tag item. Tags must be unique per item.
     list:
-      create: Liste konnte nicht erstellt werden. Listennamen müssen eindeutig sein.
-      save: Liste konnte nicht gespeichert werden.
+      load: Failed to load lists.
+      create: Failed to create list. List names must be unique.
+      move: Failed to move list. List names must be unique per level.
+      save: Failed to save list.
       item:
-        add: Objekt(e) konnten nicht zur Liste hinzugefügt werden.
+        add: Failed to add item(s) to list.
     photo:
-      consolidate: Fotos konnten nicht konsolidiert werden.
-      create: Foto konnte nicht importiert werden.
-      save: Foto konnte nicht gespeichert werden.
+      consolidate: Failed to consolidate photos.
+      create: Failed to import photo.
+      save: Failed to save photo.
     ontology:
-      import: Vokabular konnte nicht importiert werden.
+      import: Failed to import vocabulary.
       vocab:
-        save: Vokabular konnte nicht gespeichert werden.
+        save: Failed to save vocabulary. Prefix must be unique.
       template:
-        import: Vorlage konnte nicht importiert werden.
+        import: Failed to import template.
         field:
-          add: Feld konnte nicht zur Vorlage hinzugefügt werden.
-          remove: Feld konnte nicht von Vorlage entfernt werden.
+          add: Failed to add field to template.
+          remove: Failed to remove field from template.
     tag:
-      create: Tag konnte nicht erstellt werden. Tag-Namen müssen eindeutig sein.
+      create: Failed to create tag. Tag names must be unique.
   flash:
     update:
       ready:
         message: >
-            Tropy {version} kann installiert werden. Jetzt installieren und neustarten?
-        confirm: Jetzt neu starten
+          Tropy {version} is ready to be installed.
+          Do you want to install and restart now?
+        confirm: Restart Now
   plugin:
-    name: Projektname
+    name: Name
     plugin: Plugin
-    options: Optionen
+    options: Options
     hooks:
-      export: Exportieren
-      import: Importieren
+      export: Export
+      import: Import
