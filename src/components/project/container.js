@@ -21,12 +21,7 @@ const actions = require('../../actions')
 const debounce = require('lodash.debounce')
 const { match } = require('../../keymap')
 const { IconSpin } = require('../icons')
-const { Tabs, Button: ButtonAnt, Icon } = require('antd')
-const { Workplace } = require('../workplace')
 const { ProjectSummary } = require('../projectSummary')
-const { Contacts } = require('../contacts')
-
-const TabPane = Tabs.TabPane
 
 const {
   getCachePrefix,
@@ -239,11 +234,11 @@ class ProjectContainer extends Component {
       ...props
     } = this.props
 
-    const mainProject = dt(
+    return dt(
       <div style={{ height: '100%' }}
         className={cx(this.classes)}
         ref={this.setContainer}
-        onContextMenu={this.handleContextMenu} >
+        onContextMenu={this.handleContextMenu}>
         <ProjectView {...props}
           nav={nav}
           items={items}
@@ -285,7 +280,6 @@ class ProjectContainer extends Component {
           <IconSpin/>
         </div>
       </div>)
-    return mainProject
   }
 
 
