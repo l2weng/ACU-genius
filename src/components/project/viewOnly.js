@@ -86,7 +86,7 @@ class ProjectViewOnly extends Component {
     return (
       <div id="project-view">
         <div className="main">
-          <section id="items" style={this.style}>
+          <section id="dataSetItems" style={this.style}>
             <header>
               <ProjectToolbar
                 query={nav.query}

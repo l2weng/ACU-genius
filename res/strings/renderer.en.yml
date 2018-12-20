@@ -68,7 +68,7 @@ en:
         url: https://www.labelreal.com/credits
   project:
     none: Drop a project file here or create a {newProject}
-    empty: Drop your photos into Tropy to get started
+    empty: Drop your photos into LabelReal to get started
     new: new project
   wizard:
     project:

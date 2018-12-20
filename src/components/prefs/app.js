@@ -37,15 +37,15 @@ class AppPrefs extends PureComponent {
     return (
       <div className="scroll-container">
         <div className="form-horizontal">
-          <FormElement id="prefs.app.template">
-            <TemplateSelect
-              isRequired
-              options={this.props.templates}
-              value={this.props.settings.template}
-              tabIndex={0}
-              onChange={this.handleTemplateChange}/>
-          </FormElement>
-          <hr/>
+          {/*<FormElement id="prefs.app.template">*/}
+            {/*<TemplateSelect*/}
+              {/*isRequired*/}
+              {/*options={this.props.templates}*/}
+              {/*value={this.props.settings.template}*/}
+              {/*tabIndex={0}*/}
+              {/*onChange={this.handleTemplateChange}/>*/}
+          {/*</FormElement>*/}
+          {/*<hr/>*/}
           <FormToggleGroup
             id="prefs.app.dup"
             name="dup"

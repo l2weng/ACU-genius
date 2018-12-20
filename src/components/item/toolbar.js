@@ -15,14 +15,7 @@ class ItemToolbar extends PureComponent {
   handleModeChange = () => {
     this.props.onModeChange(MODE.PROJECT)
   }
-  handleLogin = () => {
-    this.props.onHandleLogin()
-  }
-  handleRefresh = () => {
 
-  }
-
-  //Todo login module
   render() {
     return (
       <Toolbar onDoubleClick={ARGS.frameless ? this.props.onMaximize : null}>
@@ -41,7 +34,6 @@ class ItemToolbar extends PureComponent {
   static propTypes = {
     isItemOpen: bool.isRequired,
     onMaximize: func.isRequired,
-    onHandleLogin:func.isRequired,
     onModeChange: func.isRequired
   }
 }

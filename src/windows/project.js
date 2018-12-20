@@ -11,11 +11,18 @@ const { main } = require('../sagas/project')
 const { win } = require('../window')
 const act = require('../actions')
 const dialog = require('../dialog')
-
+const { Tabs, Button: ButtonAnt, Icon } = require('antd')
+const TabPane = Tabs.TabPane
 const store = create()
 const tasks = store.saga.run(main)
+const { ipcRenderer: ipc  } = require('electron')
+const { USER } = require('../constants')
+const { Contacts } = require('../components/contacts')
+const { Workplace } = require('../components/workplace')
 
 const { locale, file } = ARGS
+
+const userInfo = <div style={{ paddingRight: '12px' }}><ButtonAnt icon="user" size="small" onClick={()=>{ ipc.send(USER.LOGIN) }}>用户</ButtonAnt></div>
 
 all([
   store.dispatch(act.intl.load({ locale })),
@@ -26,7 +33,16 @@ all([
     store.dispatch(act.project.open(file))
 
     render(
-      <Main store={store}><ProjectContainer/></Main>,
+      <Main store={store}>
+        <Tabs defaultActiveKey="3" style={{ height: '100%' }} tabBarExtraContent={userInfo} >
+          <TabPane tab={<span><Icon type="home" size="small"/>首页</span>} key="1" className="workplace">
+            <Workplace/>
+          </TabPane>
+          <TabPane tab={<span><Icon type="project" size="small"/>项目</span>} key="2"> project Summary</TabPane>
+          <TabPane tab={<span><Icon type="form" size="small"/>工作台</span>} key="3" ><ProjectContainer/></TabPane>
+          <TabPane tab={<span><Icon type="contacts" size="small"/>联系人</span>}  key="4"><Contacts/></TabPane>
+        </Tabs>
+      </Main>,
       $('main')
     )
   })

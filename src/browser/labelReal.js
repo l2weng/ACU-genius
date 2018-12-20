@@ -90,19 +90,30 @@ class LabelReal extends EventEmitter {
   }
 
   open(file) {
+    // if (!file) {
+    //   if (this.win) return this.win.show(), this
+    //
+    //   if (this.state.recent.length > 0) {
+    //     return this.showRecent()
+    //   } else {
+    //     for (let recent of this.state.recent) {
+    //       if (!exists(recent)) continue
+    //       file = recent
+    //       break
+    //     }
+    //     if (!file) return this.showGuideline()
+    //   }
+    // }
     if (!file) {
       if (this.win) return this.win.show(), this
 
-      if (this.state.recent.length > 0) {
-        return this.showRecent()
-      } else {
-        for (let recent of this.state.recent) {
-          if (!exists(recent)) continue
-          file = recent
-          break
-        }
-        if (!file) return this.showGuideline()
+      for (let recent of this.state.recent) {
+        if (!exists(recent)) continue
+        file = recent
+        break
       }
+
+      return this.showWizard()
     }
 
     try {
@@ -116,7 +127,6 @@ class LabelReal extends EventEmitter {
 
         return this.win.show(), this
       }
-
       this.win = open('project', { file, ...this.hash }, {
         width: WIN.WIDTH,
         height: WIN.HEIGHT,
@@ -246,6 +256,7 @@ class LabelReal extends EventEmitter {
 
   showWizard() {
     if (this.prefs) this.prefs.close()
+    if (this.gdl) this.gdl.close()
     if (this.wiz) return this.wiz.show(), this
 
     this.wiz = open('wizard', this.hash, {
@@ -426,7 +437,6 @@ class LabelReal extends EventEmitter {
       this.showGuideline())
 
     this.on('app:create-project', () =>{
-      console.log('cp')
       this.showWizard()
     })
 

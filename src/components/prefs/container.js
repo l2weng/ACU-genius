@@ -91,33 +91,33 @@ class PrefsContainer extends PureComponent {
               onSettingsUpdate={this.props.onSettingsUpdate}/>
           </PrefPane>
 
-          <PrefPane
-            name="project"
-            isActive={this.isActive('project')}/>
+          {/*<PrefPane*/}
+            {/*name="project"*/}
+            {/*isActive={this.isActive('project')}/>*/}
 
-          <PrefPane
-            name="template"
-            isActive={this.isActive('template')}>
-            <TemplateEditor/>
-          </PrefPane>
+          {/*<PrefPane*/}
+            {/*name="template"*/}
+            {/*isActive={this.isActive('template')}>*/}
+            {/*<TemplateEditor/>*/}
+          {/*</PrefPane>*/}
 
-          <VocabPane
-            isActive={this.isActive('vocab')}
-            vocab={this.props.vocab}
-            onClassSave={this.props.onClassSave}
-            onDelete={this.props.onVocabDelete}
-            onExport={this.props.onVocabExport}
-            onImport={this.props.onOntologyImport}
-            onOpenLink={this.props.onOpenLink}
-            onPropsSave={this.props.onPropsSave}
-            onSave={this.props.onVocabSave}/>
+          {/*<VocabPane*/}
+            {/*isActive={this.isActive('vocab')}*/}
+            {/*vocab={this.props.vocab}*/}
+            {/*onClassSave={this.props.onClassSave}*/}
+            {/*onDelete={this.props.onVocabDelete}*/}
+            {/*onExport={this.props.onVocabExport}*/}
+            {/*onImport={this.props.onOntologyImport}*/}
+            {/*onOpenLink={this.props.onOpenLink}*/}
+            {/*onPropsSave={this.props.onPropsSave}*/}
+            {/*onSave={this.props.onVocabSave}/>*/}
 
-          <PluginsPane
-            name="plugins"
-            plugins={this.props.plugins}
-            onUninstall={this.props.onPluginUninstall}
-            onOpenLink={this.props.onOpenLink}
-            isActive={this.isActive('plugins')}/>
+          {/*<PluginsPane*/}
+            {/*name="plugins"*/}
+            {/*plugins={this.props.plugins}*/}
+            {/*onUninstall={this.props.onPluginUninstall}*/}
+            {/*onOpenLink={this.props.onOpenLink}*/}
+            {/*isActive={this.isActive('plugins')}/>*/}
         </div>
       </div>
     )

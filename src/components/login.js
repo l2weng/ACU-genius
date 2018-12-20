@@ -83,6 +83,7 @@ class Login extends PureComponent {
       <div className={!visible ? 'login-view' : 'register-view'}>
         {this.renderToolbar()}
         <div className="flex-row center">
+          <figure className="app-icon"/>
           {!visible ? <WrappedNormalLoginForm/> : <WrappedRegistrationForm/>}
           {!visible ? <FormItem>
             <a onClick={this.needRegister}>register now!</a>
