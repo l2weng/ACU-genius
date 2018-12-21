@@ -90,19 +90,30 @@ class LabelReal extends EventEmitter {
   }
 
   open(file) {
+    // if (!file) {
+    //   if (this.win) return this.win.show(), this
+    //
+    //   if (this.state.recent.length > 0) {
+    //     return this.showRecent()
+    //   } else {
+    //     for (let recent of this.state.recent) {
+    //       if (!exists(recent)) continue
+    //       file = recent
+    //       break
+    //     }
+    //     if (!file) return this.showGuideline()
+    //   }
+    // }
     if (!file) {
       if (this.win) return this.win.show(), this
 
-      if (this.state.recent.length > 0) {
-        return this.showRecent()
-      } else {
-        for (let recent of this.state.recent) {
-          if (!exists(recent)) continue
-          file = recent
-          break
-        }
-        if (!file) return this.showGuideline()
+      for (let recent of this.state.recent) {
+        if (!exists(recent)) continue
+        file = recent
+        break
       }
+
+      return this.showWizard()
     }
 
     try {
