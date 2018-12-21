@@ -19,12 +19,12 @@ en:
       - label: 'Show Project File…'
         command: 'app:show-project-file'
     lists: &lists
-      - label: 'New List'
+      - label: 'New Task'
         command: 'app:create-list'
     list: &list
-      - label: 'Rename List'
+      - label: 'Rename Task'
         command: 'app:rename-list'
-      - label: 'Delete List'
+      - label: 'Delete Task'
         command: 'app:delete-list'
     tags: &tags
       - label: 'New Tag'

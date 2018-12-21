@@ -113,7 +113,7 @@ class LabelReal extends EventEmitter {
         break
       }
 
-      return this.showWizard()
+      if (!file) return this.showWizard()
     }
 
     try {

@@ -1,6 +1,6 @@
 en:
   sidebar:
-    lists: DataSet
+    lists: Tasks
     tags: Tags
     imports: Last Import
     trash: Deleted Items
@@ -272,16 +272,16 @@ en:
     project:
       save: Save Project
     list:
-      create: Create List
-      delete: Delete List
+      create: Create Task
+      delete: Delete Task
       item:
-        add: Add Items To List
+        add: Add Items To Task
         merge: Merge Items
-        remove: Remove Item From List
-        restore: Add Item To List
-      order: Sort List
-      restore: Restore List
-      save: Save List
+        remove: Remove Item From Task
+        restore: Add Item To Task
+      order: Sort Task
+      restore: Restore Task
+      save: Save Task
     item:
       create: Create Items
       delete: Delete Items
