@@ -13,6 +13,7 @@ const { isValidImage } = require('../../image')
 const lazy = require('./tree')
 const cx = require('classnames')
 const { last, noop, restrict } = require('../../common/util')
+const {  Tooltip, Icon } = require('antd')
 
 const {
   arrayOf, bool, func, number, object, shape, string
@@ -241,6 +242,9 @@ class ListNode extends React.PureComponent {
             onCancel={this.props.onEditCancel}
             onChange={this.handleChange}/>
         </div>
+        <span style={{ float: 'right' }}><Tooltip placement="right" title="Assign Works">
+              <Icon type="user-add" size="small"/>
+            </Tooltip></span>
       </div>
     )
   }

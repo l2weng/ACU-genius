@@ -15,6 +15,7 @@ const { has, last } = require('../../common/util')
 const { match } = require('../../keymap')
 const { testFocusChange } = require('../../dom')
 const actions = require('../../actions')
+const {  Tooltip, Icon } = require('antd')
 
 const {
   bool, shape, string, object, arrayOf, func, number
@@ -269,7 +270,9 @@ class ProjectSidebar extends React.PureComponent {
                 </ol>
               </nav>
 
-              <h3><FormattedMessage id="sidebar.lists"/></h3>
+              <h3><FormattedMessage id="sidebar.lists"/><span style={{ float: 'right' }}><Tooltip placement="right" title="Add Tasks">
+                <Icon type="plus-circle-o" size="small"/>
+              </Tooltip></span></h3>
               <nav>
                 {root &&
                   <ListTree
@@ -304,7 +307,9 @@ class ProjectSidebar extends React.PureComponent {
             </section>
 
             <section>
-              <h2><FormattedMessage id="sidebar.tags"/></h2>
+              <h2><FormattedMessage id="sidebar.tags"/><span style={{ float: 'right' }}><Tooltip placement="right" title="Add Sku">
+                <Icon type="plus-circle-o" size="small"/>
+              </Tooltip></span></h2>
               <ProjectTags
                 keymap={this.props.keymap.TagList}
                 selection={this.props.tagSelection}
