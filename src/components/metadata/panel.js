@@ -255,7 +255,6 @@ class MetadataPanel extends PureComponent {
           tabIndex={this.tabIndex}
           onBlur={this.props.onBlur}
           onKeyDown={this.handleKeyDown}>
-          {this.renderItemFields()}
           {this.renderPhotoFields()}
           {this.renderSelectionFields()}
         </div>
