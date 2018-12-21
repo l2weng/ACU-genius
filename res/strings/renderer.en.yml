@@ -1,7 +1,7 @@
 en:
   sidebar:
     lists: Tasks
-    tags: Tags
+    tags: Skus
     imports: Last Import
     trash: Deleted Items
   toolbar:
@@ -24,12 +24,12 @@ en:
           other {# Items}}
       selection: Selection
     tags:
-      tab: Tags
+      tab: Skus
       add: >
         {count, plural,
-          =0 {Add Tag}
-          one {Add Tag to 1 Item}
-          other {Add Tag to # Items}}
+          =0 {Add Sku}
+          one {Add Sku to 1 Item}
+          other {Add Sku to # Items}}
     photo:
       title: >
         {count, plural,
@@ -293,9 +293,9 @@ en:
       restore: Restore Items
       save: Save Item
       tag:
-        create: Tag
-        toggle: Tag
-        clear: Clear Tags
+        create: Sku
+        toggle: Sku
+        clear: Clear Skus
     metadata:
       save: Save Metadata
     ontology:

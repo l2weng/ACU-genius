@@ -27,7 +27,7 @@ de:
     - label: 'Delete List'
       command: 'app:delete-list'
     tags: &tags
-    - label: 'New Tag'
+    - label: 'New Sku'
       command: 'app:create-tag'
     tag: &tag
     - label: 'Tag Color'

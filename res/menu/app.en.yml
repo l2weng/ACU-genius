@@ -16,7 +16,7 @@ en:
             - label: 'List'
               command: 'app:create-list'
               accelerator: 'CmdOrCtrl+Shift+L'
-            - label: 'Tag'
+            - label: 'Sku'
               command: 'app:create-tag'
               accelerator: 'CmdOrCtrl+Shift+A'
         - type: 'separator'

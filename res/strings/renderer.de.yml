@@ -317,9 +317,9 @@ de:
       restore: Restore Items
       save: Save Item
       tag:
-        create: Tag
-        toggle: Tag
-        clear: Clear Tags
+        create: Sku
+        toggle: Sku
+        clear: Clear Skus
     metadata:
       save: Save Metadata
     ontology:
