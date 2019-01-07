@@ -102,7 +102,7 @@ function *setup(db, project) {
     put(act.photo.load()),
     put(act.metadata.load()),
     put(act.selection.load()),
-    put(act.note.load())
+    // put(act.note.load())
   ])
 
   yield call(search, db)

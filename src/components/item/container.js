@@ -56,33 +56,33 @@ class ItemContainer extends React.PureComponent {
           margin={38}
           min={ESPER.MIN_HEIGHT}>
           <Esper {...this.props.view}
-                 cache={this.props.cache}
-                 mode={this.props.view.mode || this.props.settings.zoomMode}
-                 hasOverlayToolbar={this.props.settings.overlayToolbars}
-                 invertScroll={this.props.settings.invertScroll}
-                 invertZoom={this.props.settings.invertZoom}
-                 isDisabled={this.props.isDisabled}
-                 isItemOpen={this.props.isOpen}
-                 isPanelVisible={this.props.esper.panel}
-                 keymap={this.props.keymap.Esper}
-                 photo={this.props.photo}
-                 selection={this.props.selection}
-                 selections={this.props.selections}
-                 tool={this.props.esper.tool}
-                 onChange={this.handleEsperChange}
-                 onPhotoError={this.props.onPhotoError}
-                 onSelect={this.props.onPhotoSelect}
-                 onSelectionCreate={this.props.onSelectionCreate}/>
+            cache={this.props.cache}
+            mode={this.props.view.mode || this.props.settings.zoomMode}
+            hasOverlayToolbar={this.props.settings.overlayToolbars}
+            invertScroll={this.props.settings.invertScroll}
+            invertZoom={this.props.settings.invertZoom}
+            isDisabled={this.props.isDisabled}
+            isItemOpen={this.props.isOpen}
+            isPanelVisible={this.props.esper.panel}
+            keymap={this.props.keymap.Esper}
+            photo={this.props.photo}
+            selection={this.props.selection}
+            selections={this.props.selections}
+            tool={this.props.esper.tool}
+            onChange={this.handleEsperChange}
+            onPhotoError={this.props.onPhotoError}
+            onSelect={this.props.onPhotoSelect}
+            onSelectionCreate={this.props.onSelectionCreate}/>
         </BufferedResizable>
-        <NotePad {...this.props.notepad}
-                 ref={this.setNotePad}
-                 note={this.props.note}
-                 isDisabled={this.props.isDisabled || !this.props.photo}
-                 isItemOpen={this.props.isOpen}
-                 keymap={this.props.keymap.NotePad}
-                 onChange={this.props.onNoteChange}
-                 onCommit={this.props.onNoteCommit}
-                 onContextMenu={this.props.onContextMenu}/>
+        {/*<NotePad {...this.props.notepad}*/}
+                 {/*ref={this.setNotePad}*/}
+                 {/*note={this.props.note}*/}
+                 {/*isDisabled={this.props.isDisabled || !this.props.photo}*/}
+                 {/*isItemOpen={this.props.isOpen}*/}
+                 {/*keymap={this.props.keymap.NotePad}*/}
+                 {/*onChange={this.props.onNoteChange}*/}
+                 {/*onCommit={this.props.onNoteCommit}*/}
+                 {/*onContextMenu={this.props.onContextMenu}/>*/}
       </div>
     )
   }

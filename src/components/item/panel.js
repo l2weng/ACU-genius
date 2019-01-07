@@ -3,9 +3,10 @@
 const React = require('react')
 const { ItemToolbar } = require('./toolbar')
 const { ItemTabHeader, ItemTabBody } = require('./tab')
-const { NotePanel } = require('../note')
+// const { NotePanel } = require('../note')
 const { PanelGroup, Panel } = require('../panel')
 const { PhotoPanel } = require('../photo')
+const { ReferencePanel } = require('../reference')
 const cx = require('classnames')
 const { get } = require('../../common/util')
 const { keys } = Object
@@ -69,16 +70,16 @@ class ItemPanel extends React.PureComponent {
       expanded,
       activeSelection,
       keymap,
-      note,
-      notes,
+      // note,
+      // notes,
       panel,
       photo,
       selections,
       isDisabled,
       isItemOpen,
       onItemPreview,
-      onNoteCreate,
-      onNoteSelect,
+      // onNoteCreate,
+      // onNoteSelect,
       onPhotoContract,
       onPhotoDelete,
       onPhotoError,
@@ -105,46 +106,66 @@ class ItemPanel extends React.PureComponent {
             tab={panel.tab}
             onChange={this.handleTabChange}/>
           <ItemTabBody {...props}
-                       tab={panel.tab}
-                       isDisabled={isDisabled}
-                       isItemOpen={isItemOpen}
-                       keymap={keymap}
-                       setPanel={this.setPanel}
-                       onBlur={this.handleFirstPanelBlur}
-                       onFocus={this.handleFirstPanelFocus}/>
+            tab={panel.tab}
+            isDisabled={isDisabled}
+            isItemOpen={isItemOpen}
+            keymap={keymap}
+            setPanel={this.setPanel}
+            onBlur={this.handleFirstPanelBlur}
+            onFocus={this.handleFirstPanelFocus}/>
         </Panel>
 
         <PhotoPanel {...props}
-                    isDisabled={isDisabled || !item || hasMultipleItems}
-                    isItemOpen={isItemOpen}
-                    edit={edit}
-                    expanded={expanded}
-                    keymap={keymap}
-                    zoom={panel.zoom}
-                    current={photo && photo.id}
-                    selection={activeSelection}
-                    selections={selections}
-                    onContract={onPhotoContract}
-                    onCreate={this.handlePhotoCreate}
-                    onDelete={onPhotoDelete}
-                    onError={onPhotoError}
-                    onExpand={onPhotoExpand}
-                    onItemPreview={onItemPreview}
-                    onSelect={onPhotoSelect}
-                    onSort={onPhotoSort}
-                    onSelectionSort={onSelectionSort}
-                    onZoomChange={this.handleZoomChange}/>
+          isDisabled={isDisabled || !item || hasMultipleItems}
+          isItemOpen={isItemOpen}
+          edit={edit}
+          expanded={expanded}
+          keymap={keymap}
+          zoom={panel.zoom}
+          current={photo && photo.id}
+          selection={activeSelection}
+          selections={selections}
+          onContract={onPhotoContract}
+          onCreate={this.handlePhotoCreate}
+          onDelete={onPhotoDelete}
+          onError={onPhotoError}
+          onExpand={onPhotoExpand}
+          onItemPreview={onItemPreview}
+          onSelect={onPhotoSelect}
+          onSort={onPhotoSort}
+          onSelectionSort={onSelectionSort}
+          onZoomChange={this.handleZoomChange}/>
+        <ReferencePanel {...props}
+          isDisabled={isDisabled || !item || hasMultipleItems}
+          isItemOpen={isItemOpen}
+          edit={edit}
+          expanded={expanded}
+          keymap={keymap}
+          zoom={panel.zoom}
+          current={photo && photo.id}
+          selection={activeSelection}
+          selections={selections}
+          onContract={onPhotoContract}
+          onCreate={this.handlePhotoCreate}
+          onDelete={onPhotoDelete}
+          onError={onPhotoError}
+          onExpand={onPhotoExpand}
+          onItemPreview={onItemPreview}
+          onSelect={onPhotoSelect}
+          onSort={onPhotoSort}
+          onSelectionSort={onSelectionSort}
+          onZoomChange={this.handleZoomChange}/>
 
-        <NotePanel {...props}
-                   isDisabled={isDisabled || !photo || !item || hasMultipleItems}
-                   isItemOpen={isItemOpen}
-                   item={item && item.id}
-                   keymap={keymap.NoteList}
-                   photo={photo && photo.id}
-                   notes={notes}
-                   selection={note}
-                   onCreate={onNoteCreate}
-                   onSelect={onNoteSelect}/>
+        {/*<NotePanel {...props}*/}
+        {/*isDisabled={isDisabled || !photo || !item || hasMultipleItems}*/}
+        {/*isItemOpen={isItemOpen}*/}
+        {/*item={item && item.id}*/}
+        {/*keymap={keymap.NoteList}*/}
+        {/*photo={photo && photo.id}*/}
+        {/*notes={notes}*/}
+        {/*selection={note}*/}
+        {/*onCreate={onNoteCreate}*/}
+        {/*onSelect={onNoteSelect}/>*/}
       </PanelGroup>
     )
   }
