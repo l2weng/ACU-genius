@@ -38,6 +38,14 @@ en:
           other {# Photos}}
       create: Add Photos
       selection: Selection
+    reference:
+      title: >
+        {count, plural,
+          =0 {No References}
+          one {1 Reference}
+          other {# References}}
+      create: Add References
+      selection: Selection
     note:
       title: >
         {count, plural,

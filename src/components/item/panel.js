@@ -87,12 +87,13 @@ class ItemPanel extends React.PureComponent {
       onPhotoSelect,
       onPhotoSort,
       onSelectionSort,
+      references,
       ...props
     } = this.props
 
     const hasMultipleItems = this.props.items.length > 1
     const item = hasMultipleItems ? null : this.props.items[0]
-
+    console.log(this.props)
     return (
       <PanelGroup
         slots={panel.slots}
@@ -143,6 +144,7 @@ class ItemPanel extends React.PureComponent {
           keymap={keymap}
           zoom={panel.zoom}
           current={photo && photo.id}
+          references={references}
           selection={activeSelection}
           selections={selections}
           onContract={onPhotoContract}
@@ -180,6 +182,7 @@ class ItemPanel extends React.PureComponent {
     isDisabled: bool.isRequired,
     isItemOpen: bool.isRequired,
     items: array.isRequired,
+    references: array.isRequired,
 
     note: object,
     notes: array.isRequired,

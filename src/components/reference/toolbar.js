@@ -34,7 +34,7 @@ class PhotoToolbar extends PureComponent {
           <IconPhoto/>
           <h4>
             <FormattedMessage
-              id="panel.photo.title"
+              id="panel.reference.title"
               values={{ count: photos }}/>
           </h4>
         </div>

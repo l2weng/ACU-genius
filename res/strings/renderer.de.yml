@@ -38,6 +38,14 @@ de:
           other {# Photos}}
       create: Add Photos
       selection: Selection
+    reference:
+      title: >
+        {count, plural,
+          =0 {没有参考图}
+          one {1 参考图}
+          other {# 参考图}}
+      create: 添加参考图
+      selection: Selection
     note:
       title: >
         {count, plural,

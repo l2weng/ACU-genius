@@ -226,6 +226,7 @@ class ProjectContainer extends Component {
       selection,
       selections,
       ui,
+      references,
       showProject,
       ...props
     } = this.props
@@ -253,6 +254,7 @@ class ProjectContainer extends Component {
           activeSelection={nav.selection}
           selections={selections}
           note={note}
+          references={references}
           notes={notes}
           photo={photo}
           photos={visiblePhotos}
@@ -318,7 +320,9 @@ class ProjectContainer extends Component {
     notes: arrayOf(
       shape({ id: number.isRequired })
     ),
-
+    references: arrayOf(
+      shape({ id: number.isRequired })
+    ),
     nav: shape({
       mode: oneOf(values(MODE)).isRequired
     }).isRequired,

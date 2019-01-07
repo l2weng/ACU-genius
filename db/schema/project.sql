@@ -140,6 +140,16 @@ CREATE TABLE tags (
   CHECK (name != ''),
   UNIQUE (name)
 );
+CREATE TABLE reference_photos (
+  reference_id      INTEGER  PRIMARY KEY AUTOINCREMENT,
+  tag_id           INTEGER  NOT NULL REFERENCES tags ON DELETE CASCADE,
+  path         TEXT     NOT NULL,
+  checksum     TEXT     NOT NULL,
+  orientation  INTEGER  NOT NULL DEFAULT 1,
+  created      NUMERIC  NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  modified     NUMERIC  NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CHECK (orientation > 0 AND orientation < 9)
+);
 CREATE TABLE taggings (
   tag_id     INTEGER  NOT NULL REFERENCES tags ON DELETE CASCADE,
   id         INTEGER  NOT NULL REFERENCES subjects ON DELETE CASCADE,
