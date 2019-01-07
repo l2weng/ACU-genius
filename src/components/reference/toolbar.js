@@ -22,12 +22,12 @@ class PhotoToolbar extends PureComponent {
     const {
       hasCreateButton,
       isDisabled,
+      enableReference,
       photos,
       zoom,
       maxZoom,
       onZoomChange
     } = this.props
-
     return (
       <Toolbar isDraggable={false}>
         <div className="toolbar-left">
@@ -45,7 +45,7 @@ class PhotoToolbar extends PureComponent {
               <ToolGroup>
                 <Button
                   icon={<IconPlus/>}
-                  isDisabled={!this.props.canCreate}
+                  isDisabled={!this.props.enableReference}
                   title="panel.photo.create"
                   onClick={this.handleCreate}/>
               </ToolGroup>
@@ -68,6 +68,7 @@ class PhotoToolbar extends PureComponent {
 
   static propTypes = {
     canCreate: bool,
+    enableReference:bool,
     hasCreateButton: bool,
     isDisabled: bool,
     maxZoom: number.isRequired,

@@ -30,6 +30,7 @@ class ReferencePanel extends Panel {
   renderToolbar() {
     return (
       <PhotoToolbar
+        enableReference={this.props.enableReference}
         photos={this.props.photos.length}
         zoom={this.props.zoom}
         maxZoom={PHOTO.ZOOM.length - 1}
@@ -83,6 +84,7 @@ class ReferencePanel extends Panel {
     canDrop: bool,
     isClosed: bool,
     isDisabled: bool,
+    enableReference: bool,
     isOver: bool,
     current: number,
     photos: array.isRequired,

@@ -174,11 +174,11 @@ class ItemView extends PureComponent {
       onPanelDragStop,
       isProjectClosing,
       isTrashSelected,
+      enableReference,
       ...props
     } = this.props
 
     const { isItemOpen } = this
-
     return (
       <section className="item-view" style={this.style}>
         <Resizable
@@ -195,6 +195,7 @@ class ItemView extends PureComponent {
             keymap={keymap}
             selections={selections}
             isItemOpen={isItemOpen}
+            enableReference={enableReference}
             isDisabled={isTrashSelected || isProjectClosing}
             onNoteCreate={this.handleNoteCreate}/>
         </Resizable>
@@ -231,6 +232,7 @@ class ItemView extends PureComponent {
     selections: object.isRequired,
     isModeChanging: bool.isRequired,
     isTrashSelected: bool.isRequired,
+    enableReference: bool.isRequired,
     isProjectClosing: bool.isRequired,
 
     onNoteCreate: func.isRequired,

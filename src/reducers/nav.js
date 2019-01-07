@@ -92,6 +92,7 @@ module.exports = {
           photo: payload.photo,
           selection: payload.selection,
           note: payload.note,
+          enableReference: false,
           items: select(state.items, payload.items, meta.mod)
         }
 
@@ -122,6 +123,7 @@ module.exports = {
           ...reset,
           trash: null,
           imports: null,
+          enableReference: true,
           tags: select(state.tags, [payload], meta.mod)
         }
 
@@ -131,7 +133,8 @@ module.exports = {
           photo: payload.photo,
           selection: payload.selection,
           note: payload.note,
-          items: [payload.item]
+          items: [payload.item],
+          enableReference: false,
         } : { ...state, photo: null, selection: null }
 
       case NOTE.SELECT:
@@ -140,7 +143,8 @@ module.exports = {
           items: [payload.item],
           photo: payload.photo,
           selection: payload.selection,
-          note: payload.note
+          note: payload.note,
+          enableReference: false,
         } : { ...state, note: null }
 
       case ITEM.PHOTO.REMOVE:
@@ -156,6 +160,7 @@ module.exports = {
           list: null,
           trash: null,
           imports: null,
+          enableReference: false,
           tags: [],
           ...payload
         }

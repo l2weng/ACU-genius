@@ -210,7 +210,6 @@ class ProjectContainer extends Component {
   }
   render() {
     if (this.state.isClosed) return this.renderNoProject()
-
     const {
       columns,
       data,
@@ -226,7 +225,6 @@ class ProjectContainer extends Component {
       selection,
       selections,
       ui,
-      references,
       showProject,
       ...props
     } = this.props
@@ -254,8 +252,8 @@ class ProjectContainer extends Component {
           activeSelection={nav.selection}
           selections={selections}
           note={note}
-          references={references}
           notes={notes}
+          enableReference={nav.enableReference || false}
           photo={photo}
           photos={visiblePhotos}
           panel={ui.panel}
