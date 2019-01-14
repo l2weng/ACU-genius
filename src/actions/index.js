@@ -31,5 +31,6 @@ module.exports = {
   storage: require('./storage'),
   tag: require('./tag'),
   ui: require('./ui'),
+  references: require('./references'),
   wizard: require('./wizard')
 }

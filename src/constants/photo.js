@@ -9,6 +9,7 @@ module.exports = {
   EXPAND: 'photo.expand',
   INSERT: 'photo.insert',
   LOAD: 'photo.load',
+  LOADREFERENCE: 'photo.loadReference',
   MOVE: 'photo.move',
   ORDER: 'photo.order',
   RESTORE: 'photo.restore',

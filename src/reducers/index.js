@@ -25,5 +25,6 @@ module.exports = {
   ...require('./sidebar'),
   ...require('./tags'),
   ...require('./ui'),
+  ...require('./references'),
   ...require('./wizard')
 }

@@ -36,5 +36,6 @@ module.exports = {
   TYPE: require('./type'),
   UI: require('./ui'),
   WIZARD: require('./wizard'),
+  REFERENCES: require('./references'),
   ...require('./rdf')
 }

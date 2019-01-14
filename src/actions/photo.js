@@ -86,6 +86,14 @@ module.exports = {
     }
   },
 
+  loadReference(payload, meta) {
+    return {
+      type: PHOTO.LOADREFERENCE,
+      payload,
+      meta: { cmd: 'project', ...meta }
+    }
+  },
+
   insert(payload, meta) {
     return {
       type: PHOTO.INSERT,

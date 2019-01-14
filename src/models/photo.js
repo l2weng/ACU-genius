@@ -153,7 +153,47 @@ module.exports = {
       )
     ])
 
+    console.log(photos)
     return photos
+  },
+
+  async loadReference(db, tagId, { base } = {}) {
+    const references = {}
+
+    await all([
+      db.each(`SELECT
+       id,
+       angle,
+       mirror,
+       negative,
+       brightness,
+       contrast,
+       hue,
+       saturation,
+       width,
+       height,
+       path,
+       size,
+       protocol,
+       mimetype,
+       checksum,
+       orientation,
+       tag_id
+FROM photos
+       JOIN images USING (id) WHERE tag_id notnull`,
+        ({ id, mirror, negative, path, ...data }) => {
+          data.mirror = !!mirror
+          data.negative = !!negative
+          data.path = (base) ? resolve(base, normalize(path)) : path
+
+          if (id in references) assign(references[id], data)
+          else references[id] = assign(skel(id), data)
+        }
+      ),
+
+    ])
+    console.log(references)
+    return references
   },
 
   find(db, { checksum }) {

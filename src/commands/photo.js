@@ -276,6 +276,21 @@ class Load extends Command {
   }
 }
 
+class LoadReference extends Command {
+  static get ACTION() { return PHOTO.LOAD }
+
+  *exec() {
+    const { db } = this.options
+    const { payload } = this.action
+    const { project } = yield select()
+
+    const photos = yield call(db.seq, conn =>
+      mod.photo.loadReference(conn, payload, project))
+
+    return photos
+  }
+}
+
 class Move extends Command {
   static get ACTION() { return PHOTO.MOVE }
 
@@ -396,5 +411,6 @@ module.exports = {
   Move,
   Order,
   Restore,
+  LoadReference,
   Save
 }
