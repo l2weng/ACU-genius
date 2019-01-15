@@ -100,7 +100,7 @@ function *setup(db, project) {
     put(act.tag.load()),
     put(act.item.load()),
     put(act.photo.load()),
-    put(act.references.loadReference()),
+    put(act.references.load()),
     put(act.metadata.load()),
     put(act.selection.load()),
     // put(act.note.load())

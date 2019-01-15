@@ -4,7 +4,7 @@ const { REFERENCES, PHOTO } = require('../constants')
 
 module.exports = {
 
-  loadReference(payload, meta) {
+  load(payload, meta) {
     return {
       type: PHOTO.LOADREFERENCE,
       payload,
@@ -26,6 +26,6 @@ module.exports = {
       payload,
       meta: { ...meta }
     }
-  },
+  }
 
 }

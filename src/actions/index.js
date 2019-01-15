@@ -24,6 +24,7 @@ module.exports = {
   project: require('./project'),
   properties: require('./properties'),
   qr: require('./qr'),
+  references: require('./references'),
   settings: require('./settings'),
   selection: require('./selection'),
   shell: require('./shell'),
@@ -31,6 +32,5 @@ module.exports = {
   storage: require('./storage'),
   tag: require('./tag'),
   ui: require('./ui'),
-  references: require('./references'),
   wizard: require('./wizard')
 }

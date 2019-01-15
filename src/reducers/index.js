@@ -20,11 +20,11 @@ module.exports = {
   ...require('./prefs'),
   ...require('./project'),
   ...require('./qr'),
+  ...require('./references'),
   ...require('./selections'),
   ...require('./settings'),
   ...require('./sidebar'),
   ...require('./tags'),
   ...require('./ui'),
-  ...require('./references'),
   ...require('./wizard')
 }

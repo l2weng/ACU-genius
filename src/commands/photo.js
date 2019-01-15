@@ -277,7 +277,7 @@ class Load extends Command {
 }
 
 class LoadReference extends Command {
-  static get ACTION() { return PHOTO.LOAD }
+  static get ACTION() { return PHOTO.LOADREFERENCE }
 
   *exec() {
     const { db } = this.options

@@ -114,7 +114,7 @@ module.exports = {
           FROM subjects
             JOIN images USING (id)
             JOIN photos USING (id)${
-          ids != null ? ` WHERE id IN (${ids})` : ''
+            ids != null ? ` WHERE id IN (${ids}) and tag_id isnull` : ' where tag_id isnull'
         }`,
         ({ id, created, modified, mirror, negative, path, ...data }) => {
           data.created = new Date(created)
@@ -153,7 +153,6 @@ module.exports = {
       )
     ])
 
-    console.log(photos)
     return photos
   },
 
@@ -192,7 +191,6 @@ FROM photos
       ),
 
     ])
-    console.log(references)
     return references
   },
 

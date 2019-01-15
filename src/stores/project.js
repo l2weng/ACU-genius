@@ -26,12 +26,12 @@ const {
   notepad,
   ontology,
   photos,
+  references,
   project,
   qr,
   selections,
   settings,
   sidebar,
-  references,
   tags,
   ui
 } = require('../reducers')
@@ -69,11 +69,11 @@ module.exports = {
       photos,
       project,
       qr,
+      references,
       selections,
       settings,
       sidebar,
       tags,
-      references,
       ui
     })
 

@@ -1,6 +1,6 @@
 'use strict'
 
-const { PHOTO, PROJECT } = require('../constants')
+const { PROJECT,PHOTO } = require('../constants')
 const { load  } = require('./util')
 
 module.exports = {
@@ -12,7 +12,6 @@ module.exports = {
 
       case PHOTO.LOADREFERENCE:
         return load(state, payload, meta, error)
-
 
       default:
         return state

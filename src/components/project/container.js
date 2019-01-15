@@ -226,8 +226,10 @@ class ProjectContainer extends Component {
       selections,
       ui,
       showProject,
+      references,
       ...props
     } = this.props
+    console.log(references)
     const mainProject = dt(
       <div style={{ height: '100%' }}
         className={cx(this.classes)}
@@ -318,9 +320,7 @@ class ProjectContainer extends Component {
     notes: arrayOf(
       shape({ id: number.isRequired })
     ),
-    references: arrayOf(
-      shape({ id: number.isRequired })
-    ),
+    references: object.isRequired,
     nav: shape({
       mode: oneOf(values(MODE)).isRequired
     }).isRequired,
@@ -406,6 +406,7 @@ module.exports = {
       notes: getVisibleNotes(state),
       photo: getSelectedPhoto(state),
       photos: state.photos,
+      references: state.references,
       visiblePhotos: getVisiblePhotos(state),
       project: state.project,
       properties: state.ontology.props,
