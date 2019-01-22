@@ -88,6 +88,7 @@ class ItemPanel extends React.PureComponent {
       onPhotoSort,
       onSelectionSort,
       enableReference,
+      references,
       ...props
     } = this.props
     const hasMultipleItems = this.props.items.length > 1
@@ -134,27 +135,28 @@ class ItemPanel extends React.PureComponent {
           onSort={onPhotoSort}
           onSelectionSort={onSelectionSort}
           onZoomChange={this.handleZoomChange}/>
-        <ReferencePanel {...props}
-          isDisabled={isDisabled || !item || hasMultipleItems}
-          enableReference={enableReference}
-          isItemOpen={isItemOpen}
-          edit={edit}
-          expanded={expanded}
-          keymap={keymap}
-          zoom={panel.zoom}
-          current={photo && photo.id}
-          selection={activeSelection}
-          selections={selections}
-          onContract={onPhotoContract}
-          onCreate={this.handlePhotoCreate}
-          onDelete={onPhotoDelete}
-          onError={onPhotoError}
-          onExpand={onPhotoExpand}
-          onItemPreview={onItemPreview}
-          onSelect={onPhotoSelect}
-          onSort={onPhotoSort}
-          onSelectionSort={onSelectionSort}
-          onZoomChange={this.handleZoomChange}/>
+        {/*<ReferencePanel {...props}*/}
+          {/*isDisabled={isDisabled || !item || hasMultipleItems}*/}
+          {/*enableReference={enableReference}*/}
+          {/*isItemOpen={isItemOpen}*/}
+          {/*edit={edit}*/}
+          {/*expanded={expanded}*/}
+          {/*keymap={keymap}*/}
+          {/*zoom={panel.zoom}*/}
+          {/*references={references}*/}
+          {/*current={photo && photo.id}*/}
+          {/*selection={activeSelection}*/}
+          {/*selections={selections}*/}
+          {/*onContract={onPhotoContract}*/}
+          {/*onCreate={this.handlePhotoCreate}*/}
+          {/*onDelete={onPhotoDelete}*/}
+          {/*onError={onPhotoError}*/}
+          {/*onExpand={onPhotoExpand}*/}
+          {/*onItemPreview={onItemPreview}*/}
+          {/*onSelect={onPhotoSelect}*/}
+          {/*onSort={onPhotoSort}*/}
+          {/*onSelectionSort={onSelectionSort}*/}
+          {/*onZoomChange={this.handleZoomChange}/>*/}
 
         {/*<NotePanel {...props}*/}
         {/*isDisabled={isDisabled || !photo || !item || hasMultipleItems}*/}
@@ -185,6 +187,7 @@ class ItemPanel extends React.PureComponent {
     note: object,
     notes: array.isRequired,
     selections: object.isRequired,
+    references: array.isRequired,
 
     panel: shape({
       slots: array.isRequired,

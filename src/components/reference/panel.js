@@ -1,7 +1,7 @@
 'use strict'
 
 const React = require('react')
-const { array, bool, number, func } = require('prop-types')
+const { array, bool, number, func, object } = require('prop-types')
 const { DropTarget } = require('react-dnd')
 const { NativeTypes } = require('react-dnd-electron-backend')
 const { Panel } = require('../panel')
@@ -31,20 +31,19 @@ class ReferencePanel extends Panel {
     return (
       <PhotoToolbar
         enableReference={this.props.enableReference}
-        photos={this.props.photos.length}
         zoom={this.props.zoom}
         maxZoom={PHOTO.ZOOM.length - 1}
         onZoomChange={this.props.onZoomChange}
+        references={this.props.references}
         hasCreateButton
         canCreate={!this.props.isDisabled && !this.props.isClosed}
-        isDisabled={this.props.isClosed || !this.props.photos.length}
+        isDisabled={this.props.isClosed || !this.props.references.length}
         onCreate={this.props.onCreate}/>
     )
   }
 
   renderContent() {
     const { onDelete, onEdit, onMetadataSave, zoom } = this.props
-
     const props = {
       ...this.props,
       size: PHOTO.ZOOM[zoom],
@@ -55,8 +54,8 @@ class ReferencePanel extends Panel {
       onEdit,
       onFocus: this.handleNestedTabFocus
     }
-
     const PhotoIterator = zoom ? PhotoGrid : PhotoList
+    // const PhotoIterator = PhotoGrid
 
     return (
       <PhotoIterator {...pick(props, PhotoIterator.getPropKeys())}/>
@@ -70,7 +69,6 @@ class ReferencePanel extends Panel {
       'nested-tab-focus': this.state.hasNestedTabFocus,
       'has-active': this.props.current != null
     }
-
     return (
       <section className={cx('photo-panel', 'panel', classes)}>
         {this.renderHeader(toolbar)}
@@ -96,7 +94,8 @@ class ReferencePanel extends Panel {
     onExpand: func.isRequired,
     onEdit: func.isRequired,
     onMetadataSave: func.isRequired,
-    onZoomChange: func.isRequired
+    onZoomChange: func.isRequired,
+    references: array.isRequired,
   }
 }
 

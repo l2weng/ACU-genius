@@ -10,7 +10,7 @@ const { pick } = require('../../common/util')
 const debounce = require('lodash.debounce')
 
 const {
-  arrayOf, bool, func, object, number, shape, string
+  arrayOf, bool, func, object, number, shape, string, array
 } = require('prop-types')
 
 
@@ -175,6 +175,7 @@ class ItemView extends PureComponent {
       isProjectClosing,
       isTrashSelected,
       enableReference,
+      references,
       ...props
     } = this.props
 
@@ -194,6 +195,7 @@ class ItemView extends PureComponent {
             note={this.state.note}
             keymap={keymap}
             selections={selections}
+            references={references}
             isItemOpen={isItemOpen}
             enableReference={enableReference}
             isDisabled={isTrashSelected || isProjectClosing}
@@ -230,6 +232,7 @@ class ItemView extends PureComponent {
     offset: number.isRequired,
     mode: string.isRequired,
     selections: object.isRequired,
+    references: array.isRequired,
     isModeChanging: bool.isRequired,
     isTrashSelected: bool.isRequired,
     enableReference: bool.isRequired,

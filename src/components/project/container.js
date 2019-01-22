@@ -33,11 +33,12 @@ const {
   getSortColumn,
   getVisibleItems,
   getVisibleNotes,
-  getVisiblePhotos
+  getVisiblePhotos,
+  getVisibleReferences
 } = require('../../selectors')
 
 const {
-  arrayOf, oneOf, shape, bool, object, func, string, number
+  arrayOf, oneOf, shape, bool, object, func, string, number, array
 } = require('prop-types')
 
 
@@ -229,7 +230,6 @@ class ProjectContainer extends Component {
       references,
       ...props
     } = this.props
-    console.log(references)
     const mainProject = dt(
       <div style={{ height: '100%' }}
         className={cx(this.classes)}
@@ -255,6 +255,7 @@ class ProjectContainer extends Component {
           selections={selections}
           note={note}
           notes={notes}
+          references={references}
           enableReference={nav.enableReference || false}
           photo={photo}
           photos={visiblePhotos}
@@ -320,7 +321,9 @@ class ProjectContainer extends Component {
     notes: arrayOf(
       shape({ id: number.isRequired })
     ),
-    references: object.isRequired,
+    references: arrayOf(
+      shape({ id: number.isRequired })
+    ).isRequired,
     nav: shape({
       mode: oneOf(values(MODE)).isRequired
     }).isRequired,
@@ -406,7 +409,7 @@ module.exports = {
       notes: getVisibleNotes(state),
       photo: getSelectedPhoto(state),
       photos: state.photos,
-      references: state.references,
+      references: getVisibleReferences(state),
       visiblePhotos: getVisiblePhotos(state),
       project: state.project,
       properties: state.ontology.props,

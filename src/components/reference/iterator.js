@@ -9,7 +9,7 @@ const { ceil, floor, min } = Math
 const { on, off } = require('../../dom')
 
 const {
-  arrayOf, bool, func, number, object, string, shape
+  arrayOf, bool, func, number, object, string, shape, array
 } = require('prop-types')
 
 const byIdx = ([a], [b]) => (a < b) ? -1 : (a > b) ? 1 : 0
@@ -282,7 +282,7 @@ class PhotoIterator extends Iterator {
     selection: number,
     selections: object.isRequired,
     size: number.isRequired,
-
+    references: array.isRequired,
     isItemOpen: bool,
     isDisabled: bool,
     isOver: bool,

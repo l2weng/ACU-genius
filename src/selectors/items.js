@@ -1,13 +1,16 @@
 'use strict'
 
 const { createSelector: memo } = require('reselect')
-const { pluck } = require('./util')
+const { pluck, pluckSku } = require('./util')
 const EMPTY = {}
 
 const getItems = ({ items }) => items
 
 const getSelectedItems = memo(
   ({ items }) => items, ({ nav }) => (nav.items), pluck
+)
+const getSkuItems = memo(
+  ({ items }) => items, ({ nav }) => (nav.items), pluckSku
 )
 
 const getVisibleItems = memo(
@@ -32,6 +35,7 @@ const getSelectedItemTemplate = memo(
 
 module.exports = {
   getItems,
+  getSkuItems,
   getListHold,
   getSelectedItems,
   getSelectedItemTemplate,

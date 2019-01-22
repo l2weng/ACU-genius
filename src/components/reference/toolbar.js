@@ -6,7 +6,7 @@ const { FormattedMessage } = require('react-intl')
 const { Toolbar, ToolGroup } = require('../toolbar')
 const { Slider } = require('../slider')
 const { Button } = require('../button')
-const { number, bool, func } = require('prop-types')
+const { number, bool, func, array } = require('prop-types')
 
 const {
   IconPhoto, IconPlus, IconListSmall, IconGridSmall
@@ -23,10 +23,10 @@ class PhotoToolbar extends PureComponent {
       hasCreateButton,
       isDisabled,
       enableReference,
-      photos,
       zoom,
       maxZoom,
-      onZoomChange
+      onZoomChange,
+      references
     } = this.props
     return (
       <Toolbar isDraggable={false}>
@@ -35,7 +35,7 @@ class PhotoToolbar extends PureComponent {
           <h4>
             <FormattedMessage
               id="panel.reference.title"
-              values={{ count: photos }}/>
+              values={{ count: references.length }}/>
           </h4>
         </div>
 
@@ -45,7 +45,7 @@ class PhotoToolbar extends PureComponent {
               <ToolGroup>
                 <Button
                   icon={<IconPlus/>}
-                  isDisabled={!this.props.enableReference}
+                  isDisabled={!enableReference}
                   title="panel.photo.create"
                   onClick={this.handleCreate}/>
               </ToolGroup>
@@ -57,7 +57,7 @@ class PhotoToolbar extends PureComponent {
               size="sm"
               minIcon={<IconListSmall/>}
               maxIcon={<IconGridSmall/>}
-              isDisabled={isDisabled}
+              isDisabled={false}
               onChange={onZoomChange}/>
           </ToolGroup>
         </div>
@@ -68,11 +68,11 @@ class PhotoToolbar extends PureComponent {
 
   static propTypes = {
     canCreate: bool,
-    enableReference:bool,
+    enableReference: bool,
     hasCreateButton: bool,
     isDisabled: bool,
+    references: array.isRequired,
     maxZoom: number.isRequired,
-    photos: number.isRequired,
     zoom: number.isRequired,
     onCreate: func.isRequired,
     onZoomChange: func.isRequired

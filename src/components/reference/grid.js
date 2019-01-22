@@ -55,7 +55,7 @@ class PhotoGrid extends PhotoIterator {
 
     this.mappedRange = range
 
-    const { photos } = this.props
+    const { references } = this.props
     const { from, to } = range
 
     let out = []
@@ -64,7 +64,7 @@ class PhotoGrid extends PhotoIterator {
     let exp
 
     for (; cur < gap && cur < to; ++cur) {
-      let photo = photos[cur]
+      let photo = references[cur]
 
       if (this.isExpanded(photo)) {
         exp = photo
@@ -79,7 +79,7 @@ class PhotoGrid extends PhotoIterator {
     }
 
     for (; cur < to; ++cur) {
-      let photo = photos[cur]
+      let photo = references[cur]
       out.push(fn(this.getIterableProps(photo, cur)))
     }
 
@@ -169,6 +169,7 @@ class PhotoGrid extends PhotoIterator {
   }
 
   renderSelectionGrid(photo) {
+    console.log(this.props.selections)
     const selections = pluck(this.props.selections, photo.selections)
     const gridColumnEnd = this.state.cols + 1
 

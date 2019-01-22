@@ -18,7 +18,25 @@ const pluck = (data, ids) => {
   res.idx = idx
   return res
 }
+const pluckSku = (data, ids) => {
+  ids = [-1]
+  const idx = {}
+  const res = []
+
+  if (!blank(ids)) {
+    for (const id of ids) {
+      const item = data[id]
+      if (item == null || item.pending) continue
+      idx[id] = res.length
+      res.push(item)
+    }
+  }
+
+  res.idx = idx
+  return res
+}
 
 module.exports = {
-  pluck
+  pluck,
+  pluckSku
 }
