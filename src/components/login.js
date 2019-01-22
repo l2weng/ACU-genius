@@ -3,12 +3,16 @@
 const React = require('react')
 const { PureComponent, Component } = React
 const { injectIntl, intlShape } = require('react-intl')
+const { message } = require('antd')
 const { bool } = require('prop-types')
 const { Toolbar } = require('./toolbar')
+const axios = require('axios')
 const {
   Form, Icon, Input, Button, Checkbox,
 } = require('antd')
 const { RegistrationForm } = require('./user/RegistrationForm')
+const { ipcRenderer: ipc  } = require('electron')
+const { USER } = require('../constants')
 
 const FormItem = Form.Item
 
@@ -18,7 +22,18 @@ class LoginForm extends Component {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values)
+        axios.post('http://127.0.0.1:3000/lr/auth', values)
+        .then(function (response) {
+          if (response.status === 200) {
+            message.success('Login Success', 1, ()=>{
+              console.log(response.data)
+              ipc.send(USER.LOGINED, { data: response.data })
+            })
+          }
+        })
+        .catch(function (error) {
+          message.warning('用户名密码错误, 请重试')
+        })
       }
     })
   }
@@ -28,7 +43,7 @@ class LoginForm extends Component {
     return (
       <Form onSubmit={this.handleSubmit} className="login-form">
         <FormItem>
-          {getFieldDecorator('userName', {
+          {getFieldDecorator('username', {
             rules: [{ required: true, message: 'Please input your username!' }],
           })(
             <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />

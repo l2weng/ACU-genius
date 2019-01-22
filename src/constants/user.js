@@ -1,5 +1,6 @@
 'use strict'
 
 module.exports = {
-  LOGIN: 'user.login'
+  LOGIN: 'user.login',
+  LOGINED: 'user.logined'
 }

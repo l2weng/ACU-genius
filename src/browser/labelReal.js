@@ -790,6 +790,14 @@ class LabelReal extends EventEmitter {
       this.showLogin()
     })
 
+    ipc.on(USER.LOGINED, (_, { data }) => {
+      this.state.userInfo = data
+      if (this.state != null) {
+        this.store.save.sync('state.json', this.state)
+      }
+      if (this.login) this.login.close()
+    })
+
     ipc.on(FLASH.HIDE, (_, { id, confirm }) => {
       if (id === 'update.ready' && confirm) {
         this.updater.install()
