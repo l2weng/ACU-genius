@@ -19,6 +19,8 @@ module.exports = {
         return { ...payload }
       case PROJECT.UPDATE:
         return { ...state, ...payload }
+      case PROJECT.UPDATE_USER_INFO:
+        return { ...state, ...payload }
       case PROJECT.OPEN:
       case PROJECT.CLOSE:
         return { ...state, closing: true }

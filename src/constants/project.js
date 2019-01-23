@@ -12,6 +12,7 @@ module.exports = {
   REBASE: 'project.rebase',
   SAVE: 'project.save',
   UPDATE: 'project.update',
+  UPDATE_USER_INFO: 'project.updateUserInfo',
 
   MODE: {
     HOME: 'home',

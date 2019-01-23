@@ -68,6 +68,14 @@ module.exports = {
       payload,
       meta: { ipc: !!payload.name, ...meta }
     }
+  },
+
+  updateUserInfo(payload, meta = {}) {
+    return {
+      type: PROJECT.UPDATE_USER_INFO,
+      payload,
+      meta: {...meta }
+    }
   }
 
 }
