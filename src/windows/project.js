@@ -7,6 +7,7 @@ const { ready, $ } = require('../dom')
 const { create } = require('../stores/project')
 const { Main } = require('../components/main')
 const { ProjectContainer } = require('../components/project')
+const { UserInfoContainer } = require('../components/user')
 const { main } = require('../sagas/project')
 const { win } = require('../window')
 const act = require('../actions')
@@ -34,7 +35,7 @@ all([
 
     render(
       <Main store={store}>
-        <Tabs defaultActiveKey="3" style={{ height: '100%' }} tabBarExtraContent={userInfo} >
+        <Tabs defaultActiveKey="3" style={{ height: '100%' }} tabBarExtraContent={<UserInfoContainer/>} >
           <TabPane tab={<span><Icon type="home" size="small"/>首页</span>} key="1" className="workplace">
             <Workplace/>
           </TabPane>
