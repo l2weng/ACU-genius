@@ -58,6 +58,7 @@ class LabelReal extends EventEmitter {
     updater: true,
     webgl: true,
     win: {},
+    userInfo:{},
     zoom: 1.0
   }
 
@@ -846,6 +847,7 @@ class LabelReal extends EventEmitter {
       uuid: this.state.uuid,
       update: this.updater.release,
       recent: this.state.recent,
+      userInfo:this.state.userInfo,
       version,
       webgl: this.state.webgl
     }

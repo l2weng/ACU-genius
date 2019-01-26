@@ -3,34 +3,44 @@
 const React = require('react')
 const { Component } = React
 const { connect } = require('react-redux')
-const { ipcRenderer: ipc  } = require('electron')
+const { ipcRenderer: ipc } = require('electron')
 const { USER } = require('../../constants')
 const { Button } = require('antd')
 
-
 const {
-  shape, string
+  shape, string,
 } = require('prop-types')
 
-
 class UserInfoContainer extends Component {
+
+  static propTypes = {
+    project: shape({
+      file: string,
+    }).isRequired,
+  }
+
   constructor(props) {
     super(props)
 
-    this.state = {
+    this.state = {}
+  }
+
+  renderUserInfo() {
+    let { project } = this.props
+    if (project.hasOwnProperty('user')) {
+      return <div>{project.user}</div>
+    }
+    if (ARGS.userInfo) {
+      return <div>{ARGS.userInfo.user.name}</div>
+    } else {
+      return (<Button icon="user" size="small"
+        onClick={() => { ipc.send(USER.LOGIN) }}>用户</Button>)
     }
   }
 
   render() {
-    let { project } = this.props
-    return (<div style={{ paddingRight: '12px' }}>{!project.hasOwnProperty('user') ? <Button icon="user" size="small" onClick={()=>{ ipc.send(USER.LOGIN) }}>用户</Button> : project.user}</div>)
-  }
-
-
-  static propTypes = {
-    project: shape({
-      file: string
-    }).isRequired,
+    return (
+      <div style={{ paddingRight: '12px' }} >{this.renderUserInfo()}</div>)
   }
 }
 
@@ -39,5 +49,5 @@ module.exports = {
     state => ({
       project: state.project,
     }),
-  )(UserInfoContainer)
+  )(UserInfoContainer),
 }

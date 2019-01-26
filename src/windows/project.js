@@ -12,18 +12,14 @@ const { main } = require('../sagas/project')
 const { win } = require('../window')
 const act = require('../actions')
 const dialog = require('../dialog')
-const { Tabs, Button: ButtonAnt, Icon } = require('antd')
+const { Tabs, Icon } = require('antd')
 const TabPane = Tabs.TabPane
 const store = create()
 const tasks = store.saga.run(main)
-const { ipcRenderer: ipc  } = require('electron')
-const { USER } = require('../constants')
 const { Contacts } = require('../components/contacts')
 const { Workplace } = require('../components/workplace')
 
 const { locale, file } = ARGS
-
-const userInfo = <div style={{ paddingRight: '12px' }}><ButtonAnt icon="user" size="small" onClick={()=>{ ipc.send(USER.LOGIN) }}>用户</ButtonAnt></div>
 
 all([
   store.dispatch(act.intl.load({ locale })),
