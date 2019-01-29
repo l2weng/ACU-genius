@@ -26,7 +26,6 @@ class LoginForm extends Component {
         .then(function (response) {
           if (response.status === 200) {
             message.success('Login Success', 1, ()=>{
-              console.log(response.data)
               ipc.send(USER.LOGINED, { data: response.data })
             })
           }

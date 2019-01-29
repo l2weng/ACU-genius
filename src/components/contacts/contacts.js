@@ -2,11 +2,47 @@
 
 const React = require('react')
 const { PureComponent } = React
-const { Row, Col, Tabs, Input, Card, Avatar, Badge } = require('antd')
+const { Row, Col, Tabs, Input, Card, Avatar, Badge, Form, Modal, message } = require('antd')
 const TabPane = Tabs.TabPane
 const Search = Input.Search
+const FormItem = Form.Item
+const axios = require('axios')
+const { userInfo } = ARGS
+
+const CreateForm = Form.create()(props => {
+  const { modalVisible, form, handleAdd, handleModalVisible } = props
+  const okHandle = () => {
+    form.validateFields((err, fieldsValue) => {
+      if (err) return
+      form.resetFields()
+      handleAdd(fieldsValue)
+    })
+  }
+  return (
+    <Modal
+      destroyOnClose
+      title="新建团队"
+      visible={modalVisible}
+      onOk={okHandle}
+      onCancel={() => handleModalVisible()}>
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="团队名称">
+        {form.getFieldDecorator('name', {
+          rules: [{ required: true, message: '请输入至少2个字符的团队名称！', min: 2 }],
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+    </Modal>
+  )
+})
 
 class Contacts extends PureComponent {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      teamModalVisible: false
+    }
+  }
+
   componentDidMount() {
 
   }
@@ -15,10 +51,40 @@ class Contacts extends PureComponent {
 
   }
 
+  handleTeamModalVisible = (flag) => {
+    this.setState({
+      teamModalVisible: !!flag,
+    })
+  }
+
+  handleModalVisible = flag => {
+    this.setState({
+      teamModalVisible: !!flag,
+    })
+  }
+
+  handleAdd = fields => {
+    let self = this
+    fields.userId = userInfo.user.userId
+    axios.post('http://127.0.0.1:3000/lr/teams/create', fields)
+    .then(function (response) {
+      if (response.status === 200) {
+        message.success('添加成功', 0.5, ()=>{
+          self.handleModalVisible()
+        })
+      }
+    })
+    .catch(function (error) {
+      message.warning('系统错误')
+    })
+  }
 
   render() {
-
-
+    const parentMethods = {
+      handleAdd: this.handleAdd,
+      handleModalVisible: this.handleModalVisible,
+    }
+    const { teamModalVisible } = this.state
     return (
       <div>
         <Row gutter={24}>
@@ -48,7 +114,7 @@ class Contacts extends PureComponent {
               <TabPane tab="我的团队" key="2">
                 <Card
                   title="无人驾驶团队"
-                  extra={<a href="#">添加团队</a>}
+                  extra={<a onClick={() => this.handleTeamModalVisible(true)}>添加团队</a>}
                   style={{ width: '95%' }}>
                   <p><Avatar style={{ backgroundColor: '#feff86' }} icon="user" />
                     <Avatar style={{ backgroundColor: '#c32964' }}>King</Avatar>
@@ -74,6 +140,7 @@ class Contacts extends PureComponent {
             </Tabs>
           </Col>
         </Row>
+        <CreateForm {...parentMethods} modalVisible={teamModalVisible} />
       </div>
     )
   }
