@@ -22,7 +22,7 @@ class LoginForm extends Component {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        axios.post('http://127.0.0.1:3000/lr/auth', values)
+        axios.post(`${ARGS.apiServer}/auth`, values)
         .then(function (response) {
           if (response.status === 200) {
             message.success('Login Success', 1, ()=>{

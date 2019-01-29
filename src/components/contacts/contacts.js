@@ -66,7 +66,7 @@ class Contacts extends PureComponent {
   handleAdd = fields => {
     let self = this
     fields.userId = userInfo.user.userId
-    axios.post('http://127.0.0.1:3000/lr/teams/create', fields)
+    axios.post(`${ARGS.apiServer}/teams/create`, fields)
     .then(function (response) {
       if (response.status === 200) {
         message.success('添加成功', 0.5, ()=>{
