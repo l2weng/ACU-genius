@@ -7,6 +7,7 @@ const FormItem = Form.Item
 const axios = require('axios')
 const { userInfo } = ARGS
 const { getUrlFilterParams } = require('../../common/dataUtil')
+const { TextArea } = Input
 
 const CreateForm = Form.create()(props => {
   const { modalVisible, form, handleAdd, handleModalVisible } = props
@@ -24,10 +25,14 @@ const CreateForm = Form.create()(props => {
       visible={modalVisible}
       onOk={okHandle}
       onCancel={() => handleModalVisible()}>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="团队名称">
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="名称">
         {form.getFieldDecorator('name', {
           rules: [{ required: true, message: '请输入至少2个字符的团队名称！', min: 2 }],
         })(<Input placeholder="请输入" />)}
+      </FormItem>
+      <FormItem labelCol={{ span: 5 }} key="desc" wrapperCol={{ span: 15 }} label="描述">
+        {form.getFieldDecorator('desc', {
+        })(<TextArea rows={4} placeholder="至多输入500个字符" />)}
       </FormItem>
     </Modal>
   )
@@ -44,10 +49,14 @@ class Teams extends PureComponent {
   }
 
   componentDidMount() {
+    this.fetchTeamsWithUser()
+  }
+
+  fetchTeamsWithUser = () => {
     let query = getUrlFilterParams({ userId: userInfo.user.userId }, ['userId'])
     let self = this
     this.setState({ loading: true })
-    axios.get(`${ARGS.apiServer}/graphql?query={teamQueryByUserId${query} { teamId name type icon score level levelTitle color UserTeams { isOwner } }}`)
+    axios.get(`${ARGS.apiServer}/graphql?query={teamQueryByUserId${query} { teamId name desc type icon score level levelTitle color UserTeams { isOwner } }}`)
     .then(function (response) {
       if (response.status === 200) {
         self.setState({ teamList: response.data.data.teamQueryByUserId, loading: false })
@@ -80,6 +89,7 @@ class Teams extends PureComponent {
       if (response.status === 200) {
         self.handleModalVisible()
         message.success('添加成功', 0.5)
+        self.fetchTeamsWithUser()
       }
     })
     .catch(function () {
@@ -104,11 +114,11 @@ class Teams extends PureComponent {
             item ? (
               <List.Item key={item.id}>
                 <Card hoverable className="card"
-                  actions={[<a><Icon type="plus"/> 新增成员</a>, <a>解散</a>]}>
+                  actions={[<a><Icon type="plus"/> 新增成员</a>, <a>修改</a>]}>
                   <Card.Meta
-                    avatar={<Avatar shape="square" size="large" alt="" style={{ backgroundColor: item.color }}>{item.name.substr(0,1)}</Avatar>}
+                    avatar={<Avatar shape="square" size="large" alt="" style={{ backgroundColor: item.color }}>{item.name.substr(0, 1)}</Avatar>}
                     title={<a>{item.name}</a>}
-                    description="www.instagram.com"/>
+                    description={item.desc}/>
                 </Card>
               </List.Item>
             ) : (
