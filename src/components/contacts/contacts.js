@@ -8,6 +8,7 @@ const Search = Input.Search
 const FormItem = Form.Item
 const axios = require('axios')
 const { userInfo } = ARGS
+const { Teams } = require('./teams')
 
 const CreateForm = Form.create()(props => {
   const { modalVisible, form, handleAdd, handleModalVisible } = props
@@ -41,14 +42,6 @@ class Contacts extends PureComponent {
     this.state = {
       teamModalVisible: false
     }
-  }
-
-  componentDidMount() {
-
-  }
-
-  componentWillUnmount() {
-
   }
 
   handleTeamModalVisible = (flag) => {
@@ -112,17 +105,7 @@ class Contacts extends PureComponent {
                 </Card>
               </TabPane>
               <TabPane tab="我的团队" key="2">
-                <Card
-                  title="无人驾驶团队"
-                  extra={<a onClick={() => this.handleTeamModalVisible(true)}>添加团队</a>}
-                  style={{ width: '95%' }}>
-                  <p><Avatar style={{ backgroundColor: '#feff86' }} icon="user" />
-                    <Avatar style={{ backgroundColor: '#c32964' }}>King</Avatar>
-                    <Avatar style={{ backgroundColor: '#ffd6a6' }}>Freedom</Avatar>
-                    <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                    <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>U</Avatar>
-                    <Avatar style={{ backgroundColor: '#87d068' }} icon="rocket" /></p>
-                </Card>
+                <Teams/>
               </TabPane>
               <TabPane tab="我的同事" key="3">
                 <Card
@@ -147,5 +130,5 @@ class Contacts extends PureComponent {
 }
 
 module.exports = {
-  Contacts: Contacts
+  Contacts
 }
