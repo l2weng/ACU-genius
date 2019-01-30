@@ -25,7 +25,7 @@ class LoginForm extends Component {
         axios.post(`${ARGS.apiServer}/auth`, values)
         .then(function (response) {
           if (response.status === 200) {
-            message.success('Login Success', 1, ()=>{
+            message.success('Login Success', 0.5, ()=>{
               ipc.send(USER.LOGINED, { data: response.data })
             })
           }

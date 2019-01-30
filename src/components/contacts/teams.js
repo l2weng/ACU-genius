@@ -6,6 +6,7 @@ const { List, Card, Button, Icon, Avatar, Form, Modal, message, Input } = requir
 const FormItem = Form.Item
 const axios = require('axios')
 const { userInfo } = ARGS
+const { getUrlFilterParams } = require('../../common/dataUtil')
 
 const CreateForm = Form.create()(props => {
   const { modalVisible, form, handleAdd, handleModalVisible } = props
@@ -38,11 +39,24 @@ class Teams extends PureComponent {
 
     this.state = {
       loading: false,
+      teamList: []
     }
   }
 
   componentDidMount() {
-
+    let query = getUrlFilterParams({ userId: userInfo.user.userId }, ['userId'])
+    let self = this
+    this.setState({ loading: true })
+    axios.get(`${ARGS.apiServer}/graphql?query={teamQueryByUserId${query} { teamId name type icon score level levelTitle color UserTeams { isOwner } }}`)
+    .then(function (response) {
+      if (response.status === 200) {
+        self.setState({ teamList: response.data.data.teamQueryByUserId, loading: false })
+      }
+    })
+    .catch(function () {
+      message.warning('用户名密码错误, 请重试')
+      self.setState({ loading: false })
+    })
   }
 
 
@@ -68,18 +82,13 @@ class Teams extends PureComponent {
         message.success('添加成功', 0.5)
       }
     })
-    .catch(function (error) {
+    .catch(function () {
       message.warning('系统错误')
     })
   }
 
   render() {
-    const { loading,teamModalVisible } = this.state
-    const list = [
-      { title: '射手', name: '鲁' },
-      { title: '战士', name: '亚' },
-      { title: '法师', name: '墨' },
-      { title: '刺客', name: '典' }]
+    const { loading, teamModalVisible, teamList } = this.state
     const parentMethods = {
       handleAdd: this.handleAdd,
       handleModalVisible: this.handleModalVisible,
@@ -90,22 +99,22 @@ class Teams extends PureComponent {
           rowKey="id"
           loading={loading}
           grid={{ gutter: 24, lg: 4, md: 3, sm: 2, xs: 1 }}
-          dataSource={['', ...list]}
+          dataSource={['', ...teamList]}
           renderItem={item =>
             item ? (
               <List.Item key={item.id}>
                 <Card hoverable className="card"
-                  actions={[<a>操作一</a>, <a>操作二</a>]}>
+                  actions={[<a><Icon type="plus"/> 新增成员</a>, <a>解散</a>]}>
                   <Card.Meta
-                    avatar={<Avatar alt="" className="cardAvatar" style={{ backgroundColor: '#87d068' }}>{item.name}</Avatar>}
-                    title={<a>{item.title}</a>}
+                    avatar={<Avatar shape="square" size="large" alt="" style={{ backgroundColor: item.color }}>{item.name.substr(0,1)}</Avatar>}
+                    title={<a>{item.name}</a>}
                     description="www.instagram.com"/>
                 </Card>
               </List.Item>
             ) : (
               <List.Item>
                 <Button type="dashed" className="newButton" onClick={() => this.handleTeamModalVisible(true)}>
-                  <Icon type="plus"/> 新增Team
+                  <Icon type="plus"/> 新增团队
                 </Button>
               </List.Item>
             )
