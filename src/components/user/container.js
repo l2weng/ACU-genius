@@ -5,7 +5,7 @@ const { Component } = React
 const { connect } = require('react-redux')
 const { ipcRenderer: ipc } = require('electron')
 const { USER } = require('../../constants')
-const { Button } = require('antd')
+const { Button, Menu, Icon, Dropdown, Avatar } = require('antd')
 
 const {
   shape, string,
@@ -25,13 +25,44 @@ class UserInfoContainer extends Component {
     this.state = {}
   }
 
+  onMenuClick = ({ key }) => {
+    if (key === 'userCenter') {
+      return
+    }
+    if (key === 'userinfo') {
+      return
+    }
+    if (key === 'logout') {
+      console.log('logout')
+    }
+  };
+
   renderUserInfo() {
+    const menu = (
+      <Menu className="menu" selectedKeys={[]} onClick={this.onMenuClick}>
+        <Menu.Item key="logout">
+          <Icon type="logout" />
+          退出登录
+        </Menu.Item>
+      </Menu>
+    )
     let { project } = this.props
+    let { userInfo: { user } } = ARGS
     if (project.hasOwnProperty('user')) {
       return <div>{project.user}</div>
     }
-    if (ARGS.userInfo) {
-      return <div>{ARGS.userInfo.user.name}</div>
+    if (user) {
+      return (<Dropdown overlay={menu}>
+        <span className="action account">
+          <Avatar
+            size="small"
+            className="avatar"
+            src={user.avatar}
+            style={{ backgroundColor: '#466fa4' }}
+            alt="avatar">{user.name.substr(0, 1)}</Avatar>
+          <span>{user.name}</span>
+        </span>
+      </Dropdown>)
     } else {
       return (<Button icon="user" size="small"
         onClick={() => { ipc.send(USER.LOGIN) }}>用户</Button>)

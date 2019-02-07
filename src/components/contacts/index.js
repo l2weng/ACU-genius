@@ -3,5 +3,6 @@
 module.exports = {
   ...require('./contacts'),
   ...require('./teams'),
-  ...require('./coWorkers')
+  ...require('./coWorkers'),
+  ...require('./colleague')
 }

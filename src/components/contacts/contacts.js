@@ -2,11 +2,12 @@
 
 const React = require('react')
 const { PureComponent } = React
-const { Row, Col, Tabs, Input, Card, Avatar, Badge } = require('antd')
+const { Row, Col, Tabs, Input } = require('antd')
 const TabPane = Tabs.TabPane
 const Search = Input.Search
 const { Teams } = require('./teams')
 const { CoWorkers } = require('./coWorkers')
+const { Colleague } = require('./colleague')
 
 class Contacts extends PureComponent {
   constructor(props) {
@@ -32,17 +33,7 @@ class Contacts extends PureComponent {
               defaultActiveKey="1"
               tabPosition="left">
               <TabPane tab="我的同事" key="1">
-                <Card
-                  title="智能识别同事团"
-                  extra={<a href="#">添加同事</a>}
-                  style={{ width: '95%' }}>
-                  <p><Avatar style={{ backgroundColor: '#feff86' }} icon="user" />
-                    <Avatar style={{ backgroundColor: '#c32964' }}>King</Avatar>
-                    <Avatar style={{ backgroundColor: '#ffd6a6' }}>Freedom</Avatar>
-                    <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                    <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>KIKI</Avatar>
-                    <Avatar style={{ backgroundColor: '#87d068' }} icon="car" /></p>
-                </Card>
+                <Colleague/>
               </TabPane>
               <TabPane tab="我的团队" key="2">
                 <Teams/>

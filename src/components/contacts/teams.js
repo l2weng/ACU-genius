@@ -84,7 +84,7 @@ class Teams extends PureComponent {
   }
 
   fetchTeamsWithUser = () => {
-    let query = getUrlFilterParams({ userId: userInfo.user.userId }, ['userId'])
+    let query = getUrlFilterParams({ userId: userInfo.user.userId, isOwner: true }, ['userId','isOwner'])
     let self = this
     this.setState({ loading: true })
     axios.get(`${ARGS.apiServer}/graphql?query={teamQueryByUserId${query} { teamId name desc type icon score level levelTitle color UserTeams { isOwner } }}`)

@@ -327,3 +327,37 @@
   border-radius: 48px;
 }
 
+.menu {
+  :global(.anticon) {
+    margin-right: 8px;
+  }
+  :global(.ant-dropdown-menu-item) {
+    width: 160px;
+  }
+}
+.action {
+  cursor: pointer;
+  padding: 0 12px;
+  display: inline-block;
+  transition: all 0.3s;
+  height: 100%;
+  > i {
+    vertical-align: middle;
+    color: $text-color;
+  }
+  &:hover {
+    background: $pro-header-hover-bg;
+  }
+  :global(&.ant-popover-open) {
+    background: $pro-header-hover-bg;
+  }
+}
+.account {
+  .avatar {
+    margin: 10px 8px 10px 0;
+    color: $primary-color;
+    background: rgba(255, 255, 255, 0.85);
+    vertical-align: top;
+  }
+}
+
