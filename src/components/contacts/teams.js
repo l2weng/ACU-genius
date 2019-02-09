@@ -84,7 +84,7 @@ class Teams extends PureComponent {
   }
 
   fetchTeamsWithUser = () => {
-    let query = getUrlFilterParams({ userId: userInfo.user.userId, isOwner: true }, ['userId','isOwner'])
+    let query = getUrlFilterParams({ userId: userInfo.user.userId, isOwner: true }, ['userId', 'isOwner'])
     let self = this
     this.setState({ loading: true })
     axios.get(`${ARGS.apiServer}/graphql?query={teamQueryByUserId${query} { teamId name desc type icon score level levelTitle avatarColor UserTeams { isOwner } }}`)
@@ -94,7 +94,7 @@ class Teams extends PureComponent {
       }
     })
     .catch(function () {
-      message.warning('用户名密码错误, 请重试')
+      message.warning('团队不存在, 请重试')
       self.setState({ loading: false })
     })
   }

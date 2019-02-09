@@ -2,8 +2,11 @@
 
 const React = require('react')
 const { PureComponent } = React
-const { List, Icon,  Avatar, Card, Form, Modal, Input } = require('antd')
+const { List, Icon,  Avatar, Card, Form, Modal, Input, message } = require('antd')
+const { getUrlFilterParams } = require('../../common/dataUtil')
+const { userInfo } = ARGS
 const FormItem = Form.Item
+const axios = require('axios')
 const listData = []
 for (let i = 0; i < 10; i++) {
   listData.push({
@@ -71,6 +74,23 @@ class Colleague extends PureComponent {
   }
 
   componentDidMount() {
+    this.fetchColleagues()
+  }
+
+  fetchColleagues = () => {
+    let query = getUrlFilterParams({ userId: userInfo.user.userId, companyId: userInfo.user.companyId, isOwner: true }, ['userId', 'isOwner', 'companyId'])
+    let self = this
+    this.setState({ loading: true })
+    axios.get(`${ARGS.apiServer}/graphql?query={userQueryContacts${query} { userId name email status phone userType userTypeDesc statusDesc avatarColor }}`)
+    .then(function (response) {
+      if (response.status === 200) {
+        self.setState({ colleagueList: response.data.data.userQueryContacts, loading: false })
+      }
+    })
+    .catch(function () {
+      message.warning('同事不存在, 请重试')
+      self.setState({ loading: false })
+    })
   }
 
   handleColleagueModalVisible = flag => {
@@ -80,7 +100,7 @@ class Colleague extends PureComponent {
   }
 
   render() {
-    const { loading, colleagueModalVisible, teamList } = this.state
+    const { loading, colleagueModalVisible, colleagueList } = this.state
     const parentMethods = {
       handleAdd: this.handleAdd,
       handleColleagueModalVisible: this.handleColleagueModalVisible,
@@ -91,17 +111,17 @@ class Colleague extends PureComponent {
           <List
             itemLayout="vertical"
             size="large"
+            loading={loading}
             grid={{ gutter: 16, column: 4 }}
-            dataSource={listData}
-            footer={<div><b>footer part</b></div>}
+            dataSource={colleagueList}
             renderItem={item => (
               <List.Item
-                key={item.title}
+                key={item.phone}
                 actions={[<IconText type="star-o" text="156" />, <IconText type="like-o" text="156" />, <IconText type="message" text="2" />]}>
                 <List.Item.Meta
-                  avatar={<Avatar src={item.avatar} />}
-                  title={<a href={item.href}>{item.title}</a>}
-                  description={item.description}/>
+                  avatar={<Avatar alt="" style={{ backgroundColor: item.avatarColor || '#1890ff' }}>{item.name.charAt(0)}</Avatar>}
+                  title={<a href={item.href}>{item.phone}</a>}
+                  description={item.email}/>
               </List.Item>
           )}/>
         </Card>
