@@ -72,7 +72,7 @@ class UserInfoContainer extends Component {
           style={{
             backgroundColor: user.avatarColor
                 ? user.avatarColor
-                : '#1890ff',
+                : '#1890ff'
           }}
           alt="avatar">{user.name.charAt(0)}</Avatar>
         <span>{user.name}</span>

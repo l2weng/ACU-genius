@@ -357,6 +357,9 @@
     margin: 10px 8px 10px 0;
     color: rgba(255, 255, 255, 0.85);
     vertical-align: top;
+    .ant-avatar-string {
+      transform:scale(1) translateX(-50%) !important;
+    }
   }
 }
 
