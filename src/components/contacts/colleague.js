@@ -27,7 +27,7 @@ const IconText = ({ type, text }) => (
 )
 
 const ColleagueForm = Form.create()(props => {
-  const { modalVisible, form, handleAdd, handleColleagueModalVisible } = props
+  const { modalVisible, form, handleAdd, handleColleagueModalVisible,confirmDirty } = props
   const okHandle = () => {
     form.validateFields((err, fieldsValue) => {
       if (err) return
@@ -35,6 +35,31 @@ const ColleagueForm = Form.create()(props => {
       handleAdd(fieldsValue)
     })
   }
+  const formItemLayout = {
+    labelCol: { span: 5 },
+    wrapperCol: { span: 15 },
+  }
+
+  const handleConfirmBlur = (e) => {
+    const value = e.target.value
+    // this.setState({ confirmDirty:confirmDirty || !!value })
+  }
+
+  const compareToFirstPassword = (rule, value, callback) => {
+    if (value && value !== form.getFieldValue('password')) {
+      callback('两次密码不一致!')
+    } else {
+      callback()
+    }
+  }
+
+  const validateToNextPassword = (rule, value, callback) => {
+    if (value && confirmDirty) {
+      form.validateFields(['confirm'], { force: true })
+    }
+    callback()
+  }
+
   return (
     <Modal
       destroyOnClose
@@ -42,29 +67,55 @@ const ColleagueForm = Form.create()(props => {
       visible={modalVisible}
       onOk={okHandle}
       onCancel={() => handleColleagueModalVisible()}>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="名称">
+      <FormItem {...formItemLayout} label="名称">
         {form.getFieldDecorator('name', {
           rules: [{ required: true, message: '请输入至少2个字符的名称！', min: 2 }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
       <FormItem
-        labelCol={{ span: 5 }} wrapperCol={{ span: 15 }}
+        {...formItemLayout}
         label="手机号码">
-        {form.getFieldDecorator('phone', {})(
+        {form.getFieldDecorator('phone', { rules: [{ max: 11, message: '请输入合法手机号!' }] })(
           <Input placeholder="请输入"/>
         )}
       </FormItem>
       <FormItem
-        labelCol={{ span: 5 }} wrapperCol={{ span: 15 }}
+        {...formItemLayout}
         label="E-mail">
         {form.getFieldDecorator('email', {
           rules: [{
-            type: 'email', message: 'E-mail不合法!',
+            type: 'email', message: '请输入合法 E-mail!',
           }, {
             required: true, message: '请输入 E-mail!',
           }],
         })(
-          <Input  placeholder="请输入" />
+          <Input placeholder="请输入"/>
+        )}
+      </FormItem>
+      <FormItem
+        {...formItemLayout}
+        label="密码">
+        {form.getFieldDecorator('password', {
+          rules: [{
+            required: true, message: '输入密码!',
+          }, {
+            validator: validateToNextPassword,
+          }],
+        })(
+          <Input type="password" placeholder="请输入"/>
+        )}
+      </FormItem>
+      <FormItem
+        {...formItemLayout}
+        label="确认密码">
+        {form.getFieldDecorator('confirm', {
+          rules: [{
+            required: true, message: '确认密码!',
+          }, {
+            validator: compareToFirstPassword,
+          }],
+        })(
+          <Input type="password" onBlur={handleConfirmBlur} placeholder="请输入"/>
         )}
       </FormItem>
     </Modal>
@@ -79,6 +130,7 @@ class Colleague extends PureComponent {
       loading: false,
       colleagueList: [],
       colleagueModalVisible: false,
+      confirmDirty: false,
     }
   }
 
@@ -86,6 +138,25 @@ class Colleague extends PureComponent {
     if (!_.isEmpty(userInfo.user)) {
       this.fetchColleagues()
     }
+  }
+
+  handleAdd = fields => {
+    let self = this
+    fields.ownerId = userInfo.user.userId
+    fields.userType = userInfo.user.userType
+    fields.status = userInfo.user.status
+    fields.companyId = userInfo.user.companyId
+    axios.post(`${ARGS.apiServer}/users/createAdd2Contact`, fields)
+    .then(function (response) {
+      if (response.status === 200) {
+        self.handleColleagueModalVisible()
+        message.success('添加成功', 0.5)
+        self.fetchColleagues()
+      }
+    })
+    .catch(function () {
+      message.warning('系统错误')
+    })
   }
 
   fetchColleagues = () => {
@@ -111,7 +182,7 @@ class Colleague extends PureComponent {
   }
 
   render() {
-    const { loading, colleagueModalVisible, colleagueList } = this.state
+    const { loading, colleagueModalVisible, colleagueList, confirmDirty } = this.state
     const parentMethods = {
       handleAdd: this.handleAdd,
       handleColleagueModalVisible: this.handleColleagueModalVisible,
@@ -136,7 +207,7 @@ class Colleague extends PureComponent {
               </List.Item>
           )}/>
         </Card>
-        <ColleagueForm {...parentMethods} modalVisible={colleagueModalVisible} />
+        <ColleagueForm {...parentMethods} modalVisible={colleagueModalVisible} confirmDirty={confirmDirty}/>
       </div>
     )
   }
