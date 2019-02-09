@@ -7,17 +7,7 @@ const { getUrlFilterParams } = require('../../common/dataUtil')
 const { userInfo } = ARGS
 const FormItem = Form.Item
 const axios = require('axios')
-const listData = []
 const _ = require('underscore')
-
-for (let i = 0; i < 10; i++) {
-  listData.push({
-    href: 'http://ant.design',
-    title: `合作人 ${i}`,
-    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-    description: 'Ant Design, a design language for background ',
-  })
-}
 
 const IconText = ({ type, text }) => (
   <span>

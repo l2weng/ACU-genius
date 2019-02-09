@@ -2,17 +2,12 @@
 
 const React = require('react')
 const { PureComponent } = React
-const { List, Icon,  Avatar, Card, Form, Modal, Input } = require('antd')
+const { List, Icon,  Avatar, Card, Form, Modal, Input, message } = require('antd')
+const { getUrlFilterParams } = require('../../common/dataUtil')
+const { userInfo } = ARGS
 const FormItem = Form.Item
-const listData = []
-for (let i = 0; i < 10; i++) {
-  listData.push({
-    href: 'http://ant.design',
-    title: `合作人 ${i}`,
-    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-    description: 'Ant Design, a design language for background ',
-  })
-}
+const _ = require('underscore')
+const axios = require('axios')
 
 const IconText = ({ type, text }) => (
   <span>
@@ -33,7 +28,7 @@ const CoWorkerForm = Form.create()(props => {
   return (
     <Modal
       destroyOnClose
-      title="新建团队"
+      title="添加合作人"
       visible={modalVisible}
       onOk={okHandle}
       onCancel={() => handleModalVisible()}>
@@ -52,46 +47,66 @@ class CoWorkers extends PureComponent {
 
     this.state = {
       loading: false,
-      teamList: [],
-      coWorkerModalVisible: false,
+      coWorks: [],
+      modalVisible: false,
     }
   }
 
   componentDidMount() {
+    if (!_.isEmpty(userInfo.user)) {
+      this.fetchCoWorks()
+    }
+  }
+
+  fetchCoWorks = () => {
+    let query = getUrlFilterParams({ userId: userInfo.user.userId, isOwner: true }, ['userId', 'isOwner'])
+    let self = this
+    this.setState({ loading: true })
+    axios.get(`${ARGS.apiServer}/graphql?query={userQueryContacts${query} { userId name email status phone userType userTypeDesc statusDesc avatarColor }}`)
+    .then(function (response) {
+      if (response.status === 200) {
+        self.setState({ coWorks: response.data.data.userQueryContacts, loading: false })
+      }
+    })
+    .catch(function () {
+      message.warning('合作人不存在, 请重试')
+      self.setState({ loading: false })
+    })
   }
 
   handleModalVisible = flag => {
     this.setState({
-      coWorkerModalVisible: !!flag,
+      modalVisible: !!flag,
     })
   }
 
   render() {
-    // const { loading, teamModalVisible, teamMemberModalVisible, teamList } = this.state
-    // const parentMethods = {
-    //   handleAdd: this.handleAdd,
-    //   handleModalVisible: this.handleModalVisible,
-    // }
+    const { loading, modalVisible, coWorks } = this.state
+    const parentMethods = {
+      handleAdd: this.handleAdd,
+      handleModalVisible: this.handleModalVisible,
+    }
     return (
       <div>
         <Card title="我的合作人" bordered={false} extra={<a href="#" onClick={() => this.handleModalVisible(true)}>添加合作人</a>}>
           <List
             itemLayout="vertical"
             size="large"
+            loading={loading}
             grid={{ gutter: 16, column: 4 }}
-            dataSource={listData}
-            footer={<div><b>footer part</b></div>}
+            dataSource={coWorks}
             renderItem={item => (
               <List.Item
-                key={item.title}
-                actions={[<IconText type="star-o" text="156" />, <IconText type="like-o" text="156" />, <IconText type="message" text="2" />]}>
+                key={item.phone}
+                actions={[<IconText type="star-o" text="156" />, <IconText type="like-o" text="156" />, <IconText type="info-circle" text="详情" />]}>
                 <List.Item.Meta
-                  avatar={<Avatar src={item.avatar} />}
-                  title={<a href={item.href}>{item.title}</a>}
-                  description={item.description}/>
+                  avatar={<Avatar alt="" style={{ backgroundColor: item.avatarColor || '#1890ff' }}>{item.name.charAt(0)}</Avatar>}
+                  title={<a href={item.href}>{item.name}</a>}
+                  description={item.email}/>
               </List.Item>
-          )}/>
+            )}/>
         </Card>
+        <CoWorkerForm {...parentMethods} modalVisible={modalVisible}/>
       </div>
     )
   }
