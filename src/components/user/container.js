@@ -3,6 +3,7 @@
 const React = require('react')
 const { Component } = React
 const { connect } = require('react-redux')
+const _ = require('underscore')
 const { ipcRenderer: ipc } = require('electron')
 const { USER } = require('../../constants')
 const { Button, Menu, Icon, Dropdown, Avatar } = require('antd')
@@ -33,7 +34,7 @@ class UserInfoContainer extends Component {
       return
     }
     if (key === 'logout') {
-      console.log('logout')
+      ipc.send(USER.LOGOUT)
     }
   };
 
@@ -49,24 +50,34 @@ class UserInfoContainer extends Component {
     let { project } = this.props
     let { userInfo: { user } } = ARGS
     if (project.hasOwnProperty('user')) {
-      return <div>{project.user}</div>
+      return _.isEmpty(project.user) ? this.renderLogButton() : this.renderMenu(
+        menu,
+        project.user)
     }
-    if (user) {
-      return (<Dropdown overlay={menu}>
-        <span className="action account">
-          <Avatar
-            size="small"
-            className="avatar"
-            src={user.avatar}
-            style={{ backgroundColor: '#466fa4' }}
-            alt="avatar">{user.name.substr(0, 1)}</Avatar>
-          <span>{user.name}</span>
-        </span>
-      </Dropdown>)
-    } else {
-      return (<Button icon="user" size="small"
-        onClick={() => { ipc.send(USER.LOGIN) }}>用户</Button>)
-    }
+    return user ? this.renderMenu(menu, user) : this.renderLogButton()
+  }
+
+  renderLogButton() {
+    return (<Button icon="user" size="small"
+      onClick={() => { ipc.send(USER.LOGIN) }}>登录</Button>)
+  }
+
+  renderMenu(menu, user) {
+    return (<Dropdown overlay={menu}>
+      <span className="action account">
+        <Avatar
+          size="small"
+          className="avatar"
+          src={user.avatar}
+          style={{
+            backgroundColor: user.avatarColor
+                ? user.avatarColor
+                : '#1890ff',
+          }}
+          alt="avatar">{user.name.charAt(0)}</Avatar>
+        <span>{user.name}</span>
+      </span>
+    </Dropdown>)
   }
 
   render() {

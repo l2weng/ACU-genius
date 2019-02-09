@@ -2,5 +2,6 @@
 
 module.exports = {
   LOGIN: 'user.login',
-  LOGINED: 'user.logined'
+  LOGINED: 'user.logined',
+  LOGOUT: 'user.logout'
 }

@@ -128,6 +128,7 @@
     "sqlite3": "^4.0.3",
     "string.prototype.padstart": "^3.0.0",
     "transducers.js": "^0.3.2",
+    "underscore": "^1.9.1",
     "uuid": "^3.3.2",
     "warning": "~4.0.2",
     "winreg": "^1.2.4",

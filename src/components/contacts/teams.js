@@ -87,7 +87,7 @@ class Teams extends PureComponent {
     let query = getUrlFilterParams({ userId: userInfo.user.userId, isOwner: true }, ['userId','isOwner'])
     let self = this
     this.setState({ loading: true })
-    axios.get(`${ARGS.apiServer}/graphql?query={teamQueryByUserId${query} { teamId name desc type icon score level levelTitle color UserTeams { isOwner } }}`)
+    axios.get(`${ARGS.apiServer}/graphql?query={teamQueryByUserId${query} { teamId name desc type icon score level levelTitle avatarColor UserTeams { isOwner } }}`)
     .then(function (response) {
       if (response.status === 200) {
         self.setState({ teamList: response.data.data.teamQueryByUserId, loading: false })
@@ -164,7 +164,7 @@ class Teams extends PureComponent {
                 <Card hoverable className="card"
                   actions={[<a><Icon type="plus" onClick={() => this.handleMemberModalVisible(true)}/> 新增成员</a>, <a>修改</a>]}>
                   <Card.Meta
-                    avatar={<Avatar shape="square" size="large" alt="" style={{ backgroundColor: item.color }}>{item.name.substr(0, 1)}</Avatar>}
+                    avatar={<Avatar shape="square" size="large" alt="" style={{ backgroundColor: item.avatarColor }}>{item.name.substr(0, 1)}</Avatar>}
                     title={<a>{item.name}</a>}
                     description={item.desc}/>
                 </Card>
