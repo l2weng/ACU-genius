@@ -8,6 +8,7 @@ const axios = require('axios')
 const { userInfo } = ARGS
 const { getUrlFilterParams } = require('../../common/dataUtil')
 const { TextArea } = Input
+const _ = require('underscore')
 
 const TeamForm = Form.create()(props => {
   const { modalVisible, form, handleAdd, handleModalVisible } = props
@@ -80,7 +81,9 @@ class Teams extends PureComponent {
   }
 
   componentDidMount() {
-    this.fetchTeamsWithUser()
+    if (!_.isEmpty(userInfo.user)) {
+      this.fetchTeamsWithUser()
+    }
   }
 
   fetchTeamsWithUser = () => {

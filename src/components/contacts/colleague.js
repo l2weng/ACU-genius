@@ -8,6 +8,8 @@ const { userInfo } = ARGS
 const FormItem = Form.Item
 const axios = require('axios')
 const listData = []
+const _ = require('underscore')
+
 for (let i = 0; i < 10; i++) {
   listData.push({
     href: 'http://ant.design',
@@ -47,6 +49,13 @@ const ColleagueForm = Form.create()(props => {
       </FormItem>
       <FormItem
         labelCol={{ span: 5 }} wrapperCol={{ span: 15 }}
+        label="手机号码">
+        {form.getFieldDecorator('phone', {})(
+          <Input placeholder="请输入"/>
+        )}
+      </FormItem>
+      <FormItem
+        labelCol={{ span: 5 }} wrapperCol={{ span: 15 }}
         label="E-mail">
         {form.getFieldDecorator('email', {
           rules: [{
@@ -74,7 +83,9 @@ class Colleague extends PureComponent {
   }
 
   componentDidMount() {
-    this.fetchColleagues()
+    if (!_.isEmpty(userInfo.user)) {
+      this.fetchColleagues()
+    }
   }
 
   fetchColleagues = () => {
@@ -117,10 +128,10 @@ class Colleague extends PureComponent {
             renderItem={item => (
               <List.Item
                 key={item.phone}
-                actions={[<IconText type="star-o" text="156" />, <IconText type="like-o" text="156" />, <IconText type="message" text="2" />]}>
+                actions={[<IconText type="star-o" text="156" />, <IconText type="like-o" text="156" />, <IconText type="info-circle" text="详情" />]}>
                 <List.Item.Meta
                   avatar={<Avatar alt="" style={{ backgroundColor: item.avatarColor || '#1890ff' }}>{item.name.charAt(0)}</Avatar>}
-                  title={<a href={item.href}>{item.phone}</a>}
+                  title={<a href={item.href}>{item.name}</a>}
                   description={item.email}/>
               </List.Item>
           )}/>

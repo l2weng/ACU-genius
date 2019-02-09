@@ -54,7 +54,7 @@ class UserInfoContainer extends Component {
         menu,
         project.user)
     }
-    return user ? this.renderMenu(menu, user) : this.renderLogButton()
+    return _.isEmpty(user) ? this.renderLogButton() : this.renderMenu(menu, user)
   }
 
   renderLogButton() {
