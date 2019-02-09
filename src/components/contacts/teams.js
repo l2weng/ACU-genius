@@ -166,7 +166,7 @@ class Teams extends PureComponent {
             item ? (
               <List.Item key={item.id}>
                 <Card hoverable className="card"
-                  actions={[<a><Icon type="plus" onClick={() => this.handleMemberModalVisible(true)}/> 新增成员</a>, <a>修改</a>]}>
+                  actions={[<a><Icon type="plus" onClick={() => this.handleMemberModalVisible(true)}/> 添加成员</a>, <a>修改</a>]}>
                   <Card.Meta
                     avatar={<Avatar shape="square" size="large" alt="" style={{ backgroundColor: item.avatarColor }}>{item.name.substr(0, 1)}</Avatar>}
                     title={<a>{item.name}</a>}
@@ -176,7 +176,7 @@ class Teams extends PureComponent {
             ) : (
               <List.Item>
                 <Button type="dashed" className="newButton" onClick={() => this.handleModalVisible(true)}>
-                  <Icon type="plus"/> 新增团队
+                  <Icon type="plus"/> 添加团队
                 </Button>
               </List.Item>
             )
