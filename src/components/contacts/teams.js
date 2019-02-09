@@ -156,12 +156,13 @@ class Teams extends PureComponent {
     }
     return (
       <div className="cardList">
-        <List
-          rowKey="id"
-          loading={loading}
-          grid={{ gutter: 24, lg: 4, md: 3, sm: 2, xs: 1 }}
-          dataSource={['', ...teamList]}
-          renderItem={item =>
+        <Card title="我的团队" bordered={false}>
+          <List
+            rowKey="id"
+            loading={loading}
+            grid={{ gutter: 24, lg: 4, md: 3, sm: 2, xs: 1 }}
+            dataSource={['', ...teamList]}
+            renderItem={item =>
             item ? (
               <List.Item key={item.id}>
                 <Card hoverable className="card"
@@ -180,6 +181,7 @@ class Teams extends PureComponent {
               </List.Item>
             )
           }/>
+        </Card>
         <TeamForm {...parentMethods} modalVisible={teamModalVisible} />
         <MemberForm {...parentMethods} modalVisible={teamMemberModalVisible} />
       </div>
