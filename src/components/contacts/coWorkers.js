@@ -2,12 +2,13 @@
 
 const React = require('react')
 const { PureComponent } = React
-const { List, Icon,  Avatar, Card, Form, Modal, Input, message } = require('antd')
+const { List, Icon,  Avatar, Card, Form, Modal, Input, message, Button } = require('antd')
 const { getUrlFilterParams } = require('../../common/dataUtil')
 const { userInfo } = ARGS
 const FormItem = Form.Item
 const _ = require('underscore')
 const axios = require('axios')
+const { WorkersTable } = require('./workersTable')
 
 const IconText = ({ type, text }) => (
   <span>
@@ -17,7 +18,7 @@ const IconText = ({ type, text }) => (
 )
 
 const CoWorkerForm = Form.create()(props => {
-  const { modalVisible, form, handleAdd, handleModalVisible } = props
+  const { modalVisible, form, handleAdd, handleModalVisible, otherWorks } = props
   const okHandle = () => {
     form.validateFields((err, fieldsValue) => {
       if (err) return
@@ -31,12 +32,9 @@ const CoWorkerForm = Form.create()(props => {
       title="添加合作人"
       visible={modalVisible}
       onOk={okHandle}
+      footer={null}
       onCancel={() => handleModalVisible()}>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="名称">
-        {form.getFieldDecorator('name', {
-          rules: [{ required: true, message: '请输入至少2个字符的团队名称！', min: 2 }],
-        })(<Input placeholder="请输入" />)}
-      </FormItem>
+      <WorkersTable data={otherWorks}/>
     </Modal>
   )
 })
@@ -48,6 +46,7 @@ class CoWorkers extends PureComponent {
     this.state = {
       loading: false,
       coWorks: [],
+      otherWorks: [],
       modalVisible: false,
     }
   }
@@ -62,7 +61,7 @@ class CoWorkers extends PureComponent {
     let query = getUrlFilterParams({ userId: userInfo.user.userId, isOwner: true }, ['userId', 'isOwner'])
     let self = this
     this.setState({ loading: true })
-    axios.get(`${ARGS.apiServer}/graphql?query={userQueryContacts${query} { userId name email status phone userType userTypeDesc statusDesc avatarColor }}`)
+    axios.get(`${ARGS.apiServer}/graphql?query={userQueryContacts${query} { key: userId name email avatarColor }}`)
     .then(function (response) {
       if (response.status === 200) {
         self.setState({ coWorks: response.data.data.userQueryContacts, loading: false })
@@ -75,13 +74,20 @@ class CoWorkers extends PureComponent {
   }
 
   handleModalVisible = flag => {
-    this.setState({
-      modalVisible: !!flag,
+    let self = this
+    axios.get(`${ARGS.apiServer}/graphql?query={userQueryActiveContacts { userId name email status phone userType userTypeDesc statusDesc avatarColor }}`)
+    .then(function (response) {
+      if (response.status === 200) {
+        self.setState({ otherWorks: response.data.data.userQueryActiveContacts, modalVisible: !!flag })
+      }
+    })
+    .catch(function () {
+      message.warning('查询服务连接失败, 请重试')
     })
   }
 
   render() {
-    const { loading, modalVisible, coWorks } = this.state
+    const { loading, modalVisible, coWorks, otherWorks } = this.state
     const parentMethods = {
       handleAdd: this.handleAdd,
       handleModalVisible: this.handleModalVisible,
@@ -106,7 +112,7 @@ class CoWorkers extends PureComponent {
               </List.Item>
             )}/>
         </Card>
-        <CoWorkerForm {...parentMethods} modalVisible={modalVisible}/>
+        <CoWorkerForm {...parentMethods} modalVisible={modalVisible} otherWorks={otherWorks}/>
       </div>
     )
   }

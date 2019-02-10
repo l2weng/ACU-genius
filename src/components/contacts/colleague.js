@@ -84,7 +84,7 @@ const ColleagueForm = Form.create()(props => {
       </FormItem>
       <FormItem
         {...formItemLayout}
-        label="密码">
+        label="初始密码">
         {form.getFieldDecorator('password', {
           rules: [{
             required: true, message: '输入密码!',
