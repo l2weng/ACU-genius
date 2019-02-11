@@ -13,6 +13,8 @@ const {
 const { RegistrationForm } = require('./user/RegistrationForm')
 const { ipcRenderer: ipc  } = require('electron')
 const { USER } = require('../constants')
+const { getLocalIP } = require('../common/serviceUtil')
+
 
 const FormItem = Form.Item
 
@@ -22,6 +24,7 @@ class LoginForm extends Component {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
+        values.ip = getLocalIP()
         axios.post(`${ARGS.apiServer}/auth`, values)
         .then(function (response) {
           if (response.status === 200) {

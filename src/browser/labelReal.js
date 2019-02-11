@@ -29,6 +29,7 @@ const act = require('../actions')
 const { darwin } = require('../common/os')
 const { channel, product, version } = require('../common/release')
 const { restrict } = require('../common/util')
+const { getLocalIP } = require('../common/serviceUtil')
 
 const {
   FLASH, HISTORY, TAG, PROJECT, CONTEXT, SASS, LOCALE, DATASET, USER
@@ -801,6 +802,7 @@ class LabelReal extends EventEmitter {
     })
 
     ipc.on(USER.LOGINED, (_, { data }) => {
+      data.ip = getLocalIP()
       this.state.userInfo = data
       if (this.state != null) {
         this.store.save.sync('state.json', this.state)
