@@ -5,8 +5,23 @@ const http = require('http').Server(app)
 const io = require('socket.io')(http)
 const port = Number(process.env.PORT) || 8188
 
-app.get('/', async function (req, res) {
-  res.status(200).send({ workers: [] })
+app.get('/file/:name', async function (req, res, next) {
+  let options = {
+    dotfiles: 'deny',
+    headers: {
+      'x-timestamp': Date.now(),
+      'x-sent': true
+    }
+  }
+
+  let fileName = req.params.name
+  res.sendFile('/Users/louisweng/Documents/' + fileName, options, function (err) {
+    if (err) {
+      next(err)
+    } else {
+      console.log('Sent:', fileName)
+    }
+  })
 })
 
 io.on('connection', function (socket) {

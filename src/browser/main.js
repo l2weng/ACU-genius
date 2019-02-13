@@ -98,6 +98,7 @@ if (process.env.TROPY_RUN_UNIT_TESTS === 'true') {
       once(labelReal, 'app:restored')
 
     ]).then(() => {
+      require('./server')
       session.defaultSession.webRequest.onHeadersReceived((res, cb) => {
         cb({
           responseHeaders: {
