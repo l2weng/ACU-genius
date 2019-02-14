@@ -5,7 +5,9 @@ const http = require('http').Server(app)
 const io = require('socket.io')(http)
 const port = Number(process.env.PORT) || 8188
 
-app.get('/file/:name', async function (req, res, next) {
+app.get('/file', async function (req, res, next) {
+  let { directory, fileName } = req.query
+  console.log(directory, fileName)
   let options = {
     dotfiles: 'deny',
     headers: {
@@ -13,9 +15,7 @@ app.get('/file/:name', async function (req, res, next) {
       'x-sent': true
     }
   }
-
-  let fileName = req.params.name
-  res.sendFile('/Users/louisweng/Documents/' + fileName, options, function (err) {
+  res.sendFile(`${directory}/${fileName}`, options, function (err) {
     if (err) {
       next(err)
     } else {

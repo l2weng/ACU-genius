@@ -2,20 +2,25 @@
 
 require('./common/promisify')
 
-const { basename, extname } = require('path')
+const { basename, extname, dirname, join } = require('path')
 const { createReadStream, statAsync: stat } = require('fs')
 const { createHash } = require('crypto')
 const { exif } = require('./exif')
-const { nativeImage } = require('electron')
+const { nativeImage, remote } = require('electron')
 const { assign } = Object
-const { warn, debug } = require('./common/log')
+const { warn, debug, info } = require('./common/log')
 const MIME = require('./constants/mime')
+const fs = require('fs')
+const request = require('request')
 
 
 class Image {
   static read(path) {
-    let read = (new Image(path)).read()
-    return read
+    return (new Image(path, {})).read(path)
+  }
+
+  static download(path, fields) {
+    return (new Image(path, fields).download(fields))
   }
 
   static async check({
@@ -35,26 +40,47 @@ class Image {
         status.hasChanged = (status.image.checksum !== checksum)
       }
     } catch (error) {
-      debug(`image check failed for ${path}: ${error.message}`, {
-        stack: error.stack
-      })
-
-      status.hasChanged = true
-      status.image = null
-      status.error = error
+      const app = remote.app
+      let newPath = app.getPath('userData')
+      newPath = join(newPath, 'project')
+      if (!fs.existsSync(newPath)) {
+        fs.mkdir(newPath, { recursive: true }, (err) => {
+          if (err) throw err
+        })
+      }
+      let newFileName = basename(path);
+      let fields = { host: '127.0.0.1', port: '8188', directory: dirname(path), fileName: newFileName, newPath }
+      await Image.download(path, fields)
+      info(`${newPath}/${newFileName}`)
+      try {
+        status.image = await Image.read(`${newPath}/${newFileName}`)
+        status.hasChanged = (status.image.checksum !== checksum)
+      } catch (error) {
+        debug(`image check failed for ${path}: ${error.message}`, {
+          stack: error.stack
+        })
+        status.hasChanged = true
+        status.image = null
+        status.error = error
+      }
+      info('after....')
     }
 
     return status
   }
 
-  constructor(path) {
+  constructor(path, fields) {
     this.path = path
+    this.fields = fields
   }
 
   get ext() {
     return extname(this.path)
   }
 
+  get dir() {
+    return dirname(this.path)
+  }
   get filename() {
     return basename(this.path)
   }
@@ -105,7 +131,7 @@ class Image {
     return this.hash && this.hash.digest(encoding)
   }
 
-  read() {
+  read(path) {
     return new Promise((resolve, reject) => {
 
       this.hash = createHash('md5')
@@ -113,7 +139,7 @@ class Image {
 
       const chunks = []
 
-      createReadStream(this.path)
+      createReadStream(path)
         .on('error', reject)
 
         .on('data', chunk => {
@@ -136,7 +162,7 @@ class Image {
             .all([
               exif(buffer, this.mimetype),
               toImage(buffer, this.mimetype),
-              stat(this.path)
+              stat(path)
             ])
 
             .then(([data, original, file]) =>
@@ -145,6 +171,20 @@ class Image {
             .then(resolve, reject)
 
         })
+    })
+  }
+
+  download(fields) {
+    let { host, port, directory, fileName, newPath } = fields
+    return new Promise(async (resolve)=>{
+      let fw = fs.createWriteStream(`${newPath}/${fileName}`)
+      info(`http://${host}:${port}/file?directory=${directory}&fileName=${fileName}`)
+      await request(`http://${host}:${port}/file?directory=${directory}&fileName=${fileName}`)
+      .pipe(fw)
+      .on('finish', (img) => {
+        info('!!!!!!!!!!!!!downloaded')
+        resolve(img)
+      })
     })
   }
 
