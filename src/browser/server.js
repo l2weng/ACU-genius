@@ -7,19 +7,19 @@ const port = Number(process.env.PORT) || 8188
 
 app.get('/file', async function (req, res, next) {
   let { directory, fileName } = req.query
-  console.log(directory, fileName)
   let options = {
     dotfiles: 'deny',
+    root: directory + '/',
     headers: {
       'x-timestamp': Date.now(),
-      'x-sent': true
+      'x-sent': true,
     }
   }
-  res.sendFile(`${directory}/${fileName}`, options, function (err) {
+  res.sendFile(fileName, options, function (err) {
     if (err) {
       next(err)
     } else {
-      console.log('Sent:', fileName)
+      console.log('Sent:', `${directory}/${fileName}`)
     }
   })
 })
