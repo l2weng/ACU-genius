@@ -156,7 +156,7 @@ class Teams extends PureComponent {
     }
     return (
       <div className="cardList">
-        <Card title="我的团队" bordered={false}>
+        <Card title="人员分组" bordered={false}>
           <List
             rowKey="id"
             loading={loading}

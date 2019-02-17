@@ -179,7 +179,7 @@ class Colleague extends PureComponent {
     }
     return (
       <div>
-        <Card title="我的同事" bordered={false} extra={<a href="#" onClick={() => this.handleColleagueModalVisible(true)}>添加同事</a>}>
+        <Card title="公司同事" bordered={false} extra={<a href="#" onClick={() => this.handleColleagueModalVisible(true)}>添加同事</a>}>
           <List
             itemLayout="vertical"
             size="large"

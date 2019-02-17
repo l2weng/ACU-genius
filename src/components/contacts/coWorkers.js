@@ -94,7 +94,7 @@ class CoWorkers extends PureComponent {
     }
     return (
       <div>
-        <Card title="我的合作人" bordered={false} extra={<a href="#" onClick={() => this.handleModalVisible(true)}>添加合作人</a>}>
+        <Card title="平台好友" bordered={false} extra={<a href="#" onClick={() => this.handleModalVisible(true)}>添加合作人</a>}>
           <List
             itemLayout="vertical"
             size="large"

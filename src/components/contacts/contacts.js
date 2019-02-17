@@ -32,13 +32,13 @@ class Contacts extends PureComponent {
             <Tabs style={{ textAlign: 'left' }}
               defaultActiveKey="1"
               tabPosition="left">
-              <TabPane tab="我的同事" key="1">
+              <TabPane tab="公司同事" key="1">
                 <Colleague/>
               </TabPane>
-              <TabPane tab="我的团队" key="2">
+              <TabPane tab="人员分组" key="2">
                 <Teams/>
               </TabPane>
-              <TabPane tab="我的合作人" key="3">
+              <TabPane tab="平台好友" key="3">
                 <CoWorkers/>
               </TabPane>
             </Tabs>
