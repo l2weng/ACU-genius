@@ -30,6 +30,9 @@ const { darwin } = require('../common/os')
 const { channel, product, version } = require('../common/release')
 const { restrict } = require('../common/util')
 const { getLocalIP } = require('../common/serviceUtil')
+const { machineIdSync } = require('node-machine-id')
+const axios = require('axios')
+const __ = require('underscore')
 
 const {
   FLASH, HISTORY, TAG, PROJECT, CONTEXT, SASS, LOCALE, DATASET, USER
@@ -782,6 +785,17 @@ class LabelReal extends EventEmitter {
     ipc.on(PROJECT.CREATED, (_, { file }) => {
       if (this.recent) this.recent.close()
       if (this.wiz) this.wiz.close()
+      let { userInfo, apiServer } = this.state
+      axios.post(`${apiServer}/projects/create`, {
+        userId: __.isEmpty(userInfo) ? '' : userInfo.user.userId,
+        machineId: machineIdSync({ original: true }),
+        fileDirectory: file,
+      }).then(function (response) {
+        verbose(response.status)
+      })
+      .catch(function (error) {
+        warn(error)
+      })
       this.open(file)
     })
 
