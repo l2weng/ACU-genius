@@ -17,7 +17,7 @@ const IconText = ({ type, text }) => (
 )
 
 const ColleagueForm = Form.create()(props => {
-  const { modalVisible, form, handleAdd, handleColleagueModalVisible,confirmDirty } = props
+  const { modalVisible, form, handleAdd, handleColleagueModalVisible, confirmDirty } = props
   const okHandle = () => {
     form.validateFields((err, fieldsValue) => {
       if (err) return
@@ -31,7 +31,6 @@ const ColleagueForm = Form.create()(props => {
   }
 
   const handleConfirmBlur = (e) => {
-    const value = e.target.value
     // this.setState({ confirmDirty:confirmDirty || !!value })
   }
 
