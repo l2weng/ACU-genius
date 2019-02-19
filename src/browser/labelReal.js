@@ -790,8 +790,8 @@ class LabelReal extends EventEmitter {
         userId: __.isEmpty(userInfo) ? '' : userInfo.user.userId,
         machineId: machineIdSync({ original: true }),
         fileDirectory: file,
-      }).then(function (response) {
-        verbose(response.status)
+      }).then(function () {
+        verbose('temp user create project')
       })
       .catch(function (error) {
         warn(error)
@@ -873,6 +873,7 @@ class LabelReal extends EventEmitter {
       update: this.updater.release,
       recent: this.state.recent,
       userInfo: this.state.userInfo,
+      machineId: machineIdSync({ original: true }),
       apiServer: this.state.apiServer,
       version,
       webgl: this.state.webgl
