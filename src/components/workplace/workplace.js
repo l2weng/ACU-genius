@@ -2,14 +2,26 @@
 
 const React = require('react')
 const { PureComponent } = React
-const { Row, Col, Card,List, Table, Divider, Tag, message } = require('antd')
+const { connect } = require('react-redux')
+const { Row, Col, Card, List, Table, Divider, Tag, message } = require('antd')
 const { Meta } = Card
 const { getUrlFilterParams } = require('../../common/dataUtil')
 const _ = require('underscore')
 const { userInfo, machineId, apiServer } = ARGS
 const axios = require('axios')
+const actions = require('../../actions')
+const { func } = require('prop-types')
 
 class Workplace extends PureComponent {
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      loading: false,
+      projects: [],
+    }
+  }
 
   fetchProjects = (typeFlag = false, id) => {
     let query
@@ -31,14 +43,9 @@ class Workplace extends PureComponent {
         self.setState({ loading: false })
       })
   }
-
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      loading: false,
-      projects: [],
-    }
+  openProject = (path) => {
+    console.log(path)
+    this.props.onProjectOpen(path)
   }
 
   componentDidMount() {
@@ -50,6 +57,7 @@ class Workplace extends PureComponent {
   }
 
   render() {
+
     const { projects, loading } = this.state
     const columns = [
       {
@@ -119,7 +127,7 @@ class Workplace extends PureComponent {
                 rowKey="id"
                 loading={loading}
                 grid={{ gutter: 24, lg: 6, md: 3, sm: 2, xs: 1 }}
-                dataSource={[ ...projects]}
+                dataSource={[...projects]}
                 renderItem={item =>
                   <List.Item key={item.projectId}>
                     <Card
@@ -128,7 +136,8 @@ class Workplace extends PureComponent {
                       cover={<img alt={item.name}
                         src={`${apiServer}${item.cover}`}/>}>
                       <Meta
-                        title={item.name}
+                        title={<a onClick={()=>this.openProject(
+                          item.fileDirectory)}>{item.name}</a>}
                         description={item.name}/>
                     </Card>
                   </List.Item>
@@ -145,8 +154,20 @@ class Workplace extends PureComponent {
       </div>
     )
   }
+  static propTypes = {
+    onProjectOpen: func.isRequired,
+  }
 }
 
 module.exports = {
-  Workplace,
+  Workplace: connect(
+    state => ({
+      projects: state.projects
+    }),
+    dispatch => ({
+      onProjectOpen(path) {
+        dispatch(actions.project.open(path))
+      },
+    }),
+  )(Workplace),
 }

@@ -17,10 +17,6 @@ class ProjectSummary extends PureComponent {
 
   }
 
-  componentWillUnmount() {
-
-  }
-
   render() {
     const {
       columns,
