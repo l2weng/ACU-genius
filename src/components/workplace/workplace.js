@@ -11,6 +11,7 @@ const { userInfo, machineId, apiServer } = ARGS
 const axios = require('axios')
 const actions = require('../../actions')
 const { func } = require('prop-types')
+const { HEAD } = require('../../constants')
 
 class Workplace extends PureComponent {
 
@@ -44,8 +45,8 @@ class Workplace extends PureComponent {
       })
   }
   openProject = (path) => {
-    console.log(path)
     this.props.onProjectOpen(path)
+    this.props.switchTab(HEAD.WORKSPACE)
   }
 
   componentDidMount() {
@@ -156,6 +157,7 @@ class Workplace extends PureComponent {
   }
   static propTypes = {
     onProjectOpen: func.isRequired,
+    switchTab: func.isRequired,
   }
 }
 
