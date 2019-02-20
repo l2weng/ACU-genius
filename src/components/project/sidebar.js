@@ -16,6 +16,7 @@ const { match } = require('../../keymap')
 const { testFocusChange } = require('../../dom')
 const actions = require('../../actions')
 const {  Tooltip, Icon } = require('antd')
+const { ipcRenderer: ipc  } = require('electron')
 
 const {
   bool, shape, string, object, arrayOf, func, number
@@ -225,6 +226,14 @@ class ProjectSidebar extends React.PureComponent {
     this.props.onContextMenu(event, 'sidebar')
   }
 
+  addNewTask = () =>{
+    ipc.send('cmd', 'app:create-list')
+  }
+
+  addNewSKu = () =>{
+    ipc.send('cmd', 'app:create-tag')
+  }
+
   render() {
     const {
       edit,
@@ -270,8 +279,8 @@ class ProjectSidebar extends React.PureComponent {
                 </ol>
               </nav>
 
-              <h3><FormattedMessage id="sidebar.lists"/><span style={{ float: 'right' }}><Tooltip placement="right" title="Add Tasks">
-                <Icon type="plus-circle-o" size="small"/>
+              <h3><FormattedMessage id="sidebar.lists"/><span style={{ float: 'right' }}><Tooltip placement="right" title="添加任务">
+                <Icon type="plus-circle-o" size="small" onClick={this.addNewTask}/>
               </Tooltip></span></h3>
               <nav>
                 {root &&
@@ -307,8 +316,8 @@ class ProjectSidebar extends React.PureComponent {
             </section>
 
             <section>
-              <h2><FormattedMessage id="sidebar.tags"/><span style={{ float: 'right' }}><Tooltip placement="right" title="Add Sku">
-                <Icon type="plus-circle-o" size="small"/>
+              <h2><FormattedMessage id="sidebar.tags"/><span style={{ float: 'right' }}><Tooltip placement="right" title="添加样本">
+                <Icon type="plus-circle-o" size="small" onClick={this.addNewSKu}/>
               </Tooltip></span></h2>
               <ProjectTags
                 keymap={this.props.keymap.TagList}
