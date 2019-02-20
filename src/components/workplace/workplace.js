@@ -12,6 +12,9 @@ const axios = require('axios')
 const actions = require('../../actions')
 const { func } = require('prop-types')
 const { HEAD } = require('../../constants')
+const { resolve, join } = require('path')
+const staticRoot = resolve(__dirname, '../../../', 'static')
+const defaultCover = join(staticRoot, 'images/project', 'default-cover.jpg')
 
 class Workplace extends PureComponent {
 
@@ -135,7 +138,7 @@ class Workplace extends PureComponent {
                       hoverable
                       style={{ width: 180 }}
                       cover={<img alt={item.name}
-                        src={`${apiServer}${item.cover}`}/>}>
+                        src={item.cover ? item.cover : defaultCover}/>}>
                       <Meta
                         title={<a onClick={()=>this.openProject(
                           item.fileDirectory)}>{item.name}</a>}
