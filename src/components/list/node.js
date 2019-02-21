@@ -242,9 +242,9 @@ class ListNode extends React.PureComponent {
             onCancel={this.props.onEditCancel}
             onChange={this.handleChange}/>
         </div>
-        <span style={{ float: 'right' }}><Tooltip placement="right" title="Assign Workers">
-            <Icon type="user-add" size="small"/>
-          </Tooltip>
+        <span style={{ float: 'right' }}><Tooltip placement="right" title="分配任务">
+          <Icon type="user-add" size="small"/>
+        </Tooltip>
         </span>
       </div>
     )

@@ -5,6 +5,7 @@ module.exports = {
   ...require('./edit'),
   ...require('./esper'),
   ...require('./flash'),
+  ...require('./header'),
   ...require('./history'),
   ...require('./import'),
   ...require('./intl'),

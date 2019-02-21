@@ -10,7 +10,7 @@ const _ = require('underscore')
 const { userInfo, machineId, apiServer } = ARGS
 const axios = require('axios')
 const actions = require('../../actions')
-const { func } = require('prop-types')
+const { func, object  } = require('prop-types')
 const { HEAD } = require('../../constants')
 const { resolve, join } = require('path')
 const staticRoot = resolve(__dirname, '../../../', 'static')
@@ -48,8 +48,8 @@ class Workplace extends PureComponent {
       })
   }
   openProject = (path) => {
-    this.props.onProjectOpen(path)
     this.props.switchTab(HEAD.WORKSPACE)
+    this.props.onProjectOpen(path)
   }
 
   componentDidMount() {
@@ -57,6 +57,12 @@ class Workplace extends PureComponent {
       this.fetchProjects(true, userInfo.user.userId)
     } else if (!_.isEmpty(machineId)) {
       this.fetchProjects(false, machineId)
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.project.id !== this.props.project.id) {
+      this.props.switchTab(HEAD.WORKSPACE)
     }
   }
 
@@ -161,13 +167,14 @@ class Workplace extends PureComponent {
   static propTypes = {
     onProjectOpen: func.isRequired,
     switchTab: func.isRequired,
+    project: object
   }
 }
 
 module.exports = {
   Workplace: connect(
     state => ({
-      projects: state.projects
+      project: state.project,
     }),
     dispatch => ({
       onProjectOpen(path) {

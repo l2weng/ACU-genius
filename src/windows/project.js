@@ -6,7 +6,7 @@ const { render } = require('react-dom')
 const { ready, $ } = require('../dom')
 const { create } = require('../stores/project')
 const { Main } = require('../components/main')
-const { TabContainer } = require('../components/TabContainer')
+const { Header } = require('../components/header')
 const { main } = require('../sagas/project')
 const { win } = require('../window')
 const act = require('../actions')
@@ -26,7 +26,7 @@ all([
 
     render(
       <Main store={store}>
-        <TabContainer/>
+        <Header/>
       </Main>,
       $('main')
     )

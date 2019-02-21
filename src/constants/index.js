@@ -37,6 +37,6 @@ module.exports = {
   UI: require('./ui'),
   WIZARD: require('./wizard'),
   REFERENCES: require('./references'),
-  HEAD: require('./tabContainer'),
+  HEAD: require('./header'),
   ...require('./rdf')
 }

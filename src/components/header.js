@@ -1,31 +1,34 @@
 'use strict'
 
 const React = require('react')
+const { connect } = require('react-redux')
 const { UserInfoContainer } = require('../components/user')
 const { Tabs, Icon } = require('antd')
 const TabPane = Tabs.TabPane
 const { ProjectContainer } = require('../components/project')
 const { Contacts } = require('../components/contacts')
 const { Workplace } = require('../components/workplace')
+const actions = require('../actions')
 const { HEAD } = require('../constants')
 
-class TabContainer extends React.Component {
+const {
+   func, object
+} = require('prop-types')
+
+class Header extends React.Component {
 
   constructor(props) {
     super(props)
-
-    this.state = {
-      activeKey: HEAD.HOME,
-    }
   }
 
   switchTab = (tabName) => {
-    this.setState({ activeKey: tabName })
+    this.props.switchTab(tabName)
   }
 
   render() {
+    let { activeTab } = this.props
     return (
-      <Tabs activeKey={this.state.activeKey} onChange={this.switchTab} style={{ height: '100%' }} tabBarExtraContent={<UserInfoContainer/>} >
+      <Tabs defaultActiveKey={activeTab} activeKey={activeTab} onChange={this.switchTab} style={{ height: '100%' }} tabBarExtraContent={<UserInfoContainer/>} >
         <TabPane tab={<span><Icon type="home" size="small"/>首页</span>} key={HEAD.HOME} className="workplace">
           <Workplace switchTab={this.switchTab}/>
         </TabPane>
@@ -37,7 +40,20 @@ class TabContainer extends React.Component {
   }
 
   static propTypes = {
+    activeTab: object,
+    switchTab: func.isRequired,
   }
 }
 
-module.exports = { TabContainer }
+module.exports = {
+  Header: connect(
+    state => ({
+      activeTab: state.header.activeTab
+    }),
+    dispatch => ({
+      switchTab(tabName) {
+        dispatch(actions.header.headerSwitch({ activeTab: tabName }))
+      }
+    })
+  )(Header),
+}

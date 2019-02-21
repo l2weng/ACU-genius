@@ -7,6 +7,7 @@ module.exports = {
   edit: require('./edit'),
   esper: require('./esper'),
   flash: require('./flash'),
+  header: require('./header'),
   history: require('./history'),
   imports: require('./imports'),
   intl: require('./intl'),
