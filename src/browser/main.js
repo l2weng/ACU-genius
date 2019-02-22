@@ -75,7 +75,7 @@ if (process.env.TROPY_RUN_UNIT_TESTS === 'true') {
     if (darwin) {
       app.on('open-file', (event, file) => {
         switch (extname(file)) {
-          case '.tpy':
+          case '.lbr':
             event.preventDefault()
             if (!READY) opts._ = [file]
             else labelReal.open(file)

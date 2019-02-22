@@ -155,7 +155,7 @@ open.templates = (options) => open({
 save.project = (options) => save({
   filters: [{
     name: t('dialog.filter.projects'),
-    extensions: ['tpy']
+    extensions: ['lbr']
   }],
   defaultPath: ARGS.documents,
   properties: ['createDirectory'],

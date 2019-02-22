@@ -709,7 +709,7 @@ class LabelReal extends EventEmitter {
         .show('file', win, {
           ...options,
           defaultPath: app.getPath('documents'),
-          filters: [{ name: 'LabelReal Projects', extensions: ['tpy'] }],
+          filters: [{ name: 'LabelReal Projects', extensions: ['lbr'] }],
           properties: ['openFile']
 
         }).then(files => {

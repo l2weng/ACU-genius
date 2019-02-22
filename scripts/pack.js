@@ -39,7 +39,7 @@ target.linux = (args = ['bz2']) => {
           name: qualified.name,
           bin: qualified.name,
           icon: join(res, 'icons', channel, 'tropy', '512x512.png'),
-          mimeType: ['application/vnd.tropy.tpy', 'image/jpeg'],
+          mimeType: ['application/vnd.labelreal.lbr', 'image/jpeg'],
           categories: ['Graphics', 'Viewer', 'Science']
         }
 

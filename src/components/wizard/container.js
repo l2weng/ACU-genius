@@ -23,7 +23,7 @@ class WizardContainer extends PureComponent {
 
     const file = join(
       this.props.userData,
-      sanitize(`${name}${count > 0 ? count : ''}.tpy`))
+      sanitize(`${name}${count > 0 ? count : ''}.lbr`))
 
     return exists(file) ?
       this.getDefaultFilename(name, count + 1) :

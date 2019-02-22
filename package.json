@@ -5,22 +5,21 @@
   "private": true,
   "description": "LabelReal is your friendly label assistant.",
   "license": "AGPL-3.0",
-  "homepage": "https://github.com/tropy/tropy#readme",
+  "homepage": "https://github.com/l2weng/ACU-genius#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tropy/tropy"
+    "url": "https://github.com/l2weng/ACU-genius"
   },
   "bugs": {
-    "url": "https://github.com/tropy/tropy/issues"
+    "url": "https://github.com/l2weng/ACU-genius/issues"
   },
   "keywords": [],
   "author": {
-    "name": "Center for History and New Media, George Mason University",
-    "url": "https://chnm.gmu.edu"
+    "name": "Label Real",
+    "url": "https://www.labelreal.com"
   },
   "contributors": [
-    "Sylvester Keil <sylvester@keil.or.at>",
-    "Johannes Krtek <johannes.krtek@flachware.com>"
+    "Louis Weng <louis.weng@labelreal.com>"
   ],
   "engines": {
     "node": ">=10",

@@ -43,7 +43,7 @@ Name=${qualified.product}
 Exec=${exec} %f
 Icon=${qualified.name}
 StartUpNotify=true
-MimeType=application/vnd.tropy.tpy;image/jpeg;
+MimeType=application/vnd.labelreal.lbr;image/jpeg;
 Categories=Graphics;Viewer;Science;`
   }
 }

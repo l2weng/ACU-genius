@@ -155,7 +155,7 @@ function copyIcons(dst) {
     cp(join(icons, icon), join(target, file))
   }
 
-  for (let type of ['tpy']) {
+  for (let type of ['lbr']) {
     for (let icon of ls(join(mime, type))) {
       let ext = extname(icon)
       let variant = basename(icon, ext)

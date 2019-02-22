@@ -359,7 +359,7 @@ const DropTargetSpec = {
     let files = monitor.getItem().files.map(f => f.path)
 
     switch (extname(files[0])) {
-      case '.tpy':
+      case '.lbr':
         files = files.slice(0, 1)
         if (files[0] !== project.file) {
           onProjectOpen(files[0])
@@ -382,9 +382,9 @@ const DropTargetSpec = {
     if (types.length < 1) return false
 
     switch (types[0]) {
-      case 'application-vnd.tropy.tpy':
+      case 'application-vnd.labelreal.lbr':
         return project.closed //|| files[0].path !== project.file
-      case 'application-vnd.tropy.ttp':
+      case 'application-vnd.labelreal.ttp':
         return true
       default:
         return false

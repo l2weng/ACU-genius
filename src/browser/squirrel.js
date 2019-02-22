@@ -107,7 +107,7 @@ function handleSquirrelEvent() {
       case '--squirrel-install':
         link(DESKTOP, true)
         link(START_MENU, true)
-        setMimeType('tpy', 'ttp').then(quit, quit)
+        setMimeType('lbr', 'ttp').then(quit, quit)
 
         return true
       case '--squirrel-updated':
@@ -122,7 +122,7 @@ function handleSquirrelEvent() {
           rm(app.getPath('userData'))
 
         } finally {
-          clearMimeType('tpy', 'ttp').then(quit, quit)
+          clearMimeType('lbr', 'ttp').then(quit, quit)
         }
         return true
       case '--squirrel-obsolete':
