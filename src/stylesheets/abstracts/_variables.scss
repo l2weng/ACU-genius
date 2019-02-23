@@ -151,10 +151,10 @@ $input-border-width: const("INPUT.BORDER_WIDTH") * 1px;
 // --------------------------------------------------
 
 $zindex-resizable:        1000;
-$zindex-project:          1010;
-$zindex-item:             1020;
-$zindex-draggable:        1030;
-$zindex-esper-header:     1030;
+$zindex-project:          999;
+$zindex-item:             1000;
+$zindex-draggable:        997;
+$zindex-esper-header:     998;
 $zindex-drop-target:      1040;
 $zindex-drag-layer:       1050;
 $zindex-flash:            1060;
