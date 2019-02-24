@@ -34,29 +34,35 @@ class ProjectToolbar extends PureComponent {
 
     return (
       <Toolbar isDraggable={isDraggable} onDoubleClick={onDoubleClick}>
-        <div className="toolbar-left">
-          <div className="tool-group">
-            <Slider
-              value={zoom}
-              max={maxZoom}
-              isDisabled={this.isEmpty || isDisabled}
-              onChange={onZoomChange}
-              minIcon={<IconList/>}
-              maxIcon={<IconGrid/>}/>
-          </div>
-          {isDisplay ? <div className="tool-group">
-            <Button
-              icon={<IconPlus/>}
-              isDisabled={isDisabled || !canCreateItems}
-              title="toolbar.import"
-              onClick={this.props.onItemCreate}/>
+        {isDisplay ?
+          <div className="toolbar-left">
+            <div className="tool-group">
+              <Slider
+                value={zoom}
+                max={maxZoom}
+                isDisabled={this.isEmpty || isDisabled}
+                onChange={onZoomChange}
+                minIcon={<IconList/>}
+                maxIcon={<IconGrid/>}/>
+            </div>
+            <div className="tool-group">
+              <Button
+                icon={<IconPlus/>}
+                isDisabled={isDisabled || !canCreateItems}
+                title="toolbar.import"
+                onClick={this.props.onItemCreate}/>
+            </div>
+            <div className="tool-group" onClick={this.props.onDataSetsCreate}>
+              <Tooltip placement="right" title="导入资源">
+                <Icon type="picture" size="small"/>
+              </Tooltip>
+            </div>
+            <div className="tool-group" onClick={this.props.onDataSetsSync}>
+              <Tooltip placement="right" title="同步到云">
+                <Icon type="cloud" size="small"/>
+              </Tooltip>
+            </div>
           </div> : ''}
-          {isDisplay ? <div className="tool-group" onClick={this.props.onDataSetsCreate}>
-            <Tooltip placement="right" title="导入资源">
-              <Icon type="picture" size="small"/>
-            </Tooltip>
-          </div> : ''}
-        </div>
         <div className="toolbar-center">
           <div className="item-count">
             <FormattedMessage id="toolbar.items" values={{ count: items }}/>
@@ -83,6 +89,7 @@ class ProjectToolbar extends PureComponent {
     onDoubleClick: func,
     onItemCreate: func.isRequired,
     onDataSetsCreate: func.isRequired,
+    onDataSetsSync: func.isRequired,
     onSearch: func.isRequired,
     onZoomChange: func.isRequired,
     isDisplay: bool,

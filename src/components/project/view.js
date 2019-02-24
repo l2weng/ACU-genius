@@ -50,6 +50,10 @@ class ProjectView extends Component {
     return this.props.onDataSetsCreate()
   }
 
+  handleDataSetsSync = () => {
+    return this.props.onDataSetsSync()
+  }
+
   handleSort = (sort) => {
     this.props.onSort({
       ...sort, list: this.props.nav.list || 0
@@ -93,6 +97,7 @@ class ProjectView extends Component {
                 isDisplay
                 onItemCreate={this.handleItemImport}
                 onDataSetsCreate={this.handleDataSetsCreate}
+                onDataSetsSync={this.handleDataSetsSync}
                 onDoubleClick={ARGS.frameless ? onMaximize : null}
                 onSearch={onSearch}
                 onZoomChange={this.handleZoomChange}/>

@@ -13,7 +13,7 @@ const { isValidImage } = require('../../image')
 const lazy = require('./tree')
 const cx = require('classnames')
 const { last, noop, restrict } = require('../../common/util')
-const {  Tooltip, Icon } = require('antd')
+const {  Tooltip, Icon, Modal } = require('antd')
 
 const {
   arrayOf, bool, func, number, object, shape, string
@@ -243,7 +243,7 @@ class ListNode extends React.PureComponent {
             onChange={this.handleChange}/>
         </div>
         <span style={{ float: 'right' }}><Tooltip placement="right" title="分配任务">
-          <Icon type="user-add" size="small"/>
+          <Icon type="user-add" size="small" onClick={this.showModal}/>
         </Tooltip>
         </span>
       </div>
@@ -263,6 +263,16 @@ class ListNode extends React.PureComponent {
               this.props.isDraggingParent || this.props.isDragging}
             parent={this.props.list}/>
         </Collapse>
+        <Modal
+          title="Basic Modal"
+          visible={false}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+        >
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+        </Modal>
       </li>
     )
   }

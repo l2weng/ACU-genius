@@ -78,6 +78,7 @@
   "dependencies": {
     "@pixi/filter-adjustment": "^2.5.0",
     "@tweenjs/tween.js": "^17.2.0",
+    "ali-oss": "^6.1.0",
     "antd": "^3.10.7",
     "axios": "^0.18.0",
     "bizcharts": "^3.4.1",

@@ -7,7 +7,6 @@ const {
 } = require('antd')
 const FormItem = Form.Item
 const Option = Select.Option
-const { machineIdSync } = require('node-machine-id')
 
 class RegistrationForm extends Component {
   state = {
