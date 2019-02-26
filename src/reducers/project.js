@@ -11,6 +11,7 @@ function inc(state, by = 1) {
   return { ...state, items: state.items + by }
 }
 
+
 module.exports = {
   // eslint-disable-next-line complexity
   project(state = INIT, { type, payload, meta, error }) {
@@ -18,6 +19,9 @@ module.exports = {
       case PROJECT.OPENED:
         return { ...payload }
       case PROJECT.UPDATE:
+        return { ...state, ...payload }
+      case PROJECT.SYNC:
+        // upload2Cloud(payload)
         return { ...state, ...payload }
       case PROJECT.UPDATE_USER_INFO:
         return { ...state, ...payload }

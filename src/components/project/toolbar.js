@@ -57,11 +57,6 @@ class ProjectToolbar extends PureComponent {
                 <Icon type="picture" size="small"/>
               </Tooltip>
             </div>
-            <div className="tool-group" onClick={this.props.onDataSetsSync}>
-              <Tooltip placement="right" title="同步到云">
-                <Icon type="cloud" size="small"/>
-              </Tooltip>
-            </div>
           </div> : ''}
         <div className="toolbar-center">
           <div className="item-count">
@@ -89,7 +84,6 @@ class ProjectToolbar extends PureComponent {
     onDoubleClick: func,
     onItemCreate: func.isRequired,
     onDataSetsCreate: func.isRequired,
-    onDataSetsSync: func.isRequired,
     onSearch: func.isRequired,
     onZoomChange: func.isRequired,
     isDisplay: bool,

@@ -62,6 +62,15 @@ module.exports = {
     }
   },
 
+  sync(payload, meta = {}) {
+
+    return {
+      type: PROJECT.SYNC,
+      payload,
+      meta
+    }
+  },
+
   update(payload, meta = {}) {
     return {
       type: PROJECT.UPDATE,
@@ -74,7 +83,7 @@ module.exports = {
     return {
       type: PROJECT.UPDATE_USER_INFO,
       payload,
-      meta: {...meta }
+      meta: { ...meta }
     }
   }
 

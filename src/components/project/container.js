@@ -22,6 +22,7 @@ const debounce = require('lodash.debounce')
 const { match } = require('../../keymap')
 const { IconSpin } = require('../icons')
 const { ProjectSummary } = require('../projectSummary')
+const axios = require('axios')
 
 const {
   getCachePrefix,
@@ -167,6 +168,20 @@ class ProjectContainer extends Component {
 
     onMetadataSave(payload, meta)
   }
+  handleSyncProject2Cloud = (payload, meta = {}) => {
+    const { project } = this.props
+    payload.project = project
+    axios.post('http://127.0.0.1:8188/syncProject2Cloud', { project })
+    .then(function (response) {
+      if (response.status === 200) {
+        console.log(response)
+      }
+    })
+    .catch(function (err) {
+      console.log(err)
+    })
+    // this.props.onSyncProject2Cloud(payload, meta)
+  }
 
   handleKeyDown = (event) => {
     switch (match(this.props.keymap.global, event)) {
@@ -245,6 +260,7 @@ class ProjectContainer extends Component {
           offset={this.state.offset}
           photos={photos}
           zoom={ui.zoom}
+          onSyncProject2Cloud={this.handleSyncProject2Cloud}
           onMetadataSave={this.handleMetadataSave}/>
 
         <ItemView {...props}
@@ -347,6 +363,7 @@ class ProjectContainer extends Component {
     onModeChange: func.isRequired,
     onHandleLogin: func.isRequired,
     onMetadataSave: func.isRequired,
+    onSyncProject2Cloud: func.isRequired,
     onSort: func.isRequired,
     onTemplateImport: func.isRequired,
     onUiUpdate: func.isRequired
@@ -574,6 +591,10 @@ module.exports = {
 
       onTagDelete(...args) {
         dispatch(actions.tag.delete(...args))
+      },
+
+      onSyncProject2Cloud(...args) {
+        dispatch(actions.project.sync(...args))
       },
 
       onTagSave(data, id) {

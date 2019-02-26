@@ -35,7 +35,7 @@ class Workplace extends PureComponent {
     let self = this
     this.setState({ loading: true })
     axios.get(
-      `${apiServer}/graphql?query={projectQueryByUser${query} { projectId name cover desc deadline type progress fileDirectory isOwner } } `)
+      `${apiServer}/graphql?query={projectQueryByUser${query} { projectId name cover desc deadline type progress projectFile isOwner } } `)
       .then(function (response) {
         if (response.status === 200) {
           self.setState(
@@ -147,7 +147,7 @@ class Workplace extends PureComponent {
                         src={item.cover ? item.cover : defaultCover}/>}>
                       <Meta
                         title={<a onClick={()=>this.openProject(
-                          item.fileDirectory)}>{item.name}</a>}
+                          item.projectFile)}>{item.name}</a>}
                         description={item.name}/>
                     </Card>
                   </List.Item>

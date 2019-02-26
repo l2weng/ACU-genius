@@ -789,7 +789,7 @@ class LabelReal extends EventEmitter {
       axios.post(`${apiServer}/projects/create`, {
         userId: __.isEmpty(userInfo) ? '' : userInfo.user.userId,
         machineId: machineIdSync({ original: true }),
-        fileDirectory: file,
+        projectFile: file,
       }).then(function () {
         verbose('temp user create project')
       })

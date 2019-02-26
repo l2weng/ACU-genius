@@ -18,6 +18,7 @@ const actions = require('../../actions')
 const {  Tooltip, Icon } = require('antd')
 const { ipcRenderer: ipc  } = require('electron')
 
+
 const {
   bool, shape, string, object, arrayOf, func, number
 } = require('prop-types')
@@ -245,7 +246,8 @@ class ProjectSidebar extends React.PureComponent {
       onTagCreate,
       onTagDelete,
       onTagSave,
-      onTagSelect
+      onTagSelect,
+      onSyncProject2Cloud,
     } = this.props
 
     let root = this.props.lists[this.props.root]
@@ -267,6 +269,9 @@ class ProjectSidebar extends React.PureComponent {
               onKeyDown={this.handleKeyDown}
               onMouseDown={this.handleMouseDown}>
               <nav>
+                <h2><FormattedMessage id="sidebar.project"/><span style={{ float: 'right' }}><Tooltip placement="right" title="同步到云">
+                  <Icon type="cloud" size="small" onClick={onSyncProject2Cloud}/>
+                </Tooltip></span></h2>
                 <ol>
                   <ProjectName
                     name={project.name}
@@ -279,9 +284,12 @@ class ProjectSidebar extends React.PureComponent {
                 </ol>
               </nav>
 
-              <h3><FormattedMessage id="sidebar.lists"/><span style={{ float: 'right' }}><Tooltip placement="right" title="添加任务">
-                <Icon type="plus-circle-o" size="small" onClick={this.addNewTask}/>
-              </Tooltip></span></h3>
+              <h3>
+                <FormattedMessage id="sidebar.lists"/>
+                <span style={{ float: 'right' }}><Tooltip placement="right" title="添加任务">
+                  <Icon type="plus-circle-o" size="small" onClick={this.addNewTask}/>
+                </Tooltip></span>
+              </h3>
               <nav>
                 {root &&
                   <ListTree
@@ -381,7 +389,8 @@ class ProjectSidebar extends React.PureComponent {
     onTagCreate: func.isRequired,
     onTagDelete: func.isRequired,
     onTagSave: func.isRequired,
-    onTagSelect: func.isRequired
+    onTagSelect: func.isRequired,
+    onSyncProject2Cloud: func.isRequired
   }
 
   static defaultProps = {

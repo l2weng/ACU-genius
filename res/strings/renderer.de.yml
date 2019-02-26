@@ -2,6 +2,7 @@ de:
   sidebar:
     lists: DataSet
     tags: Tags
+    project: 项目
     imports: Last Import
     trash: Deleted Items
   toolbar:

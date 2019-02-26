@@ -13,6 +13,7 @@ module.exports = {
   SAVE: 'project.save',
   UPDATE: 'project.update',
   UPDATE_USER_INFO: 'project.updateUserInfo',
+  SYNC: 'project.sync',
 
   MODE: {
     HOME: 'home',

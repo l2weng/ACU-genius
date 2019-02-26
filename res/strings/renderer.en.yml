@@ -2,6 +2,7 @@ en:
   sidebar:
     lists: Tasks
     tags: Skus
+    project: Project
     imports: Last Import
     trash: Deleted Items
   toolbar:
