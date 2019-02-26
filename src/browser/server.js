@@ -30,18 +30,8 @@ app.get('/file', async function (req, res, next) {
 })
 app.post('/syncProject2Cloud', (req, res) => {
   let { project } = req.body
-  upload2Cloud(project)
-  res.send('POST request to homepage')
-})
 
-function getOOSConfig() {
-  return {
-    region: 'oss-cn-shanghai',
-    accessKeyId: 'LTAIHmYSWuHcT5xd',
-    accessKeySecret: 'JS0Uub4G47eOwXw70EDmby0knaqDbh',
-    bucket: 'labelreal'
-  }
-}
+})
 
 function upload2Cloud(project) {
   let client = new OSS(getOOSConfig())

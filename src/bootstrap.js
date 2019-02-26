@@ -26,7 +26,8 @@ ready.then(() => {
 
 // eslint-disable-next-line
 global.eval = function () {
-  throw new Error('use of eval() is prohibited')
+  // allow eval for ali-oss
+  // throw new Error('use of eval() is prohibited')
 }
 
 if (!dev) {

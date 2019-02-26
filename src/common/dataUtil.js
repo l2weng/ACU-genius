@@ -49,6 +49,15 @@ const dataUtil = {
     }
 
     return queryParams
+  },
+
+  getOOSConfig() {
+    return {
+      region: 'oss-cn-shanghai',
+      accessKeyId: 'LTAIHmYSWuHcT5xd',
+      accessKeySecret: 'JS0Uub4G47eOwXw70EDmby0knaqDbh',
+      bucket: 'labelreal'
+    }
   }
 }
 

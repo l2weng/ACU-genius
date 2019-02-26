@@ -1,7 +1,7 @@
 'use strict'
 
 const { PROJECT } =  require('../constants')
-
+const OSS = require('ali-oss')
 
 module.exports = {
   create(payload, meta) {
@@ -63,7 +63,7 @@ module.exports = {
   },
 
   sync(payload, meta = {}) {
-
+    console.log(payload)
     return {
       type: PROJECT.SYNC,
       payload,
