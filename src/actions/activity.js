@@ -9,7 +9,6 @@ module.exports = {
     const payload = !error ?
       result :
       pick(result, ['code', 'message', 'stack', 'type'])
-
     return {
       type: action.type,
       payload,

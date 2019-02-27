@@ -54,7 +54,19 @@ class Save extends Command {
   }
 }
 
+class Sync extends Command {
+  static get ACTION() { return PROJECT.SYNC }
+
+  *exec() {
+    let { payload, meta } = this.action
+    let { photos, project } = payload
+    let projectMeta = { id: meta.seq, init: meta.now, type: 'project.upload', progress: 0, total: 1 }
+    yield put(act.project.upload(payload, projectMeta))
+  }
+}
+
 module.exports = {
   Rebase,
-  Save
+  Save,
+  Sync
 }

@@ -20,9 +20,6 @@ module.exports = {
         return { ...payload }
       case PROJECT.UPDATE:
         return { ...state, ...payload }
-      case PROJECT.SYNC:
-        // upload2Cloud(payload)
-        return { ...state, ...payload }
       case PROJECT.UPDATE_USER_INFO:
         return { ...state, ...payload }
       case PROJECT.OPEN:

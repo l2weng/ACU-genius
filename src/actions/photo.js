@@ -110,6 +110,25 @@ module.exports = {
     }
   },
 
+  sync(payload, meta) {
+    return {
+      type: PHOTO.SYNC,
+      payload,
+      meta: {
+        cmd: 'project',
+        ...meta
+      }
+    }
+  },
+
+  upload(payload, meta = {}) {
+    return {
+      type: PHOTO.UPLOAD,
+      payload,
+      meta: { ...meta }
+    }
+  },
+
   move(payload, meta) {
     return {
       type: PHOTO.MOVE,

@@ -402,6 +402,21 @@ class Restore extends Command {
   }
 }
 
+class Sync extends Command {
+  static get ACTION() { return PHOTO.SYNC }
+
+  *exec() {
+    let { payload, meta } = this.action
+    let { photos, project } = payload
+    let photosArray = []
+    for (let i in photos) {
+      photosArray.push(photos[i])
+    }
+    let photoMeta = { id: meta.seq, init: meta.now, type: 'photo.upload', progress: 0, total: photosArray.length }
+    yield put(act.photo.upload(payload, photoMeta))
+  }
+}
+
 module.exports = {
   Consolidate,
   Create,
@@ -411,6 +426,7 @@ module.exports = {
   Move,
   Order,
   Restore,
+  Sync,
   LoadReference,
   Save
 }

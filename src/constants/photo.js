@@ -16,6 +16,8 @@ module.exports = {
   SAVE: 'photo.save',
   SELECT: 'photo.select',
   UPDATE: 'photo.update',
+  SYNC: 'photo.sync',
+  UPLOAD: 'photo.upload',
 
   BULK: {
     UPDATE: 'photo.bulk.update'

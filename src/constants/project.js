@@ -6,6 +6,7 @@ module.exports = {
   CLOSE: 'project.close',
   CLOSED: 'project.closed',
   CREATE: 'project.create',
+  UPLOAD: 'project.upload',
   CREATED: 'project.created',
   OPEN: 'project.open',
   OPENED: 'project.opened',

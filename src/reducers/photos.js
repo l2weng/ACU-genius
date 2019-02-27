@@ -28,7 +28,6 @@ module.exports = {
         return insert(state, payload, meta)
       case PHOTO.UPDATE:
         return update(state, payload, meta)
-
       case PHOTO.NOTE.ADD:
         return nested.add('notes', state, payload, meta)
       case PHOTO.NOTE.REMOVE:

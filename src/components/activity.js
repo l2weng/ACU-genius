@@ -74,6 +74,7 @@ class ActivityPane extends PureComponent {
   }
 
   componentWillReceiveProps(props) {
+    console.log(this.props.activities !== props.activities)
     if (this.props.activities !== props.activities) {
       this.setState({
         activities: props.activities.filter(this.busy)
@@ -120,9 +121,11 @@ class ActivityPane extends PureComponent {
     this.resume()
   }
 
-  busy = (activity) => (
-    !activity.done && (Date.now() - activity.init) > this.props.delay
-  )
+  busy = (activity) => {
+    return (
+      !activity.done && (Date.now() - activity.init) > this.props.delay
+    )
+  }
 
   render() {
     return (

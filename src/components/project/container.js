@@ -169,32 +169,35 @@ class ProjectContainer extends Component {
 
     onMetadataSave(payload, meta)
   }
-  handleSyncProject2Cloud = (payload, meta = {}) => {
-    const { project } = this.props
+  handleSyncProject2Cloud = (payload) => {
+    const { project, photos } = this.props
     let client = new OSS(getOOSConfig())
     let projectProgress = { ...project }
     let checkpoint
     let self = this
-    async function resumeUpload() {
-      // retry 5 times
-      for (let i = 0; i < 5; i++) {
-        try {
-          client.multipartUpload(project.name,
-            project.file, {
-              checkpoint,
-              async progress(percentage, cpt) {
-                projectProgress.checkpoint = cpt
-                projectProgress.percentage = percentage
-                self.props.onSyncProject2Cloud(projectProgress, meta)
-              },
-            })
-          break // break if success
-        } catch (e) {
-          console.log(e)
-        }
-      }
-    }
-    resumeUpload()
+    // let result = client.put(project.name, project.file)
+    this.props.onSyncProject2Cloud({ project, photos })
+    // async function resumeUpload() {
+    //   // retry 5 times
+    //   for (let i = 0; i < 5; i++) {
+    //     try {
+    //       client.multipartUpload(project.name,
+    //         project.file, {
+    //           checkpoint,
+    //           async progress(percentage, cpt) {
+    //             checkpoint = cpt
+    //             projectProgress.checkpoint = cpt
+    //             projectProgress.percentage = percentage
+    //             self.props.onSyncProject2Cloud(projectProgress, meta)
+    //           },
+    //         })
+    //       break // break if success
+    //     } catch (e) {
+    //       console.log(e)
+    //     }
+    //   }
+    // }
+    // resumeUpload()
   }
 
   handleKeyDown = (event) => {
@@ -609,6 +612,7 @@ module.exports = {
 
       onSyncProject2Cloud(...args) {
         dispatch(actions.project.sync(...args))
+        dispatch(actions.photo.sync(...args))
       },
 
       onTagSave(data, id) {

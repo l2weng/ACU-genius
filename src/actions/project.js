@@ -63,11 +63,21 @@ module.exports = {
   },
 
   sync(payload, meta = {}) {
-    console.log(payload)
     return {
       type: PROJECT.SYNC,
       payload,
-      meta
+      meta: {
+        cmd: 'project',
+        ...meta
+      }
+    }
+  },
+
+  upload(payload, meta = {}) {
+    return {
+      type: PROJECT.UPLOAD,
+      payload,
+      meta: { ...meta }
     }
   },
 
