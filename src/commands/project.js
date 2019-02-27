@@ -1,13 +1,12 @@
 'use strict'
 
-const { call, put, select } = require('redux-saga/effects')
+const { all, call, put, select } = require('redux-saga/effects')
 const { dirname } = require('path')
 const { Command } = require('./command')
 const { PROJECT } = require('../constants')
 const { pick } = require('../common/util')
 const act = require('../actions')
 const mod = require('../models')
-
 
 class Rebase extends Command {
   static get ACTION() { return PROJECT.REBASE }
@@ -58,10 +57,9 @@ class Sync extends Command {
   static get ACTION() { return PROJECT.SYNC }
 
   *exec() {
-    let { payload, meta } = this.action
-    let { photos, project } = payload
-    let projectMeta = { id: meta.seq, init: meta.now, type: 'project.upload', progress: 0, total: 1 }
-    yield put(act.project.upload(payload, projectMeta))
+    let { payload } = this.action
+    yield put(act.project.upload(payload))
+    yield put(act.activity.update(this.action, { total: 1, progress: 1 }))
   }
 }
 

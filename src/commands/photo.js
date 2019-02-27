@@ -14,7 +14,9 @@ const { warn } = require('../common/log')
 const { blank, pick, pluck, splice } = require('../common/util')
 const { getPhotoTemplate, getTemplateValues } = require('../selectors')
 const { keys, values } = Object
-
+const { getOOSConfig } = require('../common/dataUtil')
+const OSS = require('ali-oss')
+const { error } = require('../common/log')
 
 class Consolidate extends ImportCommand {
   static get ACTION() { return PHOTO.CONSOLIDATE }
@@ -406,14 +408,28 @@ class Sync extends Command {
   static get ACTION() { return PHOTO.SYNC }
 
   *exec() {
-    let { payload, meta } = this.action
-    let { photos, project } = payload
+    let { payload } = this.action
+    let { photos } = payload
     let photosArray = []
     for (let i in photos) {
       photosArray.push(photos[i])
     }
-    let photoMeta = { id: meta.seq, init: meta.now, type: 'photo.upload', progress: 0, total: photosArray.length }
-    yield put(act.photo.upload(payload, photoMeta))
+    let total = photosArray.length
+    for (let i = 0; i < photosArray.length; i++) {
+      let syncPhoto = photosArray[i]
+      let client = new OSS(getOOSConfig())
+      try {
+        let result = yield client.put(syncPhoto.checksum, syncPhoto.path)
+        if (result.res.status === 200) {
+          yield all([
+            put(act.photo.upload(payload)),
+            put(act.activity.update(this.action, { total, progress: i + 1 }))
+          ])
+        }
+      } catch (e) {
+        error(e)
+      }
+    }
   }
 }
 

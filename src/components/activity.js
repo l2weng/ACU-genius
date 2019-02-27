@@ -74,12 +74,10 @@ class ActivityPane extends PureComponent {
   }
 
   componentWillReceiveProps(props) {
-    console.log(this.props.activities !== props.activities)
     if (this.props.activities !== props.activities) {
       this.setState({
         activities: props.activities.filter(this.busy)
       })
-
       this.resume()
     }
   }
@@ -94,7 +92,7 @@ class ActivityPane extends PureComponent {
 
   get style() {
     return {
-      height: getHeight(this.state.activities.length)
+      height: getHeight(this.state.activities.length) + 43
     }
   }
 
@@ -128,6 +126,7 @@ class ActivityPane extends PureComponent {
   }
 
   render() {
+    console.log(this.style)
     return (
       <div
         className={cx({ 'activity-pane': true, 'busy': this.isBusy })}

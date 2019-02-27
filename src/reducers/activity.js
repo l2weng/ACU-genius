@@ -1,7 +1,7 @@
 'use strict'
 
 const { omit } = require('../common/util')
-const { ACTIVITY,PROJECT,PHOTO } = require('../constants')
+const { ACTIVITY } = require('../constants')
 
 module.exports = {
   activities(state = {}, { type, payload, meta = {} }) {
@@ -12,22 +12,6 @@ module.exports = {
         return {
           ...state,
           [rel]: { ...state[rel], ...payload }
-        }
-
-      case (type === PROJECT.UPLOAD):
-        return {
-          ...state,
-          [seq]: {
-            id: seq, type, init: now, progress, total
-          }
-        }
-
-      case (type === PHOTO.UPLOAD):
-        return {
-          ...state,
-          [seq]: {
-            id: seq, type, init: now, progress, total
-          }
         }
 
       case (done):

@@ -22,8 +22,6 @@ const debounce = require('lodash.debounce')
 const { match } = require('../../keymap')
 const { IconSpin } = require('../icons')
 const { ProjectSummary } = require('../projectSummary')
-const { getOOSConfig } = require('../../common/dataUtil')
-const OSS = require('ali-oss')
 
 const {
   getCachePrefix,
@@ -169,35 +167,9 @@ class ProjectContainer extends Component {
 
     onMetadataSave(payload, meta)
   }
-  handleSyncProject2Cloud = (payload) => {
+  handleSyncProject2Cloud = () => {
     const { project, photos } = this.props
-    let client = new OSS(getOOSConfig())
-    let projectProgress = { ...project }
-    let checkpoint
-    let self = this
-    // let result = client.put(project.name, project.file)
     this.props.onSyncProject2Cloud({ project, photos })
-    // async function resumeUpload() {
-    //   // retry 5 times
-    //   for (let i = 0; i < 5; i++) {
-    //     try {
-    //       client.multipartUpload(project.name,
-    //         project.file, {
-    //           checkpoint,
-    //           async progress(percentage, cpt) {
-    //             checkpoint = cpt
-    //             projectProgress.checkpoint = cpt
-    //             projectProgress.percentage = percentage
-    //             self.props.onSyncProject2Cloud(projectProgress, meta)
-    //           },
-    //         })
-    //       break // break if success
-    //     } catch (e) {
-    //       console.log(e)
-    //     }
-    //   }
-    // }
-    // resumeUpload()
   }
 
   handleKeyDown = (event) => {

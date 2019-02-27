@@ -59,6 +59,7 @@ const dataUtil = {
       bucket: 'labelreal'
     }
   }
+
 }
 
 module.exports = dataUtil

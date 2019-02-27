@@ -1,7 +1,6 @@
 'use strict'
 
 const { PROJECT } =  require('../constants')
-const OSS = require('ali-oss')
 
 module.exports = {
   create(payload, meta) {
