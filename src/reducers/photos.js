@@ -1,26 +1,7 @@
 'use strict'
-const { getOOSConfig } = require('../common/dataUtil')
-const OSS = require('ali-oss')
-const { error } = require('../common/log')
 
 const { METADATA, PHOTO, PROJECT } = require('../constants')
 const { bulk, insert, load, nested, touch, update } = require('./util')
-
-async function upload(state, payload) {
-  let { syncPhoto } = payload
-  let client = new OSS(getOOSConfig())
-  try {
-    let result = await client.put(syncPhoto.checksum, syncPhoto.path)
-    console.log(result)
-  } catch (e) {
-    error(e)
-  }
-}
-// upload().then(res=>{
-//   if (res.res.status === 200) {
-//     return { ...state }
-//   }
-// })
 
 module.exports = {
   // eslint-disable-next-line complexity

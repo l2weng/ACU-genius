@@ -1,12 +1,14 @@
 'use strict'
 
-const { all, call, put, select } = require('redux-saga/effects')
+const { call, put, select } = require('redux-saga/effects')
 const { dirname } = require('path')
 const { Command } = require('./command')
 const { PROJECT } = require('../constants')
 const { pick } = require('../common/util')
 const act = require('../actions')
 const mod = require('../models')
+const { getNewOOSClient } = require('../common/dataUtil')
+const { error } = require('../common/log')
 
 class Rebase extends Command {
   static get ACTION() { return PROJECT.REBASE }
@@ -58,8 +60,17 @@ class Sync extends Command {
 
   *exec() {
     let { payload } = this.action
-    yield put(act.project.upload(payload))
-    yield put(act.activity.update(this.action, { total: 1, progress: 1 }))
+    let client = getNewOOSClient()
+    let total = 1
+    try {
+      let result = yield client.put(payload.project.name, payload.project.file)
+      if (result.res.status === 200) {
+        yield put(act.project.upload(payload))
+        put(act.activity.update(this.action, { total, progress: 1 }))
+      }
+    } catch (e) {
+      error(e)
+    }
   }
 }
 

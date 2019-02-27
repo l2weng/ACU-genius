@@ -14,8 +14,7 @@ const { warn } = require('../common/log')
 const { blank, pick, pluck, splice } = require('../common/util')
 const { getPhotoTemplate, getTemplateValues } = require('../selectors')
 const { keys, values } = Object
-const { getOOSConfig } = require('../common/dataUtil')
-const OSS = require('ali-oss')
+const { getNewOOSClient } = require('../common/dataUtil')
 const { error } = require('../common/log')
 
 class Consolidate extends ImportCommand {
@@ -417,7 +416,7 @@ class Sync extends Command {
     let total = photosArray.length
     for (let i = 0; i < photosArray.length; i++) {
       let syncPhoto = photosArray[i]
-      let client = new OSS(getOOSConfig())
+      let client = getNewOOSClient()
       try {
         let result = yield client.put(syncPhoto.checksum, syncPhoto.path)
         if (result.res.status === 200) {

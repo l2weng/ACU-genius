@@ -1,5 +1,5 @@
 'use strict'
-// const OSS = require('ali-oss')
+const OSS = require('ali-oss')
 
 const dataUtil = {
   /**
@@ -51,13 +51,13 @@ const dataUtil = {
     return queryParams
   },
 
-  getOOSConfig() {
-    return {
+  getNewOOSClient() {
+    return new OSS({
       region: 'oss-cn-shanghai',
       accessKeyId: 'LTAIHmYSWuHcT5xd',
       accessKeySecret: 'JS0Uub4G47eOwXw70EDmby0knaqDbh',
       bucket: 'labelreal'
-    }
+    })
   }
 
 }
