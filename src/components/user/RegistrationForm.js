@@ -3,10 +3,11 @@
 const React = require('react')
 const { Component } = React
 const {
-  Form, Input, Tooltip, Icon, Select, Row, Col, Button,
+  Form, Input, Tooltip, Icon, Select, Row, Col, Button, message
 } = require('antd')
 const FormItem = Form.Item
 const Option = Select.Option
+const axios = require('axios')
 
 class RegistrationForm extends Component {
   state = {
@@ -16,8 +17,16 @@ class RegistrationForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
     this.props.form.validateFieldsAndScroll((err, values) => {
+      values = { userType: 1, status: 1, ...values }
       if (!err) {
-        console.log('Received values of form: ', values)
+        axios.post(`${ARGS.apiServer}/users/create`, values).then(res => {
+          if (res.status === 200) {
+            message.success('添加成功', 0.5)
+          }
+        })
+        .catch(()=> {
+          message.error('服务器问题, 请联系客服')
+        })
       }
     })
   }
@@ -93,6 +102,16 @@ class RegistrationForm extends Component {
             })(
               <Input />
           )}
+          </FormItem><FormItem
+            {...formItemLayout}
+            label="Company Name">
+            {getFieldDecorator('companyName', {
+              rules: [{
+                required: true, message: 'Please input your Company name!',
+              }],
+            })(
+              <Input />
+          )}
           </FormItem>
           <FormItem
             {...formItemLayout}
@@ -130,7 +149,7 @@ class RegistrationForm extends Component {
                 </Tooltip>
               </span>
           )}>
-            {getFieldDecorator('nickname', {
+            {getFieldDecorator('name', {
               rules: [{ required: true, message: 'Please input your nickname!', whitespace: true }],
             })(
               <Input />

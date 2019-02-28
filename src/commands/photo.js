@@ -418,7 +418,9 @@ class Sync extends Command {
       let syncPhoto = photosArray[i]
       let client = getNewOOSClient()
       try {
+        console.log(syncPhoto)
         let result = yield client.put(syncPhoto.checksum, syncPhoto.path)
+        console.log(result)
         if (result.res.status === 200) {
           yield all([
             put(act.photo.upload(payload)),
