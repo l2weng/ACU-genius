@@ -126,7 +126,6 @@ class ActivityPane extends PureComponent {
   }
 
   render() {
-    console.log(this.style)
     return (
       <div
         className={cx({ 'activity-pane': true, 'busy': this.isBusy })}

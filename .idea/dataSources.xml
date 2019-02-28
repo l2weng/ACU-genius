@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="212" uuid="ea8e548e-3172-4b9d-ad8d-3b34289b07b4">
+    <data-source source="LOCAL" name="212" uuid="434faff9-1c79-4a20-ac82-21c502e98a3f">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:$USER_HOME$/Downloads/212</jdbc-url>
+      <jdbc-url>jdbc:sqlite:$USER_HOME$/Documents/212.lbr</jdbc-url>
       <driver-properties>
         <property name="enable_load_extension" value="true" />
       </driver-properties>
