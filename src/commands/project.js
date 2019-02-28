@@ -9,6 +9,7 @@ const act = require('../actions')
 const mod = require('../models')
 const { getNewOOSClient } = require('../common/dataUtil')
 const { error } = require('../common/log')
+const axios = require('axios')
 
 class Rebase extends Command {
   static get ACTION() { return PROJECT.REBASE }
@@ -60,13 +61,28 @@ class Sync extends Command {
 
   *exec() {
     let { payload } = this.action
+    let { project } = payload
     let client = getNewOOSClient()
     let total = 1
+    let { userInfo } = ARGS
     try {
-      let result = yield client.put(payload.project.name, payload.project.file)
+      let result = yield client.put(project.id, project.file)
       if (result.res.status === 200) {
-        yield put(act.project.upload(payload))
-        put(act.activity.update(this.action, { total, progress: 1 }))
+        let syncProject = {
+          syncStatus: true,
+          syncProjectFile: result.url,
+          projectFile: project.file,
+          itemCount: project.items,
+          localProjectId: project.id,
+          name: project.name,
+          userId: userInfo.user.userId,
+          syncProjectFileName: project.name,
+        }
+        const syncResult = yield axios.post(`${ARGS.apiServer}/projects/syncProject`, syncProject)
+        if (syncResult.status === 200) {
+          yield put(act.project.upload(payload))
+          yield put(act.activity.update(this.action, { total, progress: 1 }))
+        }
       }
     } catch (e) {
       error(e)

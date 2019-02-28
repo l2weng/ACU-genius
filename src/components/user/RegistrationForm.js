@@ -8,6 +8,7 @@ const {
 const FormItem = Form.Item
 const Option = Select.Option
 const axios = require('axios')
+const { machineIdSync } = require('node-machine-id')
 
 class RegistrationForm extends Component {
   state = {
@@ -17,7 +18,7 @@ class RegistrationForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
     this.props.form.validateFieldsAndScroll((err, values) => {
-      values = { userType: 1, status: 1, ...values }
+      values = { userType: 1, status: 1, machineId: machineIdSync({ original: true }), ...values }
       if (!err) {
         axios.post(`${ARGS.apiServer}/users/create`, values).then(res => {
           if (res.status === 200) {
