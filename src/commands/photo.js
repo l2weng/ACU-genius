@@ -422,9 +422,7 @@ class Sync extends Command {
       let client = getNewOOSClient()
       try {
         let photoName = uuid()
-        // console.log(syncPhoto)
         let result = yield client.put(photoName, syncPhoto.path)
-        // console.log(result)
         if (result.res.status === 200) {
           // let syncPhoto = {
           //   syncStatus: true,

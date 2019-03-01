@@ -34,6 +34,9 @@ const ColleagueList = Form.create()(props => {
       handleAssign(fieldsValue)
     })
   }
+  const onUserAssign = (userId) =>{
+    console.log(userId)
+  }
   return (
     <Modal
       destroyOnClose
@@ -42,7 +45,7 @@ const ColleagueList = Form.create()(props => {
       onOk={okHandle}
       footer={null}
       onCancel={() => handleModalVisible()}>
-      <ColleagueTable data={colleagues}/>
+      <ColleagueTable data={colleagues} handleAssign={onUserAssign}/>
     </Modal>
   )
 })

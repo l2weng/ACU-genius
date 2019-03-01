@@ -3,7 +3,7 @@
 const React = require('react')
 const { Table, Input, Button, Icon } = require('antd')
 const Highlighter = require('react-highlight-words')
-const { array } = require('prop-types')
+const { array, func } = require('prop-types')
 
 class ColleagueTable extends React.Component {
   state = {
@@ -66,13 +66,16 @@ class ColleagueTable extends React.Component {
     this.setState({ searchText: selectedKeys[0] })
   }
 
+  assignWork = (userId) => {
+    this.props.handleAssign(userId)
+  };
+
   handleReset = (clearFilters) => {
     clearFilters()
     this.setState({ searchText: '' })
   }
 
   render() {
-    console.log(this.props.data)
     const columns = [
       {
         title: '姓名',
@@ -92,14 +95,15 @@ class ColleagueTable extends React.Component {
         width: '15%',
         render: (text, record) => (
           <span>
-            <a href="javascript:">分配</a>
+            <a onClick={()=>this.assignWork(record.userId)}>分配</a>
           </span>
         ),
       }]
     return <Table columns={columns} dataSource={this.props.data}/>
   }
   static propTypes = {
-    data: array
+    data: array.isRequired,
+    handleAssign: func.isRequired
   }
 }
 
