@@ -59,6 +59,7 @@ class ListTree extends React.Component {
   static propTypes = {
     depth: number.isRequired,
     edit: object,
+    project: object,
     expand: object.isRequired,
     hold: object.isRequired,
     isDraggingParent: bool,

@@ -35,7 +35,7 @@ const ColleagueList = Form.create()(props => {
     })
   }
   const onUserAssign = (userId) =>{
-    console.log(userId)
+    handleAssign(userId)
   }
   return (
     <Modal
@@ -148,7 +148,8 @@ class ListNode extends React.PureComponent {
   }
 
   handleAssign = assigneeId =>{
-    console.log(assigneeId)
+    let { project } = this.props
+    console.log(project, assigneeId)
   }
 
   handleModalVisible = flag => {
@@ -301,6 +302,7 @@ class ListNode extends React.PureComponent {
   }
 
   render() {
+    console.log(this.props)
     const { modalVisible, colleagues } = this.state
     const parentMethods = {
       handleAssign: this.handleAssign,
@@ -327,6 +329,7 @@ class ListNode extends React.PureComponent {
     canDrop: bool,
     depth: number.isRequired,
     expand: object.isRequired,
+    project: object,
     isDragging: bool,
     isDraggingParent: bool,
     isEditing: bool,

@@ -298,6 +298,7 @@ class ProjectSidebar extends React.PureComponent {
                     edit={this.props.edit.list}
                     expand={this.props.expand}
                     hold={this.props.hold}
+                    project={this.props.project}
                     isExpanded
                     selection={this.props.list}
                     onContextMenu={onContextMenu}
