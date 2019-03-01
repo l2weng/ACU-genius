@@ -16,6 +16,7 @@ const { getPhotoTemplate, getTemplateValues } = require('../selectors')
 const { keys, values } = Object
 const { getNewOOSClient } = require('../common/dataUtil')
 const { error } = require('../common/log')
+const uuid = require('uuid/v4')
 
 class Consolidate extends ImportCommand {
   static get ACTION() { return PHOTO.CONSOLIDATE }
@@ -408,6 +409,7 @@ class Sync extends Command {
 
   *exec() {
     let { payload } = this.action
+    const { db } = this.options
     let { photos } = payload
     let photosArray = []
     for (let i in photos) {
@@ -418,17 +420,19 @@ class Sync extends Command {
       let syncPhoto = photosArray[i]
       let client = getNewOOSClient()
       try {
+        let photoName = uuid();
         console.log(syncPhoto)
-        let result = yield client.put(syncPhoto.checksum, syncPhoto.path)
+        let result = yield client.put(photoName, syncPhoto.path)
         console.log(result)
         if (result.res.status === 200) {
+          yield call(mod.photo.syncFileUrl, db, syncPhoto.id, result.url)
           yield all([
             put(act.photo.upload(payload)),
             put(act.activity.update(this.action, { total, progress: i + 1 }))
           ])
         }
       } catch (e) {
-        error(e)
+        error(e.toString())
       }
     }
   }

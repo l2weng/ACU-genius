@@ -317,5 +317,11 @@ module.exports = {
     await bb.map(delta, ({ id, path }) => db.run(
       ...update('photos').set({ path }).where({ id })
     ))
+  },
+
+  async syncFileUrl(db, id, syncFileUrl) {
+    return db.run(`
+      UPDATE photos SET syncFileUrl = ?  WHERE id = (${id})`,
+      syncFileUrl)
   }
 }

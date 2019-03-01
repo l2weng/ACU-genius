@@ -1,6 +1,6 @@
 'use strict'
 
-const { call, put, select } = require('redux-saga/effects')
+const { call, put, select, all } = require('redux-saga/effects')
 const { dirname } = require('path')
 const { Command } = require('./command')
 const { PROJECT } = require('../constants')
@@ -80,8 +80,10 @@ class Sync extends Command {
         }
         const syncResult = yield axios.post(`${ARGS.apiServer}/projects/syncProject`, syncProject)
         if (syncResult.status === 200) {
-          yield put(act.project.upload(payload))
-          yield put(act.activity.update(this.action, { total, progress: 1 }))
+          yield all([
+            put(act.project.upload(payload)),
+            put(act.activity.update(this.action, { total, progress: 1 }))
+          ])
         }
       }
     } catch (e) {
