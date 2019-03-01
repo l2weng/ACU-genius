@@ -13,7 +13,11 @@ const { isValidImage } = require('../../image')
 const lazy = require('./tree')
 const cx = require('classnames')
 const { last, noop, restrict } = require('../../common/util')
-const {  Tooltip, Icon, Modal } = require('antd')
+const {  Tooltip, Icon, Modal, message, Form } = require('antd')
+const axios = require('axios')
+const { getUrlFilterParams } = require('../../common/dataUtil')
+const { userInfo } = ARGS
+const { ColleagueTable } = require('../contacts/colleagueTable')
 
 const {
   arrayOf, bool, func, number, object, shape, string
@@ -21,6 +25,27 @@ const {
 
 const { INDENT, PADDING } = SASS.LIST
 
+const ColleagueList = Form.create()(props => {
+  const { modalVisible, form, handleAssign, handleModalVisible, colleagues } = props
+  const okHandle = () => {
+    form.validateFields((err, fieldsValue) => {
+      if (err) return
+      form.resetFields()
+      handleAssign(fieldsValue)
+    })
+  }
+  return (
+    <Modal
+      destroyOnClose
+      title="分配任务"
+      visible={modalVisible}
+      onOk={okHandle}
+      footer={null}
+      onCancel={() => handleModalVisible()}>
+      <ColleagueTable data={colleagues}/>
+    </Modal>
+  )
+})
 
 class NewListNode extends React.Component {
   handleChange = (name) => {
@@ -65,7 +90,10 @@ class NewListNode extends React.Component {
 class ListNode extends React.PureComponent {
   state = {
     depth: null,
-    offset: null
+    offset: null,
+    modalVisible: false,
+    loading: false,
+    colleagues: []
   }
 
   componentDidMount() {
@@ -114,6 +142,25 @@ class ListNode extends React.PureComponent {
 
   getDropDepth(depth = this.state.depth) {
     return restrict(depth, this.props.minDropDepth, this.props.depth)
+  }
+
+  handleAssign = assigneeId =>{
+    console.log(assigneeId)
+  }
+
+  handleModalVisible = flag => {
+    let self = this
+    let query = getUrlFilterParams({ companyId: userInfo.user.companyId }, ['companyId'])
+
+    axios.get(`${ARGS.apiServer}/graphql?query={userQueryActiveContacts${query} { userId name email status phone userType userTypeDesc statusDesc avatarColor machineId prefix }}`)
+    .then(function (response) {
+      if (response.status === 200) {
+        self.setState({ colleagues: response.data.data.userQueryActiveContacts, modalVisible: !!flag })
+      }
+    })
+    .catch(function () {
+      message.warning('查询服务连接失败, 请重试')
+    })
   }
 
   getDropOutsidePosition(depth = 1, other) {
@@ -243,7 +290,7 @@ class ListNode extends React.PureComponent {
             onChange={this.handleChange}/>
         </div>
         <span style={{ float: 'right' }}><Tooltip placement="right" title="分配任务">
-          <Icon type="user-add" size="small" onClick={this.showModal}/>
+          <Icon type="user-add" size="small" onClick={() => this.handleModalVisible(true)}/>
         </Tooltip>
         </span>
       </div>
@@ -251,6 +298,11 @@ class ListNode extends React.PureComponent {
   }
 
   render() {
+    const { modalVisible, colleagues } = this.state
+    const parentMethods = {
+      handleAssign: this.handleAssign,
+      handleModalVisible: this.handleModalVisible,
+    }
     return (
       <li className={cx(...this.classes)}>
         {this.renderNodeContainer()}
@@ -263,16 +315,7 @@ class ListNode extends React.PureComponent {
               this.props.isDraggingParent || this.props.isDragging}
             parent={this.props.list}/>
         </Collapse>
-        <Modal
-          title="Basic Modal"
-          visible={false}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
-        >
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-        </Modal>
+        <ColleagueList {...parentMethods} modalVisible={modalVisible} colleagues={colleagues}/>
       </li>
     )
   }

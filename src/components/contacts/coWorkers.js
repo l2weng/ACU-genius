@@ -5,7 +5,6 @@ const { PureComponent } = React
 const { List, Icon,  Avatar, Card, Form, Modal, Input, message, Button } = require('antd')
 const { getUrlFilterParams } = require('../../common/dataUtil')
 const { userInfo } = ARGS
-const FormItem = Form.Item
 const _ = require('underscore')
 const axios = require('axios')
 const { WorkersTable } = require('./workersTable')

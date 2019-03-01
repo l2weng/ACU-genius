@@ -421,7 +421,7 @@ class Sync extends Command {
       let syncPhoto = photosArray[i]
       let client = getNewOOSClient()
       try {
-        let photoName = uuid();
+        let photoName = uuid()
         // console.log(syncPhoto)
         let result = yield client.put(photoName, syncPhoto.path)
         // console.log(result)
@@ -438,11 +438,11 @@ class Sync extends Command {
           // }
           // const syncResult = yield axios.post(`${ARGS.apiServer}/photos/syncPhoto`, syncPhoto)
           // if (syncResult.status === 200) {
-            yield all([
-              call(mod.photo.syncFileUrl, db, syncPhoto.id, result.url),
-              put(act.photo.upload(payload)),
-              put(act.activity.update(this.action, {total, progress: i + 1}))
-            ])
+          yield all([
+            call(mod.photo.syncFileUrl, db, syncPhoto.id, result.url),
+            put(act.photo.upload(payload)),
+            put(act.activity.update(this.action, { total, progress: i + 1 }))
+          ])
           // }
         }
       } catch (e) {
