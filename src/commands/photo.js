@@ -17,6 +17,7 @@ const { keys, values } = Object
 const { getNewOOSClient } = require('../common/dataUtil')
 const { error } = require('../common/log')
 const uuid = require('uuid/v4')
+const axios = require('axios')
 
 class Consolidate extends ImportCommand {
   static get ACTION() { return PHOTO.CONSOLIDATE }
@@ -421,15 +422,28 @@ class Sync extends Command {
       let client = getNewOOSClient()
       try {
         let photoName = uuid();
-        console.log(syncPhoto)
+        // console.log(syncPhoto)
         let result = yield client.put(photoName, syncPhoto.path)
-        console.log(result)
+        // console.log(result)
         if (result.res.status === 200) {
-          yield call(mod.photo.syncFileUrl, db, syncPhoto.id, result.url)
-          yield all([
-            put(act.photo.upload(payload)),
-            put(act.activity.update(this.action, { total, progress: i + 1 }))
-          ])
+          // let syncPhoto = {
+          //   syncStatus: true,
+          //   syncProjectFile: result.url,
+          //   projectFile: project.file,
+          //   itemCount: project.items,
+          //   localProjectId: project.id,
+          //   name: project.name,
+          //   userId: userInfo.user.userId,
+          //   syncProjectFileName: project.name,
+          // }
+          // const syncResult = yield axios.post(`${ARGS.apiServer}/photos/syncPhoto`, syncPhoto)
+          // if (syncResult.status === 200) {
+            yield all([
+              call(mod.photo.syncFileUrl, db, syncPhoto.id, result.url),
+              put(act.photo.upload(payload)),
+              put(act.activity.update(this.action, {total, progress: i + 1}))
+            ])
+          // }
         }
       } catch (e) {
         error(e.toString())
