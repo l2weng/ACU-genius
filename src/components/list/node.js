@@ -149,7 +149,18 @@ class ListNode extends React.PureComponent {
 
   handleAssign = assigneeId =>{
     let { project } = this.props
-    console.log(project, assigneeId)
+    let self = this
+    axios.post(`${ARGS.apiServer}/projects/addColleague`, { localProjectId: project.id, colleagueId: assigneeId })
+    .then(function (response) {
+      if (response.status === 200) {
+        message.success('任务分配成功', 0.5, ()=>{
+          self.setState({ modalVisible: false })
+        })
+      }
+    })
+    .catch(function () {
+      message.warning('任务分配失败, 请联系客服')
+    })
   }
 
   handleModalVisible = flag => {
