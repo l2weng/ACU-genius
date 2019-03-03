@@ -88,60 +88,36 @@ class Database extends EventEmitter {
     return this.pool.size - this.pool.available
   }
 
-  download(oldPath, newPath, newFileName) {
-    return new Promise(async (resolve)=>{
-      let fw = fs.createWriteStream(`${newPath}/${newFileName}`)
-      await request(`http://127.20.10.9/file?directory=${dirname(oldPath)}&fileName=${newFileName}`)
-      .pipe(fw)
-      .on('finish', (projectFile) => {
-        resolve(projectFile)
-      })
-    })
-  }
-
   create(mode) {
     return new Promise((resolve, reject) => {
-      const app = remote.app
       verbose(`opening db ${this.path}`)
-      let newPath = app.getPath('userData')
-      newPath = join(newPath, 'project')
-      if (!fs.existsSync(newPath)) {
-        fs.mkdir(newPath, { recursive: true }, (err) => {
-          if (err) throw err
-        })
-      }
-      let newFileName = basename(this.path)
-      let fw = fs.createWriteStream(`${newPath}/${newFileName}`)
-      request(`http://127.20.10.9/file?directory=${dirname(this.path)}&fileName=${newFileName}`)
-      .pipe(fw)
-      .on('finish', (projectFile) => {
-        let db = new sqlite.Database(newFileName, M[mode], (error) => {
-          if (error) {
-            this.emit('error', error)
-            return reject(error)
-          }
 
-          new Connection(db)
+      let db = new sqlite.Database(this.path, M[mode], (error) => {
+        if (error) {
+          this.emit('error', error)
+          return reject(error)
+        }
+
+        new Connection(db)
           .configure()
           .tap(() => this.emit('create'))
           .then(resolve, reject)
-        })
+      })
 
-        // db.on('trace', query => debug(query))
+      // db.on('trace', query => debug(query))
 
-        db.on('profile', (query, time) => {
-          const message = `db query took ${ms(time)}`
+      db.on('profile', (query, time) => {
+        const message = `db query took ${ms(time)}`
 
-          if (ms > 100) {
-            return warn(`SLOW: ${message}`, { query, time })
-          }
+        if (ms > 100) {
+          return warn(`SLOW: ${message}`, { query, time })
+        }
 
-          if (ms > 25) {
-            return verbose(message, { query, time })
-          }
+        if (ms > 25) {
+          return verbose(message, { query, time })
+        }
 
-          debug(message, { query, time })
-        })
+        debug(message, { query, time })
       })
     })
   }

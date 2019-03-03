@@ -48,8 +48,9 @@ class Workplace extends PureComponent {
       })
   }
   openProject = (path) => {
-    this.props.switchTab(HEAD.WORKSPACE)
-    this.props.onProjectOpen(path)
+    console.log(path)
+    // this.props.switchTab(HEAD.WORKSPACE)
+    // this.props.onProjectOpen(path)
   }
 
   componentDidMount() {
@@ -147,7 +148,7 @@ class Workplace extends PureComponent {
                         src={item.cover ? item.cover : defaultCover}/>}>
                       <Meta
                         title={<a onClick={()=>this.openProject(
-                          item.projectFile)}>{item.name}</a>}
+                          item)}>{item.name}</a>}
                         description={item.name}/>
                     </Card>
                   </List.Item>

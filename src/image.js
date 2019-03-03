@@ -48,7 +48,7 @@ class Image {
           if (err) throw err
         })
       }
-      let newFileName = basename(path);
+      let newFileName = basename(path)
       let fields = { host: '127.0.0.1', port: '8188', directory: dirname(path), fileName: newFileName, newPath }
       await Image.download(path, fields)
       info(`${newPath}/${newFileName}`)
