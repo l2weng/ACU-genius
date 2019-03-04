@@ -178,11 +178,9 @@ class Image {
     let { host, port, directory, fileName, newPath } = fields
     return new Promise(async (resolve)=>{
       let fw = fs.createWriteStream(`${newPath}/${fileName}`)
-      info(`http://${host}:${port}/file?directory=${directory}&fileName=${fileName}`)
       await request(`http://${host}:${port}/file?directory=${directory}&fileName=${fileName}`)
       .pipe(fw)
       .on('finish', (img) => {
-        info('!!!!!!!!!!!!!downloaded')
         resolve(img)
       })
     })

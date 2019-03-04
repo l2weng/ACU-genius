@@ -3,9 +3,11 @@
 const React = require('react')
 const { PureComponent } = React
 const { connect } = require('react-redux')
+const { remote } = require('electron')
+const fs = require('fs')
 const { Row, Col, Card, List, Table, Divider, Tag, message } = require('antd')
 const { Meta } = Card
-const { getUrlFilterParams } = require('../../common/dataUtil')
+const { getUrlFilterParams, getNewOOSClient } = require('../../common/dataUtil')
 const _ = require('underscore')
 const { userInfo, machineId, apiServer } = ARGS
 const axios = require('axios')
@@ -35,11 +37,36 @@ class Workplace extends PureComponent {
     let self = this
     this.setState({ loading: true })
     axios.get(
-      `${apiServer}/graphql?query={projectQueryByUser${query} { projectId name cover desc deadline type progress projectFile isOwner } } `)
+      `${apiServer}/graphql?query={projectQueryByUser${query} { projectId name desc deadline projectFile type progress cover itemCount syncStatus syncCover remoteProjectFile localProjectId syncProjectFileName syncProjectFile isOwner } } `)
       .then(function (response) {
         if (response.status === 200) {
+          let projects = response.data.data.projectQueryByUser
+          projects.map(async project => {
+            if (project.syncStatus && !fs.existsSync(project.projectFile)) {
+              const app = remote.app
+              let client = getNewOOSClient()
+              let newPath = app.getPath('userData')
+              newPath = join(newPath, 'project')
+              if (!fs.existsSync(newPath)) {
+                fs.mkdir(newPath, { recursive: true }, (err) => {
+                  if (err) throw err
+                })
+              }
+              newPath = join(newPath, `${project.syncProjectFileName}.lbr`)
+              try {
+                let result = await client.get(project.localProjectId, newPath)
+                if (result.status === 200) {
+                  return newPath
+                }
+              } catch (e) {
+                console.log(e)
+              }
+              project.projectFile = newPath
+            }
+          })
+          console.log(projects)
           self.setState(
-            { projects: response.data.data.projectQueryByUser, loading: false })
+            { projects, loading: false })
         }
       })
       .catch(function () {
@@ -47,10 +74,10 @@ class Workplace extends PureComponent {
         self.setState({ loading: false })
       })
   }
+
   openProject = (path) => {
-    console.log(path)
-    // this.props.switchTab(HEAD.WORKSPACE)
-    // this.props.onProjectOpen(path)
+    this.props.switchTab(HEAD.WORKSPACE)
+    this.props.onProjectOpen(path)
   }
 
   componentDidMount() {

@@ -6,16 +6,13 @@ const sqlite = require('sqlite3')
 const ms = require('ms')
 const { EventEmitter } = require('events')
 const { Migration } = require('./migration')
-const { normalize, basename, dirname, join } = require('path')
+const { normalize } = require('path')
 const Bluebird = require('bluebird')
 const { using } = Bluebird
 const { readFileAsync: read } = require('fs')
 const { createPool } = require('generic-pool')
 const { debug, verbose, warn } = require('./log')
-const { remote } = require('electron')
-const fs = require('fs')
 const { entries } = Object
-const request = require('request')
 
 const M = {
   'r': sqlite.OPEN_READONLY,
