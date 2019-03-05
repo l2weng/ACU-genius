@@ -20,17 +20,17 @@ class Image {
     return (new Image(path, {})).read(path)
   }
 
-  static download(path, syncPath, newFileName, newPath) {
+  static download(path, syncFileUrl, newFileName, newPath) {
     // if(local)
     let fields = { host: '127.0.0.1', port: '8188', directory: dirname(path), fileName: newFileName, newPath }
     // return (new Image(fields).download(fields))
     //if(cloud)
-    return (new Image(fields).downloadFromCloud(fields, syncPath))
+    return (new Image(fields).downloadFromCloud(fields, syncFileUrl))
   }
 
   static async check({
     path,
-    syncPath,
+    syncFileUrl,
     consolidated,
     created,
     checksum
@@ -55,7 +55,7 @@ class Image {
         })
       }
       let newFileName = basename(path)
-      await Image.download(path, syncPath, newFileName, newPath)
+      await Image.download(path, syncFileUrl, newFileName, newPath)
       info(`${newPath}/${newFileName}`)
       try {
         status.image = await Image.read(`${newPath}/${newFileName}`)
@@ -191,9 +191,9 @@ class Image {
     })
   }
 
-  downloadFromCloud(fields, syncPath) {
+  downloadFromCloud(fields, syncFileUrl) {
     let { host, port, directory, fileName, newPath } = fields
-    let objName = (/[^/]*$/).exec(syncPath)[0]
+    let objName = (/[^/]*$/).exec(syncFileUrl)[0]
     let client = getNewOOSClient()
     return new Promise(async (resolve)=>{
       let result = await client.getStream(objName)
