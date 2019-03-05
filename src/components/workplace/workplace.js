@@ -94,6 +94,10 @@ class Workplace extends PureComponent {
     }
   }
 
+  componentWillReceiveProps(props) {
+    console.log(props)
+  }
+
   render() {
 
     const { projects, loading } = this.state
@@ -175,7 +179,7 @@ class Workplace extends PureComponent {
                         src={item.cover ? item.cover : defaultCover}/>}>
                       <Meta
                         title={<a onClick={()=>this.openProject(
-                          item)}>{item.name}</a>}
+                          item.projectFile)}>{item.name}</a>}
                         description={item.name}/>
                     </Card>
                   </List.Item>

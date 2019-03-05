@@ -32,6 +32,7 @@ class Consolidate extends ImportCommand {
       blank(payload) ? values(state.photos) : pluck(state.photos, payload)
     ])
 
+    console.log(photos)
     for (let i = 0, total = photos.length; i < total; ++i) {
       let photo = photos[i]
 
