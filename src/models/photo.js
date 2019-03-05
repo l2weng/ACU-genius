@@ -102,6 +102,7 @@ module.exports = {
             brightness,
             contrast,
             hue,
+            syncFileUrl,
             saturation,
             width,
             height,

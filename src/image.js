@@ -10,6 +10,7 @@ const { nativeImage, remote } = require('electron')
 const { assign } = Object
 const { warn, debug, info } = require('./common/log')
 const MIME = require('./constants/mime')
+const { getNewOOSClient } = require('./common/dataUtil')
 const fs = require('fs')
 const request = require('request')
 
@@ -19,12 +20,17 @@ class Image {
     return (new Image(path, {})).read(path)
   }
 
-  static download(path, fields) {
-    return (new Image(path, fields).download(fields))
+  static download(path, syncPath, newFileName, newPath) {
+    // if(local)
+    let fields = { host: '127.0.0.1', port: '8188', directory: dirname(path), fileName: newFileName, newPath }
+    // return (new Image(fields).download(fields))
+    //if(cloud)
+    return (new Image(fields).downloadFromCloud(fields, syncPath))
   }
 
   static async check({
     path,
+    syncPath,
     consolidated,
     created,
     checksum
@@ -49,8 +55,7 @@ class Image {
         })
       }
       let newFileName = basename(path)
-      let fields = { host: '127.0.0.1', port: '8188', directory: dirname(path), fileName: newFileName, newPath }
-      await Image.download(path, fields)
+      await Image.download(path, syncPath)
       info(`${newPath}/${newFileName}`)
       try {
         status.image = await Image.read(`${newPath}/${newFileName}`)
@@ -179,6 +184,21 @@ class Image {
     return new Promise(async (resolve)=>{
       let fw = fs.createWriteStream(`${newPath}/${fileName}`)
       await request(`http://${host}:${port}/file?directory=${directory}&fileName=${fileName}`)
+      .pipe(fw)
+      .on('finish', (img) => {
+        resolve(img)
+      })
+    })
+  }
+
+  downloadFromCloud(fields, syncPath) {
+    let { host, port, directory, fileName, newPath } = fields
+    let objName = (/[^/]*$/).exec(syncPath)[0]
+    let client = getNewOOSClient()
+    return new Promise(async (resolve)=>{
+      let result = await client.getStream(objName)
+      let fw = fs.createWriteStream(`${newPath}/${fileName}`)
+      result.stream
       .pipe(fw)
       .on('finish', (img) => {
         resolve(img)

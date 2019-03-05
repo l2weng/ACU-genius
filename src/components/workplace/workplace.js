@@ -42,7 +42,7 @@ class Workplace extends PureComponent {
         if (response.status === 200) {
           let projects = response.data.data.projectQueryByUser
           projects.map(async project => {
-            if (project.syncStatus && !fs.existsSync(project.projectFile)) {
+            if (project.syncStatus) {
               const app = remote.app
               let client = getNewOOSClient()
               let newPath = app.getPath('userData')
