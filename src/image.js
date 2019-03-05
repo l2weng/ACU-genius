@@ -55,7 +55,7 @@ class Image {
         })
       }
       let newFileName = basename(path)
-      await Image.download(path, syncPath)
+      await Image.download(path, syncPath, newFileName, newPath)
       info(`${newPath}/${newFileName}`)
       try {
         status.image = await Image.read(`${newPath}/${newFileName}`)
