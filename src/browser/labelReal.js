@@ -63,7 +63,7 @@ class LabelReal extends EventEmitter {
     webgl: true,
     win: {},
     userInfo: {},
-    apiServer: 'http://127.0.0.1:3000/lr',
+    apiServer: 'http://47.105.236.123:8098/lr',
     zoom: 1.0
   }
 
@@ -96,6 +96,10 @@ class LabelReal extends EventEmitter {
   }
 
   open(file) {
+    let { userInfo } = this.state
+    if (__.isEmpty(userInfo)) {
+      return this.showLogin()
+    }
     // if (!file) {
     //   if (this.win) return this.win.show(), this
     //
@@ -813,6 +817,8 @@ class LabelReal extends EventEmitter {
         this.store.save.sync('state.json', this.state)
       }
       this.dispatch(act.project.updateUserInfo({ user: {} }), this.win)
+      if (this.win) this.win.close()
+      this.showLogin()
     })
 
     ipc.on(USER.LOGINED, (_, { data }) => {
@@ -822,8 +828,8 @@ class LabelReal extends EventEmitter {
         this.store.save.sync('state.json', this.state)
       }
       this.dispatch(act.project.updateUserInfo({ user: this.state.userInfo.user }), this.win)
-
       if (this.login) this.login.close()
+      this.open()
     })
 
     ipc.on(FLASH.HIDE, (_, { id, confirm }) => {
