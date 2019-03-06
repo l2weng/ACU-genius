@@ -2,12 +2,13 @@
 
 const { call, put, select, all } = require('redux-saga/effects')
 const { dirname } = require('path')
+const fs = require('fs')
 const { Command } = require('./command')
 const { PROJECT } = require('../constants')
 const { pick } = require('../common/util')
 const act = require('../actions')
 const mod = require('../models')
-const { getNewOOSClient } = require('../common/dataUtil')
+const { getNewOOSClient, getFilesizeInBytes } = require('../common/dataUtil')
 const { error } = require('../common/log')
 const axios = require('axios')
 
@@ -66,6 +67,10 @@ class Sync extends Command {
     let total = 1
     let { userInfo } = ARGS
     try {
+      let syncProjectSize = 0
+      if (fs.existsSync(project.projectFile)) {
+        syncProjectSize = getFilesizeInBytes(project.file)
+      }
       let result = yield client.put(project.id, project.file)
       if (result.res.status === 200) {
         let syncProject = {
@@ -77,6 +82,7 @@ class Sync extends Command {
           name: project.name,
           userId: userInfo.user.userId,
           syncProjectFileName: project.name,
+          syncProjectSize
         }
         const syncResult = yield axios.post(`${ARGS.apiServer}/projects/syncProject`, syncProject)
         if (syncResult.status === 200) {

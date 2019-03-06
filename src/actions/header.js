@@ -17,10 +17,21 @@ module.exports = {
     }
   },
 
+  projectsLoaded(payload = {}) {
+    console.log(payload)
+    return {
+      type: HEAD.PROJECTS_LOADED,
+      payload
+    }
+  },
+
   loadProjects(payload = {}) {
     return {
       type: HEAD.PROJECTS,
-      payload
+      payload,
+      meta: {
+        cmd: 'project',
+      }
     }
   }
 }

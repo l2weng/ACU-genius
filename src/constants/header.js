@@ -7,5 +7,6 @@ module.exports = {
   FRIENDS: 'friends',
   RESTORE: 'header.restore',
   SWITCH: 'header.switch',
-  PROJECTS: 'header.projects',
+  PROJECTS: 'header.loadProjects',
+  PROJECTS_LOADED: 'header.projectsLoaded',
 }

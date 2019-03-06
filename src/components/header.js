@@ -12,7 +12,7 @@ const actions = require('../actions')
 const { HEAD } = require('../constants')
 
 const {
-   func, object
+   func, string
 } = require('prop-types')
 
 class Header extends React.Component {
@@ -46,9 +46,8 @@ class Header extends React.Component {
   }
 
   static propTypes = {
-    activeTab: object,
-    switchTab: func,
-    fetchProjects: func.isRequired,
+    activeTab: string,
+    switchTab: func
   }
 }
 

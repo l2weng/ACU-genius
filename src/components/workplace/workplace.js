@@ -3,14 +3,10 @@
 const React = require('react')
 const { PureComponent } = React
 const { connect } = require('react-redux')
-const { remote } = require('electron')
-const fs = require('fs')
 const { Row, Col, Card, List, Table, Divider, Tag, message } = require('antd')
 const { Meta } = Card
-const { getUrlFilterParams, getNewOOSClient } = require('../../common/dataUtil')
 const _ = require('underscore')
 const { userInfo, machineId, apiServer } = ARGS
-const axios = require('axios')
 const actions = require('../../actions')
 const { func, object  } = require('prop-types')
 const { HEAD } = require('../../constants')
@@ -27,52 +23,6 @@ class Workplace extends PureComponent {
       loading: false,
       projects: [],
     }
-  }
-
-  fetchProjects = (typeFlag = false, id) => {
-    let query
-    query = typeFlag
-      ? getUrlFilterParams({ userId: id }, ['userId'])
-      : getUrlFilterParams({ machineId: id }, ['machineId'])
-    let self = this
-    this.setState({ loading: true })
-    axios.get(
-      `${apiServer}/graphql?query={projectQueryByUser${query} { projectId name desc deadline projectFile type progress cover itemCount syncStatus syncCover remoteProjectFile localProjectId syncProjectFileName syncProjectFile isOwner } } `)
-      .then(function (response) {
-        if (response.status === 200) {
-          let projects = response.data.data.projectQueryByUser
-          projects.map(async project => {
-            if (project.syncStatus) {
-              const app = remote.app
-              let client = getNewOOSClient()
-              let newPath = app.getPath('userData')
-              newPath = join(newPath, 'project')
-              if (!fs.existsSync(newPath)) {
-                fs.mkdir(newPath, { recursive: true }, (err) => {
-                  if (err) throw err
-                })
-              }
-              newPath = join(newPath, `${project.syncProjectFileName}.lbr`)
-              try {
-                let result = await client.get(project.localProjectId, newPath)
-                if (result.status === 200) {
-                  return newPath
-                }
-              } catch (e) {
-                console.log(e)
-              }
-              project.projectFile = newPath
-            }
-          })
-          console.log(projects)
-          self.setState(
-            { projects, loading: false })
-        }
-      })
-      .catch(function () {
-        message.warning('项目未找到, 请联系客服')
-        self.setState({ loading: false })
-      })
   }
 
   openProject = (path) => {

@@ -14,6 +14,7 @@ module.exports = {
   ...seq(require('./project'), handles),
   ...seq(require('./selection'), handles),
   ...seq(require('./tag'), handles),
+  ...seq(require('./header'), handles),
 
   exec(action, options) {
     return new module.exports[action.type](action, options).execute()
