@@ -583,8 +583,8 @@ module.exports = {
       },
 
       onSyncProject2Cloud(...args) {
-        dispatch(actions.project.sync(...args))
         dispatch(actions.photo.sync(...args))
+        dispatch(actions.project.sync(...args))
       },
 
       onTagSave(data, id) {
