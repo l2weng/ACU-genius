@@ -10,6 +10,8 @@ const { Contacts } = require('../components/contacts')
 const { Workplace } = require('../components/workplace')
 const actions = require('../actions')
 const { HEAD } = require('../constants')
+const { userInfo } = ARGS
+const _ = require('underscore')
 
 const {
    func, string
@@ -22,17 +24,23 @@ class Header extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.activeTab === undefined) {
-      this.switchTab(HEAD.HOME)
-    }
+    // if (this.props.activeTab === undefined) {
+    //   this.switchTab(HEAD.HOME)
+    // }
   }
 
   switchTab = (tabName) => {
+    if (tabName === HEAD.HOME) {
+      if (!_.isEmpty(userInfo)) {
+        this.props.reloadProjects(true, userInfo.user.userId)
+      }
+    }
     this.props.switchTab(tabName)
   }
 
   render() {
     let { activeTab } = this.props
+    console.log(activeTab)
     return (
       <Tabs defaultActiveKey={activeTab} activeKey={activeTab} onChange={this.switchTab} style={{ height: '100%' }} tabBarExtraContent={<UserInfoContainer/>} >
         <TabPane tab={<span><Icon type="home" size="small"/>首页</span>} key={HEAD.HOME} className="workplace">
@@ -47,7 +55,8 @@ class Header extends React.Component {
 
   static propTypes = {
     activeTab: string,
-    switchTab: func
+    switchTab: func,
+    reloadProjects: func,
   }
 }
 
@@ -59,6 +68,9 @@ module.exports = {
     dispatch => ({
       switchTab(tabName) {
         dispatch(actions.header.headerSwitch({ activeTab: tabName }))
+      },
+      reloadProjects(typeFlag = false, id) {
+        dispatch(actions.header.loadProjects({ typeFlag, id }))
       }
     }),
   )(Header),

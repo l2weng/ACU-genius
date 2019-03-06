@@ -635,7 +635,6 @@ module.exports = {
       onUiUpdate(...args) {
         dispatch(actions.ui.update(...args))
       }
-
     })
 
   )(DropTarget(NativeTypes.FILE, DropTargetSpec, (c, m) => ({

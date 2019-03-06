@@ -313,7 +313,6 @@ class ListNode extends React.PureComponent {
   }
 
   render() {
-    console.log(this.props)
     const { modalVisible, colleagues } = this.state
     const parentMethods = {
       handleAssign: this.handleAssign,

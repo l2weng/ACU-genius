@@ -4,7 +4,7 @@ const { HEAD } = require('../constants')
 const { merge } = require('../common/util')
 
 const init = {
-  activeTab: ''
+  activeTab: HEAD.WORKSPACE
 }
 
 module.exports = {
