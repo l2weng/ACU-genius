@@ -40,14 +40,17 @@ class Workplace extends PureComponent {
   }
 
   renderTitle(item) {
-    let cloudMark = ''
+    let titleMark = ''
     if (item.syncStatus) {
-      cloudMark = <Icon type="cloud" theme="twoTone" twoToneColor="#52c41a" style={{ float: 'right' }}/>
+      titleMark = (<div>
+        <a onClick={()=>this.openProject(
+        item.projectFile)}>{item.name}</a>
+        <Icon type="cloud" theme="twoTone" twoToneColor="#52c41a" style={{ float: 'right' }}/>
+      </div>)
     } else {
-      cloudMark = <Icon type="cluster" style={{ float: 'right' }}/>
+      titleMark = <div>{item.name}<Icon type="cluster" style={{ float: 'right' }}/></div>
     }
-    return (<div><a onClick={()=>this.openProject(
-      item.projectFile)}>{item.name}</a>{cloudMark}</div>)
+    return (titleMark)
   }
 
   render() {

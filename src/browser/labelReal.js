@@ -816,9 +816,8 @@ class LabelReal extends EventEmitter {
       if (this.state != null) {
         this.store.save.sync('state.json', this.state)
       }
-      this.dispatch(act.project.updateUserInfo({ user: {} }), this.win)
-      if (this.win) this.win.close()
       this.showLogin()
+      if (this.win) this.win.close()
     })
 
     ipc.on(USER.LOGINED, (_, { data }) => {
