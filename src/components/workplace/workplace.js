@@ -3,7 +3,7 @@
 const React = require('react')
 const { PureComponent } = React
 const { connect } = require('react-redux')
-const { Row, Col, Card, List, Table, Divider, Tag, message } = require('antd')
+const { Row, Col, Card, List, Table, Divider, Tag, Icon } = require('antd')
 const { Meta } = Card
 const _ = require('underscore')
 const { userInfo, machineId } = ARGS
@@ -39,8 +39,15 @@ class Workplace extends PureComponent {
     }
   }
 
-  componentWillReceiveProps(props) {
-    console.log(props)
+  renderTitle(item) {
+    let cloudMark = ''
+    if (item.syncStatus) {
+      cloudMark = <Icon type="cloud" theme="twoTone" twoToneColor="#52c41a" style={{ float: 'right' }}/>
+    } else {
+      cloudMark = <Icon type="cluster" style={{ float: 'right' }}/>
+    }
+    return (<div><a onClick={()=>this.openProject(
+      item.projectFile)}>{item.name}</a>{cloudMark}</div>)
   }
 
   render() {
@@ -122,8 +129,9 @@ class Workplace extends PureComponent {
                       cover={<img alt={item.name}
                         src={item.cover ? item.cover : defaultCover}/>}>
                       <Meta
-                        title={<a onClick={()=>this.openProject(
-                          item.projectFile)}>{item.name}</a>}
+                        title={
+                          this.renderTitle(item)
+                        }
                         description={item.name}/>
                     </Card>
                   </List.Item>
@@ -153,7 +161,7 @@ module.exports = {
   Workplace: connect(
     state => ({
       project: state.project,
-      projects: state.header.projects
+      projects: state.header.projects || []
     }),
     dispatch => ({
       onProjectOpen(path) {
