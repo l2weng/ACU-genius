@@ -13,6 +13,9 @@ module.exports = {
         return merge(init, payload)
       case HEAD.SWITCH: {
         return merge(state, payload)
+      } case HEAD.PROJECTS: {
+        console.log(payload)
+        return merge(state, payload)
       }
       default:
         return state

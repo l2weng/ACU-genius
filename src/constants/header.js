@@ -6,5 +6,6 @@ module.exports = {
   WORKSPACE: 'workspace',
   FRIENDS: 'friends',
   RESTORE: 'header.restore',
-  SWITCH: 'header.switch'
+  SWITCH: 'header.switch',
+  PROJECTS: 'header.projects',
 }

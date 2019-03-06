@@ -188,7 +188,7 @@ class Colleague extends PureComponent {
             renderItem={item => (
               <List.Item
                 key={item.phone}
-                actions={[<IconText type="star-o" text="156" />, <IconText type="like-o" text="156" />, <IconText type="info-circle" text="详情" />]}>
+                actions={[<IconText type="star-o" text="1" />, <IconText type="like-o" text="1" />, <IconText type="info-circle" text="详情" />]}>
                 <List.Item.Meta
                   avatar={<Avatar alt="" style={{ backgroundColor: item.avatarColor || '#1890ff' }}>{item.name.charAt(0)}</Avatar>}
                   title={<a href={item.href}>{item.name}</a>}

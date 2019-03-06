@@ -21,6 +21,12 @@ class Header extends React.Component {
     super(props)
   }
 
+  componentDidMount() {
+    if (this.props.activeTab === undefined) {
+      this.switchTab(HEAD.HOME)
+    }
+  }
+
   switchTab = (tabName) => {
     this.props.switchTab(tabName)
   }
@@ -41,7 +47,8 @@ class Header extends React.Component {
 
   static propTypes = {
     activeTab: object,
-    switchTab: func.isRequired,
+    switchTab: func,
+    fetchProjects: func.isRequired,
   }
 }
 
@@ -54,6 +61,6 @@ module.exports = {
       switchTab(tabName) {
         dispatch(actions.header.headerSwitch({ activeTab: tabName }))
       }
-    })
+    }),
   )(Header),
 }

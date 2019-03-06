@@ -1,5 +1,6 @@
 'use strict'
 const OSS = require('ali-oss')
+const fs = require('fs')
 
 const dataUtil = {
   /**
@@ -58,6 +59,11 @@ const dataUtil = {
       accessKeySecret: 'JS0Uub4G47eOwXw70EDmby0knaqDbh',
       bucket: 'labelreal'
     })
+  },
+
+  getFilesizeInBytes(filename) {
+    let stats = fs.statSync(filename)
+    return stats['size']
   }
 
 }

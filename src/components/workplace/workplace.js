@@ -82,9 +82,9 @@ class Workplace extends PureComponent {
 
   componentDidMount() {
     if (!_.isEmpty(userInfo)) {
-      this.fetchProjects(true, userInfo.user.userId)
+      this.props.fetchProjects(true, userInfo.user.userId)
     } else if (!_.isEmpty(machineId)) {
-      this.fetchProjects(false, machineId)
+      this.props.fetchProjects(false, machineId)
     }
   }
 
@@ -199,6 +199,7 @@ class Workplace extends PureComponent {
   static propTypes = {
     onProjectOpen: func.isRequired,
     switchTab: func.isRequired,
+    fetchProjects: func.isRequired,
     project: object
   }
 }
@@ -212,6 +213,9 @@ module.exports = {
       onProjectOpen(path) {
         dispatch(actions.project.open(path))
       },
+      fetchProjects(typeFlag = false, id) {
+        dispatch(actions.header.loadProjects({ typeFlag, id }))
+      }
     }),
   )(Workplace),
 }

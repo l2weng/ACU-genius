@@ -15,6 +15,13 @@ module.exports = {
       type: HEAD.SWITCH,
       payload
     }
+  },
+
+  loadProjects(payload = {}) {
+    return {
+      type: HEAD.PROJECTS,
+      payload
+    }
   }
 }
 
