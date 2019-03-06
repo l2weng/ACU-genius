@@ -18,7 +18,6 @@ module.exports = {
   },
 
   projectsLoaded(payload = {}) {
-    console.log(payload)
     return {
       type: HEAD.PROJECTS_LOADED,
       payload

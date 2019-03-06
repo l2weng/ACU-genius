@@ -6,9 +6,9 @@ const { connect } = require('react-redux')
 const { Row, Col, Card, List, Table, Divider, Tag, message } = require('antd')
 const { Meta } = Card
 const _ = require('underscore')
-const { userInfo, machineId, apiServer } = ARGS
+const { userInfo, machineId } = ARGS
 const actions = require('../../actions')
-const { func, object  } = require('prop-types')
+const { func, object, array  } = require('prop-types')
 const { HEAD } = require('../../constants')
 const { resolve, join } = require('path')
 const staticRoot = resolve(__dirname, '../../../', 'static')
@@ -18,11 +18,6 @@ class Workplace extends PureComponent {
 
   constructor(props) {
     super(props)
-
-    this.state = {
-      loading: false,
-      projects: [],
-    }
   }
 
   openProject = (path) => {
@@ -49,8 +44,7 @@ class Workplace extends PureComponent {
   }
 
   render() {
-
-    const { projects, loading } = this.state
+    const { projects } = this.props
     const columns = [
       {
         title: 'Name',
@@ -117,7 +111,7 @@ class Workplace extends PureComponent {
               extra={<a href="#">全部项目</a>}>
               <List
                 rowKey="id"
-                loading={loading}
+                loading={false}
                 grid={{ gutter: 24, lg: 6, md: 3, sm: 2, xs: 1 }}
                 dataSource={[...projects]}
                 renderItem={item =>
@@ -150,7 +144,8 @@ class Workplace extends PureComponent {
     onProjectOpen: func.isRequired,
     switchTab: func.isRequired,
     fetchProjects: func.isRequired,
-    project: object
+    project: object,
+    projects: array,
   }
 }
 
@@ -158,6 +153,7 @@ module.exports = {
   Workplace: connect(
     state => ({
       project: state.project,
+      projects: state.header.projects
     }),
     dispatch => ({
       onProjectOpen(path) {
