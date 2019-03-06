@@ -68,7 +68,7 @@ class Sync extends Command {
     let { userInfo } = ARGS
     try {
       let syncProjectSize = 0
-      if (fs.existsSync(project.projectFile)) {
+      if (fs.existsSync(project.file)) {
         syncProjectSize = getFilesizeInBytes(project.file)
       }
       let result = yield client.put(project.id, project.file)

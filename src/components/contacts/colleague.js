@@ -149,13 +149,13 @@ class Colleague extends PureComponent {
   }
 
   fetchColleagues = () => {
-    let query = getUrlFilterParams({ userId: userInfo.user.userId, companyId: userInfo.user.companyId, isOwner: true }, ['userId', 'isOwner', 'companyId'])
+    let query = getUrlFilterParams({ companyId: userInfo.user.companyId }, ['companyId'])
     let self = this
     this.setState({ loading: true })
-    axios.get(`${ARGS.apiServer}/graphql?query={userQueryContacts${query} { userId name email status phone userType userTypeDesc statusDesc avatarColor }}`)
+    axios.get(`${ARGS.apiServer}/graphql?query={userQueryColleagues${query} { userId name email status phone userType userTypeDesc statusDesc avatarColor }}`)
     .then(function (response) {
       if (response.status === 200) {
-        self.setState({ colleagueList: response.data.data.userQueryContacts, loading: false })
+        self.setState({ colleagueList: response.data.data.userQueryColleagues, loading: false })
       }
     })
     .catch(function () {

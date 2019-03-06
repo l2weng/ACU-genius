@@ -8,7 +8,7 @@ const { Editable } = require('../editable')
 const { isValidImage } = require('../../image')
 const cx = require('classnames')
 const { bool, func, string } = require('prop-types')
-
+const {  Tooltip, Icon } = require('antd')
 
 class ProjectName extends React.PureComponent {
   get classes() {
@@ -21,10 +21,10 @@ class ProjectName extends React.PureComponent {
 
   render() {
     return this.props.dt(
-      <li className={cx(this.classes)} onClick={this.props.onClick}>
+      <li className={cx(this.classes)}>
         <div className="list-node-container">
           <IconMaze/>
-          <div className="name">
+          <div className="name" onClick={this.props.onClick}>
             <Editable
               value={this.props.name}
               isRequired
@@ -33,6 +33,9 @@ class ProjectName extends React.PureComponent {
               onCancel={this.props.onEditCancel}
               onChange={this.props.onChange}/>
           </div>
+          <div style={{ float: 'right' }} onClick={this.props.onSyncProject2Cloud}><Tooltip placement="right" title="同步到云">
+          <Icon type="cloud" size="small" />
+        </Tooltip></div>
         </div>
       </li>
     )
@@ -49,7 +52,8 @@ class ProjectName extends React.PureComponent {
     onClick: func.isRequired,
     onEditCancel: func.isRequired,
     onChange: func.isRequired,
-    onDrop: func.isRequired
+    onDrop: func.isRequired,
+    onSyncProject2Cloud: func.isRequired
   }
 }
 

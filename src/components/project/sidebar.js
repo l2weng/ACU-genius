@@ -270,10 +270,9 @@ class ProjectSidebar extends React.PureComponent {
               onMouseDown={this.handleMouseDown}>
               <nav>
                 <ol>
-                  <h2><FormattedMessage id="sidebar.project"/><span style={{ float: 'right' }}><Tooltip placement="right" title="同步到云">
-                    <Icon type="cloud" size="small" onClick={onSyncProject2Cloud}/>
-                  </Tooltip></span></h2>
+                  <h2><FormattedMessage id="sidebar.project"/></h2>
                   <ProjectName
+                    onSyncProject2Cloud={onSyncProject2Cloud}
                     name={project.name}
                     isSelected={!this.hasSelection}
                     isEditing={this.isEditing}

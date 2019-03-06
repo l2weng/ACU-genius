@@ -40,7 +40,6 @@ class Header extends React.Component {
 
   render() {
     let { activeTab } = this.props
-    console.log(activeTab)
     return (
       <Tabs defaultActiveKey={activeTab} activeKey={activeTab} onChange={this.switchTab} style={{ height: '100%' }} tabBarExtraContent={<UserInfoContainer/>} >
         <TabPane tab={<span><Icon type="home" size="small"/>首页</span>} key={HEAD.HOME} className="workplace">
