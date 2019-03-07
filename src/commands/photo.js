@@ -449,6 +449,7 @@ class Sync extends Command {
         error(e.toString())
       }
     }
+    yield put(act.project.sync(payload))
   }
 }
 

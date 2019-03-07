@@ -44,19 +44,19 @@ class LoadProjects extends Command {
             if (fs.existsSync(project.projectFile)) {
               if (getFilesizeInBytes(project.projectFile) !== project.syncProjectSize) {
                 let result = yield client.get(project.localProjectId, newPath)
-                if (result.status === 200) {
+                if (result.res.status === 200) {
                   project.projectFile = newPath
                 }
               }
             } else {
               if (!fs.existsSync(newPath)) {
                 let result = yield client.get(project.localProjectId, newPath)
-                if (result.status === 200) {
+                if (result.res.status === 200) {
                   project.projectFile = newPath
                 }
               } else if (getFilesizeInBytes(newPath) !== project.syncProjectSize) {
                 let result = yield client.get(project.localProjectId, newPath)
-                if (result.status === 200) {
+                if (result.res.status === 200) {
                   project.projectFile = newPath
                 }
               } else {
