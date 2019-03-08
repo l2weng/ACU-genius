@@ -33,9 +33,18 @@ class ProjectName extends React.PureComponent {
               onCancel={this.props.onEditCancel}
               onChange={this.props.onChange}/>
           </div>
-          <div style={{ float: 'right' }} onClick={this.props.onSyncProject2Cloud}><Tooltip placement="right" title="同步到云">
-          <Icon type="cloud" size="small" />
-        </Tooltip></div>
+          <span className="functionIcon" onClick={this.props.onSyncProject2Cloud}><Tooltip placement="right" title="同步到云">
+            <Icon type="cloud" />
+          </Tooltip>
+          </span>
+          <span className="functionIcon"><Tooltip placement="right" title="分配项目">
+            <Icon type="user-add"/>
+          </Tooltip>
+          </span>
+          <span className="functionIcon"><Tooltip placement="right" title="项目详情">
+            <Icon type="info-circle"/>
+          </Tooltip>
+          </span>
         </div>
       </li>
     )

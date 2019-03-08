@@ -285,8 +285,8 @@ class ProjectSidebar extends React.PureComponent {
 
               <h3>
                 <FormattedMessage id="sidebar.lists"/>
-                <span style={{ float: 'right' }}><Tooltip placement="right" title="添加任务">
-                  <Icon type="plus-circle-o" size="small" onClick={this.addNewTask}/>
+                <span className="functionIcon"><Tooltip placement="right" title="添加任务">
+                  <Icon type="plus" onClick={this.addNewTask}/>
                 </Tooltip></span>
               </h3>
               <nav>
@@ -325,7 +325,7 @@ class ProjectSidebar extends React.PureComponent {
 
             <section>
               <h2><FormattedMessage id="sidebar.tags"/><span style={{ float: 'right' }}><Tooltip placement="right" title="添加样本">
-                <Icon type="plus-circle-o" size="small" onClick={this.addNewSKu}/>
+                <Icon type="plus" className="functionIcon" onClick={this.addNewSKu}/>
               </Tooltip></span></h2>
               <ProjectTags
                 keymap={this.props.keymap.TagList}

@@ -304,7 +304,7 @@ class ListNode extends React.PureComponent {
             onCancel={this.props.onEditCancel}
             onChange={this.handleChange}/>
         </div>
-        <span style={{ float: 'right' }}><Tooltip placement="right" title="分配任务">
+        <span className="functionIcon"><Tooltip placement="right" title="分配任务">
           <Icon type="user-add" size="small" onClick={() => this.handleModalVisible(true)}/>
         </Tooltip>
         </span>
