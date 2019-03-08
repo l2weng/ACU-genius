@@ -52,6 +52,7 @@ class Workplace extends PureComponent {
 
   render() {
     const { projects } = this.props
+    console.log(projects)
     const columns = [
       {
         title: 'Name',

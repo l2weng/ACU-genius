@@ -11,6 +11,7 @@ const { verbose, warn } = require('../common/log')
 const { open, hasOverlayScrollBars } = require('./window')
 const { all } = require('bluebird')
 const { existsSync: exists } = require('fs')
+const fs = require('fs')
 const { join } = require('path')
 const { into, compose, remove, take } = require('transducers.js')
 const rm = require('rimraf')
@@ -30,6 +31,7 @@ const { darwin } = require('../common/os')
 const { channel, product, version } = require('../common/release')
 const { restrict } = require('../common/util')
 const { getLocalIP } = require('../common/serviceUtil')
+const { getNewOOSClient, getFilesizeInBytes } = require('../common/dataUtil')
 const { machineIdSync } = require('node-machine-id')
 const axios = require('axios')
 const __ = require('underscore')
@@ -63,7 +65,7 @@ class LabelReal extends EventEmitter {
     webgl: true,
     win: {},
     userInfo: {},
-    apiServer: 'http://47.105.236.123:8098/lr',
+    apiServer: 'http://127.0.0.1:3000/lr',
     zoom: 1.0
   }
 
@@ -820,15 +822,55 @@ class LabelReal extends EventEmitter {
       if (this.win) this.win.close()
     })
 
-    ipc.on(USER.LOGINED, (_, { data }) => {
+    ipc.on(USER.LOGINED, async (_, { data }) => {
       data.ip = getLocalIP()
       this.state.userInfo = data
       if (this.state != null) {
         this.store.save.sync('state.json', this.state)
       }
-      this.dispatch(act.project.updateUserInfo({ user: this.state.userInfo.user }), this.win)
+      // this.dispatch(act.project.updateUserInfo({ user: this.state.userInfo.user }), this.win)
       if (this.login) this.login.close()
-      this.open()
+      verbose(this.state.userInfo.hasProject)
+      if (this.state.userInfo.hasProject) {
+        const project = this.state.userInfo.lastProject
+        let client = getNewOOSClient()
+        let newPath = app.getPath('userData')
+        newPath = join(newPath, 'project')
+        if (!fs.existsSync(newPath)) {
+          fs.mkdir(newPath, { recursive: true }, (err) => {
+            if (err) throw err
+          })
+        }
+        newPath = join(newPath, `${project.syncProjectFileName}.lbr`)
+        //if project file is his own
+        if (fs.existsSync(project.projectFile)) {
+          if (getFilesizeInBytes(project.projectFile) !==
+            project.syncProjectSize) {
+            let result = await client.get(project.localProjectId, newPath)
+            if (result.res.status === 200) {
+              this.open(newPath)
+            }
+          } else {
+            this.open(project.projectFile)
+          }
+        } else {
+          if (!fs.existsSync(newPath)) {
+            let result = await client.get(project.localProjectId, newPath)
+            if (result.res.status === 200) {
+              this.open(newPath)
+            }
+          } else if (getFilesizeInBytes(newPath) !== project.syncProjectSize) {
+            let result = await client.get(project.localProjectId, newPath)
+            if (result.res.status === 200) {
+              this.open(newPath)
+            }
+          } else {
+            this.open(newPath)
+          }
+        }
+      } else {
+        this.open()
+      }
     })
 
     ipc.on(FLASH.HIDE, (_, { id, confirm }) => {
