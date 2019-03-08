@@ -98,9 +98,9 @@ target.all = async (args = []) => {
         CompanyName: author.name,
         ProductName: qualified.product
       },
-      // asar: {
-      //   unpack: '**/{*.node,lib/stylesheets/**/*,res/icons/mime/*.ico,res/menu/*,res/strings/*,res/keymaps/*}',
-      // }
+      asar: {
+        unpack: '**/{*.node,lib/stylesheets/**/*,res/icons/mime/*.ico,res/menu/*,res/strings/*,res/keymaps/*}',
+      }
 
     })
 
