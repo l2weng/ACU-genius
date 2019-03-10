@@ -27,7 +27,8 @@ const {
   IconMinusCircle,
   IconPlusCircle,
   IconFit,
-  IconFill
+  IconFill,
+  IconPolygon,
 } = require('../icons')
 
 
@@ -91,6 +92,13 @@ class EsperToolbar extends PureComponent {
               noFocus
               icon={<IconSelection/>}
               title="esper.tool.select"
+              isActive={this.isToolActive(TOOL.SELECT)}
+              isDisabled={this.props.isDisabled || this.props.isSelectionActive}
+              onClick={this.setSelectTool}/>
+            <Button
+              noFocus
+              icon={<IconPolygon/>}
+              title="esper.tool.polygon"
               isActive={this.isToolActive(TOOL.SELECT)}
               isDisabled={this.props.isDisabled || this.props.isSelectionActive}
               onClick={this.setSelectTool}/>

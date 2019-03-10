@@ -178,6 +178,7 @@ en:
     tool:
       pan: Pan Tool
       select: Selection Tool
+      polygon: Polygon Tool
       rotate: Rotate
       mirror: Mirror
       edit: Edit Photo
