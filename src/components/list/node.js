@@ -7,7 +7,7 @@ const { Collapse } = require('../fx')
 const { IconFolder, IconGhost, IconTriangle } = require('../icons')
 const { DragSource, DropTarget } = require('react-dnd')
 const { NativeTypes, getEmptyImage } = require('react-dnd-electron-backend')
-const { DND, LIST, SASS } = require('../../constants')
+const { DND, LIST, SASS, SIDEBAR } = require('../../constants')
 const { bounds } = require('../../dom')
 const { isValidImage } = require('../../image')
 const lazy = require('./tree')
@@ -305,7 +305,7 @@ class ListNode extends React.PureComponent {
             onChange={this.handleChange}/>
         </div>
         <span className="functionIcon"><Tooltip placement="right" title="分配任务">
-          <Icon type="user-add" size="small" onClick={() => this.handleModalVisible(true)}/>
+          <Icon type="user-add" size="small" onClick={() => this.props.onAddWorkers(SIDEBAR.TASK, this.props.list.id)}/>
         </Tooltip>
         </span>
       </div>
@@ -364,7 +364,8 @@ class ListNode extends React.PureComponent {
     connectDropTarget: func.isRequired,
     onCollapse: func.isRequired,
     onExpand: func.isRequired,
-    onMove: func.isRequired
+    onMove: func.isRequired,
+    onAddWorkers: func.isRequired,
   }
 
   static defaultProps = {

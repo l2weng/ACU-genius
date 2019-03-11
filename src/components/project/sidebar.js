@@ -152,6 +152,10 @@ class ProjectSidebar extends React.PureComponent {
     this.hasFocusChanged = testFocusChange()
   }
 
+  handleAddWorkers = (type, id) => {
+    console.log('......flag', type, id)
+  }
+
   handleClick = () => {
     if (this.hasSelection || this.hasActiveFilters) {
       return this.handleSelect()
@@ -274,6 +278,8 @@ class ProjectSidebar extends React.PureComponent {
                   <ProjectName
                     onSyncProject2Cloud={onSyncProject2Cloud}
                     name={project.name}
+                    projectId={project.id || ''}
+                    onAddWorkers={this.handleAddWorkers}
                     isSelected={!this.hasSelection}
                     isEditing={this.isEditing}
                     onChange={this.handleChange}
@@ -303,6 +309,7 @@ class ProjectSidebar extends React.PureComponent {
                     onContextMenu={onContextMenu}
                     onDropFiles={onItemImport}
                     onDropItems={this.props.onListItemsAdd}
+                    onAddWorkers={this.handleAddWorkers}
                     onClick={this.handleListClick}
                     onEditCancel={onEditCancel}
                     onExpand={this.props.onListExpand}

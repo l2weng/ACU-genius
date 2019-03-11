@@ -45,7 +45,8 @@ class ListTree extends React.Component {
     return (
       <ol className="list-tree" ref={this.setContainer}>
         {this.mapChildren((key, props) =>
-          <lazy.ListNode key={key} {...props}/>)}
+          <lazy.ListNode key={key} {...props}
+            onAddWorkers={this.props.onAddWorkers}/>)}
         <Fade in={this.hasNewListNode()} exit={false}>
           <lazy.NewListNode
             parent={get(this.props.edit, ['parent'])}
@@ -72,7 +73,8 @@ class ListTree extends React.Component {
     }).isRequired,
     selection: number,
     onEditCancel: func.isRequired,
-    onSave: func.isRequired
+    onSave: func.isRequired,
+    onAddWorkers: func.isRequired,
   }
 
   static defaultProps = {

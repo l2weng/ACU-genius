@@ -52,7 +52,6 @@ class Workplace extends PureComponent {
 
   render() {
     const { projects } = this.props
-    console.log(projects)
     const columns = [
       {
         title: 'Name',
@@ -126,7 +125,7 @@ class Workplace extends PureComponent {
                   <List.Item key={item.projectId}>
                     <Card
                       hoverable
-                      style={{ width: 180 }}
+                      style={{ width: 180,height: 273 }}
                       cover={<img alt={item.name}
                         src={item.cover ? item.cover : defaultCover}/>}>
                       <Meta

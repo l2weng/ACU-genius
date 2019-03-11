@@ -2,5 +2,7 @@
 
 module.exports = {
   RESTORE: 'sidebar.restore',
-  UPDATE: 'sidebar.update'
+  UPDATE: 'sidebar.update',
+  TASK: 'task',
+  PROJECT: 'project'
 }

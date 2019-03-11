@@ -5,6 +5,7 @@ const { DropTarget } = require('react-dnd')
 const { NativeTypes } = require('react-dnd-electron-backend')
 const { IconMaze } = require('../icons')
 const { Editable } = require('../editable')
+const { SIDEBAR } = require('../../constants')
 const { isValidImage } = require('../../image')
 const cx = require('classnames')
 const { bool, func, string } = require('prop-types')
@@ -37,7 +38,7 @@ class ProjectName extends React.PureComponent {
             <Icon type="cloud" />
           </Tooltip>
           </span>
-          <span className="functionIcon"><Tooltip placement="right" title="分配项目">
+          <span className="functionIcon" onClick={() => this.props.onAddWorkers(SIDEBAR.PROJECT, this.props.projectId)}><Tooltip placement="right" title="分配项目">
             <Icon type="user-add"/>
           </Tooltip>
           </span>
@@ -53,6 +54,7 @@ class ProjectName extends React.PureComponent {
 
   static propTypes = {
     name: string.isRequired,
+    projectId: string.isRequired,
     isEditing: bool,
     isSelected: bool,
     isOver: bool,
@@ -62,7 +64,8 @@ class ProjectName extends React.PureComponent {
     onEditCancel: func.isRequired,
     onChange: func.isRequired,
     onDrop: func.isRequired,
-    onSyncProject2Cloud: func.isRequired
+    onSyncProject2Cloud: func.isRequired,
+    onAddWorkers: func.isRequired,
   }
 }
 
