@@ -248,20 +248,16 @@ class ListNode extends React.PureComponent {
             onCancel={this.props.onEditCancel}
             onChange={this.handleChange}/>
         </div>
-        <span className="functionIcon"><Tooltip placement="right" title="分配任务">
-          <Icon type="user-add" size="small" onClick={() => this.props.onAddWorkers(SIDEBAR.TASK, this.props.list.id)}/>
-        </Tooltip>
-        </span>
+        {this.props.isOwner ?
+          <span className="functionIcon"><Tooltip placement="right" title="分配任务">
+            <Icon type="user-add" size="small" onClick={() => this.props.onAddWorkers(SIDEBAR.TASK, this.props.list.id)}/>
+          </Tooltip>
+          </span> : ''}
       </div>
     )
   }
 
   render() {
-    const { modalVisible, colleagues } = this.state
-    const parentMethods = {
-      handleAssign: this.handleAssign,
-      handleModalVisible: this.handleModalVisible,
-    }
     return (
       <li className={cx(...this.classes)}>
         {this.renderNodeContainer()}
@@ -280,6 +276,7 @@ class ListNode extends React.PureComponent {
 
   static propTypes = {
     canDrop: bool,
+    isOwner:bool.isRequired,
     depth: number.isRequired,
     expand: object.isRequired,
     project: object,
