@@ -12,6 +12,7 @@ const actions = require('../../actions')
 const sanitize = require('sanitize-filename')
 const { blank } = require('../../common/util')
 const { existsSync: exists } = require('fs')
+const { userInfo } = ARGS
 
 class WizardContainer extends PureComponent {
   get hasDefaultFilename() {
@@ -31,7 +32,7 @@ class WizardContainer extends PureComponent {
   }
 
   handleComplete = () => {
-    this.props.onComplete(this.props.project, { truncate: true })
+    this.props.onComplete({ ...this.props.project, owner: userInfo.user.userId }, { truncate: true })
   }
 
   handleNameChange = (name) => {

@@ -319,6 +319,7 @@ class ProjectSidebar extends React.PureComponent {
       onTagSave,
       onTagSelect,
       onSyncProject2Cloud,
+      isOwner
     } = this.props
 
     let root = this.props.lists[this.props.root]
@@ -351,6 +352,7 @@ class ProjectSidebar extends React.PureComponent {
                   <ProjectName
                     onSyncProject2Cloud={onSyncProject2Cloud}
                     name={project.name}
+                    isOwner={isOwner}
                     projectId={project.id || ''}
                     onAddWorkers={this.handleAddWorkers}
                     isSelected={!this.hasSelection}
@@ -433,6 +435,7 @@ class ProjectSidebar extends React.PureComponent {
     edit: object.isRequired,
     expand: object.isRequired,
     hasLastImport: bool.isRequired,
+    isOwner: bool.isRequired,
     hasToolbar: bool,
     hold: object.isRequired,
     isDisabled: bool,

@@ -34,14 +34,16 @@ class ProjectName extends React.PureComponent {
               onCancel={this.props.onEditCancel}
               onChange={this.props.onChange}/>
           </div>
-          <span className="functionIcon" onClick={this.props.onSyncProject2Cloud}><Tooltip placement="right" title="同步到云">
-            <Icon type="cloud" />
-          </Tooltip>
-          </span>
-          <span className="functionIcon" onClick={() => this.props.onAddWorkers(SIDEBAR.PROJECT, this.props.projectId)}><Tooltip placement="right" title="分配项目">
-            <Icon type="user-add"/>
-          </Tooltip>
-          </span>
+          {this.props.isOwner ? <div>
+            <span className="functionIcon" onClick={this.props.onSyncProject2Cloud}><Tooltip placement="right" title="同步到云">
+              <Icon type="cloud" />
+            </Tooltip>
+            </span>
+            <span className="functionIcon" onClick={() => this.props.onAddWorkers(SIDEBAR.PROJECT, this.props.projectId)}><Tooltip placement="right" title="分配项目">
+              <Icon type="user-add"/>
+            </Tooltip>
+            </span>
+          </div> : ''}
           <span className="functionIcon"><Tooltip placement="right" title="项目详情">
             <Icon type="info-circle"/>
           </Tooltip>
@@ -55,6 +57,7 @@ class ProjectName extends React.PureComponent {
   static propTypes = {
     name: string.isRequired,
     projectId: string.isRequired,
+    isOwner: bool.isRequired,
     isEditing: bool,
     isSelected: bool,
     isOver: bool,

@@ -125,6 +125,7 @@ class ProjectView extends Component {
     edit: object.isRequired,
     isActive: bool,
     isEmpty: bool.isRequired,
+    isOwner: bool.isRequired,
     isOver: bool,
     items: array.isRequired,
     keymap: object.isRequired,

@@ -20,7 +20,7 @@ BEGIN TRANSACTION;
 CREATE TABLE project (
   project_id  TEXT     NOT NULL PRIMARY KEY,
   name        TEXT     NOT NULL,
-  created     NUMERIC  NOT NULL DEFAULT CURRENT_TIMESTAMP, base TEXT,
+  created     NUMERIC  NOT NULL DEFAULT CURRENT_TIMESTAMP, base TEXT, owner TEXT
 
   CHECK (project_id != ''),
   CHECK (name != '')

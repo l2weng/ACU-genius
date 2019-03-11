@@ -22,6 +22,7 @@ const debounce = require('lodash.debounce')
 const { match } = require('../../keymap')
 const { IconSpin } = require('../icons')
 const { ProjectSummary } = require('../projectSummary')
+const { userInfo } = ARGS
 
 const {
   getCachePrefix,
@@ -232,8 +233,10 @@ class ProjectContainer extends Component {
       ui,
       showProject,
       references,
+      project,
       ...props
     } = this.props
+    let isOwner = project.owner === userInfo.user.userId
     const mainProject = dt(
       <div style={{ height: '100%' }}
         className={cx(this.classes)}
@@ -249,6 +252,7 @@ class ProjectContainer extends Component {
           offset={this.state.offset}
           photos={photos}
           zoom={ui.zoom}
+          isOwner={isOwner}
           onSyncProject2Cloud={this.handleSyncProject2Cloud}
           onMetadataSave={this.handleMetadataSave}/>
 

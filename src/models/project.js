@@ -9,12 +9,13 @@ const { info } = require('../common/log')
 const { PROJECT } = require('../constants')
 
 module.exports = {
-  async create(db, { name, base, id = uuid() }) {
-    info(`creating project "${name}" #${id}`)
+  async create(db, { name, base, owner, id = uuid() }) {
+    info(`creating project "${name}" #${id} owner:${owner}`)
     await db.read(PROJECT.SCHEMA)
     await db.run(...into('project').insert({
       project_id: id,
       name,
+      owner,
       base
     }))
   },
@@ -22,7 +23,7 @@ module.exports = {
   async load(db) {
     const [project, items] = await all([
       db.get(`
-        SELECT project_id AS id, name, base FROM project LIMIT 1`),
+        SELECT project_id AS id, name, base, owner FROM project LIMIT 1`),
       db.get(`
         SELECT COUNT (id) AS total
           FROM items LEFT OUTER JOIN trash USING (id)
