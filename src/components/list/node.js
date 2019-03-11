@@ -25,31 +25,6 @@ const {
 
 const { INDENT, PADDING } = SASS.LIST
 
-const ColleagueList = Form.create()(props => {
-  const { modalVisible, form, handleAssign, handleModalVisible, colleagues } = props
-  const okHandle = () => {
-    form.validateFields((err, fieldsValue) => {
-      if (err) return
-      form.resetFields()
-      handleAssign(fieldsValue)
-    })
-  }
-  const onUserAssign = (userId) =>{
-    handleAssign(userId)
-  }
-  return (
-    <Modal
-      destroyOnClose
-      title="分配任务"
-      visible={modalVisible}
-      onOk={okHandle}
-      footer={null}
-      onCancel={() => handleModalVisible()}>
-      <ColleagueTable data={colleagues} handleAssign={onUserAssign}/>
-    </Modal>
-  )
-})
-
 class NewListNode extends React.Component {
   handleChange = (name) => {
     this.props.onSave({ parent: this.props.parent, name })
@@ -145,37 +120,6 @@ class ListNode extends React.PureComponent {
 
   getDropDepth(depth = this.state.depth) {
     return restrict(depth, this.props.minDropDepth, this.props.depth)
-  }
-
-  handleAssign = assigneeId =>{
-    let { project } = this.props
-    let self = this
-    axios.post(`${ARGS.apiServer}/projects/addColleague`, { localProjectId: project.id, colleagueId: assigneeId })
-    .then(function (response) {
-      if (response.status === 200) {
-        message.success('任务分配成功', 0.5, ()=>{
-          self.setState({ modalVisible: false })
-        })
-      }
-    })
-    .catch(function () {
-      message.warning('任务分配失败, 请联系客服')
-    })
-  }
-
-  handleModalVisible = flag => {
-    let self = this
-    let query = getUrlFilterParams({ companyId: userInfo.user.companyId }, ['companyId'])
-
-    axios.get(`${ARGS.apiServer}/graphql?query={userQueryActiveContacts${query} { userId name email status phone userType userTypeDesc statusDesc avatarColor machineId prefix }}`)
-    .then(function (response) {
-      if (response.status === 200) {
-        self.setState({ colleagues: response.data.data.userQueryActiveContacts, modalVisible: !!flag })
-      }
-    })
-    .catch(function () {
-      message.warning('查询服务连接失败, 请重试')
-    })
   }
 
   getDropOutsidePosition(depth = 1, other) {
@@ -330,7 +274,6 @@ class ListNode extends React.PureComponent {
               this.props.isDraggingParent || this.props.isDragging}
             parent={this.props.list}/>
         </Collapse>
-        <ColleagueList {...parentMethods} modalVisible={modalVisible} colleagues={colleagues}/>
       </li>
     )
   }

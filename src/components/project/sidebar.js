@@ -15,9 +15,12 @@ const { has, last } = require('../../common/util')
 const { match } = require('../../keymap')
 const { testFocusChange } = require('../../dom')
 const actions = require('../../actions')
-const {  Tooltip, Icon } = require('antd')
+const {  Tooltip, Icon, message, Modal, Form } = require('antd')
 const { ipcRenderer: ipc  } = require('electron')
-
+const { getUrlFilterParams } = require('../../common/dataUtil')
+const { ColleagueTable } = require('../contacts/colleagueTable')
+const { userInfo } = ARGS
+const axios = require('axios')
 
 const {
   bool, shape, string, object, arrayOf, func, number
@@ -30,7 +33,38 @@ const {
 } = require('../../selectors')
 
 
+const ColleagueList = Form.create()(props => {
+  const { modalVisible, form, handleAssign, handleModalVisible, colleagues } = props
+  const okHandle = () => {
+    form.validateFields((err, fieldsValue) => {
+      if (err) return
+      form.resetFields()
+      handleAssign(fieldsValue)
+    })
+  }
+  const onUserAssign = (userId) =>{
+    handleAssign(userId)
+  }
+  return (
+    <Modal
+      destroyOnClose
+      title="分配任务"
+      visible={modalVisible}
+      onOk={okHandle}
+      footer={null}
+      onCancel={() => handleModalVisible()}>
+      <ColleagueTable data={colleagues} handleAssign={onUserAssign}/>
+    </Modal>
+  )
+})
+
 class ProjectSidebar extends React.PureComponent {
+
+  state = {
+    modalVisible: false,
+    colleagues: []
+  }
+
   get isEditing() {
     return has(this.props.edit, 'project')
   }
@@ -153,7 +187,18 @@ class ProjectSidebar extends React.PureComponent {
   }
 
   handleAddWorkers = (type, id) => {
-    console.log('......flag', type, id)
+    let self = this
+    let query = getUrlFilterParams({ companyId: userInfo.user.companyId }, ['companyId'])
+
+    axios.get(`${ARGS.apiServer}/graphql?query={userQueryActiveContacts${query} { userId name email status phone userType userTypeDesc statusDesc avatarColor machineId prefix }}`)
+    .then(function (response) {
+      if (response.status === 200) {
+        self.setState({ colleagues: response.data.data.userQueryActiveContacts, modalVisible: true })
+      }
+    })
+    .catch(function () {
+      message.warning('查询服务连接失败, 请重试')
+    })
   }
 
   handleClick = () => {
@@ -239,6 +284,28 @@ class ProjectSidebar extends React.PureComponent {
     ipc.send('cmd', 'app:create-tag')
   }
 
+  handleModalVisible = () => {
+    this.setState({
+      modalVisible: false,
+    })
+  }
+
+  handleAssign = assigneeId =>{
+    let { project } = this.props
+    let self = this
+    axios.post(`${ARGS.apiServer}/projects/addColleague`, { localProjectId: project.id, colleagueId: assigneeId })
+    .then(function (response) {
+      if (response.status === 200) {
+        message.success('任务分配成功', 0.5, ()=>{
+          self.setState({ modalVisible: false })
+        })
+      }
+    })
+    .catch(function () {
+      message.warning('任务分配失败, 请联系客服')
+    })
+  }
+
   render() {
     const {
       edit,
@@ -256,6 +323,12 @@ class ProjectSidebar extends React.PureComponent {
 
     let root = this.props.lists[this.props.root]
 
+    const { modalVisible, colleagues } = this.state
+
+    const parentMethods = {
+      handleAssign: this.handleAssign,
+      handleModalVisible: this.handleModalVisible,
+    }
     return (
       <BufferedResizable
         edge="right"
@@ -350,6 +423,7 @@ class ProjectSidebar extends React.PureComponent {
           </SidebarBody>
           <ActivityPane activities={this.props.activities}/>
         </Sidebar>
+        <ColleagueList {...parentMethods} modalVisible={modalVisible} colleagues={colleagues}/>
       </BufferedResizable>
     )
   }

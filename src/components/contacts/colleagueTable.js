@@ -11,33 +11,32 @@ class ColleagueTable extends React.Component {
   }
 
   getColumnSearchProps = (dataIndex) => ({
-    filterDropdown: ({
-                       setSelectedKeys, selectedKeys, confirm, clearFilters,
-                     }) => (
-                       <div style={{ padding: 8 }}>
-                         <Input
-                           ref={node => { this.searchInput = node }}
-                           placeholder={`Search ${dataIndex}`}
-                           value={selectedKeys[0]}
-                           onChange={e => setSelectedKeys(
-            e.target.value ? [e.target.value] : [])}
-                           onPressEnter={() => this.handleSearch(selectedKeys, confirm)}
-                           style={{ width: 188, marginBottom: 8, display: 'block' }}/>
-                         <Button
-                           type="primary"
-                           onClick={() => this.handleSearch(selectedKeys, confirm)}
-                           icon="search"
-                           size="small"
-                           style={{ width: 90, marginRight: 8 }}>
-          Search
-                         </Button>
-                         <Button
-                           onClick={() => this.handleReset(clearFilters)}
-                           size="small"
-                           style={{ width: 90 }}>
-          Reset
-                         </Button>
-                       </div>
+    filterDropdown:
+      ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+        <div style={{ padding: 8 }}>
+          <Input
+            ref={node => { this.searchInput = node }}
+            placeholder={`Search ${dataIndex}`}
+            value={selectedKeys[0]}
+            onChange={e => setSelectedKeys(
+  e.target.value ? [e.target.value] : [])}
+            onPressEnter={() => this.handleSearch(selectedKeys, confirm)}
+            style={{ width: 188, marginBottom: 8, display: 'block' }}/>
+          <Button
+            type="primary"
+            onClick={() => this.handleSearch(selectedKeys, confirm)}
+            icon="search"
+            size="small"
+            style={{ width: 90, marginRight: 8 }}>
+  Search
+          </Button>
+          <Button
+            onClick={() => this.handleReset(clearFilters)}
+            size="small"
+            style={{ width: 90 }}>
+  Reset
+          </Button>
+        </div>
     ),
     filterIcon: filtered => <Icon type="search" style={{
       color: filtered
