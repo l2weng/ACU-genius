@@ -39,10 +39,10 @@ class ProjectName extends React.PureComponent {
               <Icon type="cloud" />
             </Tooltip>
             </span>
-            <span className="functionIcon" onClick={() => this.props.onAddWorkers(SIDEBAR.PROJECT, this.props.projectId)}><Tooltip placement="right" title="分配项目">
-              <Icon type="user-add"/>
-            </Tooltip>
-            </span>
+            {/*<span className="functionIcon" onClick={() => this.props.onAddWorkers(SIDEBAR.PROJECT, this.props.projectId)}><Tooltip placement="right" title="分配项目">*/}
+              {/*<Icon type="user-add"/>*/}
+            {/*</Tooltip>*/}
+            {/*</span>*/}
           </div> : ''}
           <span className="functionIcon"><Tooltip placement="right" title="项目详情">
             <Icon type="info-circle"/>

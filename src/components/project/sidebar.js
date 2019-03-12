@@ -63,7 +63,9 @@ class ProjectSidebar extends React.PureComponent {
 
   state = {
     modalVisible: false,
-    colleagues: []
+    colleagues: [],
+    assignType: '',
+    callId: ''
   }
 
   get isEditing() {
@@ -194,7 +196,7 @@ class ProjectSidebar extends React.PureComponent {
     axios.get(`${ARGS.apiServer}/graphql?query={userQueryActiveContacts${query} { userId name email status phone userType userTypeDesc statusDesc avatarColor machineId prefix }}`)
     .then(function (response) {
       if (response.status === 200) {
-        self.setState({ colleagues: response.data.data.userQueryActiveContacts, modalVisible: true })
+        self.setState({ colleagues: response.data.data.userQueryActiveContacts, modalVisible: true, assignType: type, callId: id })
       }
     })
     .catch(function () {
@@ -291,20 +293,26 @@ class ProjectSidebar extends React.PureComponent {
     })
   }
 
-  handleAssign = assigneeId =>{
-    let { project } = this.props
-    let self = this
-    axios.post(`${ARGS.apiServer}/projects/addColleague`, { localProjectId: project.id, colleagueId: assigneeId })
-    .then(function (response) {
-      if (response.status === 200) {
-        message.success('任务分配成功', 0.5, ()=>{
-          self.setState({ modalVisible: false })
-        })
-      }
+  handleAssign = selectedUserIndexs =>{
+    let { colleagues, assignType, callId } = this.state
+    let colleagueIds = []
+    selectedUserIndexs.map(userIndex=>{
+      colleagueIds.push(colleagues[userIndex].userId)
     })
-    .catch(function () {
-      message.warning('任务分配失败, 请联系客服')
-    })
+    console.log(assignType, callId)
+    // let { project } = this.props
+    // let self = this
+    // axios.post(`${ARGS.apiServer}/projects/addColleague`, { localProjectId: project.id, colleagueId: assigneeId })
+    // .then(function (response) {
+    //   if (response.status === 200) {
+    //     message.success('任务分配成功', 0.5, ()=>{
+    //       self.setState({ modalVisible: false })
+    //     })
+    //   }
+    // })
+    // .catch(function () {
+    //   message.warning('任务分配失败, 请联系客服')
+    // })
   }
 
   render() {

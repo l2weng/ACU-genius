@@ -26,7 +26,6 @@ module.exports = {
         info(`creating new project ${name} in ${file}`)
 
         if (meta.truncate) await rm(file)
-        console.log(owner)
         file = await Database.create(file, create, { name, base, owner })
         ipc.send(PROJECT.CREATED, { file })
 

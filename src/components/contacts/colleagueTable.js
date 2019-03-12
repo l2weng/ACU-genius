@@ -8,7 +8,7 @@ const { array, func } = require('prop-types')
 class ColleagueTable extends React.Component {
   state = {
     searchText: '',
-    selectedRowKeys: [],
+    selectedUserIds: [],
     loading: false,
   }
 
@@ -67,8 +67,8 @@ class ColleagueTable extends React.Component {
     this.setState({ searchText: selectedKeys[0] })
   }
 
-  assignWork = (userId) => {
-    this.props.handleAssign(userId)
+  assignWork = () => {
+    this.props.handleAssign(this.state.selectedUserIds)
   };
 
   handleReset = (clearFilters) => {
@@ -78,7 +78,7 @@ class ColleagueTable extends React.Component {
 
   onSelectChange = (selectedRowKeys) => {
     console.log('selectedRowKeys changed: ', selectedRowKeys);
-    this.setState({ selectedRowKeys });
+    this.setState({ selectedUserIds: selectedRowKeys });
   }
 
   render() {
@@ -96,32 +96,27 @@ class ColleagueTable extends React.Component {
         width: '40%',
         ...this.getColumnSearchProps('email'),
       }, {
-        title: '操作',
-        key: 'action',
+        title: '级别',
+        key: 'level',
         width: '15%',
-        render: (text, record) => (
-          <span>
-            <a onClick={()=>this.assignWork(record.userId)}>分配</a>
-          </span>
-        ),
       }]
-    const { loading, selectedRowKeys } = this.state;
+    const { loading, selectedUserIds } = this.state;
     const rowSelection = {
-      selectedRowKeys,
+      selectedRowKeys: selectedUserIds,
       onChange: this.onSelectChange,
     };
-    const hasSelected = selectedRowKeys.length > 0;
+    const hasSelected = selectedUserIds.length > 0;
     return (<div>
       <div style={{ marginBottom: 16 }}>
         <Button
           type="primary"
-          onClick={this.start}
+          onClick={this.assignWork}
           disabled={!hasSelected}
           loading={loading}>
           分配
         </Button>
         <span style={{ marginLeft: 8 }}>
-          {hasSelected ? `Selected ${selectedRowKeys.length} users` : ''}
+          {hasSelected ? `Selected ${selectedUserIds.length} users` : ''}
         </span>
       </div> <Table rowSelection={rowSelection} columns={columns} dataSource={this.props.data}/>
     </div>)
