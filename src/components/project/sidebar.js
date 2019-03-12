@@ -303,20 +303,19 @@ class ProjectSidebar extends React.PureComponent {
     selectedUserIndexs.map(userIndex=>{
       colleagueIds.push(colleagues[userIndex].userId)
     })
-    console.log(assignType, callId)
-    // let { project } = this.props
-    // let self = this
-    // axios.post(`${ARGS.apiServer}/projects/addColleague`, { localProjectId: project.id, colleagueId: assigneeId })
-    // .then(function (response) {
-    //   if (response.status === 200) {
-    //     message.success('任务分配成功', 0.5, ()=>{
-    //       self.setState({ modalVisible: false })
-    //     })
-    //   }
-    // })
-    // .catch(function () {
-    //   message.warning('任务分配失败, 请联系客服')
-    // })
+    let { project } = this.props
+    let self = this
+    axios.post(`${ARGS.apiServer}/projects/addColleague`, { localProjectId: project.id, colleagueId: assigneeId })
+    .then(function (response) {
+      if (response.status === 200) {
+        message.success('任务分配成功', 0.5, ()=>{
+          self.setState({ modalVisible: false })
+        })
+      }
+    })
+    .catch(function () {
+      message.warning('任务分配失败, 请联系客服')
+    })
   }
 
   render() {
@@ -334,7 +333,7 @@ class ProjectSidebar extends React.PureComponent {
       onSyncProject2Cloud,
       isOwner
     } = this.props
-
+    console.log(this.props.lists)
     let root = this.props.lists[this.props.root]
 
     const { modalVisible, colleagues } = this.state

@@ -11,12 +11,12 @@ module.exports = mod.list = {
     let lists = {}
 
     await db.each(
-      ...select({ id: 'list_id', parent: 'parent_list_id' }, 'name')
+      ...select({ id: 'list_id', parent: 'parent_list_id', syncTaskId: 'sync_task_id' }, 'name')
         .from('lists')
         .order('parent, position'),
-      ({ id, parent, name }) => {
+      ({ id, parent, name, syncTaskId }) => {
         lists[id] = {
-          id, parent, name, children: [], ...lists[id]
+          id, parent, name, syncTaskId, children: [], ...lists[id]
         }
 
         if (parent != null) {
@@ -36,6 +36,13 @@ module.exports = mod.list = {
         .insert({ name, parent_list_id: parent, position }))
 
     return { id, name, parent, children: [] }
+  },
+
+  async update(db, { syncTaskId, id }) {
+    return db.run(
+      ...update('lists')
+      .set({ sync_task_id: syncTaskId })
+      .where({ list_id: id }))
   },
 
   remove(db, id) {
