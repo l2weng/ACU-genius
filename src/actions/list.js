@@ -70,6 +70,10 @@ module.exports = {
     return { type: LIST.UPDATE, payload, meta }
   },
 
+  updateOwner(payload, meta) {
+    return { type: LIST.UPDATE_OWNER, payload, meta: { cmd: 'project', ...meta } }
+  },
+
   collapse(payload, meta = {}) {
     return {
       type: LIST.COLLAPSE,

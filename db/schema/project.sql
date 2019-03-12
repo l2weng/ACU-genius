@@ -114,7 +114,7 @@ CREATE TABLE lists (
   name            TEXT     NOT NULL COLLATE NOCASE,
   parent_list_id  INTEGER  DEFAULT 0 REFERENCES lists ON DELETE CASCADE,
   position        INTEGER,
-  worker   TEXT  DEFAULT '',
+  workers   TEXT  DEFAULT '',
   sync_task_id TEXT DEFAULT '',
   created         NUMERIC  NOT NULL DEFAULT CURRENT_TIMESTAMP,
   modified        NUMERIC  NOT NULL DEFAULT CURRENT_TIMESTAMP,

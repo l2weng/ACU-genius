@@ -11,6 +11,9 @@ module.exports = {
         return {}
       case LIST.LOAD:
         return replace(state, payload, meta, error)
+      case LIST.UPDATE_OWNER:
+        state[payload.id].workers = JSON.stringify(payload.workers)
+        return state
 
       case LIST.INSERT: {
         const parent = state[payload.parent]

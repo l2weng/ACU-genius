@@ -65,7 +65,8 @@ class ProjectSidebar extends React.PureComponent {
     modalVisible: false,
     colleagues: [],
     assignType: '',
-    callId: ''
+    syncTaskId: '',
+    listId: 0,
   }
 
   get isEditing() {
@@ -193,14 +194,14 @@ class ProjectSidebar extends React.PureComponent {
     this.props.onListSave({ syncProjectId: this.props.project.syncProjectId, ...payload })
   }
 
-  handleAddWorkers = (type, id) => {
+  handleAddWorkers = (type, syncTaskId, listId) => {
     let self = this
     let query = getUrlFilterParams({ companyId: userInfo.user.companyId }, ['companyId'])
 
     axios.get(`${ARGS.apiServer}/graphql?query={userQueryActiveContacts${query} { userId name email status phone userType userTypeDesc statusDesc avatarColor machineId prefix }}`)
     .then(function (response) {
       if (response.status === 200) {
-        self.setState({ colleagues: response.data.data.userQueryActiveContacts, modalVisible: true, assignType: type, callId: id })
+        self.setState({ colleagues: response.data.data.userQueryActiveContacts, modalVisible: true, assignType: type, syncTaskId: syncTaskId, listId })
       }
     })
     .catch(function () {
@@ -298,16 +299,18 @@ class ProjectSidebar extends React.PureComponent {
   }
 
   handleAssign = selectedUserIndexs =>{
-    let { colleagues, assignType, callId } = this.state
+    let { colleagues, assignType, syncTaskId,listId } = this.state
+    console.log(this.state)
     let colleagueIds = []
     selectedUserIndexs.map(userIndex=>{
       colleagueIds.push(colleagues[userIndex].userId)
     })
     let { project } = this.props
     let self = this
-    axios.post(`${ARGS.apiServer}/projects/addColleague`, { localProjectId: project.id, colleagueId: assigneeId })
+    axios.post(`${ARGS.apiServer}/tasks/addWorker`, { workerIds: colleagueIds, projectId: project.syncProjectId, taskId: syncTaskId })
     .then(function (response) {
       if (response.status === 200) {
+        self.props.updateListOwner({ workers: response.data.workers, syncTaskId: syncTaskId,id:listId })
         message.success('任务分配成功', 0.5, ()=>{
           self.setState({ modalVisible: false })
         })
@@ -333,6 +336,7 @@ class ProjectSidebar extends React.PureComponent {
       onSyncProject2Cloud,
       isOwner
     } = this.props
+
     console.log(this.props.lists)
     let root = this.props.lists[this.props.root]
 
@@ -491,7 +495,8 @@ class ProjectSidebar extends React.PureComponent {
     onTagDelete: func.isRequired,
     onTagSave: func.isRequired,
     onTagSelect: func.isRequired,
-    onSyncProject2Cloud: func.isRequired
+    onSyncProject2Cloud: func.isRequired,
+    updateListOwner: func.isRequired
   }
 
   static defaultProps = {
@@ -554,6 +559,10 @@ module.exports = {
       onProjectSave(...args) {
         dispatch(actions.project.save(...args))
         dispatch(actions.edit.cancel())
+      },
+
+      updateListOwner(...args) {
+        dispatch(actions.list.updateOwner(...args))
       },
 
       onResize(width) {

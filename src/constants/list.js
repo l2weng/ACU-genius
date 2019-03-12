@@ -15,6 +15,7 @@ module.exports = {
   RESTORE: 'list.restore',
   SAVE: 'list.save',
   UPDATE: 'list.update',
+  UPDATE_OWNER: 'list.updateOwner',
 
   ITEM: {
     ADD: 'list.item.add',

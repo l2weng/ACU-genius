@@ -18,6 +18,18 @@ class Load extends Command {
   }
 }
 
+class UpdateOwner extends Command {
+  static get ACTION() { return LIST.UPDATE_OWNER }
+
+  *exec() {
+    const { payload } = this.action
+    const { workers, syncTaskId, id } = payload
+    const { db } = this.options
+    yield call(mod.updateOwner, db, { workers: JSON.stringify(workers), syncTaskId })
+    return { id, syncTaskId, workers }
+  }
+}
+
 
 class Create extends Command {
   static get ACTION() { return LIST.CREATE }
@@ -38,7 +50,8 @@ class Create extends Command {
     if (createResult.status === 200) {
       syncTaskId = createResult.data.obj.taskId
     }
-    list = yield call(mod.update, db, { syncTaskId, id: list.id })
+    let updateList = yield call(mod.update, db, { syncTaskId, id: list.id })
+    if (updateList) { list.syncTaskId = syncTaskId }
     this.undo = actions.delete(list.id)
     this.redo = actions.restore(list, { idx })
     return list
@@ -212,6 +225,7 @@ class RestoreItems extends Command {
 module.exports = {
   Create,
   Delete,
+  UpdateOwner,
   Load,
   Restore,
   Save,

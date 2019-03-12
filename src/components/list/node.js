@@ -246,7 +246,7 @@ class ListNode extends React.PureComponent {
         </div>
         {this.props.isOwner ?
           <span className="functionIcon"><Tooltip placement="right" title="分配任务">
-            <Icon type="user-add" size="small" onClick={() => this.props.onAddWorkers(SIDEBAR.TASK, this.props.list.id)}/>
+            <Icon type="user-add" size="small" onClick={() => this.props.onAddWorkers(SIDEBAR.TASK, this.props.list.syncTaskId, this.props.list.id)}/>
           </Tooltip>
           </span> : ''}
       </div>
