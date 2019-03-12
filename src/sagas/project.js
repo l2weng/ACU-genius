@@ -57,11 +57,13 @@ function *open(file) {
     const cache = new Cache(ARGS.cache, project.id)
     yield call([cache, cache.init])
     let syncProjectId = ''
+    let syncStatus = false
     const syncResult = yield axios.post(`${ARGS.apiServer}/projects/syncLocalProject`, { file: db.path, ...project })
     if (syncResult.status === 200) {
-      syncProjectId = syncResult.data.projectId
+      syncProjectId = syncResult.data.project.projectId
+      syncStatus = syncResult.data.project.syncStatus
     }
-    yield put(act.project.opened({ file: db.path, syncProjectId, ...project }))
+    yield put(act.project.opened({ file: db.path, syncProjectId, syncStatus, ...project }))
 
     try {
       yield fork(setup, db, project)

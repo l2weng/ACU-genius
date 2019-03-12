@@ -78,7 +78,7 @@ class Sync extends Command {
           syncProjectFile: result.url,
           projectFile: project.file,
           itemCount: project.items,
-          localProjectId: project.id,
+          syncProjectId: project.syncProjectId,
           name: project.name,
           userId: userInfo.user.userId,
           syncProjectFileName: project.name,
