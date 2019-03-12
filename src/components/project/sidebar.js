@@ -189,6 +189,10 @@ class ProjectSidebar extends React.PureComponent {
     this.hasFocusChanged = testFocusChange()
   }
 
+  handleListSave = (payload) => {
+    this.props.onListSave({ syncProjectId: this.props.project.syncProjectId, ...payload })
+  }
+
   handleAddWorkers = (type, id) => {
     let self = this
     let query = getUrlFilterParams({ companyId: userInfo.user.companyId }, ['companyId'])
@@ -400,7 +404,7 @@ class ProjectSidebar extends React.PureComponent {
                     onExpand={this.props.onListExpand}
                     onCollapse={this.props.onListCollapse}
                     onMove={this.props.onListMove}
-                    onSave={this.props.onListSave}/>}
+                    onSave={this.handleListSave}/>}
                 <ol>
                   {this.props.hasLastImport &&
                     <LastImportListNode

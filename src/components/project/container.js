@@ -62,7 +62,6 @@ class ProjectContainer extends Component {
   }
 
   componentWillUnmount() {
-    console.log(this.props)
     this.projectWillChange.cancel()
     off(document, 'keydown', this.handleKeyDown)
   }
@@ -237,7 +236,6 @@ class ProjectContainer extends Component {
       project,
       ...props
     } = this.props
-    console.log(this.props)
     let isOwner = project.owner === userInfo.user.userId
     const mainProject = dt(
       <div style={{ height: '100%' }}

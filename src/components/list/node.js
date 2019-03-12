@@ -13,11 +13,7 @@ const { isValidImage } = require('../../image')
 const lazy = require('./tree')
 const cx = require('classnames')
 const { last, noop, restrict } = require('../../common/util')
-const {  Tooltip, Icon, Modal, message, Form } = require('antd')
-const axios = require('axios')
-const { getUrlFilterParams } = require('../../common/dataUtil')
-const { userInfo } = ARGS
-const { ColleagueTable } = require('../contacts/colleagueTable')
+const {  Tooltip, Icon } = require('antd')
 
 const {
   arrayOf, bool, func, number, object, shape, string

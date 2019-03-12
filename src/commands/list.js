@@ -7,7 +7,7 @@ const { LIST } = require('../constants')
 
 const actions = require('../actions/list')
 const mod = require('../models/list')
-
+const axios = require('axios')
 
 class Load extends Command {
   static get ACTION() { return LIST.LOAD }
@@ -25,7 +25,7 @@ class Create extends Command {
   *exec() {
     const { payload } = this.action
     const { db } = this.options
-    const { name, parent } = payload
+    const { name, parent, syncProjectId } = payload
 
     const { children } = yield select(state => state.lists[parent])
     const idx = children.length
@@ -33,7 +33,7 @@ class Create extends Command {
     const list = yield call(mod.create, db, { name, parent, position: idx + 1 })
 
     yield put(actions.insert(list, { idx }))
-
+    yield axios.post(`${ARGS.apiServer}/tasks/create`, { localTaskId: list.id, name: list.name, projectId: syncProjectId })
     this.undo = actions.delete(list.id)
     this.redo = actions.restore(list, { idx })
 
@@ -52,7 +52,6 @@ class Save extends Command {
 
     yield put(actions.update(payload))
     yield call(mod.save, db, payload)
-
     this.undo = actions.save(this.original)
   }
 
