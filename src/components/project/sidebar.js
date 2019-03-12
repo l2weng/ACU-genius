@@ -48,6 +48,7 @@ const ColleagueList = Form.create()(props => {
   return (
     <Modal
       destroyOnClose
+      style={{ top: 20 }}
       title="分配任务"
       visible={modalVisible}
       onOk={okHandle}

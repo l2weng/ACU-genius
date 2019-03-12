@@ -8,6 +8,8 @@ const { array, func } = require('prop-types')
 class ColleagueTable extends React.Component {
   state = {
     searchText: '',
+    selectedRowKeys: [],
+    loading: false,
   }
 
   getColumnSearchProps = (dataIndex) => ({
@@ -74,6 +76,11 @@ class ColleagueTable extends React.Component {
     this.setState({ searchText: '' })
   }
 
+  onSelectChange = (selectedRowKeys) => {
+    console.log('selectedRowKeys changed: ', selectedRowKeys);
+    this.setState({ selectedRowKeys });
+  }
+
   render() {
     const columns = [
       {
@@ -98,7 +105,26 @@ class ColleagueTable extends React.Component {
           </span>
         ),
       }]
-    return <Table columns={columns} dataSource={this.props.data}/>
+    const { loading, selectedRowKeys } = this.state;
+    const rowSelection = {
+      selectedRowKeys,
+      onChange: this.onSelectChange,
+    };
+    const hasSelected = selectedRowKeys.length > 0;
+    return (<div>
+      <div style={{ marginBottom: 16 }}>
+        <Button
+          type="primary"
+          onClick={this.start}
+          disabled={!hasSelected}
+          loading={loading}>
+          分配
+        </Button>
+        <span style={{ marginLeft: 8 }}>
+          {hasSelected ? `Selected ${selectedRowKeys.length} users` : ''}
+        </span>
+      </div> <Table rowSelection={rowSelection} columns={columns} dataSource={this.props.data}/>
+    </div>)
   }
   static propTypes = {
     data: array.isRequired,
