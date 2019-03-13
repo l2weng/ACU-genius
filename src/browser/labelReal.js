@@ -797,7 +797,7 @@ class LabelReal extends EventEmitter {
         machineId: machineIdSync({ original: true }),
         projectFile: file,
       }).then(function () {
-        verbose('temp user create project')
+        verbose('user create project')
       })
       .catch(function (error) {
         warn(error)

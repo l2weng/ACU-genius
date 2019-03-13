@@ -326,7 +326,6 @@ class ProjectSidebar extends React.PureComponent {
       return list
     }
     let filteredList = {}
-    console.log(list)
     for (let key in list) {
       if (list.hasOwnProperty(key)) {
         let oneNode = list[key]
