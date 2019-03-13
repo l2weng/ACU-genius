@@ -18,27 +18,51 @@ class ListTree extends React.Component {
   }
 
   mapChildren(fn, props = this.props) {
-    return props.parent.children.map((id, idx, all) => {
-      if (id in props.lists) {
-        let list = props.lists[id]
-        let hasNewListNode = this.hasNewListNode(id)
-        let isExpandable = hasNewListNode || list.children.length > 0
-        let isExpanded = hasNewListNode || props.expand[id]
-        let isLast = (idx === all.length - 1)
+    if (props.isOwner) {
+      return props.parent.children.map((id, idx, all) => {
+        if (id in props.lists) {
+          let list = props.lists[id]
+          let hasNewListNode = this.hasNewListNode(id)
+          let isExpandable = hasNewListNode || list.children.length > 0
+          let isExpanded = hasNewListNode || props.expand[id]
+          let isLast = (idx === all.length - 1)
 
-        return fn(id, {
-          ...props,
-          list,
-          isSelected: props.selection === id,
-          isExpandable,
-          isExpanded: isExpandable && isExpanded,
-          isEditing: this.isEditing(id),
-          isHolding: props.hold[id],
-          isLast,
-          position: idx
-        })
-      }
-    })
+          return fn(id, {
+            ...props,
+            list,
+            isSelected: props.selection === id,
+            isExpandable,
+            isExpanded: isExpandable && isExpanded,
+            isEditing: this.isEditing(id),
+            isHolding: props.hold[id],
+            isLast,
+            position: idx
+          })
+        }
+      })
+    } else {
+      return props.parent.children.map((id, idx, all) => {
+        if (id in props.lists) {
+          let list = props.lists[id]
+          let hasNewListNode = this.hasNewListNode(id)
+          let isExpandable = hasNewListNode || list.children.length > 0
+          let isExpanded = hasNewListNode || props.expand[id]
+          let isLast = (idx === all.length - 1)
+
+          return fn(id, {
+            ...props,
+            list,
+            isSelected: props.selection === id,
+            isExpandable,
+            isExpanded: isExpandable && isExpanded,
+            isEditing: this.isEditing(id),
+            isHolding: props.hold[id],
+            isLast,
+            position: idx
+          })
+        }
+      })
+    }
   }
 
   render() {
