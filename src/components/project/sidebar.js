@@ -299,7 +299,7 @@ class ProjectSidebar extends React.PureComponent {
   }
 
   handleAssign = selectedUserIndexs =>{
-    let { colleagues, assignType, syncTaskId,listId } = this.state
+    let { colleagues, assignType, syncTaskId, listId } = this.state
     let colleagueIds = []
     selectedUserIndexs.map(userIndex=>{
       colleagueIds.push(colleagues[userIndex].userId)
@@ -309,7 +309,7 @@ class ProjectSidebar extends React.PureComponent {
     axios.post(`${ARGS.apiServer}/tasks/addWorker`, { workerIds: colleagueIds, projectId: project.syncProjectId, taskId: syncTaskId })
     .then(function (response) {
       if (response.status === 200) {
-        self.props.updateListOwner({ workers: response.data.workers, syncTaskId: syncTaskId,id:listId })
+        self.props.updateListOwner({ workers: response.data.workers, syncTaskId: syncTaskId, id: listId })
         message.success('任务分配成功', 0.5, ()=>{
           self.setState({ modalVisible: false })
         })
