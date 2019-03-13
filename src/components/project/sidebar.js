@@ -300,7 +300,6 @@ class ProjectSidebar extends React.PureComponent {
 
   handleAssign = selectedUserIndexs =>{
     let { colleagues, assignType, syncTaskId,listId } = this.state
-    console.log(this.state)
     let colleagueIds = []
     selectedUserIndexs.map(userIndex=>{
       colleagueIds.push(colleagues[userIndex].userId)
@@ -337,7 +336,6 @@ class ProjectSidebar extends React.PureComponent {
       isOwner
     } = this.props
 
-    console.log(this.props.lists)
     let root = this.props.lists[this.props.root]
 
     const { modalVisible, colleagues } = this.state

@@ -13,7 +13,7 @@ const { isValidImage } = require('../../image')
 const lazy = require('./tree')
 const cx = require('classnames')
 const { last, noop, restrict } = require('../../common/util')
-const {  Tooltip, Icon } = require('antd')
+const {  Tooltip, Icon, Avatar } = require('antd')
 
 const {
   arrayOf, bool, func, number, object, shape, string
@@ -216,6 +216,27 @@ class ListNode extends React.PureComponent {
     })
   }
 
+  renderAssign = (workers) =>{
+    let workerArray = []
+    let workerView = ''
+    if (workers) {
+      workerArray = JSON.parse(workers)
+      workerView = (
+        <span style={{ float: 'right' }}>{workerArray.map(
+        worker => {
+          return <Avatar size={18} key={worker.userId} style={{ backgroundColor: worker.avatarColor }}>{worker.name.charAt(0)}</Avatar>
+        })}</span>)
+    }
+    return (
+      <div>
+        {workerView}
+        <span className="functionIcon"><Tooltip placement="right" title="分配任务">
+          <Icon type="user-add" size="small" onClick={() => this.props.onAddWorkers(SIDEBAR.TASK, this.props.list.syncTaskId, this.props.list.id)}/>
+        </Tooltip>
+        </span>
+      </div>)
+  }
+
   expand = () => {
     this.props.onExpand(this.props.list.id)
   }
@@ -244,11 +265,7 @@ class ListNode extends React.PureComponent {
             onCancel={this.props.onEditCancel}
             onChange={this.handleChange}/>
         </div>
-        {this.props.isOwner ?
-          <span className="functionIcon"><Tooltip placement="right" title="分配任务">
-            <Icon type="user-add" size="small" onClick={() => this.props.onAddWorkers(SIDEBAR.TASK, this.props.list.syncTaskId, this.props.list.id)}/>
-          </Tooltip>
-          </span> : ''}
+        {this.props.isOwner ? this.renderAssign(this.props.list.workers) : ''}
       </div>
     )
   }
@@ -272,7 +289,7 @@ class ListNode extends React.PureComponent {
 
   static propTypes = {
     canDrop: bool,
-    isOwner:bool.isRequired,
+    isOwner: bool.isRequired,
     depth: number.isRequired,
     expand: object.isRequired,
     project: object,
