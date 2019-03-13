@@ -65,7 +65,7 @@ class LabelReal extends EventEmitter {
     webgl: true,
     win: {},
     userInfo: {},
-    apiServer: 'http://127.0.0.1:3000/lr',
+    apiServer: 'http://47.105.236.123:8098/lr',
     zoom: 1.0
   }
 
