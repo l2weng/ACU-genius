@@ -198,6 +198,7 @@ class LabelReal extends EventEmitter {
   hasOpened({ file, name }) {
     if (this.wiz) this.wiz.close()
     if (this.prefs) this.prefs.close()
+    if (this.login) this.login.close()
 
     this.state.recent = into(
       [file],
@@ -829,7 +830,6 @@ class LabelReal extends EventEmitter {
         this.store.save.sync('state.json', this.state)
       }
       // this.dispatch(act.project.updateUserInfo({ user: this.state.userInfo.user }), this.win)
-      if (this.login) this.login.close()
       verbose(this.state.userInfo.hasProject)
       if (this.state.userInfo.hasProject) {
         const project = this.state.userInfo.lastProject
