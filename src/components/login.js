@@ -101,12 +101,10 @@ class Login extends PureComponent {
         {this.renderToolbar()}
         <div className="flex-row center">
           <figure className="app-icon"/>
-          {!visible ? <WrappedNormalLoginForm/> : <WrappedRegistrationForm/>}
+          {!visible ? <WrappedNormalLoginForm/> : <WrappedRegistrationForm needLogin={this.needLogin}/>}
           {!visible ? <FormItem>
             <a onClick={this.needRegister}>register now!</a>
-          </FormItem> : <FormItem>
-            <a onClick={this.needLogin}>back!</a>
-          </FormItem>}
+          </FormItem> : ''}
         </div>
       </div>
     )

@@ -3,12 +3,13 @@
 const React = require('react')
 const { Component } = React
 const {
-  Form, Input, Tooltip, Icon, Select, Row, Col, Button, message
+  Form, Input, Tooltip, Icon, Select, Row, Col, Button, notification, message
 } = require('antd')
 const FormItem = Form.Item
 const Option = Select.Option
 const axios = require('axios')
 const { machineIdSync } = require('node-machine-id')
+const { func } = require('prop-types')
 
 class RegistrationForm extends Component {
   state = {
@@ -22,14 +23,31 @@ class RegistrationForm extends Component {
       if (!err) {
         axios.post(`${ARGS.apiServer}/users/create`, values).then(res => {
           if (res.status === 200) {
-            message.success('添加成功', 0.5)
+            const key = `open${Date.now()}`
+            const btn = (
+              <Button type="primary" size="small" onClick={() => notification.close(key)}>
+                Go
+              </Button>
+            )
+            notification.open({
+              message: '注册成功',
+              description: 'LabelReal带您开启AI标注大门',
+              icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
+              btn,
+              key,
+              onClose: this.close,
+            })
           }
         })
-        .catch(()=> {
-          message.error('服务器问题, 请联系客服')
+        .catch((err)=> {
+          message.error('服务器问题, 请联系客服', err)
         })
       }
     })
+  }
+
+  close = () => {
+    console.log('Notification was closed. Either the close button was clicked or duration time elapsed.')
   }
 
   handleConfirmBlur = (e) => {
@@ -184,10 +202,17 @@ class RegistrationForm extends Component {
           </FormItem>
           <FormItem {...tailFormItemLayout}>
             <Button type="primary" htmlType="submit">Register</Button>
+            <Button style={{ marginLeft: 8 }} onClick={this.props.needLogin}>
+              Back
+            </Button>
           </FormItem>
         </Form>
       </div>
     )
+  }
+
+  static propTypes = {
+    needLogin: func.isRequired
   }
 }
 

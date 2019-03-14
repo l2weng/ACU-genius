@@ -20,7 +20,7 @@ const RECENT = {
 //Login and register with the same view
 const LOGIN = {
   WIDTH: 578,
-  HEIGHT: 500
+  HEIGHT: 550
 }
 
 const GUIDELINE = {

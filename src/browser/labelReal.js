@@ -65,9 +65,10 @@ class LabelReal extends EventEmitter {
     webgl: true,
     win: {},
     userInfo: {},
-    apiServer: 'http://47.105.236.123:8098/lr',
+    apiServer: 'http://127.0.0.1:3000/lr',
     zoom: 1.0
   }
+  // apiServer: 'http://47.105.236.123:8098/lr',
 
   constructor() {
     super()
@@ -830,7 +831,7 @@ class LabelReal extends EventEmitter {
         this.store.save.sync('state.json', this.state)
       }
       // this.dispatch(act.project.updateUserInfo({ user: this.state.userInfo.user }), this.win)
-      verbose(this.state.userInfo.hasProject)
+      verbose('User has project already', this.state.userInfo.hasProject)
       if (this.state.userInfo.hasProject) {
         const project = this.state.userInfo.lastProject
         let client = getNewOOSClient()
@@ -869,7 +870,7 @@ class LabelReal extends EventEmitter {
           }
         }
       } else {
-        this.open()
+        return this.showWizard()
       }
     })
 
