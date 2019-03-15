@@ -106,12 +106,13 @@ class LabelReal extends EventEmitter {
 
     if (!file) {
       if (this.win) return this.win.show(), this
-      for (let recent of this.state.recent[this.state.userInfo.user.userId]) {
-        if (!exists(recent)) continue
-        file = recent
-        break
+      if (this.state.recent.hasOwnProperty(this.state.userInfo.user.userId)) {
+        for (let recent of this.state.recent[this.state.userInfo.user.userId]) {
+          if (!exists(recent)) continue
+          file = recent
+          break
+        }
       }
-
       if (!file) return this.showWizard()
     }
 
@@ -812,7 +813,9 @@ class LabelReal extends EventEmitter {
     ipc.on(USER.LOGINED, async (_, { data }) => {
       data.ip = getLocalIP()
       this.state.userInfo = data
-      this.state.recent[this.state.userInfo.user.userId] = []
+      if (!this.state.recent.hasOwnProperty(this.state.userInfo.user.userId)) {
+        this.state.recent[this.state.userInfo.user.userId] = []
+      }
       if (this.state != null) {
         this.store.save.sync('state.json', this.state)
       }
@@ -828,7 +831,7 @@ class LabelReal extends EventEmitter {
             if (err) throw err
           })
         }
-        newPath = join(newPath, `${project.syncProjectFileName}.tpy`)
+        newPath = join(newPath, `${project.syncProjectFileName}.lbr`)
         //if project file is his own
         if (fs.existsSync(project.projectFile)) {
           if (getFilesizeInBytes(project.projectFile) !==
@@ -856,7 +859,9 @@ class LabelReal extends EventEmitter {
           }
         }
       } else {
-        return this.showWizard()
+        this.open()
+
+        // return this.showWizard()
       }
     })
 

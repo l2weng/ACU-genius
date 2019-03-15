@@ -123,7 +123,7 @@ class Menu {
         // recent projects only in the translation loop.
         case 'recent':
           if (item.id === 'recent') {
-            if (!__.isEmpty(this.app.state.userInfo)) {
+            if (this.app.state.recent.hasOwnProperty(this.app.state.userInfo.userId)) {
               if (this.app.state.recent[this.app.state.userInfo.user.userId].length) {
                 item.enabled = true
 
