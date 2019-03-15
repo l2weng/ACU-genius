@@ -58,6 +58,7 @@ function *open(file) {
     yield call([cache, cache.init])
     let syncProjectId = ''
     let syncStatus = false
+    console.log({ file: db.path, ...project })
     const syncResult = yield axios.post(`${ARGS.apiServer}/projects/syncLocalProject`, { file: db.path, ...project })
     if (syncResult.status === 200) {
       syncProjectId = syncResult.data.project.projectId
