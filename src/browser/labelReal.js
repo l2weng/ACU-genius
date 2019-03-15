@@ -187,6 +187,8 @@ class LabelReal extends EventEmitter {
     if (this.wiz) this.wiz.close()
     if (this.prefs) this.prefs.close()
     if (this.login) this.login.close()
+    if (this.recent) this.recent.close()
+    if (this.wiz) this.wiz.close()
     this.state.recent[this.state.userInfo.user.userId] =  into(
       [file],
       compose(remove(f => f === file), take(9)),
@@ -778,8 +780,6 @@ class LabelReal extends EventEmitter {
     })
 
     ipc.on(PROJECT.CREATED, async (_, { file }) => {
-      if (this.recent) this.recent.close()
-      if (this.wiz) this.wiz.close()
       let { userInfo, apiServer } = this.state
       await axios.post(`${apiServer}/projects/create`, {
         userId: __.isEmpty(userInfo) ? '' : userInfo.user.userId,
@@ -790,7 +790,7 @@ class LabelReal extends EventEmitter {
       }).catch(function (error) {
         warn(error)
       })
-      this.open(file)
+      return this.open(file)
     })
 
     ipc.on(DATASET.CREATE, () => {
