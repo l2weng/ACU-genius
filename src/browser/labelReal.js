@@ -60,7 +60,7 @@ class LabelReal extends EventEmitter {
     frameless: darwin,
     debug: false,
     theme: 'light',
-    recent: [],
+    recent: {},
     updater: true,
     webgl: true,
     win: {},
@@ -106,8 +106,7 @@ class LabelReal extends EventEmitter {
 
     if (!file) {
       if (this.win) return this.win.show(), this
-
-      for (let recent of this.state.recent) {
+      for (let recent of this.state.recent[this.state.userInfo.user.userId]) {
         if (!exists(recent)) continue
         file = recent
         break
@@ -187,11 +186,10 @@ class LabelReal extends EventEmitter {
     if (this.wiz) this.wiz.close()
     if (this.prefs) this.prefs.close()
     if (this.login) this.login.close()
-
-    this.state.recent = into(
+    this.state.recent[this.state.userInfo.user.userId] =  into(
       [file],
       compose(remove(f => f === file), take(9)),
-      this.state.recent)
+      this.state.recent[this.state.userInfo.user.userId])
 
     // if (darwin) this.win.setRepresentedFilename(file)
     if (name) this.win.setTitle(name)
@@ -455,8 +453,8 @@ class LabelReal extends EventEmitter {
       this.dispatch(act.edit.start({ project: { name: true } }), win))
 
     this.on('app:show-project-file', () => {
-      if (this.state.recent.length > 0) {
-        shell.showItemInFolder(this.state.recent[0])
+      if (this.state.recent[this.state.userInfo.user.userId].length > 0) {
+        shell.showItemInFolder(this.state.recent[this.state.userInfo.user.userId][0])
       }
     })
 
@@ -587,7 +585,7 @@ class LabelReal extends EventEmitter {
 
     this.on('app:clear-recent-projects', () => {
       verbose('clearing recent projects...')
-      this.state.recent = []
+      this.state.recent[this.state.userInfo.user.userId] = []
       this.emit('app:reload-menu')
     })
 
@@ -814,6 +812,7 @@ class LabelReal extends EventEmitter {
     ipc.on(USER.LOGINED, async (_, { data }) => {
       data.ip = getLocalIP()
       this.state.userInfo = data
+      this.state.recent[this.state.userInfo.user.userId] = []
       if (this.state != null) {
         this.store.save.sync('state.json', this.state)
       }

@@ -5,6 +5,7 @@ const { basename } = require('path')
 const { warn, verbose } = require('../common/log')
 const { transduce, map, transformer } = require('transducers.js')
 const { BrowserWindow, Menu: M } = require('electron')
+const __ = require('underscore')
 
 function withWindow(win, cmd, fn) {
   return (_, w) => {
@@ -122,16 +123,19 @@ class Menu {
         // recent projects only in the translation loop.
         case 'recent':
           if (item.id === 'recent') {
-            if (this.app.state.recent.length) {
-              item.enabled =  true
+            if (!__.isEmpty(this.app.state.userInfo)) {
+              if (this.app.state.recent[this.app.state.userInfo.user.userId].length) {
+                item.enabled = true
 
-              item.submenu = [
-                ...this.app.state.recent.map((file, idx) => ({
-                  label: `${idx + 1}. ${basename(file)}`,
-                  click: () => this.app.open(file)
-                })),
-                ...item.submenu
-              ]
+                item.submenu = [
+                  ...this.app.state.recent[this.app.state.userInfo.user.userId].map(
+                    (file, idx) => ({
+                      label: `${idx + 1}. ${basename(file)}`,
+                      click: () => this.app.open(file)
+                    })),
+                  ...item.submenu
+                ]
+              }
             }
           }
           break
