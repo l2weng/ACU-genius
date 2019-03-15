@@ -12,6 +12,7 @@ const { ready } = require('./dom')
 ready.then(() => {
   const READY = performance.now()
   const { win } = require('./window')
+  verbose(`initializing ${win.type} window...`)
 
   win.init(() => {
     requestIdleCallback(win.show, { timeout: 500 })

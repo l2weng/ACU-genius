@@ -103,20 +103,7 @@ class LabelReal extends EventEmitter {
     if (__.isEmpty(userInfo)) {
       return this.showLogin()
     }
-    // if (!file) {
-    //   if (this.win) return this.win.show(), this
-    //
-    //   if (this.state.recent.length > 0) {
-    //     return this.showRecent()
-    //   } else {
-    //     for (let recent of this.state.recent) {
-    //       if (!exists(recent)) continue
-    //       file = recent
-    //       break
-    //     }
-    //     if (!file) return this.showGuideline()
-    //   }
-    // }
+
     if (!file) {
       if (this.win) return this.win.show(), this
 
@@ -271,6 +258,7 @@ class LabelReal extends EventEmitter {
   showWizard() {
     if (this.prefs) this.prefs.close()
     if (this.gdl) this.gdl.close()
+    if (this.login) this.login.close()
     if (this.wiz) return this.wiz.show(), this
 
     this.wiz = open('wizard', this.hash, {
@@ -799,7 +787,7 @@ class LabelReal extends EventEmitter {
         machineId: machineIdSync({ original: true }),
         projectFile: file,
       }).then(function () {
-        verbose('user create project')
+        verbose('sync new project to cloud')
       })
       .catch(function (error) {
         warn(error)
@@ -842,7 +830,7 @@ class LabelReal extends EventEmitter {
             if (err) throw err
           })
         }
-        newPath = join(newPath, `${project.syncProjectFileName}.lbr`)
+        newPath = join(newPath, `${project.syncProjectFileName}.tpy`)
         //if project file is his own
         if (fs.existsSync(project.projectFile)) {
           if (getFilesizeInBytes(project.projectFile) !==

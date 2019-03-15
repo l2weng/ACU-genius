@@ -8,7 +8,7 @@ tmp
 npm-debug.log
 db/*.db
 *.tpy
-*.lbr
+*.tpy
 .vimrc
 scripts/appimagetool
 _book

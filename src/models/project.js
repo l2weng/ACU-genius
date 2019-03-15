@@ -10,7 +10,7 @@ const { PROJECT } = require('../constants')
 
 module.exports = {
   async create(db, { name, base, owner, id = uuid() }) {
-    info(`creating project "${name}" #${id} owner:${owner}`)
+    info(`saving project into local "${name}" #${id} owner:${owner}`)
     await db.read(PROJECT.SCHEMA)
     await db.run(...into('project').insert({
       project_id: id,

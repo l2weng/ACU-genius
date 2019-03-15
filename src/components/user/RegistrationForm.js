@@ -10,6 +10,9 @@ const Option = Select.Option
 const axios = require('axios')
 const { machineIdSync } = require('node-machine-id')
 const { func } = require('prop-types')
+const { ipcRenderer: ipc  } = require('electron')
+const { USER } = require('../../constants')
+const { getLocalIP } = require('../../common/serviceUtil')
 
 class RegistrationForm extends Component {
   state = {
@@ -25,7 +28,7 @@ class RegistrationForm extends Component {
           if (res.status === 200) {
             const key = `open${Date.now()}`
             const btn = (
-              <Button type="primary" size="small" onClick={() => notification.close(key)}>
+              <Button type="primary" size="small" onClick={() => this.goProject(res.data.obj, notification, key)}>
                 Go
               </Button>
             )
@@ -35,6 +38,7 @@ class RegistrationForm extends Component {
               icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
               btn,
               key,
+              placement: 'bottomRight',
               onClose: this.close,
             })
           }
@@ -46,8 +50,19 @@ class RegistrationForm extends Component {
     })
   }
 
-  close = () => {
-    console.log('Notification was closed. Either the close button was clicked or duration time elapsed.')
+  goProject = (userInfo, registerNotification, key) => {
+    registerNotification.close(key)
+    let loginData = { username: userInfo.name, password: userInfo.password }
+    loginData.ip = getLocalIP()
+    axios.post(`${ARGS.apiServer}/auth`, loginData)
+    .then(function (response) {
+      if (response.status === 200) {
+        ipc.send(USER.LOGINED, { data: response.data })
+      }
+    })
+    .catch(function (error) {
+      message.warning('用户名密码错误, 请重试')
+    })
   }
 
   handleConfirmBlur = (e) => {
