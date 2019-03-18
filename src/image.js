@@ -3,6 +3,7 @@
 require('./common/promisify')
 
 const { basename, extname, dirname, join } = require('path')
+const nodePath = require('path')
 const { createReadStream, statAsync: stat } = require('fs')
 const { createHash } = require('crypto')
 const { exif } = require('./exif')
@@ -54,7 +55,7 @@ class Image {
           if (err) throw err
         })
       }
-      let newFileName = basename(path)
+      let newFileName = nodePath.win32.basename(path)
       if (!fs.existsSync(`${newPath}/${newFileName}`)) {
         await Image.download(path, syncFileUrl, newFileName, newPath)
       }
