@@ -8,12 +8,15 @@ const { Meta } = Card
 const _ = require('underscore')
 const { userInfo, machineId } = ARGS
 const actions = require('../../actions')
-const { func, object, array  } = require('prop-types')
+const { func, object, array, string  } = require('prop-types')
 const { HEAD } = require('../../constants')
 const { resolve, join } = require('path')
 const staticRoot = resolve(__dirname, '../../../', 'static')
 const defaultCover = join(staticRoot, 'images/project', 'default-cover.jpg')
 
+const {
+  getCachePrefix,
+} = require('../../selectors')
 class Workplace extends PureComponent {
 
   constructor(props) {
@@ -48,6 +51,11 @@ class Workplace extends PureComponent {
     }
     return (<div><a onClick={()=>this.openProject(
       item.projectFile)}>{item.name}</a>{cloudMark}</div>)
+  }
+
+
+  getCacheCover = (cover) => {
+    return cover ? cover : defaultCover
   }
 
   render() {
@@ -125,9 +133,9 @@ class Workplace extends PureComponent {
                   <List.Item key={item.projectId}>
                     <Card
                       hoverable
-                      style={{ width: 180,height: 273 }}
+                      style={{ width: 180, height: 273 }}
                       cover={<img alt={item.name}
-                        src={item.cover ? item.cover : defaultCover}/>}>
+                        src={this.getCacheCover(item.syncCover)}/>}>
                       <Meta
                         title={
                           this.renderTitle(item)
@@ -152,6 +160,7 @@ class Workplace extends PureComponent {
     onProjectOpen: func.isRequired,
     switchTab: func.isRequired,
     fetchProjects: func.isRequired,
+    cache: string,
     project: object,
     projects: array,
   }
@@ -161,6 +170,7 @@ module.exports = {
   Workplace: connect(
     state => ({
       project: state.project,
+      cache: getCachePrefix(state),
       projects: state.header.projects || []
     }),
     dispatch => ({

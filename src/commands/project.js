@@ -1,7 +1,7 @@
 'use strict'
 
 const { call, put, select, all } = require('redux-saga/effects')
-const { dirname } = require('path')
+const { dirname, resolve, join } = require('path')
 const fs = require('fs')
 const { Command } = require('./command')
 const { PROJECT } = require('../constants')
@@ -11,6 +11,7 @@ const mod = require('../models')
 const { getNewOOSClient, getFilesizeInBytes } = require('../common/dataUtil')
 const { error } = require('../common/log')
 const axios = require('axios')
+const uuid = require('uuid/v4')
 
 class Rebase extends Command {
   static get ACTION() { return PROJECT.REBASE }
@@ -62,7 +63,7 @@ class Sync extends Command {
 
   *exec() {
     let { payload } = this.action
-    let { project } = payload
+    let { project, cache } = payload
     let client = getNewOOSClient()
     let total = 1
     let { userInfo } = ARGS
@@ -72,6 +73,13 @@ class Sync extends Command {
         syncProjectSize = getFilesizeInBytes(project.file)
       }
       let result = yield client.put(project.id, project.file)
+      let syncCover = ''
+      if (cache) {
+        let coverId = uuid()
+        let coverResult = yield client.put(coverId, join(resolve(cache), '2_512.jpg'))
+        syncCover = coverResult.url
+      }
+      console.log(syncCover)
       if (result.res.status === 200) {
         let syncProject = {
           syncStatus: true,
@@ -82,7 +90,8 @@ class Sync extends Command {
           name: project.name,
           userId: userInfo.user.userId,
           syncProjectFileName: project.name,
-          syncProjectSize
+          syncProjectSize,
+          syncCover:syncCover
         }
         const syncResult = yield axios.post(`${ARGS.apiServer}/projects/syncProject`, syncProject)
         if (syncResult.status === 200) {

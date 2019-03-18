@@ -169,8 +169,8 @@ class ProjectContainer extends Component {
     onMetadataSave(payload, meta)
   }
   handleSyncProject2Cloud = () => {
-    const { project, photos } = this.props
-    this.props.onSyncProject2Cloud({ project, photos })
+    const { project, photos, cache } = this.props
+    this.props.onSyncProject2Cloud({ project, photos, cache })
   }
 
   handleKeyDown = (event) => {
