@@ -13,6 +13,7 @@ const { HEAD } = require('../../constants')
 const { resolve, join } = require('path')
 const staticRoot = resolve(__dirname, '../../../', 'static')
 const defaultCover = join(staticRoot, 'images/project', 'default-cover.jpg')
+const { TasksTable } = require('./taskTable')
 
 const {
   getCachePrefix,
@@ -31,6 +32,7 @@ class Workplace extends PureComponent {
   componentDidMount() {
     if (!_.isEmpty(userInfo)) {
       this.props.fetchProjects(true, userInfo.user.userId)
+      this.props.fetchTasks(userInfo.user.userId)
     } else if (!_.isEmpty(machineId)) {
       this.props.fetchProjects(false, machineId)
     }
@@ -59,62 +61,7 @@ class Workplace extends PureComponent {
   }
 
   render() {
-    const { projects } = this.props
-    const columns = [
-      {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        render: text => <a href="javascript:;">{text}</a>,
-      }, {
-        title: 'Age',
-        dataIndex: 'age',
-        key: 'age',
-      }, {
-        title: 'Address',
-        dataIndex: 'address',
-        key: 'address',
-      }, {
-        title: 'Tags',
-        key: 'tags',
-        dataIndex: 'tags',
-        render: tags => (
-          <span>
-            {tags.map(tag => <Tag color="blue" key={tag}>{tag}</Tag>)}
-          </span>
-        ),
-      }, {
-        title: 'Action',
-        key: 'action',
-        render: (text, record) => (
-          <span>
-            <a href="javascript:;">Invite {record.name}</a>
-            <Divider type="vertical"/>
-            <a href="javascript:;">Delete</a>
-          </span>
-        ),
-      }]
-
-    const data = [
-      {
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-        tags: ['nice', 'developer'],
-      }, {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-        tags: ['loser'],
-      }, {
-        key: '3',
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sidney No. 1 Lake Park',
-        tags: ['cool', 'teacher'],
-      }]
+    const { projects, tasks } = this.props
 
     return (
       <div>
@@ -147,9 +94,8 @@ class Workplace extends PureComponent {
             </Card>
             <Card
               bordered={false}
-              title="进行中的任务"
-              extra={<a href="#">全部任务</a>}>
-              <Table columns={columns} dataSource={data}/>
+              title="进行中的任务">
+              <TasksTable tasks={tasks}/>
             </Card>
           </Col>
         </Row>
@@ -160,9 +106,11 @@ class Workplace extends PureComponent {
     onProjectOpen: func.isRequired,
     switchTab: func.isRequired,
     fetchProjects: func.isRequired,
+    fetchTasks: func.isRequired,
     cache: string,
     project: object,
     projects: array,
+    tasks: array,
   }
 }
 
@@ -171,7 +119,8 @@ module.exports = {
     state => ({
       project: state.project,
       cache: getCachePrefix(state),
-      projects: state.header.projects || []
+      projects: state.header.projects || [],
+      tasks: state.header.tasks || []
     }),
     dispatch => ({
       onProjectOpen(path) {
@@ -179,6 +128,9 @@ module.exports = {
       },
       fetchProjects(typeFlag = false, id) {
         dispatch(actions.header.loadProjects({ typeFlag, id }))
+      },
+      fetchTasks(userId) {
+        dispatch(actions.header.loadMyTasks({ userId }))
       }
     }),
   )(Workplace),

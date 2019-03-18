@@ -79,7 +79,6 @@ class Sync extends Command {
         let coverResult = yield client.put(coverId, join(resolve(cache), '2_512.jpg'))
         syncCover = coverResult.url
       }
-      console.log(syncCover)
       if (result.res.status === 200) {
         let syncProject = {
           syncStatus: true,

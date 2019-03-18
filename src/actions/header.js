@@ -24,9 +24,26 @@ module.exports = {
     }
   },
 
+  tasksLoaded(payload = {}) {
+    return {
+      type: HEAD.TASKS_LOADED,
+      payload
+    }
+  },
+
   loadProjects(payload = {}) {
     return {
       type: HEAD.PROJECTS,
+      payload,
+      meta: {
+        cmd: 'project',
+      }
+    }
+  },
+
+  loadMyTasks(payload = {}) {
+    return {
+      type: HEAD.TASKS,
       payload,
       meta: {
         cmd: 'project',

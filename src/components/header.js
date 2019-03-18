@@ -33,6 +33,7 @@ class Header extends React.Component {
     if (tabName === HEAD.HOME) {
       if (!_.isEmpty(userInfo)) {
         this.props.reloadProjects(true, userInfo.user.userId)
+        this.props.reloadTasks(userInfo.user.userId)
       }
     }
     this.props.switchTab(tabName)
@@ -70,6 +71,9 @@ module.exports = {
       },
       reloadProjects(typeFlag = false, id) {
         dispatch(actions.header.loadProjects({ typeFlag, id }))
+      },
+      reloadTasks(userId) {
+        dispatch(actions.header.loadMyTasks({ userId }))
       }
     }),
   )(Header),

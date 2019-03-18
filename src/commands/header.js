@@ -69,6 +69,28 @@ class LoadProjects extends Command {
   }
 }
 
+class LoadMyTasks extends Command {
+  static get ACTION() { return HEAD.TASKS }
+
+  * exec() {
+    let { userId } = this.action.payload
+    let query
+    query = getUrlFilterParams({ userId: userId }, ['userId'])
+    let tasks = []
+    try {
+      let response = yield axios.get(
+        `${apiServer}/graphql?query={taskQueryByUser${query}  { taskId name type localTaskId progress projectId createdAt project { projectId name deadline } }} `)
+      if (response.status === 200) {
+        tasks = response.data.data.taskQueryByUser
+      }
+      yield put(act.header.tasksLoaded({ tasks }))
+    } catch (err) {
+      error(err.toString())
+    }
+  }
+}
+
 module.exports = {
   LoadProjects,
+  LoadMyTasks
 }
