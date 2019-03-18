@@ -55,8 +55,9 @@ class Image {
         })
       }
       let newFileName = basename(path)
-      await Image.download(path, syncFileUrl, newFileName, newPath)
-      info(`${newPath}/${newFileName}`)
+      if (!fs.existsSync(`${newPath}/${newFileName}`)) {
+        await Image.download(path, syncFileUrl, newFileName, newPath)
+      }
       try {
         status.image = await Image.read(`${newPath}/${newFileName}`)
         status.hasChanged = (status.image.checksum !== checksum)

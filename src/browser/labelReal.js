@@ -65,7 +65,7 @@ class LabelReal extends EventEmitter {
     webgl: true,
     win: {},
     userInfo: {},
-    apiServer: 'http://47.105.236.123:8098/lr',
+    apiServer: 'http://127.0.0.1:3000/lr',
     zoom: 1.0
   }
   // apiServer: 'http://47.105.236.123:8098/lr',
@@ -834,34 +834,31 @@ class LabelReal extends EventEmitter {
         newPath = join(newPath, `${project.syncProjectFileName}.lbr`)
         //if project file is his own
         if (fs.existsSync(project.projectFile)) {
+          //未同步
+          if (project.syncProjectSize === null) {
+            return this.open(project.projectFile)
+          }
           if (getFilesizeInBytes(project.projectFile) !==
             project.syncProjectSize) {
             let result = await client.get(project.localProjectId, newPath)
             if (result.res.status === 200) {
-              this.open(newPath)
+              return this.open(newPath)
             }
           } else {
-            this.open(project.projectFile)
+            return this.open(project.projectFile)
           }
         } else {
           if (!fs.existsSync(newPath)) {
             let result = await client.get(project.localProjectId, newPath)
             if (result.res.status === 200) {
-              this.open(newPath)
-            }
-          } else if (getFilesizeInBytes(newPath) !== project.syncProjectSize) {
-            let result = await client.get(project.localProjectId, newPath)
-            if (result.res.status === 200) {
-              this.open(newPath)
+              return this.open(newPath)
             }
           } else {
-            this.open(newPath)
+            return this.open(newPath)
           }
         }
       } else {
         this.open()
-
-        // return this.showWizard()
       }
     })
 

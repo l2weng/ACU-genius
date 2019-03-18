@@ -24,7 +24,7 @@ class LoadProjects extends Command {
     let projects = []
     try {
       let response = yield axios.get(
-        `${apiServer}/graphql?query={projectQueryByUser${query} { projectId name desc deadline projectFile type progress cover itemCount syncStatus syncCover remoteProjectFile localProjectId syncProjectFileName syncProjectFile syncProjectSize isOwner } } `)
+        `${apiServer}/graphql?query={projectQueryByUser${query} { projectId name desc deadline projectFile type progress cover itemCount syncStatus syncCover remoteProjectFile localProjectId syncProjectFileName syncProjectFile syncProjectSize syncVersion isOwner } } `)
       if (response.status === 200) {
         projects = response.data.data.projectQueryByUser
         for (let i = 0; i < projects.length; i++) {
@@ -42,26 +42,22 @@ class LoadProjects extends Command {
             newPath = join(newPath, `${project.syncProjectFileName}.lbr`)
             //if project file is his own
             if (fs.existsSync(project.projectFile)) {
-              if (getFilesizeInBytes(project.projectFile) !== project.syncProjectSize) {
+              //未同步
+              if (project.syncProjectSize !== null &&
+                getFilesizeInBytes(project.projectFile) !==
+                project.syncProjectSize) {
                 let result = yield client.get(project.localProjectId, newPath)
                 if (result.res.status === 200) {
                   project.projectFile = newPath
                 }
               }
-            } else {
-              if (!fs.existsSync(newPath)) {
-                let result = yield client.get(project.localProjectId, newPath)
-                if (result.res.status === 200) {
-                  project.projectFile = newPath
-                }
-              } else if (getFilesizeInBytes(newPath) !== project.syncProjectSize) {
-                let result = yield client.get(project.localProjectId, newPath)
-                if (result.res.status === 200) {
-                  project.projectFile = newPath
-                }
-              } else {
+            } else if (!fs.existsSync(newPath)) {
+              let result = yield client.get(project.localProjectId, newPath)
+              if (result.res.status === 200) {
                 project.projectFile = newPath
               }
+            }  else {
+              project.projectFile = newPath
             }
           }
         }
