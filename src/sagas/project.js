@@ -156,10 +156,10 @@ function *main() {
       fork(consolidator.run)
     ])
 
-    // yield all([
-    //   call(storage.restore, 'settings'),
-    //   call(storage.restore, 'ui')
-    // ])
+    yield all([
+      call(storage.restore, 'settings'),
+      call(storage.restore, 'ui')
+    ])
 
     while (true) {
       const { type, payload, error } = yield take([OPEN, CLOSE])
