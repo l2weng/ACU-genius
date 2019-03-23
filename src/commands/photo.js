@@ -17,7 +17,6 @@ const { keys, values } = Object
 const { getNewOOSClient } = require('../common/dataUtil')
 const { error } = require('../common/log')
 const uuid = require('uuid/v4')
-const axios = require('axios')
 
 class Consolidate extends ImportCommand {
   static get ACTION() { return PHOTO.CONSOLIDATE }
@@ -32,7 +31,6 @@ class Consolidate extends ImportCommand {
       blank(payload) ? values(state.photos) : pluck(state.photos, payload)
     ])
 
-    console.log(photos)
     for (let i = 0, total = photos.length; i < total; ++i) {
       let photo = photos[i]
 
