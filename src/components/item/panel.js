@@ -137,13 +137,11 @@ class ItemPanel extends React.PureComponent {
           onZoomChange={this.handleZoomChange}/>
         {/*<ReferencePanel {...props}*/}
           {/*isDisabled={isDisabled || !item || hasMultipleItems}*/}
-          {/*enableReference={enableReference}*/}
           {/*isItemOpen={isItemOpen}*/}
           {/*edit={edit}*/}
           {/*expanded={expanded}*/}
           {/*keymap={keymap}*/}
           {/*zoom={panel.zoom}*/}
-          {/*references={references}*/}
           {/*current={photo && photo.id}*/}
           {/*selection={activeSelection}*/}
           {/*selections={selections}*/}

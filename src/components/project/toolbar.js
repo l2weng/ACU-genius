@@ -5,7 +5,7 @@ const { PureComponent } = React
 const { FormattedMessage } = require('react-intl')
 const { bool, func, number, string } = require('prop-types')
 const { Toolbar } = require('../toolbar')
-const { IconPlus, IconList, IconGrid } = require('../icons')
+const { IconPlus, IconList, IconGrid, IconExport, IconPhotoResources } = require('../icons')
 const { Slider } = require('../slider')
 const { SearchField } = require('../search')
 const { Button } = require('../button')
@@ -52,10 +52,19 @@ class ProjectToolbar extends PureComponent {
                 title="toolbar.import"
                 onClick={this.props.onItemCreate}/>
             </div>
-            <div className="tool-group" onClick={this.props.onDataSetsCreate}>
-              <Tooltip placement="right" title="导入资源">
-                <Icon type="picture" size="small"/>
-              </Tooltip>
+            <div className="tool-group">
+              <Button
+                icon={<IconPhotoResources/>}
+                isDisabled={isDisabled || !canCreateItems}
+                title="toolbar.import"
+                onClick={this.props.onDataSetsCreate}/>
+            </div>
+            <div className="tool-group">
+              <Button
+                icon={<IconExport/>}
+                isDisabled={isDisabled || !canCreateItems}
+                title="toolbar.import"
+                onClick={this.props.onItemCreate}/>
             </div>
           </div> : ''}
         <div className="toolbar-center">
