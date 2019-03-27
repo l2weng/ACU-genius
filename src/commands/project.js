@@ -90,7 +90,7 @@ class Sync extends Command {
           userId: userInfo.user.userId,
           syncProjectFileName: project.name,
           syncProjectSize,
-          syncCover:syncCover
+          syncCover: syncCover
         }
         const syncResult = yield axios.post(`${ARGS.apiServer}/projects/syncProject`, syncProject)
         if (syncResult.status === 200) {

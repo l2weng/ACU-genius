@@ -11,7 +11,7 @@ const { nativeImage, remote } = require('electron')
 const { assign } = Object
 const { warn, debug, info } = require('./common/log')
 const MIME = require('./constants/mime')
-const { getNewOOSClient } = require('./common/dataUtil')
+const { getNewOOSClient, getOSSOjbectName } = require('./common/dataUtil')
 const fs = require('fs')
 const request = require('request')
 
@@ -195,7 +195,7 @@ class Image {
 
   downloadFromCloud(fields, syncFileUrl) {
     let { host, port, directory, fileName, newPath } = fields
-    let objName = (/[^/]*$/).exec(syncFileUrl)[0]
+    let objName = getOSSOjbectName(syncFileUrl)
     let client = getNewOOSClient()
     return new Promise(async (resolve)=>{
       let result = await client.getStream(objName)

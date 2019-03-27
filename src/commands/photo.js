@@ -17,6 +17,8 @@ const { keys, values } = Object
 const { getNewOOSClient } = require('../common/dataUtil')
 const { error } = require('../common/log')
 const uuid = require('uuid/v4')
+const nodePath = require('path')
+const axios = require('axios')
 
 class Consolidate extends ImportCommand {
   static get ACTION() { return PHOTO.CONSOLIDATE }
@@ -417,32 +419,30 @@ class Sync extends Command {
     }
     let total = photosArray.length
     for (let i = 0; i < photosArray.length; i++) {
-      let syncPhoto = photosArray[i]
+      let sPhoto = photosArray[i]
       let client = getNewOOSClient()
       try {
-        let photoName = syncPhoto.syncPhotoName
-        if (!photoName) photoName = uuid()
-        let result = yield client.put(photoName, syncPhoto.path)
-        if (result.res.status === 200) {
-          // let syncPhoto = {
-          //   syncStatus: true,
-          //   syncProjectFile: result.url,
-          //   projectFile: project.file,
-          //   itemCount: project.items,
-          //   localProjectId: project.id,
-          //   name: project.name,
-          //   userId: userInfo.user.userId,
-          //   syncProjectFileName: project.name,
-          // }
-          // const syncResult = yield axios.post(`${ARGS.apiServer}/photos/syncPhoto`, syncPhoto)
-          // if (syncResult.status === 200) {
-          yield all([
-            call(mod.photo.syncFileUrl, db, syncPhoto.id, result.url),
-            put(act.photo.upload(payload)),
-            put(act.activity.update(this.action, { total, progress: i + 1 }))
-          ])
-          // }
+        let result = { res: { status: 500 }, url: sPhoto.syncFileUrl }
+        if (!sPhoto.syncFileUrl) {
+          result = yield client.put(uuid(), sPhoto.path)
         }
+        let syncPhoto = {
+          syncStatus: true,
+          syncFileUrl: result.url,
+          syncFileName: nodePath.win32.basename(sPhoto.path).split('.').slice(0, -1).join('.'),
+          size: sPhoto.size,
+          width: sPhoto.width,
+          height: sPhoto.height,
+          mimeType: sPhoto.mimetype,
+          protocol: sPhoto.protocol,
+          orientation: sPhoto.orientation,
+        }
+        const syncResult = yield axios.post(`${ARGS.apiServer}/photos/syncPhoto`, syncPhoto)
+        if (syncResult.status === 200) {
+          yield call(mod.photo.syncPhoto, db, syncPhoto.id, result.url)
+        }
+        yield put(act.photo.upload(payload))
+        yield put(act.activity.update(this.action, { total, progress: i + 1 }))
       } catch (e) {
         error(e.toString())
       }

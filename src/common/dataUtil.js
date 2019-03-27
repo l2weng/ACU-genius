@@ -61,6 +61,10 @@ const dataUtil = {
     })
   },
 
+  getOSSOjbectName(url) {
+    return (/[^/]*$/).exec(url)[0]
+  },
+
   getFilesizeInBytes(filename) {
     let stats = fs.statSync(filename)
     return stats['size']

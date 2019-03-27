@@ -103,7 +103,6 @@ module.exports = {
             contrast,
             hue,
             syncFileUrl,
-            syncPhotoName,
             saturation,
             width,
             height,
@@ -321,9 +320,9 @@ module.exports = {
     ))
   },
 
-  async syncFileUrl(db, id, syncFileUrl) {
+  async syncPhoto(db, id, syncFileUrl, syncPhotoId) {
     return db.run(`
-      UPDATE photos SET syncFileUrl = ?  WHERE id = (${id})`,
-      syncFileUrl)
+      UPDATE photos SET syncFileUrl = ? and syncPhotoId =?  WHERE id = (${id})`,
+      syncFileUrl,syncPhotoId)
   }
 }
