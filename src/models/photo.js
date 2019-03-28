@@ -141,19 +141,31 @@ module.exports = {
           else photos[id] = skel(id, [selection])
         }
       ),
-
-      db.each(`
-        SELECT id, note_id AS note
-          FROM notes
-          WHERE ${ids != null ? `id IN (${ids}) AND` : ''} deleted IS NULL
-          ORDER BY id, created`,
-        ({ id, note }) => {
-          if (id in photos) photos[id].notes.push(note)
-          else photos[id] = skel(id, [], [note])
+      //
+      // db.each(`
+      //   SELECT id, note_id AS note
+      //     FROM notes
+      //     WHERE ${ids != null ? `id IN (${ids}) AND` : ''} deleted IS NULL
+      //     ORDER BY id, created`,
+      //   ({ id, note }) => {
+      //     if (id in photos) photos[id].notes.push(note)
+      //     else photos[id] = skel(id, [], [note])
+      //   }
+      // )
+      db.each(`select lists.list_id as taskId, lists.sync_task_id as syncTaskId, items.id as item
+from lists as lists
+       left join list_items as items where lists.list_id = items.list_id
+and items.id in (SELECT item_id AS item FROM subjects
+                                               JOIN images USING (id)
+                                               JOIN photos USING (id))`,
+        ({ taskId, syncTaskId, item }) => {
+          let id = item + 1
+          let tasks = { taskId, syncTaskId }
+          if (id in photos) assign(photos[id], tasks)
+          else photos[id] = assign(skel(id), tasks)
         }
       )
     ])
-
     return photos
   },
 
@@ -323,6 +335,6 @@ module.exports = {
   async syncPhoto(db, id, syncFileUrl, syncPhotoId) {
     return db.run(`
       UPDATE photos SET syncFileUrl = ? and syncPhotoId =?  WHERE id = (${id})`,
-      syncFileUrl,syncPhotoId)
+      syncFileUrl, syncPhotoId)
   }
 }
