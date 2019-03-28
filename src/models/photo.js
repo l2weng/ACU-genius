@@ -333,8 +333,8 @@ and items.id in (SELECT item_id AS item FROM subjects
   },
 
   async syncPhoto(db, id, syncFileUrl, syncPhotoId) {
-    return db.run(`
-      UPDATE photos SET syncFileUrl = ? and syncPhotoId =?  WHERE id = (${id})`,
-      syncFileUrl, syncPhotoId)
+    console.log(id, syncFileUrl, syncPhotoId)
+    return await db.run(
+      ...update('photos').set({ syncFileUrl, syncPhotoId }).where({ id }))
   }
 }

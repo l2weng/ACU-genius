@@ -413,13 +413,11 @@ class Sync extends Command {
     let { payload } = this.action
     const { db } = this.options
     let { photos } = payload
+    const { userInfo } = ARGS
     let photosArray = []
     for (let i in photos) {
       photosArray.push(photos[i])
     }
-    let items = yield call(mod.item.all, db, { })
-
-    console.log(photos, items)
     let total = photosArray.length
     for (let i = 0; i < photosArray.length; i++) {
       let sPhoto = photosArray[i]
@@ -439,12 +437,15 @@ class Sync extends Command {
           mimeType: sPhoto.mimetype,
           protocol: sPhoto.protocol,
           orientation: sPhoto.orientation,
+          taskId: sPhoto.syncTaskId,
+          photoId: sPhoto.syncPhotoId,
+          userId: userInfo.user.userId,
         }
-        // const syncResult = yield axios.post(`${ARGS.apiServer}/photos/syncPhoto`, syncPhoto)
-        // if (syncResult.status === 200) {
-        //   yield call(mod.photo.syncPhoto, db, syncPhoto.id, result.url)
-        // }
-        // yield put(act.photo.upload(payload))
+        const syncResult = yield axios.post(`${ARGS.apiServer}/photos/syncPhoto`, syncPhoto)
+        if (syncResult.status === 200) {
+          yield call(mod.photo.syncPhoto, db, sPhoto.id, result.url, syncResult.data.obj.photoId)
+        }
+        yield put(act.photo.upload(payload))
         yield put(act.activity.update(this.action, { total, progress: i + 1 }))
       } catch (e) {
         error(e.toString())
