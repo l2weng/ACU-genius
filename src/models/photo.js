@@ -103,6 +103,7 @@ module.exports = {
             contrast,
             hue,
             syncFileUrl,
+            syncPhotoId,
             saturation,
             width,
             height,
