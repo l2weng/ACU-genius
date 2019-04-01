@@ -98,7 +98,7 @@ class LabelReal extends EventEmitter {
     })
   }
 
-  open(file) {
+  async open(file) {
     let { userInfo } = this.state
     if (__.isEmpty(userInfo)) {
       return this.showLogin()
@@ -113,7 +113,47 @@ class LabelReal extends EventEmitter {
           break
         }
       }
-      if (!file) return this.showWizard()
+      if (!file) {
+        verbose('User has project already', this.state.userInfo.hasProject)
+        if (this.state.userInfo.hasProject) {
+          const project = this.state.userInfo.lastProject
+          let client = getNewOOSClient()
+          let newPath = app.getPath('userData')
+          newPath = join(newPath, 'project')
+          if (!fs.existsSync(newPath)) {
+            fs.mkdir(newPath, { recursive: true }, (err) => {
+              if (err) throw err
+            })
+          }
+          newPath = join(newPath, `${project.syncProjectFileName}.lbr`)
+          //if project file is his own
+          if (fs.existsSync(project.projectFile)) {
+            //未同步
+            if (project.syncProjectSize === null) {
+              return this.open(project.projectFile)
+            }
+            if (getFilesizeInBytes(project.projectFile) !==
+              project.syncProjectSize) {
+              let result = await client.get(project.localProjectId, newPath)
+              if (result.res.status === 200) {
+                return this.open(newPath)
+              }
+            } else {
+              return this.open(project.projectFile)
+            }
+          } else {
+            if (!fs.existsSync(newPath)) {
+              let result = await client.get(project.localProjectId, newPath)
+              if (result.res.status === 200) {
+                return this.open(newPath)
+              }
+            } else {
+              return this.open(newPath)
+            }
+          }
+        }
+        return this.showWizard()
+      }
     }
 
     try {
@@ -136,41 +176,39 @@ class LabelReal extends EventEmitter {
         frame: !this.hash.frameless
       }, this.state.zoom)
 
-      this.win
-        .on('unresponsive', async () => {
-          warn(`win#${this.win.id} has become unresponsive`)
+      this.win.on('unresponsive', async () => {
+        warn(`win#${this.win.id} has become unresponsive`)
 
-          const chosen = await dialog.show('message-box', this.win, {
-            type: 'warning',
-            ...this.dict.dialogs.unresponsive
-          })
-
-          switch (chosen) {
-            case 0: return this.win.destroy()
-          }
-        })
-        .on('close', () => {
-          if (!this.win.isFullScreen()) {
-            this.state.win.bounds = this.win.getBounds()
-          }
-        })
-        .on('closed', () => { this.win = undefined })
-
-      this.win.webContents
-        .on('crashed', async () => {
-          warn(`win#${this.win.id} contents crashed`)
-
-          const chosen = await dialog.show('message-box', this.win, {
-            type: 'warning',
-            ...this.dict.dialogs.crashed
-          })
-
-          switch (chosen) {
-            case 0: return this.win.close()
-            case 1: return this.win.reload()
-          }
+        const chosen = await dialog.show('message-box', this.win, {
+          type: 'warning',
+          ...this.dict.dialogs.unresponsive
         })
 
+        switch (chosen) {
+          case 0:
+            return this.win.destroy()
+        }
+      }).on('close', () => {
+        if (!this.win.isFullScreen()) {
+          this.state.win.bounds = this.win.getBounds()
+        }
+      }).on('closed', () => { this.win = undefined })
+
+      this.win.webContents.on('crashed', async () => {
+        warn(`win#${this.win.id} contents crashed`)
+
+        const chosen = await dialog.show('message-box', this.win, {
+          type: 'warning',
+          ...this.dict.dialogs.crashed
+        })
+
+        switch (chosen) {
+          case 0:
+            return this.win.close()
+          case 1:
+            return this.win.reload()
+        }
+      })
 
       if (this.state.win.bounds) {
         this.win.setBounds(this.state.win.bounds)
@@ -810,7 +848,7 @@ class LabelReal extends EventEmitter {
       if (this.win) this.win.close()
     })
 
-    ipc.on(USER.LOGINED, async (_, { data }) => {
+    ipc.on(USER.LOGINED, (_, { data }) => {
       data.ip = getLocalIP()
       this.state.userInfo = data
       if (!this.state.recent.hasOwnProperty(this.state.userInfo.user.userId)) {
@@ -819,47 +857,7 @@ class LabelReal extends EventEmitter {
       if (this.state != null) {
         this.store.save.sync('state.json', this.state)
       }
-      // this.dispatch(act.project.updateUserInfo({ user: this.state.userInfo.user }), this.win)
-      verbose('User has project already', this.state.userInfo.hasProject)
-      if (this.state.userInfo.hasProject) {
-        const project = this.state.userInfo.lastProject
-        let client = getNewOOSClient()
-        let newPath = app.getPath('userData')
-        newPath = join(newPath, 'project')
-        if (!fs.existsSync(newPath)) {
-          fs.mkdir(newPath, { recursive: true }, (err) => {
-            if (err) throw err
-          })
-        }
-        newPath = join(newPath, `${project.syncProjectFileName}.lbr`)
-        //if project file is his own
-        if (fs.existsSync(project.projectFile)) {
-          //未同步
-          if (project.syncProjectSize === null) {
-            return this.open(project.projectFile)
-          }
-          if (getFilesizeInBytes(project.projectFile) !==
-            project.syncProjectSize) {
-            let result = await client.get(project.localProjectId, newPath)
-            if (result.res.status === 200) {
-              return this.open(newPath)
-            }
-          } else {
-            return this.open(project.projectFile)
-          }
-        } else {
-          if (!fs.existsSync(newPath)) {
-            let result = await client.get(project.localProjectId, newPath)
-            if (result.res.status === 200) {
-              return this.open(newPath)
-            }
-          } else {
-            return this.open(newPath)
-          }
-        }
-      } else {
-        this.open()
-      }
+      return this.open()
     })
 
     ipc.on(FLASH.HIDE, (_, { id, confirm }) => {

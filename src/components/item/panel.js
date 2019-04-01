@@ -87,8 +87,8 @@ class ItemPanel extends React.PureComponent {
       onPhotoSelect,
       onPhotoSort,
       onSelectionSort,
-      enableReference,
-      references,
+      // enableReference,
+      // references,
       ...props
     } = this.props
     const hasMultipleItems = this.props.items.length > 1
