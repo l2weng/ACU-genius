@@ -35,6 +35,13 @@ class Consolidate extends ImportCommand {
 
     for (let i = 0, total = photos.length; i < total; ++i) {
       let photo = photos[i]
+      yield put(act.photo.update({
+        id: photo.id, consolidating: true
+      }))
+    }
+
+    for (let i = 0, total = photos.length; i < total; ++i) {
+      let photo = photos[i]
 
       try {
         let { image, hasChanged, error } = yield call(Image.check, photo, meta)
