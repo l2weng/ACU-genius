@@ -19,6 +19,8 @@ const {
 
 class Header extends React.Component {
 
+  state = { taskType: HEAD.MY_TASKS }
+
   constructor(props) {
     super(props)
   }
@@ -33,10 +35,14 @@ class Header extends React.Component {
     if (tabName === HEAD.HOME) {
       if (!_.isEmpty(userInfo)) {
         this.props.reloadProjects(true, userInfo.user.userId)
-        this.props.reloadTasks(userInfo.user.userId)
+        this.props.reloadTasks(userInfo.user.userId, this.state.taskType)
       }
     }
     this.props.switchTab(tabName)
+  }
+
+  switchTask = (taskTab) =>{
+    this.setState({ taskType: taskTab })
   }
 
   render() {
@@ -44,7 +50,7 @@ class Header extends React.Component {
     return (
       <Tabs defaultActiveKey={activeTab} activeKey={activeTab} onChange={this.switchTab} style={{ height: '100%' }} tabBarExtraContent={<UserInfoContainer/>} >
         <TabPane tab={<span><Icon type="home" size="small"/>首页</span>} key={HEAD.HOME} className="tab-container">
-          <Workplace switchTab={this.switchTab}/>
+          <Workplace switchTab={this.switchTab} switchTask={this.switchTask}/>
         </TabPane>
         <TabPane tab={<span><Icon type="project" size="small"/>项目</span>} key={HEAD.PROJECT} className="tab-container"><ProjectContainer showProject={false}/></TabPane>
         <TabPane tab={<span><Icon type="form" size="small"/>工作台</span>} key={HEAD.WORKSPACE} className="tab-container"><ProjectContainer showProject/></TabPane>
@@ -64,7 +70,7 @@ class Header extends React.Component {
 module.exports = {
   Header: connect(
     state => ({
-      activeTab: state.header.activeTab
+      activeTab: state.header.activeTab,
     }),
     dispatch => ({
       switchTab(tabName) {
@@ -73,8 +79,8 @@ module.exports = {
       reloadProjects(typeFlag = false, id) {
         dispatch(actions.header.loadProjects({ typeFlag, id }))
       },
-      reloadTasks(userId) {
-        dispatch(actions.header.loadMyTasks({ userId }))
+      reloadTasks(userId, taskType) {
+        dispatch(actions.header.loadMyTasks({ userId, type: taskType }))
       }
     }),
   )(Header),

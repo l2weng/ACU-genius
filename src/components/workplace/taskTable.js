@@ -3,7 +3,7 @@
 const React = require('react')
 const { Table, Input, Button, Icon } = require('antd')
 const Highlighter = require('react-highlight-words')
-const { array } = require('prop-types')
+const { array, func } = require('prop-types')
 
 class TasksTable extends React.Component {
   state = {
@@ -71,6 +71,10 @@ class TasksTable extends React.Component {
     this.setState({ searchText: '' })
   }
 
+  checkProject = (projectId)=>{
+    this.props.openProjectById(projectId)
+  }
+
   render() {
     const columns = [
       {
@@ -101,7 +105,7 @@ class TasksTable extends React.Component {
         width: '10%',
         render: (text, record) => (
           <span>
-            <a href="javascript:;">查看</a>
+            <a href="javascript:;" onClick={()=>this.checkProject(record.project.projectId)}>查看</a>
           </span>
         ),
       }]
@@ -109,6 +113,7 @@ class TasksTable extends React.Component {
   }
   static propTypes = {
     tasks: array.isRequired,
+    openProjectById: func.isRequired
   }
 }
 

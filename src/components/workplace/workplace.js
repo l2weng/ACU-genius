@@ -33,10 +33,19 @@ class Workplace extends PureComponent {
     this.props.onProjectOpen(path)
   }
 
+  openProjectById = (projectId) =>{
+    const { projects } = this.props
+    projects.map(p=>{
+      if (p.projectId === projectId) {
+        this.openProject(p.projectFile)
+      }
+    })
+  }
+
   componentDidMount() {
     if (!_.isEmpty(userInfo)) {
       this.props.fetchProjects(true, userInfo.user.userId)
-      this.props.fetchTasks(userInfo.user.userId)
+      this.props.fetchTasks(userInfo.user.userId, HEAD.MY_TASKS)
     } else if (!_.isEmpty(machineId)) {
       this.props.fetchProjects(false, machineId)
     }
@@ -62,6 +71,11 @@ class Workplace extends PureComponent {
 
   getCacheCover = (cover) => {
     return cover ? cover : defaultCover
+  }
+
+  onTaskSwitch = (e) =>{
+    this.props.fetchTasks(userInfo.user.userId, e.target.value)
+    this.props.switchTask(e.target.value)
   }
 
   render() {
@@ -101,14 +115,14 @@ class Workplace extends PureComponent {
               title="进行中的任务"
               extra={
                 <div>
-                  <RadioGroup defaultValue="all">
-                    <RadioButton value="all">我的任务</RadioButton>
-                    <RadioButton value="progress">参与的任务</RadioButton>
+                  <RadioGroup defaultValue="myTasks" onChange={this.onTaskSwitch}>
+                    <RadioButton key={HEAD.MY_TASKS} value={HEAD.MY_TASKS}>我的任务</RadioButton>
+                    <RadioButton key={HEAD.JOINED_TASKS} value={HEAD.JOINED_TASKS}>参与的任务</RadioButton>
                   </RadioGroup>
                   <Search className="extraContentSearch" placeholder="请输入" onSearch={() => ({})} />
                 </div>
               }>
-              <TasksTable tasks={tasks}/>
+              <TasksTable tasks={tasks} openProjectById={this.openProjectById}/>
             </Card>
           </Col>
         </Row>
@@ -120,6 +134,7 @@ class Workplace extends PureComponent {
     switchTab: func.isRequired,
     fetchProjects: func.isRequired,
     fetchTasks: func.isRequired,
+    switchTask: func.isRequired,
     cache: string,
     project: object,
     projects: array,
@@ -142,8 +157,8 @@ module.exports = {
       fetchProjects(typeFlag = false, id) {
         dispatch(actions.header.loadProjects({ typeFlag, id }))
       },
-      fetchTasks(userId) {
-        dispatch(actions.header.loadMyTasks({ userId }))
+      fetchTasks(userId, type) {
+        dispatch(actions.header.loadMyTasks({ userId, type: type }))
       },
       fetchSelections(userId) {
         dispatch(actions.header.loadMyTasks({ userId }))

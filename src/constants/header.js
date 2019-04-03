@@ -5,6 +5,8 @@ module.exports = {
   PROJECT: 'project',
   WORKSPACE: 'workspace',
   FRIENDS: 'friends',
+  MY_TASKS: 'myTasks',
+  JOINED_TASKS: 'joinedTasks',
   RESTORE: 'header.restore',
   SWITCH: 'header.switch',
   PROJECTS: 'header.loadProjects',
