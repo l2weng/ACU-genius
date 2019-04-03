@@ -57,6 +57,7 @@ class Header extends React.Component {
     activeTab: string,
     switchTab: func,
     reloadProjects: func,
+    reloadTasks: func,
   }
 }
 

@@ -8,6 +8,7 @@ const { LIST } = require('../constants')
 const actions = require('../actions/list')
 const mod = require('../models/list')
 const axios = require('axios')
+const { userInfo } = ARGS
 
 class Load extends Command {
   static get ACTION() { return LIST.LOAD }
@@ -45,7 +46,7 @@ class Create extends Command {
     let list = yield call(mod.create, db, { name, parent, position: idx + 1 })
 
     yield put(actions.insert(list, { idx }))
-    const createResult = yield axios.post(`${ARGS.apiServer}/tasks/create`, { localTaskId: list.id, name: list.name, projectId: syncProjectId })
+    const createResult = yield axios.post(`${ARGS.apiServer}/tasks/create`, { localTaskId: list.id, name: list.name, projectId: syncProjectId, userId: userInfo.user.userId })
     let syncTaskId
     if (createResult.status === 200) {
       syncTaskId = createResult.data.obj.taskId

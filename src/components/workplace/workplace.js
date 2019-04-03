@@ -3,7 +3,11 @@
 const React = require('react')
 const { PureComponent } = React
 const { connect } = require('react-redux')
-const { Row, Col, Card, List, Table, Divider, Tag, Icon } = require('antd')
+const { Row, Col, Card, List, Radio, Input, Icon } = require('antd')
+const RadioButton = Radio.Button
+const RadioGroup = Radio.Group
+const { Search } = Input
+
 const { Meta } = Card
 const _ = require('underscore')
 const { userInfo, machineId } = ARGS
@@ -94,7 +98,16 @@ class Workplace extends PureComponent {
             </Card>
             <Card
               bordered={false}
-              title="进行中的任务">
+              title="进行中的任务"
+              extra={
+                <div>
+                  <RadioGroup defaultValue="all">
+                    <RadioButton value="all">我的任务</RadioButton>
+                    <RadioButton value="progress">参与的任务</RadioButton>
+                  </RadioGroup>
+                  <Search className="extraContentSearch" placeholder="请输入" onSearch={() => ({})} />
+                </div>
+              }>
               <TasksTable tasks={tasks}/>
             </Card>
           </Col>
@@ -130,6 +143,9 @@ module.exports = {
         dispatch(actions.header.loadProjects({ typeFlag, id }))
       },
       fetchTasks(userId) {
+        dispatch(actions.header.loadMyTasks({ userId }))
+      },
+      fetchSelections(userId) {
         dispatch(actions.header.loadMyTasks({ userId }))
       }
     }),
