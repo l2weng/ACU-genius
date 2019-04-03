@@ -49,13 +49,6 @@ function *open(file) {
 
     assert(project != null && project.id != null, 'invalid project')
 
-    // Update window's global ARGS to allow reloading the project!
-    if (db.path !== ARGS.file) {
-      args.update({ file: db.path })
-    }
-
-    const cache = new Cache(ARGS.cache, project.id)
-    yield call([cache, cache.init])
     let syncProjectId = ''
     let syncStatus = false
     const syncResult = yield axios.post(`${ARGS.apiServer}/projects/syncLocalProject`, { file: db.path, ...project })
@@ -63,6 +56,13 @@ function *open(file) {
       syncProjectId = syncResult.data.project.projectId
       syncStatus = syncResult.data.project.syncStatus
     }
+    // Update window's global ARGS to allow reloading the project!
+    if (db.path !== ARGS.file) {
+      args.update({ file: db.path })
+    }
+
+    const cache = new Cache(ARGS.cache, project.id)
+    yield call([cache, cache.init])
     yield put(act.project.opened({ file: db.path, syncProjectId, syncStatus, ...project }))
 
     try {

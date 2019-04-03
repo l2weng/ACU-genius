@@ -31,7 +31,7 @@ const { darwin } = require('../common/os')
 const { channel, product, version } = require('../common/release')
 const { restrict } = require('../common/util')
 const { getLocalIP } = require('../common/serviceUtil')
-const { getNewOOSClient, getFilesizeInBytes } = require('../common/dataUtil')
+const { getNewOOSClient, getUrlFilterParams } = require('../common/dataUtil')
 const { machineIdSync } = require('node-machine-id')
 const axios = require('axios')
 const __ = require('underscore')
@@ -115,6 +115,7 @@ class LabelReal extends EventEmitter {
       }
       if (!file) {
         verbose('User has project already', this.state.userInfo.hasProject)
+        const { apiServer } = this.state
         if (this.state.userInfo.hasProject) {
           const project = this.state.userInfo.lastProject
           let client = getNewOOSClient()
@@ -132,8 +133,10 @@ class LabelReal extends EventEmitter {
             if (project.syncProjectSize === null) {
               return this.open(project.projectFile)
             }
-            if (getFilesizeInBytes(project.projectFile) !==
-              project.syncProjectSize) {
+            let query = getUrlFilterParams({ projectId: project.projectId }, ['projectId'])
+            const response = await axios.post(`${apiServer}/graphql?query={projectQueryById${query} { syncVersion }}`).catch(err=>{ warn(err) })
+            const freshProject = response.data.data
+            if (freshProject.projectQueryById.syncVersion !== project.syncVersion) {
               let result = await client.get(project.localProjectId, newPath)
               if (result.res.status === 200) {
                 return this.open(newPath)
