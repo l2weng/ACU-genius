@@ -114,10 +114,13 @@ class LabelReal extends EventEmitter {
         }
       }
       if (!file) {
-        verbose('User has project already', this.state.userInfo.hasProject)
         const { apiServer } = this.state
         if (this.state.userInfo.hasProject) {
           const project = this.state.userInfo.lastProject
+          verbose(`User has project (${project.projectId}) already, sync status: ${project.syncStatus}`)
+          if (!project.syncStatus) {
+            return this.showWizard()
+          }
           let client = getNewOOSClient()
           let newPath = app.getPath('userData')
           newPath = join(newPath, 'project')
