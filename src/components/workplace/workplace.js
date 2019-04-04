@@ -18,6 +18,8 @@ const { resolve, join } = require('path')
 const staticRoot = resolve(__dirname, '../../../', 'static')
 const defaultCover = join(staticRoot, 'images/project', 'default-cover.jpg')
 const { TasksTable } = require('./taskTable')
+const { existsSync: exists } = require('fs')
+const { openNotification } = require('../../common/uiUtil')
 
 const {
   getCachePrefix,
@@ -28,16 +30,20 @@ class Workplace extends PureComponent {
     super(props)
   }
 
-  openProject = (path) => {
-    this.props.switchTab(HEAD.WORKSPACE)
-    this.props.onProjectOpen(path)
+  openProject = (item) => {
+    if (!item.syncStatus && !exists(item.projectFile)) {
+      openNotification('warning', '提示', `项目: ${item.name} 尚未同步, 暂时无法查看`)
+    } else {
+      this.props.switchTab(HEAD.WORKSPACE)
+      this.props.onProjectOpen(item.projectFile)
+    }
   }
 
   openProjectById = (projectId) =>{
     const { projects } = this.props
     projects.map(p=>{
       if (p.projectId === projectId) {
-        this.openProject(p.projectFile)
+        this.openProject(p)
       }
     })
   }
@@ -58,6 +64,7 @@ class Workplace extends PureComponent {
   }
 
   renderTitle(item) {
+    console.log(item)
     let cloudMark = ''
     if (item.syncStatus) {
       cloudMark = <Icon type="cloud" theme="twoTone" twoToneColor="#52c41a" style={{ float: 'right' }}/>
@@ -65,7 +72,7 @@ class Workplace extends PureComponent {
       cloudMark = <Icon type="cluster" style={{ float: 'right' }}/>
     }
     return (<div><a onClick={()=>this.openProject(
-      item.projectFile)}>{item.name}</a>{cloudMark}</div>)
+      item)}>{item.name}</a>{cloudMark}</div>)
   }
 
 
