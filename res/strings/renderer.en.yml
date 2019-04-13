@@ -182,6 +182,7 @@ en:
       rotate: Rotate
       mirror: Mirror
       edit: Edit Photo
+      save: Save
     mode:
       fill: Fill
       fit: Fit

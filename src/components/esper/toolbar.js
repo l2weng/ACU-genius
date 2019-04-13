@@ -5,7 +5,7 @@ const { PureComponent } = React
 const { Toolbar, ToolbarLeft, ToolbarRight, ToolGroup } = require('../toolbar')
 const { Button } = require('../button')
 const { Slider } = require('../slider')
-const { arrayOf, bool, func, number, string } = require('prop-types')
+const { arrayOf, bool, func, number, string, object } = require('prop-types')
 const throttle = require('lodash.throttle')
 
 const { TOOL, MODE } = require('../../constants/esper')
@@ -23,6 +23,7 @@ const {
   IconRotate,
   IconHand,
   IconSliders,
+  IconSave,
   IconMirror,
   IconMinusCircle,
   IconPlusCircle,
@@ -47,6 +48,10 @@ class EsperToolbar extends PureComponent {
 
   handlePanelToggle = () => {
     this.props.onPanelChange(!this.props.isPanelVisible)
+  }
+
+  handleLabelSave = () => {
+    console.log(this.props.photo)
   }
 
   handleRotate = () => {
@@ -157,6 +162,11 @@ class EsperToolbar extends PureComponent {
           <ToolGroup>
             <Button
               noFocus
+              icon={<IconSave/>}
+              title="esper.tool.save"
+              onClick={this.handleLabelSave}/>
+            <Button
+              noFocus
               icon={<IconSliders/>}
               title="esper.tool.edit"
               isActive={this.props.isPanelVisible}
@@ -181,6 +191,8 @@ class EsperToolbar extends PureComponent {
     onMirrorChange: func.isRequired,
     onModeChange: func.isRequired,
     onPanelChange: func.isRequired,
+    onLabelSave: func.isRequired,
+    photo: object,
     onToolChange: func.isRequired,
     onRotationChange: func.isRequired,
     onZoomChange: func.isRequired

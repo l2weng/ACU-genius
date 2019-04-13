@@ -181,6 +181,7 @@ de:
       rotate: Rotate
       mirror: Mirror
       edit: Edit Photo
+      save: 保存
     mode:
       fill: Fill
       fit: Fit

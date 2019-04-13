@@ -480,6 +480,10 @@ class Esper extends PureComponent {
     this.props.onChange({ esper: { panel } })
   }
 
+  handleLabelSave = () => {
+    console.log('handle save')
+  }
+
   handleColorChange = (opts) => {
     this.setState(opts, () => {
       this.view.adjust(this.state)
@@ -679,6 +683,7 @@ class Esper extends PureComponent {
         onKeyUp={this.handleKeyUp}>
         <EsperHeader>
           <EsperToolbar
+            photo={this.props.photo}
             isDisabled={isDisabled}
             isSelectionActive={isSelectionActive}
             isPanelVisible={this.props.isPanelVisible}
@@ -690,6 +695,7 @@ class Esper extends PureComponent {
             onMirrorChange={this.handleMirrorChange}
             onModeChange={this.handleModeChange}
             onPanelChange={this.handlePanelChange}
+            onLabelSave={this.handleLabelSave}
             onToolChange={this.handleToolChange}
             onRotationChange={this.handleRotationChange}
             onZoomChange={this.handleZoomChange}/>
