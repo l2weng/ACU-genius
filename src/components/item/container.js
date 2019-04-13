@@ -4,7 +4,7 @@ const React = require('react')
 const { connect } = require('react-redux')
 const { BufferedResizable } = require('../resizable')
 const { Esper } = require('../esper')
-const { NotePad } = require('../note')
+// const { NotePad } = require('../note')
 const act = require('../../actions')
 const { SASS: { ESPER } } = require('../../constants')
 
@@ -41,6 +41,10 @@ class ItemContainer extends React.PureComponent {
     }
   }
 
+  handleLabelSave = (photo) => {
+    this.props.onLabelSync({ photo: photo })
+  }
+
   handleEsperResize = (height) => {
     this.props.onUiUpdate({ esper: { height } })
   }
@@ -69,20 +73,21 @@ class ItemContainer extends React.PureComponent {
             selection={this.props.selection}
             selections={this.props.selections}
             tool={this.props.esper.tool}
+            onLabelSave={this.handleLabelSave}
             onChange={this.handleEsperChange}
             onPhotoError={this.props.onPhotoError}
             onSelect={this.props.onPhotoSelect}
             onSelectionCreate={this.props.onSelectionCreate}/>
         </BufferedResizable>
         {/*<NotePad {...this.props.notepad}*/}
-                 {/*ref={this.setNotePad}*/}
-                 {/*note={this.props.note}*/}
-                 {/*isDisabled={this.props.isDisabled || !this.props.photo}*/}
-                 {/*isItemOpen={this.props.isOpen}*/}
-                 {/*keymap={this.props.keymap.NotePad}*/}
-                 {/*onChange={this.props.onNoteChange}*/}
-                 {/*onCommit={this.props.onNoteCommit}*/}
-                 {/*onContextMenu={this.props.onContextMenu}/>*/}
+        {/*ref={this.setNotePad}*/}
+        {/*note={this.props.note}*/}
+        {/*isDisabled={this.props.isDisabled || !this.props.photo}*/}
+        {/*isItemOpen={this.props.isOpen}*/}
+        {/*keymap={this.props.keymap.NotePad}*/}
+        {/*onChange={this.props.onNoteChange}*/}
+        {/*onCommit={this.props.onNoteCommit}*/}
+        {/*onContextMenu={this.props.onContextMenu}/>*/}
       </div>
     )
   }
@@ -110,6 +115,7 @@ class ItemContainer extends React.PureComponent {
     onNoteCommit: func.isRequired,
     onPhotoError: func.isRequired,
     onPhotoSave: func.isRequired,
+    onLabelSync: func.isRequired,
     onPhotoSelect: func.isRequired,
     onSelectionCreate: func.isRequired,
     onSelectionSave: func.isRequired,
@@ -133,6 +139,10 @@ module.exports = {
     dispatch => ({
       onPhotoSave(...args) {
         dispatch(act.photo.save(...args))
+      },
+
+      onLabelSync(...args) {
+        dispatch(act.photo.syncLabel(...args))
       },
 
       onPhotoSelect(...args) {

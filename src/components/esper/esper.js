@@ -480,8 +480,8 @@ class Esper extends PureComponent {
     this.props.onChange({ esper: { panel } })
   }
 
-  handleLabelSave = () => {
-    console.log('handle save')
+  handleLabelSave = (photo) => {
+    this.props.onLabelSave(photo)
   }
 
   handleColorChange = (opts) => {
@@ -745,6 +745,7 @@ class Esper extends PureComponent {
     minZoom: number.isRequired,
     mode: string.isRequired,
     onChange: func.isRequired,
+    onLabelSave: func.isRequired,
     onPhotoError: func.isRequired,
     onSelect: func.isRequired,
     onSelectionCreate: func.isRequired,

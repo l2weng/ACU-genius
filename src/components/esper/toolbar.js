@@ -51,7 +51,7 @@ class EsperToolbar extends PureComponent {
   }
 
   handleLabelSave = () => {
-    console.log(this.props.photo)
+    this.props.onLabelSave(this.props.photo)
   }
 
   handleRotate = () => {
