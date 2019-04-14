@@ -18,6 +18,7 @@ module.exports = {
   UPDATE: 'photo.update',
   SYNC: 'photo.sync',
   LABEL_SYNC: 'photo.labelSync',
+  LABEL_SYNC_SUCCESS: 'photo.labelSyncSuccess',
   UPLOAD: 'photo.upload',
 
   BULK: {

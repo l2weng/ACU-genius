@@ -30,6 +30,8 @@ module.exports = {
         return update(state, payload, meta)
       case PHOTO.UPLOAD:
         return state
+      case PHOTO.LABEL_SYNC_SUCCESS:
+        return state
       case PHOTO.NOTE.ADD:
         return nested.add('notes', state, payload, meta)
       case PHOTO.NOTE.REMOVE:

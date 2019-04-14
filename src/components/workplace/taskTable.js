@@ -1,9 +1,10 @@
 'use strict'
 
 const React = require('react')
-const { Table, Input, Button, Icon } = require('antd')
+const { Table, Input, Button, Icon, Badge } = require('antd')
 const Highlighter = require('react-highlight-words')
 const { array, func } = require('prop-types')
+const { getTaskStatusDesc } = require('../../common/dataUtil')
 
 class TasksTable extends React.Component {
   state = {
@@ -95,10 +96,13 @@ class TasksTable extends React.Component {
         key: '3',
         width: '15%',
       }, {
-        title: '类型',
-        dataIndex: 'type',
+        title: '状态',
+        dataIndex: 'workStatus',
         key: '4',
         width: '15%',
+        render: (text, record) => (
+          <div><Badge status="default" />{getTaskStatusDesc(record.workStatus)}</div>
+        ),
       }, {
         title: '操作',
         key: 'action',

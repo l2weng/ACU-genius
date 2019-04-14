@@ -68,6 +68,19 @@ const dataUtil = {
   getFilesizeInBytes(filename) {
     let stats = fs.statSync(filename)
     return stats['size']
+  },
+
+  getTaskStatusDesc(status = 0, lang = 'en') {
+    switch (status) {
+      case 0:
+        return 'open'
+      case 1:
+        return 'working'
+      case 2:
+        return 'complete'
+      case 3:
+        return 'confirmed'
+    }
   }
 
 }

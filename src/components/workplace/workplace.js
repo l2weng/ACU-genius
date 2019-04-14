@@ -64,7 +64,6 @@ class Workplace extends PureComponent {
   }
 
   renderTitle(item) {
-    console.log(item)
     let cloudMark = ''
     if (item.syncStatus) {
       cloudMark = <Icon type="cloud" theme="twoTone" twoToneColor="#52c41a" style={{ float: 'right' }}/>
