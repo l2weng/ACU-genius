@@ -480,7 +480,7 @@ class LabelSync extends Command {
     try {
       const result  = yield axios.post(`${ARGS.apiServer}/labels/saveLabels`, { labels })
       if (result.status === 200) {
-        yield put(act.photo.syncLabelSuccess(payload))
+        yield put(act.photo.labelSyncSuccess(payload))
       }
     } catch (e) {
       error(e.toString())

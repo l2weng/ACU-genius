@@ -89,14 +89,9 @@ module.exports = {
     }
   },
 
-  syncLabelSuccess(payload, meta) {
+  labelSyncSuccess(payload, meta) {
     return {
-      type: PHOTO.LABEL_SYNC_SUCCESS,
-      payload,
-      meta: {
-        cmd: 'project',
-        ...meta
-      }
+      type: PHOTO.LABEL_SYNC_SUCCESS, payload, meta
     }
   },
 
