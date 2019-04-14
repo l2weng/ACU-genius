@@ -467,7 +467,7 @@ class LabelSync extends Command {
   *exec() {
     let { payload } = this.action
     const { db } = this.options
-    let { photo } = payload
+    let { photo, taskId } = payload
     const { userInfo } = ARGS
     const selections = yield call(db.seq, conn =>
       mod.selection.load(conn, photo.selections))
@@ -477,14 +477,17 @@ class LabelSync extends Command {
       selections[i].userId = userInfo.user.userId
       labels.push(selections[i])
     }
-    try {
-      const result  = yield axios.post(`${ARGS.apiServer}/labels/saveLabels`, { labels })
-      if (result.status === 200) {
-        yield put(act.photo.labelSyncSuccess(payload))
-      }
-    } catch (e) {
-      error(e.toString())
-    }
+    console.log('TTTAskId',taskId)
+    yield put(act.photo.labelSyncSuccess(payload))
+
+    // try {
+    //   const result  = yield axios.post(`${ARGS.apiServer}/labels/saveLabels`, { photoId: photo.syncPhotoId, labels, myTaskId: taskId })
+    //   if (result.status === 200) {
+    //     yield put(act.photo.labelSyncSuccess(payload))
+    //   }
+    // } catch (e) {
+    //   error(e.toString())
+    // }
   }
 }
 

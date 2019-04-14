@@ -204,6 +204,7 @@ class ItemView extends PureComponent {
         <ItemContainer
           ref={this.setNotePad}
           note={this.state.note}
+          nav={this.props.nav}
           photo={photo}
           isDisabled={isTrashSelected || isProjectClosing}
           isOpen={isItemOpen}
@@ -229,6 +230,7 @@ class ItemView extends PureComponent {
     ),
 
     keymap: object.isRequired,
+    nav: object.isRequired,
     offset: number.isRequired,
     mode: string.isRequired,
     selections: object.isRequired,

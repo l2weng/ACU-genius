@@ -42,7 +42,8 @@ class ItemContainer extends React.PureComponent {
   }
 
   handleLabelSave = (photo) => {
-    this.props.onLabelSync({ photo: photo })
+    console.log(this.props.nav)
+    this.props.onLabelSync({ photo: photo, taskId: this.props.nav.list })
   }
 
   handleEsperResize = (height) => {
