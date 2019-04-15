@@ -9,7 +9,7 @@ const defaults = {
   locale: ARGS.locale,
   template: ITEM.TEMPLATE,
   theme: ARGS.theme,
-  overlayToolbars: ARGS.frameless,
+  overlayToolbars: !ARGS.frameless,
   invertScroll: true,
   invertZoom: darwin,
   zoomMode: ESPER.MODE.FIT

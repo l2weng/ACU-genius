@@ -13,7 +13,7 @@
     background: $esper-toolbar-solid-bg;
 
     .frameless & {
-      background: transparent;
+      background: var(--shade-1);
     }
 
     .btn-icon {
