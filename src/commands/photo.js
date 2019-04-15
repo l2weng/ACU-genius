@@ -477,17 +477,15 @@ class LabelSync extends Command {
       selections[i].userId = userInfo.user.userId
       labels.push(selections[i])
     }
-    console.log('TTTAskId',taskId)
-    yield put(act.photo.labelSyncSuccess(payload))
-
-    // try {
-    //   const result  = yield axios.post(`${ARGS.apiServer}/labels/saveLabels`, { photoId: photo.syncPhotoId, labels, myTaskId: taskId })
-    //   if (result.status === 200) {
-    //     yield put(act.photo.labelSyncSuccess(payload))
-    //   }
-    // } catch (e) {
-    //   error(e.toString())
-    // }
+    try {
+      const result  = yield axios.post(`${ARGS.apiServer}/labels/saveLabels`, { photoId: photo.syncPhotoId, labels, myTaskId: taskId })
+      if (result.status === 200) {
+        console.log(result)
+        yield put(act.photo.labelSyncSuccess(payload))
+      }
+    } catch (e) {
+      error(e.toString())
+    }
   }
 }
 

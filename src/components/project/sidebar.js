@@ -239,16 +239,16 @@ class ProjectSidebar extends React.PureComponent {
   }
 
   handleListClick = (list) => {
-    if (!this.handleListSelect(list.id)) {
+    if (!this.handleListSelect(list.id, list.syncTaskId)) {
       if (!this.hasFocusChanged()) {
         this.props.onEdit({ list: { id: list.id } })
       }
     }
   }
 
-  handleListSelect = (list) => {
+  handleListSelect = (list, syncTaskId) => {
     if (list && (!this.isListSelected(list) || this.hasActiveFilters)) {
-      this.props.onSelect({ list }, { throttle: true })
+      this.props.onSelect({ list, syncTaskId }, { throttle: true })
       return true
     }
   }

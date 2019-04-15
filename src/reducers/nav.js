@@ -19,6 +19,7 @@ const init = {
   query: '',
   tags: [],
   sort: {},
+  syncTaskId: '',
   columns: [
     { width: 250, id: DC.title },
     { width: 100, id: DC.creator },
@@ -154,6 +155,7 @@ module.exports = {
 
 
       case NAV.SELECT:
+        console.log(payload)
         return {
           ...state,
           ...reset,
