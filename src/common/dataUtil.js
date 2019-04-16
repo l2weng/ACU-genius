@@ -86,15 +86,15 @@ const dataUtil = {
   getTaskColor(status = 0, lang = 'en') {
     switch (status) {
       case 0:
-        return 'silver'
+        return '#7D8690'
       case 1:
-        return 'blue'
+        return '#2db7f5'
       case 2:
-        return 'green'
+        return '#87d068'
       case 3:
-        return 'geekblue'
+        return '#108ee9'
     }
-  }
+  },
 
 }
 

@@ -4,7 +4,7 @@ const React = require('react')
 const { Table, Input, Button, Icon, Badge } = require('antd')
 const Highlighter = require('react-highlight-words')
 const { array, func } = require('prop-types')
-const { getTaskStatusDesc } = require('../../common/dataUtil')
+const { getTaskStatusDesc, getTaskColor } = require('../../common/dataUtil')
 
 class TasksTable extends React.Component {
   state = {
@@ -101,7 +101,7 @@ class TasksTable extends React.Component {
         key: '4',
         width: '15%',
         render: (text, record) => (
-          <div><Badge status="default" />{getTaskStatusDesc(record.workStatus)}</div>
+          <div><Badge color={getTaskColor(record.workStatus)} text={getTaskStatusDesc(record.workStatus)} /></div>
         ),
       }, {
         title: '操作',
