@@ -155,7 +155,6 @@ module.exports = {
 
 
       case NAV.SELECT:
-        console.log(payload)
         return {
           ...state,
           ...reset,

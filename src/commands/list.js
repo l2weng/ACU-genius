@@ -19,6 +19,20 @@ class Load extends Command {
   }
 }
 
+class SubmitTask extends Command {
+  static get ACTION() { return LIST.SUBMIT_TASK }
+
+  *exec() {
+    const { payload } = this.action
+    const { id, syncTaskId } = payload
+
+    const updateResult = yield axios.post(`${ARGS.apiServer}/tasks/updateUserTaskStatus`, { taskId: syncTaskId, userId: userInfo.user.userId  })
+    if (updateResult.status === 200) {
+      yield put(actions.update({ id, syncTaskId, workStatus: 2 }))
+    }
+  }
+}
+
 class UpdateOwner extends Command {
   static get ACTION() { return LIST.UPDATE_OWNER }
 
@@ -231,6 +245,7 @@ module.exports = {
   Restore,
   Save,
   Move,
+  SubmitTask,
   AddItems,
   RemoveItems,
   RestoreItems

@@ -13,7 +13,10 @@ const { isValidImage } = require('../../image')
 const lazy = require('./tree')
 const cx = require('classnames')
 const { last, noop, restrict } = require('../../common/util')
-const {  Tooltip, Icon, Avatar } = require('antd')
+const { getTaskColor, getUrlFilterParams } = require('../../common/dataUtil')
+const {  Tooltip, Icon, Avatar, Popconfirm } = require('antd')
+const axios = require('axios')
+const { apiServer } = ARGS
 
 const {
   arrayOf, bool, func, number, object, shape, string
@@ -67,10 +70,17 @@ class ListNode extends React.PureComponent {
     offset: null,
     modalVisible: false,
     loading: false,
+    singleTaskStatus: 0,
     colleagues: []
   }
 
   componentDidMount() {
+    if (this.props.list.syncTaskId) {
+      const query = getUrlFilterParams({ id: this.props.list.syncTaskId }, ['id'])
+      axios.get(`${apiServer}/graphql?query={taskQueryById${query} { taskId type workStatus }} `).then(task=>{
+        this.setState({ singleTaskStatus: task.data.data.taskQueryById.workStatus })
+      })
+    }
     this.props.connectDragPreview(getEmptyImage())
   }
 
@@ -216,7 +226,15 @@ class ListNode extends React.PureComponent {
     })
   }
 
-  renderAssign = (workers) =>{
+  componentWillReceiveProps(props) {
+    if (this.props.list !== props.list &&
+      props.list.hasOwnProperty('workStatus')) {
+      this.setState({ singleTaskStatus: props.list.workStatus })
+    }
+  }
+
+  renderAssign = (list) =>{
+    const workers = list.workers
     let workerArray = []
     let workerView = ''
     if (workers) {
@@ -230,6 +248,12 @@ class ListNode extends React.PureComponent {
     return (
       <div>
         {workerView}
+        <span className="functionIcon"><Tooltip placement="top" title="完成任务">
+          <Popconfirm placement="right" title={'提交任务'} onConfirm={()=>this.props.onSubmitTask(this.props.list)} okText="Yes" cancelText="No">
+            <span style={{ color: getTaskColor(this.state.singleTaskStatus) }}> <Icon type="check" size="small"/></span>
+          </Popconfirm>
+        </Tooltip>
+        </span>
         <span className="functionIcon"><Tooltip placement="right" title="分配任务">
           <Icon type="user-add" size="small" onClick={() => this.props.onAddWorkers(SIDEBAR.TASK, this.props.list.syncTaskId, this.props.list.id)}/>
         </Tooltip>
@@ -265,7 +289,7 @@ class ListNode extends React.PureComponent {
             onCancel={this.props.onEditCancel}
             onChange={this.handleChange}/>
         </div>
-        {this.props.isOwner ? this.renderAssign(this.props.list.workers) : ''}
+        {this.props.isOwner ? this.renderAssign(this.props.list) : ''}
       </div>
     )
   }
@@ -319,6 +343,7 @@ class ListNode extends React.PureComponent {
     onExpand: func.isRequired,
     onMove: func.isRequired,
     onAddWorkers: func.isRequired,
+    onSubmitTask: func.isRequired,
   }
 
   static defaultProps = {

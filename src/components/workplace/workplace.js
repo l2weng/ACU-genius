@@ -66,9 +66,9 @@ class Workplace extends PureComponent {
   renderTitle(item) {
     let cloudMark = ''
     if (item.syncStatus) {
-      cloudMark = <Icon type="cloud" theme="twoTone" twoToneColor="#52c41a" style={{ float: 'right' }}/>
+      cloudMark = <Icon type="cloud" theme="twoTone" twoToneColor="cyan" style={{ float: 'right' }}/>
     } else {
-      cloudMark = <Icon type="cluster" style={{ float: 'right' }}/>
+      cloudMark = <Icon type="eye-invisible" style={{ float: 'right' }}/>
     }
     return (<div><a onClick={()=>this.openProject(
       item)}>{item.name}</a>{cloudMark}</div>)
@@ -93,8 +93,7 @@ class Workplace extends PureComponent {
           <Col span={24}>
             <Card
               bordered={false}
-              title="进行中的项目"
-              extra={<a href="#">全部项目</a>}>
+              title="进行中的项目">
               <List
                 rowKey="id"
                 loading={false}

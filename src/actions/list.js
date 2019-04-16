@@ -70,6 +70,10 @@ module.exports = {
     return { type: LIST.UPDATE, payload, meta }
   },
 
+  submitTask(payload, meta) {
+    return { type: LIST.SUBMIT_TASK, payload, meta: { cmd: 'project', ...meta } }
+  },
+
   updateOwner(payload, meta) {
     return { type: LIST.UPDATE_OWNER, payload, meta: { cmd: 'project', ...meta } }
   },

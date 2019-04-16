@@ -16,6 +16,7 @@ module.exports = {
   SAVE: 'list.save',
   UPDATE: 'list.update',
   UPDATE_OWNER: 'list.updateOwner',
+  SUBMIT_TASK: 'list.submitTask',
 
   ITEM: {
     ADD: 'list.item.add',

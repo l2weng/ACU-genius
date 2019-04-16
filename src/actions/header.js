@@ -35,6 +35,9 @@ module.exports = {
     return {
       type: HEAD.PROJECTS,
       payload,
+      meta: {
+        cmd: 'project',
+      }
     }
   },
 
@@ -42,6 +45,9 @@ module.exports = {
     return {
       type: HEAD.TASKS,
       payload,
+      meta: {
+        cmd: 'project',
+      }
     }
   }
 }

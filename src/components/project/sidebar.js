@@ -206,8 +206,12 @@ class ProjectSidebar extends React.PureComponent {
       }
     })
     .catch(function () {
-      message.warning('查询服务连接失败, 请重试')
+      message.warning('服务连接失败, 请重试')
     })
+  }
+
+  handleSubmitTask = (list) => {
+    this.props.onSubmitTask(list)
   }
 
   handleClick = () => {
@@ -422,6 +426,7 @@ class ProjectSidebar extends React.PureComponent {
                     onDropItems={this.props.onListItemsAdd}
                     onAddWorkers={this.handleAddWorkers}
                     onClick={this.handleListClick}
+                    onSubmitTask={this.handleSubmitTask}
                     onEditCancel={onEditCancel}
                     onExpand={this.props.onListExpand}
                     onCollapse={this.props.onListCollapse}
@@ -515,7 +520,8 @@ class ProjectSidebar extends React.PureComponent {
     onTagSave: func.isRequired,
     onTagSelect: func.isRequired,
     onSyncProject2Cloud: func.isRequired,
-    updateListOwner: func.isRequired
+    updateListOwner: func.isRequired,
+    onSubmitTask: func.isRequired
   }
 
   static defaultProps = {
@@ -551,6 +557,10 @@ module.exports = {
 
       onListExpand(...args) {
         dispatch(actions.list.expand(...args))
+      },
+
+      onSubmitTask(...args) {
+        dispatch(actions.list.submitTask(...args))
       },
 
       onListItemsAdd({ list, items }) {

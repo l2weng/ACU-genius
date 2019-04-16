@@ -81,6 +81,19 @@ const dataUtil = {
       case 3:
         return 'confirmed'
     }
+  },
+
+  getTaskColor(status = 0, lang = 'en') {
+    switch (status) {
+      case 0:
+        return 'silver'
+      case 1:
+        return 'blue'
+      case 2:
+        return 'green'
+      case 3:
+        return 'geekblue'
+    }
   }
 
 }
