@@ -113,53 +113,58 @@ class LabelReal extends EventEmitter {
           break
         }
       }
-      if (!file) {
-        const { apiServer } = this.state
-        if (this.state.userInfo.hasProject) {
-          const project = this.state.userInfo.lastProject
-          verbose(`User has project (${project.projectId}) already, sync status: ${project.syncStatus}`)
-          if (!project.syncStatus) {
+    }
+
+    if (!file) {
+      const { apiServer } = this.state
+      if (this.state.userInfo.hasProject) {
+        const project = this.state.userInfo.lastProject
+        verbose(`User has project (${project.projectId}) already, sync status: ${project.syncStatus}`)
+        if (!project.syncStatus) {
+          if (fs.existsAsync(project.projectFile)) {
+            return this.open(project.projectFile)
+          } else {
             return this.showWizard()
           }
-          let client = getNewOOSClient()
-          let newPath = app.getPath('userData')
-          newPath = join(newPath, 'project')
-          if (!fs.existsSync(newPath)) {
-            fs.mkdir(newPath, { recursive: true }, (err) => {
-              if (err) throw err
-            })
+        }
+        let client = getNewOOSClient()
+        let newPath = app.getPath('userData')
+        newPath = join(newPath, 'project')
+        if (!fs.existsSync(newPath)) {
+          fs.mkdir(newPath, { recursive: true }, (err) => {
+            if (err) throw err
+          })
+        }
+        newPath = join(newPath, `${project.syncProjectFileName}.lbr`)
+        //if project file is his own
+        if (fs.existsSync(project.projectFile)) {
+          //未同步
+          if (project.syncProjectSize === null) {
+            return this.open(project.projectFile)
           }
-          newPath = join(newPath, `${project.syncProjectFileName}.lbr`)
-          //if project file is his own
-          if (fs.existsSync(project.projectFile)) {
-            //未同步
-            if (project.syncProjectSize === null) {
-              return this.open(project.projectFile)
-            }
-            let query = getUrlFilterParams({ projectId: project.projectId }, ['projectId'])
-            const response = await axios.post(`${apiServer}/graphql?query={projectQueryById${query} { syncVersion }}`).catch(err=>{ warn(err) })
-            const freshProject = response.data.data
-            if (freshProject.projectQueryById.syncVersion !== project.syncVersion) {
-              let result = await client.get(project.localProjectId, newPath)
-              if (result.res.status === 200) {
-                return this.open(newPath)
-              }
-            } else {
-              return this.open(project.projectFile)
-            }
-          } else {
-            if (!fs.existsSync(newPath)) {
-              let result = await client.get(project.localProjectId, newPath)
-              if (result.res.status === 200) {
-                return this.open(newPath)
-              }
-            } else {
+          let query = getUrlFilterParams({ projectId: project.projectId }, ['projectId'])
+          const response = await axios.post(`${apiServer}/graphql?query={projectQueryById${query} { syncVersion }}`).catch(err=>{ warn(err) })
+          const freshProject = response.data.data
+          if (freshProject.projectQueryById.syncVersion !== project.syncVersion) {
+            let result = await client.get(project.localProjectId, newPath)
+            if (result.res.status === 200) {
               return this.open(newPath)
             }
+          } else {
+            return this.open(project.projectFile)
+          }
+        } else {
+          if (!fs.existsSync(newPath)) {
+            let result = await client.get(project.localProjectId, newPath)
+            if (result.res.status === 200) {
+              return this.open(newPath)
+            }
+          } else {
+            return this.open(newPath)
           }
         }
-        return this.showWizard()
       }
+      return this.showWizard()
     }
 
     try {
