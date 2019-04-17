@@ -13,7 +13,7 @@ const _ = require('underscore')
 const { userInfo, machineId } = ARGS
 const actions = require('../../actions')
 const { func, object, array, string  } = require('prop-types')
-const { HEAD } = require('../../constants')
+const { HEAD, LIST } = require('../../constants')
 const { resolve, join } = require('path')
 const staticRoot = resolve(__dirname, '../../../', 'static')
 const defaultCover = join(staticRoot, 'images/project', 'default-cover.jpg')
@@ -46,6 +46,10 @@ class Workplace extends PureComponent {
         this.openProject(p)
       }
     })
+  }
+
+  handlePassTask = (task) =>{
+    this.props.auditTask({ id: task.localTaskId, syncTaskId: task.taskId, workStatus: LIST.STATUS_CONFIRMED })
   }
 
   componentDidMount() {
@@ -127,7 +131,7 @@ class Workplace extends PureComponent {
                   <Search className="extraContentSearch" placeholder="请输入" onSearch={() => ({})} />
                 </div>
               }>
-              <TasksTable tasks={tasks} openProjectById={this.openProjectById}/>
+              <TasksTable tasks={tasks} openProjectById={this.openProjectById} onPassTask={this.handlePassTask}/>
             </Card>
           </Col>
         </Row>
@@ -140,6 +144,7 @@ class Workplace extends PureComponent {
     fetchProjects: func.isRequired,
     fetchTasks: func.isRequired,
     switchTask: func.isRequired,
+    auditTask: func.isRequired,
     cache: string,
     project: object,
     projects: array,
@@ -164,6 +169,9 @@ module.exports = {
       },
       fetchTasks(userId, type) {
         dispatch(actions.header.loadMyTasks({ userId, type: type }))
+      },
+      auditTask(...args) {
+        dispatch(actions.list.submitTask(...args))
       },
       fetchSelections(userId) {
         dispatch(actions.header.loadMyTasks({ userId }))

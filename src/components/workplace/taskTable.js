@@ -1,7 +1,7 @@
 'use strict'
 
 const React = require('react')
-const { Table, Input, Button, Icon, Badge } = require('antd')
+const { Table, Input, Button, Icon, Badge, Divider, Popconfirm } = require('antd')
 const Highlighter = require('react-highlight-words')
 const { array, func } = require('prop-types')
 const { getTaskStatusDesc, getTaskColor } = require('../../common/dataUtil')
@@ -76,19 +76,27 @@ class TasksTable extends React.Component {
     this.props.openProjectById(projectId)
   }
 
+  auditTask = (task)=>{
+    this.props.onPassTask(task)
+  }
+
+  rollbackTask = (taskId)=>{
+    console.log(taskId)
+  }
+
   render() {
     const columns = [
       {
         key: '1',
         title: '名称',
         dataIndex: 'name',
-        width: '25%',
+        width: '20%',
         ...this.getColumnSearchProps('name'),
       }, {
         title: '项目',
         dataIndex: 'project.name',
         key: '2',
-        width: '25%',
+        width: '20%',
         ...this.getColumnSearchProps('email'),
       }, {
         title: '进度',
@@ -99,16 +107,22 @@ class TasksTable extends React.Component {
         title: '状态',
         dataIndex: 'workStatus',
         key: '4',
-        width: '15%',
+        width: '20%',
         render: (text, record) => (
           <div><Badge color={getTaskColor(record.workStatus)} text={getTaskStatusDesc(record.workStatus)} /></div>
         ),
       }, {
         title: '操作',
         key: 'action',
-        width: '10%',
+        width: '20%',
         render: (text, record) => (
           <span>
+            <Popconfirm placement="top" title={'审核任务'} onConfirm={()=>this.auditTask(record)} okText="通过" cancelText="取消">
+              <a href="javascript:;">审核</a>
+            </Popconfirm>
+            <Divider type="vertical" />
+            <a href="javascript:;" onClick={()=>this.rollbackTask(record.taskId)}>撤回</a>
+            <Divider type="vertical" />
             <a href="javascript:;" onClick={()=>this.checkProject(record.project.projectId)}>查看</a>
           </span>
         ),
@@ -117,7 +131,8 @@ class TasksTable extends React.Component {
   }
   static propTypes = {
     tasks: array.isRequired,
-    openProjectById: func.isRequired
+    openProjectById: func.isRequired,
+    onPassTask: func.isRequired,
   }
 }
 
