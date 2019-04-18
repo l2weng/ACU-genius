@@ -195,6 +195,11 @@ class ProjectSidebar extends React.PureComponent {
     this.props.onListSave({ syncProjectId: this.props.project.syncProjectId, ...payload })
   }
 
+  handleTagCreate = (payload) => {
+    payload.syncProjectId = this.props.project.syncProjectId
+    this.props.onTagCreate({ ...payload })
+  }
+
   handleAddWorkers = (type, syncTaskId, listId) => {
     let self = this
     let query = getUrlFilterParams({ companyId: userInfo.user.companyId }, ['companyId'])
@@ -305,7 +310,7 @@ class ProjectSidebar extends React.PureComponent {
   }
 
   handleAssign = selectedUserIndexs =>{
-    let { colleagues, assignType, syncTaskId, listId } = this.state
+    let { colleagues, syncTaskId, listId } = this.state
     let colleagueIds = []
     selectedUserIndexs.map(userIndex=>{
       colleagueIds.push(colleagues[userIndex].userId)
@@ -353,7 +358,6 @@ class ProjectSidebar extends React.PureComponent {
       onEditCancel,
       onItemImport,
       onItemTagAdd,
-      onTagCreate,
       onTagDelete,
       onTagSave,
       onTagSelect,
@@ -460,7 +464,7 @@ class ProjectSidebar extends React.PureComponent {
                 selection={this.props.tagSelection}
                 edit={edit.tag}
                 onEditCancel={onEditCancel}
-                onCreate={onTagCreate}
+                onCreate={this.handleTagCreate}
                 onDelete={onTagDelete}
                 onDropItems={onItemTagAdd}
                 onSave={onTagSave}

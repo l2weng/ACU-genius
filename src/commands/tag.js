@@ -7,7 +7,8 @@ const { pick } = require('../common/util')
 const { keys } = Object
 const mod = require('../models')
 const act = require('../actions')
-
+const axios = require('axios')
+const { userInfo } = ARGS
 
 class Load extends Command {
   static get ACTION() { return TAG.LOAD }
@@ -23,17 +24,15 @@ class Create extends Command {
 
   *exec() {
     const { db } = this.options
-    const { items, ...data } = this.action.payload
-
+    const { items, syncProjectId, ...data } = this.action.payload
     const hasItems = (items && items.length > 0)
     if (data.id != null) data['tag_id'] = data.id
-
     const tag = yield call(db.transaction, async tx => {
       const tg = await mod.tag.create(tx, data)
       if (hasItems) await mod.item.tags.add(tx, { id: items, tag: tg.id })
       return tg
     })
-
+    yield axios.post(`${ARGS.apiServer}/skus/create`, { localSkuId: tag.id, name: tag.name, projectId: syncProjectId, userId: userInfo.user.userId })
     if (hasItems) {
       yield put(act.item.tags.insert({ id: items, tags: [tag.id] }))
     }
