@@ -2,6 +2,7 @@
 
 const assert = require('assert')
 const { OPEN, CLOSE, CLOSED, MIGRATIONS } = require('../constants/project')
+const { WORKSPACE } = require('../constants/header')
 const { Database } = require('../common/db')
 const { Cache } = require('../common/cache')
 const { warn, debug } = require('../common/log')
@@ -74,6 +75,7 @@ function *open(file) {
       }
 
     } finally {
+      yield put(act.header.headerSwitch({ activeTab: WORKSPACE }))
       yield call(close, db, project, access)
     }
   } catch (error) {

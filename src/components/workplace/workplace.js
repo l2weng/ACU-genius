@@ -34,7 +34,6 @@ class Workplace extends PureComponent {
     if (!item.syncStatus && !exists(item.projectFile)) {
       openNotification('warning', '提示', `项目: ${item.name} 尚未同步, 暂时无法查看`)
     } else {
-      this.props.switchTab(HEAD.WORKSPACE)
       this.props.onProjectOpen(item.projectFile)
     }
   }
