@@ -97,7 +97,6 @@ class TasksTable extends React.Component {
         dataIndex: 'project.name',
         key: '2',
         width: '20%',
-        ...this.getColumnSearchProps('email'),
       }, {
         title: '进度',
         dataIndex: 'progress',
@@ -121,7 +120,7 @@ class TasksTable extends React.Component {
               <a href="javascript:;">审核</a>
             </Popconfirm>
             <Divider type="vertical" />
-            <Popconfirm placement="top" title={'审核任务'} onConfirm={()=>this.rollbackTask(record)} okText="撤回" cancelText="取消">
+            <Popconfirm placement="top" title={'撤回任务'} onConfirm={()=>this.rollbackTask(record)} okText="撤回" cancelText="取消">
               <a href="javascript:;">撤回</a>
             </Popconfirm>
             <Divider type="vertical" />
@@ -135,7 +134,7 @@ class TasksTable extends React.Component {
     tasks: array.isRequired,
     openProjectById: func.isRequired,
     onPassTask: func.isRequired,
-    onRollbackTask: func.isRequired,
+    onRollbackTask: func.isRequired
   }
 }
 
