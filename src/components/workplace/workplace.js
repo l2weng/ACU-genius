@@ -49,7 +49,21 @@ class Workplace extends PureComponent {
   }
 
   handlePassTask = (task) =>{
-    this.props.auditTask({ id: task.localTaskId, syncTaskId: task.taskId, workStatus: LIST.STATUS_CONFIRMED, taskType: this.props.currentTaskType})
+    this.props.auditTask({
+      id: task.localTaskId,
+      syncTaskId: task.taskId,
+      workStatus: LIST.STATUS_CONFIRMED,
+      taskType: this.props.currentTaskType,
+    })
+  }
+
+  handleRollbackTask = (task) =>{
+    this.props.auditTask({
+      id: task.localTaskId,
+      syncTaskId: task.taskId,
+      workStatus: LIST.STATUS_WORKING,
+      taskType: this.props.currentTaskType,
+    })
   }
 
   componentDidMount() {
@@ -131,7 +145,9 @@ class Workplace extends PureComponent {
                   <Search className="extraContentSearch" placeholder="请输入" onSearch={() => ({})} />
                 </div>
               }>
-              <TasksTable tasks={tasks} openProjectById={this.openProjectById} onPassTask={this.handlePassTask}/>
+              <TasksTable tasks={tasks} openProjectById={this.openProjectById}
+                onPassTask={this.handlePassTask}
+                onRollbackTask={this.handleRollbackTask}/>
             </Card>
           </Col>
         </Row>

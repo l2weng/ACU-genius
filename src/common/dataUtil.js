@@ -88,11 +88,11 @@ const dataUtil = {
       case 0:
         return '#7D8690'
       case 1:
-        return '#2db7f5'
+        return '#f5a014'
       case 2:
-        return '#87d068'
-      case 3:
         return '#108ee9'
+      case 3:
+        return '#1fe91d'
     }
   },
 

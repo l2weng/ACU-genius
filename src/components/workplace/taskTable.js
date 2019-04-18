@@ -80,8 +80,8 @@ class TasksTable extends React.Component {
     this.props.onPassTask(task)
   }
 
-  rollbackTask = (taskId)=>{
-    console.log(taskId)
+  rollbackTask = (task)=>{
+    this.props.onRollbackTask(task)
   }
 
   render() {
@@ -121,7 +121,9 @@ class TasksTable extends React.Component {
               <a href="javascript:;">审核</a>
             </Popconfirm>
             <Divider type="vertical" />
-            <a href="javascript:;" onClick={()=>this.rollbackTask(record.taskId)}>撤回</a>
+            <Popconfirm placement="top" title={'审核任务'} onConfirm={()=>this.rollbackTask(record)} okText="撤回" cancelText="取消">
+              <a href="javascript:;">撤回</a>
+            </Popconfirm>
             <Divider type="vertical" />
             <a href="javascript:;" onClick={()=>this.checkProject(record.project.projectId)}>查看</a>
           </span>
@@ -133,6 +135,7 @@ class TasksTable extends React.Component {
     tasks: array.isRequired,
     openProjectById: func.isRequired,
     onPassTask: func.isRequired,
+    onRollbackTask: func.isRequired,
   }
 }
 
