@@ -6,6 +6,7 @@ const { pluck, splice, warp } = require('../common/util')
 const { LIST } = require('../constants')
 
 const actions = require('../actions/list')
+const actionsHeader = require('../actions/header')
 const mod = require('../models/list')
 const axios = require('axios')
 const { userInfo } = ARGS
@@ -24,10 +25,13 @@ class SubmitTask extends Command {
 
   *exec() {
     const { payload } = this.action
-    const { id, syncTaskId, workStatus } = payload
+    const { id, syncTaskId, workStatus, taskType } = payload
 
     const updateResult = yield axios.post(`${ARGS.apiServer}/tasks/updateUserTaskStatus`, { taskId: syncTaskId, userId: userInfo.user.userId, workStatus })
     if (updateResult.status === 200) {
+      if (taskType) {
+        yield put(actionsHeader.loadMyTasks({ userId: userInfo.user.userId, type: taskType }))
+      }
       yield put(actions.update({ id, syncTaskId, workStatus }))
     }
   }

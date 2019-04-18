@@ -46,11 +46,12 @@ class Header extends React.Component {
   }
 
   render() {
-    let { activeTab } = this.props
+    const { activeTab } = this.props
+    const { taskType } = this.state
     return (
       <Tabs defaultActiveKey={activeTab} activeKey={activeTab} onChange={this.switchTab} style={{ height: '100%' }} tabBarExtraContent={<UserInfoContainer/>} >
         <TabPane tab={<span><Icon type="home" size="small"/>首页</span>} key={HEAD.HOME} className="tab-container">
-          <Workplace switchTab={this.switchTab} switchTask={this.switchTask}/>
+          <Workplace switchTab={this.switchTab} switchTask={this.switchTask} currentTaskType={taskType}/>
         </TabPane>
         <TabPane tab={<span><Icon type="project" size="small"/>项目</span>} key={HEAD.PROJECT} className="tab-container"><ProjectContainer showProject={false}/></TabPane>
         <TabPane tab={<span><Icon type="form" size="small"/>工作台</span>} key={HEAD.WORKSPACE} className="tab-container"><ProjectContainer showProject/></TabPane>

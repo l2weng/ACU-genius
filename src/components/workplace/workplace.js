@@ -49,7 +49,7 @@ class Workplace extends PureComponent {
   }
 
   handlePassTask = (task) =>{
-    this.props.auditTask({ id: task.localTaskId, syncTaskId: task.taskId, workStatus: LIST.STATUS_CONFIRMED })
+    this.props.auditTask({ id: task.localTaskId, syncTaskId: task.taskId, workStatus: LIST.STATUS_CONFIRMED, taskType: this.props.currentTaskType})
   }
 
   componentDidMount() {
@@ -149,6 +149,7 @@ class Workplace extends PureComponent {
     project: object,
     projects: array,
     tasks: array,
+    currentTaskType: string,
   }
 }
 
