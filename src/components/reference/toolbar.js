@@ -56,7 +56,7 @@ class PhotoToolbar extends PureComponent {
               size="sm"
               minIcon={<IconListSmall/>}
               maxIcon={<IconGridSmall/>}
-              isDisabled={false}
+              isDisabled={!enableReference}
               onChange={onZoomChange}/>
           </ToolGroup>
         </div>
