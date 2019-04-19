@@ -153,10 +153,11 @@ module.exports = {
       //     else photos[id] = skel(id, [], [note])
       //   }
       // )
-      db.each(`select lists.list_id as taskId, lists.sync_task_id as syncTaskId, items.id as item
-from lists as lists
-       left join list_items as items where lists.list_id = items.list_id
-and items.id in (SELECT item_id AS item FROM subjects
+      db.each(`
+        select lists.list_id as taskId, lists.sync_task_id as syncTaskId, items.id as item
+          from lists as lists
+          left join list_items as items where lists.list_id = items.list_id
+          and items.id in (SELECT item_id AS item FROM subjects
                                                JOIN images USING (id)
                                                JOIN photos USING (id))`,
         ({ taskId, syncTaskId, item }) => {
@@ -200,7 +201,7 @@ and items.id in (SELECT item_id AS item FROM subjects
           FROM subjects
             JOIN images USING (id)
             JOIN photos USING (id)${
-            ids != null ? ` WHERE id IN (${ids}) and tag_id isnull` : ' where tag_id isnull'
+            ids != null ? ` WHERE id IN (${ids}) and tag_id notnull` : ' where tag_id notnull'
         }`,
         ({ id, created, modified, mirror, negative, path, ...data }) => {
           data.created = new Date(created)
@@ -213,31 +214,8 @@ and items.id in (SELECT item_id AS item FROM subjects
           else photos[id] = assign(skel(id), data)
         }
       ),
-
-      db.each(`
-        SELECT id AS selection, photo_id AS id
-          FROM selections
-            LEFT OUTER JOIN trash USING (id)
-          WHERE ${ids != null ? `photo_id IN (${ids}) AND` : ''}
-            deleted IS NULL
-          ORDER BY photo_id, position`,
-        ({ selection, id }) => {
-          if (id in photos) photos[id].selections.push(selection)
-          else photos[id] = skel(id, [selection])
-        }
-      ),
-
-      db.each(`
-        SELECT id, note_id AS note
-          FROM notes
-          WHERE ${ids != null ? `id IN (${ids}) AND` : ''} deleted IS NULL
-          ORDER BY id, created`,
-        ({ id, note }) => {
-          if (id in photos) photos[id].notes.push(note)
-          else photos[id] = skel(id, [], [note])
-        }
-      )
     ])
+    console.log(photos)
 
     return photos
   },

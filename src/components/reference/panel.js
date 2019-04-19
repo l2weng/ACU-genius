@@ -36,7 +36,7 @@ class ReferencePanel extends Panel {
         onZoomChange={this.props.onZoomChange}
         references={this.props.references}
         hasCreateButton
-        canCreate={!this.props.isDisabled && !this.props.isClosed}
+        canCreate={this.props.enableReference}
         isDisabled={this.props.isClosed || !this.props.references.length}
         onCreate={this.props.onCreate}/>
     )
@@ -55,7 +55,6 @@ class ReferencePanel extends Panel {
       onFocus: this.handleNestedTabFocus
     }
     const PhotoIterator = zoom ? PhotoGrid : PhotoList
-    // const PhotoIterator = PhotoGrid
 
     return (
       <PhotoIterator {...pick(props, PhotoIterator.getPropKeys())}/>
@@ -72,7 +71,7 @@ class ReferencePanel extends Panel {
     return (
       <section className={cx('photo-panel', 'panel', classes)}>
         {this.renderHeader(toolbar)}
-        {this.connect(this.renderBody(content))}
+        {/*{this.connect(this.renderBody(content))}*/}
       </section>
     )
   }

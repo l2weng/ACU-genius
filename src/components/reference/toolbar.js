@@ -21,7 +21,6 @@ class PhotoToolbar extends PureComponent {
   render() {
     const {
       hasCreateButton,
-      isDisabled,
       enableReference,
       zoom,
       maxZoom,

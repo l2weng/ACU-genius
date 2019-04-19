@@ -18,7 +18,8 @@ const init = {
     ],
     tab: 'metadata',
     width: SASS.PANEL.DEFAULT_WIDTH,
-    zoom: 0
+    zoom: 0,
+    refZoom: 1
   },
   sidebar: {
     width: SASS.SIDEBAR.DEFAULT_WIDTH

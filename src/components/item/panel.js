@@ -47,6 +47,10 @@ class ItemPanel extends React.PureComponent {
     this.props.onUiUpdate({ panel: { zoom } })
   }
 
+  handleRefZoomChange = (refZoom) => {
+    this.props.onUiUpdate({ panel: { refZoom } })
+  }
+
   handleFirstPanelFocus = () => {
     this.setState({ hasFirstPanelFocus: true })
   }
@@ -87,7 +91,6 @@ class ItemPanel extends React.PureComponent {
       onPhotoSelect,
       onPhotoSort,
       onSelectionSort,
-      // enableReference,
       // references,
       ...props
     } = this.props
@@ -135,26 +138,26 @@ class ItemPanel extends React.PureComponent {
           onSort={onPhotoSort}
           onSelectionSort={onSelectionSort}
           onZoomChange={this.handleZoomChange}/>
-        {/*<ReferencePanel {...props}*/}
-          {/*isDisabled={isDisabled || !item || hasMultipleItems}*/}
-          {/*isItemOpen={isItemOpen}*/}
-          {/*edit={edit}*/}
-          {/*expanded={expanded}*/}
-          {/*keymap={keymap}*/}
-          {/*zoom={panel.zoom}*/}
-          {/*current={photo && photo.id}*/}
-          {/*selection={activeSelection}*/}
-          {/*selections={selections}*/}
-          {/*onContract={onPhotoContract}*/}
-          {/*onCreate={this.handlePhotoCreate}*/}
-          {/*onDelete={onPhotoDelete}*/}
-          {/*onError={onPhotoError}*/}
-          {/*onExpand={onPhotoExpand}*/}
-          {/*onItemPreview={onItemPreview}*/}
-          {/*onSelect={onPhotoSelect}*/}
-          {/*onSort={onPhotoSort}*/}
-          {/*onSelectionSort={onSelectionSort}*/}
-          {/*onZoomChange={this.handleZoomChange}/>*/}
+        <ReferencePanel {...props}
+          isDisabled={isDisabled || !item || hasMultipleItems}
+          isItemOpen={isItemOpen}
+          edit={edit}
+          expanded={expanded}
+          keymap={keymap}
+          zoom={panel.refZoom}
+          current={photo && photo.id}
+          selection={false}
+          selections={[]}
+          onContract={onPhotoContract}
+          onCreate={this.handlePhotoCreate}
+          onDelete={onPhotoDelete}
+          onError={onPhotoError}
+          onExpand={onPhotoExpand}
+          onItemPreview={onItemPreview}
+          onSelect={onPhotoSelect}
+          onSort={onPhotoSort}
+          onSelectionSort={onSelectionSort}
+          onZoomChange={this.handleRefZoomChange}/>
 
         {/*<NotePanel {...props}*/}
         {/*isDisabled={isDisabled || !photo || !item || hasMultipleItems}*/}
