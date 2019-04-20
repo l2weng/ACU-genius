@@ -26,6 +26,14 @@ module.exports = {
     }
   },
 
+  referenceCreate(payload, meta) {
+    return {
+      type: PHOTO.REFERENCE_CREATE,
+      payload,
+      meta: { cmd: 'project', history: 'add', ...meta }
+    }
+  },
+
   delete(payload, meta) {
     return {
       type: PHOTO.DELETE,

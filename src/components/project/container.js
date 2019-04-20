@@ -550,6 +550,10 @@ module.exports = {
         dispatch(actions.photo.create(...args))
       },
 
+      onReferenceCreate(...args) {
+        dispatch(actions.photo.referenceCreate(...args))
+      },
+
       onPhotoDelete(payload) {
         if (payload.selections == null) {
           dispatch(actions.photo.delete(payload))

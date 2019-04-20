@@ -186,6 +186,79 @@ class Create extends ImportCommand {
   }
 }
 
+class RefCreate extends ImportCommand {
+  static get ACTION() { return PHOTO.REFERENCE_CREATE }
+
+  *exec() {
+    let { db } = this.options
+    let { files, tag_id } = this.action.payload
+    let { idx } = this.action.meta
+
+    let photos = []
+    let item = -999
+
+    if (idx == null) {
+      idx = [yield select(state => Object.keys(state.references).length)]
+    }
+
+    if (!files) {
+      this.isInteractive = true
+      files = yield call(open.images)
+    }
+
+    if (!files) return []
+
+    let [base, template] = yield select(state => [
+      state.project.base,
+      getPhotoTemplate(state)
+    ])
+
+    let data = getTemplateValues(template)
+
+    for (let i = 0, total = files.length; i < total; ++i) {
+      let file
+      let image
+      let photo
+
+      try {
+        file = files[i]
+        image = yield call(Image.read, file)
+
+        yield* this.handleDuplicate(image)
+
+        photo = yield call(db.transaction, tx =>
+          mod.photo.create(tx, { base, template: template.id }, {
+            item, image, data, position: idx[0] + i + 1, tag_id
+          }))
+
+        yield all([
+          put(act.photo.insert(photo, { idx: [idx[0] + photos.length] })),
+          put(act.activity.update(this.action, { total, progress: i + 1 }))
+        ])
+
+        console.log('<<<<<<<<<<<<<<<',photo.id)
+        photos.push(photo.id)
+
+        yield* this.createThumbnails(photo.id, image)
+
+      } catch (error) {
+        if (error instanceof DuplicateError) continue
+
+        warn(`Failed to import "${file}": ${error.message}`, {
+          stack: error.stack
+        })
+
+        fail(error, this.action.type)
+      }
+    }
+
+    this.undo = act.photo.delete({ item, photos })
+    this.redo = act.photo.restore({ item, photos }, { idx })
+
+    return photos
+  }
+}
+
 class Delete extends Command {
   static get ACTION() { return PHOTO.DELETE }
 
@@ -491,6 +564,7 @@ class LabelSync extends Command {
 
 module.exports = {
   Consolidate,
+  RefCreate,
   Create,
   Delete,
   Duplicate,

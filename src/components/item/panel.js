@@ -35,6 +35,13 @@ class ItemPanel extends React.PureComponent {
     })
   }
 
+  handleReferenceCreate = (dropped) => {
+    this.props.onReferenceCreate({
+      tag_id: this.props.nav.tags[0],
+      files: dropped && dropped.files
+    })
+  }
+
   handleResize = (slots) => {
     this.props.onUiUpdate({ panel: { slots } })
   }
@@ -149,7 +156,7 @@ class ItemPanel extends React.PureComponent {
           selection={false}
           selections={[]}
           onContract={onPhotoContract}
-          onCreate={this.handlePhotoCreate}
+          onCreate={this.handleReferenceCreate}
           onDelete={onPhotoDelete}
           onError={onPhotoError}
           onExpand={onPhotoExpand}
@@ -188,6 +195,7 @@ class ItemPanel extends React.PureComponent {
     note: object,
     notes: array.isRequired,
     selections: object.isRequired,
+    nav: object.isRequired,
     references: array.isRequired,
 
     panel: shape({
@@ -218,6 +226,7 @@ class ItemPanel extends React.PureComponent {
     onOpenInFolder: func.isRequired,
     onPhotoContract: func.isRequired,
     onPhotoCreate: func.isRequired,
+    onReferenceCreate: func.isRequired,
     onPhotoDelete: func.isRequired,
     onPhotoError: func.isRequired,
     onPhotoExpand: func.isRequired,

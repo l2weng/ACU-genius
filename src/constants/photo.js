@@ -4,6 +4,7 @@ module.exports = {
   CONSOLIDATE: 'photo.consolidate',
   CONTRACT: 'photo.contract',
   CREATE: 'photo.create',
+  REFERENCE_CREATE: 'photo.referenceCreate',
   DELETE: 'photo.delete',
   DUPLICATE: 'photo.duplicate',
   EXPAND: 'photo.expand',

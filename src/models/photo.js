@@ -27,7 +27,7 @@ const skel = (id, selections = [], notes = []) => ({
 })
 
 module.exports = {
-  async create(db, { base, template }, { item, image, data, position }) {
+  async create(db, { base, template }, { item, image, data, position, tag_id }) {
     let {
       path, checksum, mimetype, width, height, orientation, size
     } = image
@@ -50,6 +50,7 @@ module.exports = {
         size,
         checksum,
         mimetype,
+        tag_id,
         orientation,
         position
       })),
@@ -215,7 +216,6 @@ module.exports = {
         }
       ),
     ])
-    console.log(photos)
 
     return photos
   },
