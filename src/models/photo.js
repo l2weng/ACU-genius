@@ -74,7 +74,7 @@ module.exports = {
     } = image
 
     let { id } = await db.run(
-      ...into('subjects').insert({ template: template || TEMPLATE })
+      ...into('subjects').insert({ template: template || TEMPLATE, type: 'reference' })
     )
 
     if (base != null) {
