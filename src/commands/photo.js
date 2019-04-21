@@ -227,7 +227,7 @@ class RefCreate extends ImportCommand {
         yield* this.handleDuplicate(image)
 
         photo = yield call(db.transaction, tx =>
-          mod.photo.create(tx, { base, template: template.id }, {
+          mod.photo.refCreate(tx, { base, template: template.id }, {
             item, image, data, position: idx[0] + i + 1, tag_id
           }))
 
@@ -236,7 +236,6 @@ class RefCreate extends ImportCommand {
           put(act.activity.update(this.action, { total, progress: i + 1 }))
         ])
 
-        console.log('<<<<<<<<<<<<<<<',photo.id)
         photos.push(photo.id)
 
         yield* this.createThumbnails(photo.id, image)

@@ -68,6 +68,47 @@ module.exports = {
     return (await module.exports.load(db, [id], { base }))[id]
   },
 
+  async refCreate(db, { base, template }, { item, image, data, position, tag_id }) {
+    let {
+      path, checksum, mimetype, width, height, orientation, size
+    } = image
+
+    let { id } = await db.run(
+      ...into('subjects').insert({ template: template || TEMPLATE })
+    )
+
+    if (base != null) {
+      path = relative(base, path)
+    }
+
+    await db.run(...into('images').insert({ id, width, height }))
+
+    await all([
+      db.run(...into('photos').insert({
+        id,
+        item_id: item,
+        path,
+        size,
+        checksum,
+        mimetype,
+        tag_id,
+        orientation,
+        position
+      })),
+
+      metadata.update(db, {
+        ids: [id],
+        data: {
+          [DC.title]: text(image.title),
+          [DC.date]: date(image.date),
+          ...data
+        }
+      })
+    ])
+
+    return (await module.exports.loadReference(db, [id], { base }))[id]
+  },
+
   async save(db, { id, timestamp, ...data }, { base } = {}) {
     data = pick(data, COLUMNS)
 
