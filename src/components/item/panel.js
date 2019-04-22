@@ -101,6 +101,7 @@ class ItemPanel extends React.PureComponent {
       // references,
       ...props
     } = this.props
+    console.log(this.props)
     const hasMultipleItems = this.props.items.length > 1
     const item = hasMultipleItems ? null : this.props.items[0]
     return (

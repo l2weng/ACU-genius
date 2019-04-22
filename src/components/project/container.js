@@ -602,6 +602,8 @@ module.exports = {
 
       onTagSelect(...args) {
         dispatch(actions.tag.select(...args))
+        console.log({ tag_id: args[0] })
+        dispatch(actions.photo.loadReference({ tag_id: args[0] }))
       },
 
       onTemplateImport(files) {

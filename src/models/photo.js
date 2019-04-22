@@ -213,9 +213,8 @@ module.exports = {
     return photos
   },
 
-  async loadReference(db, ids, { base } = {}) {
+  async loadReference(db, { tag_id }, { base } = {}) {
     const photos = {}
-    if (ids != null) ids = ids.join(',')
 
     await all([
       db.each(`
@@ -243,7 +242,7 @@ module.exports = {
           FROM subjects
             JOIN images USING (id)
             JOIN photos USING (id)${
-            ids != null ? ` WHERE id IN (${ids}) and tag_id notnull` : ' where tag_id notnull'
+            tag_id != null ? ` WHERE tag_id = ${tag_id}` : ' where tag_id notnull'
         }`,
         ({ id, created, modified, mirror, negative, path, ...data }) => {
           data.created = new Date(created)
@@ -257,6 +256,7 @@ module.exports = {
         }
       ),
     ])
+    console.log(photos)
 
     return photos
   },

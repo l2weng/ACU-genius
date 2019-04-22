@@ -360,13 +360,13 @@ class Load extends Command {
 }
 
 class LoadReference extends Command {
-  static get ACTION() { return PHOTO.LOADREFERENCE }
+  static get ACTION() { return PHOTO.LOAD_REFERENCE }
 
   *exec() {
     const { db } = this.options
     const { payload } = this.action
+    console.log(payload)
     const { project } = yield select()
-
     const photos = yield call(db.seq, conn =>
       mod.photo.loadReference(conn, payload, project))
 

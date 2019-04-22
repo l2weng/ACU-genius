@@ -15,8 +15,7 @@ module.exports = {
         imports: state.imports,
         sort: getSortColumn(state)
       }))
-
-      const { list, tags, trash, query } = nav
+      const { list, tags, trash, query, searchReference } = nav
 
       const START = Date.now()
 

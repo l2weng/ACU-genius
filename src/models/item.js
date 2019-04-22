@@ -161,6 +161,28 @@ module.exports = mod.item = {
       params)
   },
 
+  async listReferences(db, list, options) {
+    let { dir, order, params } = prep(options, { $list: list })
+    return search(db, `
+      ${params.$sort ? SORT : ''}
+      SELECT DISTINCT id, added
+        FROM list_items
+          ${params.$sort ?
+      'LEFT OUTER JOIN sort USING (id)' :
+      'JOIN subjects USING (id)'}
+          ${params.$tags ? 'JOIN taggings USING (id)' : ''}
+          LEFT OUTER JOIN items USING (id)
+          LEFT OUTER JOIN trash USING (id)
+        WHERE
+          list_id = $list AND list_items.deleted IS NULL AND
+          ${params.$query ? `id IN (${SEARCH}) AND` : ''}
+          ${params.$tags ? `tag_id IN (${lst(options.tags)}) AND` : ''}
+          trash.deleted IS NULL
+        ${params.$tags ? 'GROUP BY id HAVING COUNT(tag_id) = $tags' : ''}
+        ORDER BY ${order} ${dir}, id ${dir}`,
+      params)
+  },
+
   async load(db, ids) {
     const items = {}
     if (ids != null) ids = ids.join(',')

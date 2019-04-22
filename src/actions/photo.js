@@ -113,7 +113,7 @@ module.exports = {
 
   loadReference(payload, meta) {
     return {
-      type: PHOTO.LOADREFERENCE,
+      type: PHOTO.LOAD_REFERENCE,
       payload,
       meta: { cmd: 'project', ...meta }
     }
