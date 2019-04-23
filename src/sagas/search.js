@@ -21,6 +21,10 @@ module.exports = {
 
       let result
 
+      if (tags.length > 0) {
+        yield put(act.references.load({ tag_id: tags[0] }))
+      }
+
       switch (true) {
         case (nav.imports && imports.length > 0): {
           const ids = imports[0].items
@@ -33,14 +37,8 @@ module.exports = {
 
         case (list != null):
           result = yield call(mod.item.list, db, list, { tags, query, sort })
-          if (tags.length > 0) {
-            yield put(act.references.load({ tag_id: tags[0] }))
-          }
           break
         default:
-          if (tags.length > 0) {
-            yield put(act.references.load({ tag_id: tags[0] }))
-          }
           result = yield call(mod.item.all, db, { tags, sort, query })
       }
 

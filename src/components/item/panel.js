@@ -55,7 +55,6 @@ class ItemPanel extends React.PureComponent {
   }
 
   handleRefZoomChange = (refZoom) => {
-    console.log('rrrefzoom',refZoom)
     this.props.onUiUpdate({ panel: { refZoom } })
   }
 
