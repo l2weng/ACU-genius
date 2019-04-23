@@ -7,7 +7,7 @@ const { NativeTypes } = require('react-dnd-electron-backend')
 const { Panel } = require('../panel')
 const { PhotoToolbar } = require('./toolbar')
 const { PhotoList } = require('./list')
-const { PhotoGrid } = require('./grid')
+const { ReferencesGrid } = require('./grid')
 const { isValidImage } = require('../../image')
 const { pick } = require('../../common/util')
 const { PHOTO } = require('../../constants/sass')
@@ -30,6 +30,7 @@ class ReferencePanel extends Panel {
   renderToolbar() {
     return (
       <PhotoToolbar
+        photos={this.props.photos.length}
         enableReference={this.props.enableReference}
         zoom={this.props.zoom}
         maxZoom={PHOTO.ZOOM.length - 1}
@@ -37,7 +38,7 @@ class ReferencePanel extends Panel {
         references={this.props.references}
         hasCreateButton
         canCreate={this.props.enableReference}
-        isDisabled={this.props.isClosed || !this.props.references.length}
+        isDisabled={this.props.isClosed || !this.props.photos.length}
         onCreate={this.props.onCreate}/>
     )
   }
@@ -54,7 +55,7 @@ class ReferencePanel extends Panel {
       onEdit,
       onFocus: this.handleNestedTabFocus
     }
-    const PhotoIterator = zoom ? PhotoGrid : PhotoList
+    const PhotoIterator = zoom ? ReferencesGrid : PhotoList
 
     return (
       <PhotoIterator {...pick(props, PhotoIterator.getPropKeys())}/>
@@ -71,7 +72,7 @@ class ReferencePanel extends Panel {
     return (
       <section className={cx('photo-panel', 'panel', classes)}>
         {this.renderHeader(toolbar)}
-        {/*{this.connect(this.renderBody(content))}*/}
+        {this.connect(this.renderBody(content))}
       </section>
     )
   }
@@ -94,7 +95,7 @@ class ReferencePanel extends Panel {
     onEdit: func.isRequired,
     onMetadataSave: func.isRequired,
     onZoomChange: func.isRequired,
-    references: array.isRequired,
+    references: array,
   }
 }
 

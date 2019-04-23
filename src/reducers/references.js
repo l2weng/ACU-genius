@@ -1,21 +1,20 @@
 'use strict'
 
-const { PROJECT, PHOTO } = require('../constants')
-const { load  } = require('./util')
+const { PROJECT, REFERENCES } = require('../constants')
+const { packageIdx  } = require('./util')
 
 module.exports = {
   // eslint-disable-next-line complexity
   references(state = {}, { type, payload, error, meta }) {
     switch (type) {
       case PROJECT.OPEN:
-        return {}
+        return []
+
+      case REFERENCES.LOADED:
+        return packageIdx(payload)
 
       default:
         return state
     }
   }
 }
-
-// case PHOTO.LOAD_REFERENCE:
-// return load(state, payload, meta, error)
-

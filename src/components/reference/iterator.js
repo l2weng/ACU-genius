@@ -282,7 +282,7 @@ class PhotoIterator extends Iterator {
     selection: number,
     selections: object.isRequired,
     size: number.isRequired,
-    references: array.isRequired,
+    references: array,
     isItemOpen: bool,
     isDisabled: bool,
     isOver: bool,

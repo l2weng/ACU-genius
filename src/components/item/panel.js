@@ -55,6 +55,7 @@ class ItemPanel extends React.PureComponent {
   }
 
   handleRefZoomChange = (refZoom) => {
+    console.log('rrrefzoom',refZoom)
     this.props.onUiUpdate({ panel: { refZoom } })
   }
 
@@ -98,7 +99,7 @@ class ItemPanel extends React.PureComponent {
       onPhotoSelect,
       onPhotoSort,
       onSelectionSort,
-      // references,
+      references,
       ...props
     } = this.props
     console.log(this.props)
@@ -154,8 +155,9 @@ class ItemPanel extends React.PureComponent {
           keymap={keymap}
           zoom={panel.refZoom}
           current={photo && photo.id}
-          selection={false}
-          selections={[]}
+          selection={0}
+          photos={references}
+          selections={{}}
           onContract={onPhotoContract}
           onCreate={this.handleReferenceCreate}
           onDelete={onPhotoDelete}
@@ -197,7 +199,7 @@ class ItemPanel extends React.PureComponent {
     notes: array.isRequired,
     selections: object.isRequired,
     nav: object.isRequired,
-    references: array.isRequired,
+    references: array,
 
     panel: shape({
       slots: array.isRequired,

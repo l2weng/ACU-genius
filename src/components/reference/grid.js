@@ -4,14 +4,12 @@ const React = require('react')
 const { PhotoIterator } = require('./iterator')
 const { PhotoTile } = require('./tile')
 const { SelectionGrid } = require('../selection/grid')
-const { pluck } = require('../../common/util')
 const cx = require('classnames')
 const { match } = require('../../keymap')
 const { floor, ceil } = Math
 const { GRID } = require('../../constants/sass')
 
-
-class PhotoGrid extends PhotoIterator {
+class ReferencesGrid extends PhotoIterator {
   get isGrid() { return true }
 
   get classes() {
@@ -169,7 +167,6 @@ class PhotoGrid extends PhotoIterator {
   }
 
   renderSelectionGrid(photo) {
-    const selections = pluck(this.props.selections, photo.selections)
     const gridColumnEnd = this.state.cols + 1
 
     return (
@@ -192,7 +189,7 @@ class PhotoGrid extends PhotoIterator {
           onSelect={this.select}
           onSort={this.props.onSelectionSort}
           photo={photo}
-          selections={selections}
+          selections={{}}
           size={this.props.size}/>
       </li>
     )
@@ -244,5 +241,5 @@ class PhotoGrid extends PhotoIterator {
 }
 
 module.exports = {
-  PhotoGrid: PhotoGrid.asDropTarget()
+  ReferencesGrid: ReferencesGrid.asDropTarget()
 }

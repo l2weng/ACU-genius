@@ -234,7 +234,7 @@ class ItemView extends PureComponent {
     offset: number.isRequired,
     mode: string.isRequired,
     selections: object.isRequired,
-    references: array.isRequired,
+    references: array,
     isModeChanging: bool.isRequired,
     isTrashSelected: bool.isRequired,
     enableReference: bool.isRequired,

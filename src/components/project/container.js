@@ -35,11 +35,10 @@ const {
   getVisibleItems,
   getVisibleNotes,
   getVisiblePhotos,
-  getVisibleReferences
 } = require('../../selectors')
 
 const {
-  arrayOf, oneOf, shape, bool, object, func, string, number
+  arrayOf, oneOf, shape, bool, object, func, string, number, array
 } = require('prop-types')
 
 
@@ -331,9 +330,7 @@ class ProjectContainer extends Component {
     notes: arrayOf(
       shape({ id: number.isRequired })
     ),
-    references: arrayOf(
-      shape({ id: number.isRequired })
-    ).isRequired,
+    references: array,
     nav: shape({
       mode: oneOf(values(MODE)).isRequired
     }).isRequired,
@@ -420,7 +417,7 @@ module.exports = {
       notes: getVisibleNotes(state),
       photo: getSelectedPhoto(state),
       photos: state.photos,
-      references: getVisibleReferences(state),
+      references: state.references,
       visiblePhotos: getVisiblePhotos(state),
       project: state.project,
       properties: state.ontology.props,
@@ -602,8 +599,7 @@ module.exports = {
 
       onTagSelect(...args) {
         dispatch(actions.tag.select(...args))
-        console.log({ tag_id: args[0] })
-        dispatch(actions.photo.loadReference({ tag_id: args[0] }))
+        dispatch(actions.references.load({ tag_id: args[0] }))
       },
 
       onTemplateImport(files) {

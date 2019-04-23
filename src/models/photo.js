@@ -213,7 +213,9 @@ module.exports = {
     return photos
   },
 
-  async loadReference(db, { tag_id }, { base } = {}) {
+  async loadReference(db, tag, { base } = {}) {
+    if (!tag) return []
+    let { tag_id } = tag
     const photos = {}
 
     await all([
@@ -256,7 +258,6 @@ module.exports = {
         }
       ),
     ])
-    console.log(photos)
 
     return photos
   },

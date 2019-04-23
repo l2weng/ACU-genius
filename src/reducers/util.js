@@ -101,6 +101,15 @@ const util = {
       map(id => ({ [id]: { id, pending: true } })),
       payload
     )
+  },
+
+  packageIdx(payload) {
+    let refArray = Object.values(payload)
+    refArray.idx = {}
+    refArray.map((r, i)=>{
+      refArray.idx[r.id] = i
+    })
+    return refArray
   }
 }
 

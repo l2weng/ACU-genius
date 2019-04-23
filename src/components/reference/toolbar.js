@@ -22,10 +22,10 @@ class PhotoToolbar extends PureComponent {
     const {
       hasCreateButton,
       enableReference,
+      photos,
       zoom,
       maxZoom,
       onZoomChange,
-      references
     } = this.props
     return (
       <Toolbar isDraggable={false}>
@@ -34,7 +34,7 @@ class PhotoToolbar extends PureComponent {
           <h4>
             <FormattedMessage
               id="panel.reference.title"
-              values={{ count: references.length }}/>
+              values={{ count: photos }}/>
           </h4>
         </div>
 
@@ -70,7 +70,7 @@ class PhotoToolbar extends PureComponent {
     enableReference: bool,
     hasCreateButton: bool,
     isDisabled: bool,
-    references: array.isRequired,
+    photos: number.isRequired,
     maxZoom: number.isRequired,
     zoom: number.isRequired,
     onCreate: func.isRequired,
