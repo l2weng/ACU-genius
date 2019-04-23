@@ -15,7 +15,7 @@ module.exports = {
         imports: state.imports,
         sort: getSortColumn(state)
       }))
-      const { list, tags, trash, query, searchReference } = nav
+      const { list, tags, trash, query } = nav
 
       const START = Date.now()
 
@@ -33,9 +33,14 @@ module.exports = {
 
         case (list != null):
           result = yield call(mod.item.list, db, list, { tags, query, sort })
+          if (tags.length > 0) {
+            yield put(act.references.load({ tag_id: tags[0] }))
+          }
           break
-
         default:
+          if (tags.length > 0) {
+            yield put(act.references.load({ tag_id: tags[0] }))
+          }
           result = yield call(mod.item.all, db, { tags, sort, query })
       }
 

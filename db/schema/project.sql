@@ -72,6 +72,7 @@ CREATE TABLE items (
   id              INTEGER  PRIMARY KEY REFERENCES subjects ON DELETE CASCADE,
   cover_image_id  INTEGER  REFERENCES images ON DELETE SET NULL
 ) WITHOUT ROWID;
+INSERT INTO items (id, cover_image_id) VALUES (-999, null);
 CREATE TABLE metadata (
   id          INTEGER  NOT NULL REFERENCES subjects ON DELETE CASCADE,
   property    TEXT     NOT NULL,
