@@ -198,7 +198,7 @@ module.exports = mod.item = {
           FROM subjects
             JOIN items USING (id)
             LEFT OUTER JOIN trash USING (id)${
-          (ids != null) ? ` WHERE id IN (${ids}) and id! = -999` : 'where id != -999'
+          (ids != null) ? ` WHERE id IN (${ids}) and id != -999` : 'where id != -999'
         }`,
         ({ id, created, modified, deleted, ...data }) => {
           data.created = new Date(created)
@@ -225,7 +225,7 @@ module.exports = mod.item = {
         SELECT id AS photo, item_id AS id
           FROM photos
             LEFT OUTER JOIN trash USING (id)
-          WHERE ${(ids != null) ? `item_id IN (${ids}) AND item_id! = -999 AND` : 'item_id!=-999 AND'}
+          WHERE ${(ids != null) ? `item_id IN (${ids}) AND item_id != -999 AND` : 'item_id!=-999 AND'}
             deleted IS NULL
           ORDER BY item_id, position`,
         ({ id, photo }) => {
