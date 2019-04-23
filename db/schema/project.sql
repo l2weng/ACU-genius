@@ -139,7 +139,7 @@ CREATE TABLE tags (
   tag_id      INTEGER  PRIMARY KEY,
   name        TEXT     NOT NULL COLLATE NOCASE,
   color,
-  syncSkuId   INTEGER
+  syncSkuId   INTEGER,
   created     NUMERIC  NOT NULL DEFAULT CURRENT_TIMESTAMP,
   modified    NUMERIC  NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
