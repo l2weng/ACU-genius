@@ -164,6 +164,7 @@ module.exports = {
     dispatch => ({
       onProjectOpen(path) {
         dispatch(actions.project.open(path, HEAD.WORKSPACE))
+        dispatch(actions.ui.headerSwitch({ activeTab: HEAD.WORKSPACE }))
       },
       fetchProjects(typeFlag = false, id) {
         dispatch(actions.header.loadProjects({ typeFlag, id }))
