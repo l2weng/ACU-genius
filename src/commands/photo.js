@@ -538,7 +538,6 @@ class LabelSync extends Command {
     try {
       const result  = yield axios.post(`${ARGS.apiServer}/labels/saveLabels`, { photoId: photo.syncPhotoId, labels, myTaskId: taskId })
       if (result.status === 200) {
-        console.log(result)
         yield put(act.photo.labelSyncSuccess(payload))
       }
     } catch (e) {

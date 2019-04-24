@@ -27,6 +27,7 @@ class ProjectSummary extends PureComponent {
       isEmpty,
       ...props
     } = this.props
+    console.log(this.props)
     return (
       <div>
         <Row gutter={24}>

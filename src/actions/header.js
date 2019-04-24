@@ -3,16 +3,18 @@
 const { HEAD } = require('../constants')
 
 module.exports = {
-  restore(payload = {}) {
+
+  load(payload, meta) {
     return {
-      type: HEAD.RESTORE,
-      payload
+      type: HEAD.LOAD,
+      payload,
+      meta: { cmd: 'project', ...meta }
     }
   },
 
-  headerSwitch(payload = {}) {
+  restore(payload = {}) {
     return {
-      type: HEAD.SWITCH,
+      type: HEAD.RESTORE,
       payload
     }
   },

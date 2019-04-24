@@ -75,7 +75,6 @@ function *open(file) {
       }
 
     } finally {
-      yield put(act.header.headerSwitch({ activeTab: WORKSPACE }))
       yield call(close, db, project, access)
     }
   } catch (error) {
@@ -101,7 +100,6 @@ function *setup(db, project) {
     call(storage.restore, 'esper', project.id),
     call(storage.restore, 'imports', project.id),
     call(storage.restore, 'sidebar', project.id),
-    call(storage.restore, 'header', project.id)
   ])
 
   yield all([
@@ -113,6 +111,7 @@ function *setup(db, project) {
     put(act.references.load()),
     put(act.metadata.load()),
     put(act.selection.load()),
+    put(act.header.load()),
     // put(act.note.load())
   ])
 

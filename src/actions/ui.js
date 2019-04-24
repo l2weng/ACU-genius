@@ -1,6 +1,6 @@
 'use strict'
 
-const { UI } = require('../constants')
+const { UI, HEAD } = require('../constants')
 
 module.exports = {
   restore(payload, meta) {
@@ -14,6 +14,13 @@ module.exports = {
       type: UI.RESTORE,
       payload,
       meta
+    }
+  },
+
+  headerSwitch(payload = {}) {
+    return {
+      type: HEAD.SWITCH,
+      payload
     }
   },
 

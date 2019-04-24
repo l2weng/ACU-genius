@@ -25,12 +25,6 @@ class Header extends React.Component {
     super(props)
   }
 
-  componentDidMount() {
-    // if (this.props.activeTab === undefined) {
-    //   this.switchTab(HEAD.HOME)
-    // }
-  }
-
   switchTab = (tabName) => {
     if (tabName === HEAD.HOME) {
       if (!_.isEmpty(userInfo)) {
@@ -71,11 +65,11 @@ class Header extends React.Component {
 module.exports = {
   Header: connect(
     state => ({
-      activeTab: state.header.activeTab,
+      activeTab: state.ui.activeTab,
     }),
     dispatch => ({
       switchTab(tabName) {
-        dispatch(actions.header.headerSwitch({ activeTab: tabName }))
+        dispatch(actions.ui.headerSwitch({ activeTab: tabName }))
       },
       reloadProjects(typeFlag = false, id) {
         dispatch(actions.header.loadProjects({ typeFlag, id }))

@@ -3,6 +3,7 @@
 module.exports = {
   HOME: 'home',
   PROJECT: 'project',
+  LOAD: 'load',
   WORKSPACE: 'workspace',
   FRIENDS: 'friends',
   MY_TASKS: 'myTasks',

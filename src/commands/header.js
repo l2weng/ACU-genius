@@ -99,7 +99,19 @@ class LoadMyTasks extends Command {
   }
 }
 
+
+class Load extends Command {
+  static get ACTION() { return HEAD.LOAD }
+
+  *exec() {
+    const { userInfo } = ARGS
+    yield put(act.header.loadProjects({ typeFlag: true, id: userInfo.user.userId }))
+    yield put(act.header.loadMyTasks({ userId: userInfo.user.userId, type: HEAD.MY_TASKS }))
+  }
+}
+
 module.exports = {
   LoadProjects,
-  LoadMyTasks
+  LoadMyTasks,
+  Load
 }

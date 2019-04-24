@@ -65,21 +65,6 @@ class Workplace extends PureComponent {
     })
   }
 
-  componentDidMount() {
-    if (!_.isEmpty(userInfo)) {
-      this.props.fetchProjects(true, userInfo.user.userId)
-      this.props.fetchTasks(userInfo.user.userId, HEAD.MY_TASKS)
-    } else if (!_.isEmpty(machineId)) {
-      this.props.fetchProjects(false, machineId)
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.project.id !== this.props.project.id) {
-      this.props.switchTab(HEAD.WORKSPACE)
-    }
-  }
-
   renderTitle(item) {
     let cloudMark = ''
     if (item.syncStatus) {
@@ -178,7 +163,7 @@ module.exports = {
     }),
     dispatch => ({
       onProjectOpen(path) {
-        dispatch(actions.project.open(path))
+        dispatch(actions.project.open(path, HEAD.WORKSPACE))
       },
       fetchProjects(typeFlag = false, id) {
         dispatch(actions.header.loadProjects({ typeFlag, id }))

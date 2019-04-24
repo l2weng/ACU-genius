@@ -1,6 +1,6 @@
 'use strict'
 
-const { ESPER, ITEM, PHOTO, NOTE, UI, SASS } = require('../constants')
+const { ESPER, ITEM, PHOTO, NOTE, UI, SASS, HEAD } = require('../constants')
 const { merge, omit } = require('../common/util')
 
 const init = {
@@ -24,7 +24,8 @@ const init = {
   sidebar: {
     width: SASS.SIDEBAR.DEFAULT_WIDTH
   },
-  zoom: 0
+  zoom: 0,
+  activeTab: HEAD.WORKSPACE
 }
 
 function contract(state, photos) {
@@ -46,6 +47,8 @@ module.exports = {
       case UI.RESTORE:
         return merge(init, payload)
       case UI.UPDATE:
+        return merge(state, payload)
+      case HEAD.SWITCH:
         return merge(state, payload)
       case PHOTO.CONTRACT:
         return contract(state, payload)
