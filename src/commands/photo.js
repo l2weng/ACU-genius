@@ -251,6 +251,7 @@ class RefCreate extends ImportCommand {
       }
     }
 
+    yield put(act.references.load({ tag_id }))
     this.undo = act.photo.delete({ item, photos })
     this.redo = act.photo.restore({ item, photos }, { idx })
 

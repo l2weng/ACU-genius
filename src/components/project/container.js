@@ -487,6 +487,7 @@ module.exports = {
       },
 
       onItemSelect(payload, mod, meta) {
+        console.log(payload)
         dispatch(actions.item.select(payload, { mod, ...meta }))
       },
 

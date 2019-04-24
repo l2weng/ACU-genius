@@ -150,7 +150,7 @@ class ItemPanel extends React.PureComponent {
           isDisabled={isDisabled || !item || hasMultipleItems}
           isItemOpen={isItemOpen}
           edit={edit}
-          expanded={expanded}
+          expanded={[]}
           keymap={keymap}
           zoom={panel.refZoom}
           current={photo && photo.id}
