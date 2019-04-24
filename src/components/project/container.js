@@ -425,7 +425,9 @@ module.exports = {
       selections: state.selections,
       sort: getSortColumn(state),
       tags: state.tags,
-      ui: state.ui
+      ui: state.ui,
+      projects: state.header.projects || [],
+      tasks: state.header.tasks || []
     }),
 
     dispatch => ({

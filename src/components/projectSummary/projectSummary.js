@@ -2,7 +2,7 @@
 
 const React = require('react')
 const { PureComponent } = React
-const { Row, Col, Card, Tabs } = require('antd')
+const { Row, Col, Card, Tabs, Select, Statistic } = require('antd')
 const { Summary } = require('./summary')
 const { PhotoData } = require('./photoData')
 const { TaskList } = require('./taskList')
@@ -11,10 +11,24 @@ const { QualitySetting } = require('./qualitySetting')
 const { Members } = require('./members')
 const { array, bool, func, object, } = require('prop-types')
 const TabPane = Tabs.TabPane
+const Option = Select.Option
 
 class ProjectSummary extends PureComponent {
   componentDidMount() {
 
+  }
+
+  renderTitle() {
+    const { projects } = this.props
+    if (projects.length > 0) {
+      return (
+        <Select style={{ width: 120 }} defaultValue={projects[0].projectId}>
+          {projects.map(project=>{
+            return (<Option value={project.projectId} key={project.projectId}>{project.name}</Option>)
+          })}
+        </Select>
+      )
+    }
   }
 
   render() {
@@ -27,12 +41,11 @@ class ProjectSummary extends PureComponent {
       isEmpty,
       ...props
     } = this.props
-    console.log(this.props)
     return (
       <div>
         <Row gutter={24}>
           <Col span={24}>
-            <Card title="Telsa Project" bordered={false}>
+            <Card title={this.renderTitle()} bordered={false}>
               <Tabs style={{ textAlign: 'left' }}
                 defaultActiveKey="1"
                 tabPosition="left">
