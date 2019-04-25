@@ -2,7 +2,7 @@
 
 const React = require('react')
 const { PureComponent } = React
-const { Row, Col, Card, Tabs, Select, Statistic } = require('antd')
+const { Row, Col, Card, Tabs, Select, Form } = require('antd')
 const { Summary } = require('./summary')
 const { PhotoData } = require('./photoData')
 const { TaskList } = require('./taskList')
@@ -22,11 +22,17 @@ class ProjectSummary extends PureComponent {
     const { projects } = this.props
     if (projects.length > 0) {
       return (
-        <Select style={{ width: 120 }} defaultValue={projects[0].projectId}>
-          {projects.map(project=>{
-            return (<Option value={project.projectId} key={project.projectId}>{project.name}</Option>)
-          })}
-        </Select>
+        <div>
+          <Form layout="inline">
+            <Form.Item  label="项目">
+              <Select style={{ width: 120 }} defaultValue={projects[0].projectId}>
+                {projects.map(project=>{
+                  return (<Option value={project.projectId} key={project.projectId}>{project.name}</Option>)
+                })}
+              </Select>
+            </Form.Item>
+          </Form>
+        </div>
       )
     }
   }

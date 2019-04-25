@@ -6,7 +6,7 @@ const { FormattedMessage } = require('react-intl')
 const { Toolbar, ToolGroup } = require('../toolbar')
 const { Slider } = require('../slider')
 const { Button } = require('../button')
-const { number, bool, func, array } = require('prop-types')
+const { number, bool, func } = require('prop-types')
 
 const {
   IconPhoto, IconPlus, IconListSmall, IconGridSmall
@@ -22,6 +22,7 @@ class PhotoToolbar extends PureComponent {
     const {
       hasCreateButton,
       enableReference,
+      isDisabled,
       photos,
       zoom,
       maxZoom,
@@ -56,7 +57,7 @@ class PhotoToolbar extends PureComponent {
               size="sm"
               minIcon={<IconListSmall/>}
               maxIcon={<IconGridSmall/>}
-              isDisabled={!enableReference}
+              isDisabled={isDisabled}
               onChange={onZoomChange}/>
           </ToolGroup>
         </div>

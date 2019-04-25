@@ -58,7 +58,6 @@ class Members extends PureComponent {
   render() {
     return (
       <div>
-        <div style={{ paddingBottom: '12px' }}><Button type="primary" icon="user-add">添加参与者</Button></div>
         <List
           dataSource={[
             {

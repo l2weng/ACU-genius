@@ -37,7 +37,6 @@ class PhotoTile extends PhotoIterable {
         ref={this.setContainer}>
         <div className="tile-state">
           {this.renderThumbnail({
-            onClick: this.handleClick,
             onContextMenu: this.handleContextMenu
           })}
           <div className="icon-container">
