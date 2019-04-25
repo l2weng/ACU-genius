@@ -5,7 +5,7 @@ const { merge, omit } = require('../common/util')
 
 const init = {
   esper: {
-    height: 50,
+    height: 96,
     tool: ESPER.TOOL.PAN,
     panel: false
   },

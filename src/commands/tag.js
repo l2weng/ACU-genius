@@ -34,7 +34,6 @@ class Create extends Command {
     })
     let skuResult = yield axios.post(`${ARGS.apiServer}/skus/create`, { localSkuId: tag.id, name: tag.name, projectId: syncProjectId, userId: userInfo.user.userId })
     if (skuResult.status === 200) {
-      console.log(skuResult)
       let updatePayload = { id: tag.id, syncSkuId: skuResult.data.obj.skuId }
       yield call(mod.tag.save, db, updatePayload)
     }
