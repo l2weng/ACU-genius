@@ -104,7 +104,7 @@ function *setup(db, project) {
 
   yield all([
     put(act.history.drop()),
-    put(act.list.load()),
+    put(act.list.load({ project: project })),
     put(act.tag.load()),
     put(act.item.load()),
     put(act.photo.load()),

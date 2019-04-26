@@ -16,7 +16,10 @@ class Load extends Command {
 
   *exec() {
     const { db } = this.options
-    return (yield call(mod.all, db))
+    const { payload } = this.action
+    const { project } = payload
+    const isOwner = project.owner === userInfo.user.userId
+    if (isOwner) { return (yield call(mod.all, db)) } else { return (yield call(mod.myAll, db)) }
   }
 }
 

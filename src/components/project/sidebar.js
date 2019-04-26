@@ -331,25 +331,6 @@ class ProjectSidebar extends React.PureComponent {
     })
   }
 
-  filterList = (isOwner, list) =>{
-    if (__.isEmpty(list) || isOwner) {
-      return list
-    }
-    let filteredList = {}
-    for (let key in list) {
-      if (list.hasOwnProperty(key)) {
-        let oneNode = list[key]
-        if (!__.isEmpty(oneNode.workers)) {
-          let filteredResult = JSON.parse(oneNode.workers).filter(worker=>worker.userId === userInfo.user.userId)
-          if (filteredResult.length > 0) {
-            filteredList[key] = oneNode
-          }
-        }
-      }
-    }
-    return filteredList
-  }
-
   render() {
     const {
       edit,
@@ -366,7 +347,6 @@ class ProjectSidebar extends React.PureComponent {
     } = this.props
 
     let root = this.props.lists[this.props.root]
-    let filteredList = this.filterList(isOwner, this.props.lists)
 
     const { modalVisible, colleagues } = this.state
 
@@ -418,7 +398,7 @@ class ProjectSidebar extends React.PureComponent {
                 {root &&
                   <ListTree
                     parent={root}
-                    lists={filteredList}
+                    lists={this.props.lists}
                     edit={this.props.edit.list}
                     expand={this.props.expand}
                     hold={this.props.hold}

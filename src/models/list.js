@@ -5,6 +5,8 @@ const { ROOT } = require('../constants/list')
 const { into, select, update } = require('../common/query')
 const { pick, remove, toId } = require('../common/util')
 const mod = {}
+const { userInfo } = ARGS
+const __ = require('underscore')
 
 module.exports = mod.list = {
   async all(db) {
@@ -24,6 +26,33 @@ module.exports = mod.list = {
             lists[parent] = { id: parent, children: [] }
           }
           lists[parent].children.push(id)
+        }
+      })
+
+    return lists
+  },
+
+  async myAll(db) {
+    let lists = {}
+
+    await db.each(
+      ...select({ id: 'list_id', parent: 'parent_list_id', workers: 'workers', syncTaskId: 'sync_task_id' }, 'name')
+        .from('lists')
+        .order('parent, position'),
+      ({ id, parent, name, syncTaskId, workers }) => {
+        if (!__.isEmpty(workers)) {
+          let filteredResult = JSON.parse(workers).filter(worker=>worker.userId === userInfo.user.userId)
+          if (filteredResult.length > 0) {
+            lists[id] = {
+              id, parent, name, syncTaskId, workers, children: [], ...lists[id]
+            }
+            if (parent != null) {
+              if (!(parent in lists)) {
+                lists[parent] = { id: parent, children: [] }
+              }
+              lists[parent].children.push(id)
+            }
+          }
         }
       })
 

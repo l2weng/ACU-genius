@@ -235,7 +235,7 @@ class ProjectContainer extends Component {
       project,
       ...props
     } = this.props
-    let isOwner = project.owner === userInfo.user.userId
+    const isOwner = project.owner === userInfo.user.userId
     const mainProject = dt(
       <div style={{ height: '100%' }}
         className={cx(this.classes)}
