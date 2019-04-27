@@ -213,6 +213,29 @@ module.exports = {
     return photos
   },
 
+  async loadOne(db, syncPhotoId) {
+    let photo = {}
+
+    await all([
+      db.each(`
+        SELECT
+            id,
+            angle,
+            mirror
+          FROM subjects
+            JOIN images USING (id)
+            JOIN photos USING (id)${
+            ` WHERE syncPhotoId = '${syncPhotoId}' and tag_id isnull`
+        }`,
+        ({ mirror, ...data }) => {
+          data.mirror = !!mirror
+          photo = data
+        }
+      ),
+    ])
+    return photo
+  },
+
   async loadReference(db, tag, { base } = {}) {
     if (!tag) return []
     let { tag_id } = tag

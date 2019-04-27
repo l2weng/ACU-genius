@@ -7,6 +7,7 @@ module.exports = {
   ORDER: 'selection.order',
   RESTORE: 'selection.restore',
   SAVE: 'selection.save',
+  SYNC: 'selection.sync',
 
   NOTE: {
     ADD: 'selection.note.add',

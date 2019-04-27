@@ -8,6 +8,7 @@ const { LIST } = require('../constants')
 const actions = require('../actions/list')
 const actionsHeader = require('../actions/header')
 const mod = require('../models/list')
+const pMod = require('../models/photo')
 const axios = require('axios')
 const { userInfo } = ARGS
 
@@ -19,7 +20,26 @@ class Load extends Command {
     const { payload } = this.action
     const { project } = payload
     const isOwner = project.owner === userInfo.user.userId
-    if (isOwner) { return (yield call(mod.all, db)) } else { return (yield call(mod.myAll, db)) }
+    let listResult = {}
+    if (isOwner) { listResult =  yield call(mod.all, db) } else { listResult = yield call(mod.myAll, db) }
+    const listArr = Object.values(listResult)
+    if (listArr.length > 0) {
+      for (let i = 0; i < listArr.length; i++) {
+        const oList = listArr[i]
+        if (oList.id !== 0) {
+          const labels = yield axios.post(`${ARGS.apiServer}/labels/queryLabels`, { taskId: oList.syncTaskId })
+          const labelArr = labels.data
+          if (labelArr.length > 0) {
+            for (let j = 0; j < labelArr.length; j++) {
+              const oLabel = labelArr[j]
+              const photo = yield call(pMod.loadOne, db, oLabel.photoId )
+              console.log(photo)
+            }
+          }
+        }
+      }
+    }
+    return listResult
   }
 }
 
