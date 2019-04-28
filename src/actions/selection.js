@@ -38,6 +38,17 @@ module.exports = {
     }
   },
 
+  sync(payload, meta) {
+    return {
+      type: SELECTION.SYNC,
+      payload,
+      meta: {
+        cmd: 'project',
+        ...meta
+      }
+    }
+  },
+
   notes: {
     add(payload, meta = {}) {
       return { type: SELECTION.NOTE.ADD, payload, meta }

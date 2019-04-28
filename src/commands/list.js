@@ -1,11 +1,12 @@
 'use strict'
 
-const { call, put, select } = require('redux-saga/effects')
+const { call, put, select, all } = require('redux-saga/effects')
 const { Command } = require('./command')
 const { pluck, splice, warp } = require('../common/util')
 const { LIST } = require('../constants')
 
 const actions = require('../actions/list')
+const act = require('../actions')
 const actionsHeader = require('../actions/header')
 const mod = require('../models/list')
 const pMod = require('../models/photo')
@@ -33,7 +34,11 @@ class Load extends Command {
             for (let j = 0; j < labelArr.length; j++) {
               const oLabel = labelArr[j]
               const photo = yield call(pMod.loadOne, db, oLabel.photoId )
-              console.log(photo)
+
+              yield all([
+                put(act.selection.sync({ photo, labels: oLabel.Labels })),
+                put(act.activity.update(this.action, { total: labelArr.length, progress: j + 1 }))
+              ])
             }
           }
         }
