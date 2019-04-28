@@ -43,12 +43,12 @@ class Sync extends Command {
     const {db} = this.options
     const {payload} = this.action
     const {labels} = payload
-    console.log(payload)
     // const idx =  [
     //   yield select(state => state.photos[payload.photo.id])
     // ]
     const existedLabels = yield select(state => state.photos[payload.photo.id].selections)
     const syncLabels = labels.map(l=>l.id)
+    console.log(existedLabels,syncLabels)
     let diffLabels = _.difference(existedLabels, syncLabels)
     console.log(diffLabels)
     //
