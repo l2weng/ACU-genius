@@ -7,6 +7,7 @@ const act = require('../actions')
 const { SELECTION } = require('../constants')
 const { pick, splice } = require('../common/util')
 const { keys } = Object
+const _ = require('underscore')
 
 class Create extends Command {
   static get ACTION() { return SELECTION.CREATE }
@@ -39,25 +40,28 @@ class Sync extends Command {
   static get ACTION() { return SELECTION.SYNC }
 
   *exec() {
-    const { db } = this.options
-    const { payload } = this.action
+    const {db} = this.options
+    const {payload} = this.action
+    const {labels} = payload
+    console.log(payload)
+    // const idx =  [
+    //   yield select(state => state.photos[payload.photo.id])
+    // ]
+    const existedLabels = yield select(state => state.photos[payload.photo.id].selections)
+    const syncLabels = labels.map(l=>l.id)
+    let diffLabels = _.difference(existedLabels, syncLabels)
+    console.log(diffLabels)
+    //
+    // const selection = yield call(db.transaction, tx =>
+    //   mod.selection.create(tx, null, payload))
+    //
+    // const photo = selection.photo
+    // const selections = [selection.id]
+    //
+    // yield put(act.photo.selections.add({ id: photo, selections }, { idx }))
 
-    const idx =  [
-      yield select(state => state.photos[payload.photo].selections.length)
-    ]
-
-    const selection = yield call(db.transaction, tx =>
-      mod.selection.create(tx, null, payload))
-
-    const photo = selection.photo
-    const selections = [selection.id]
-
-    yield put(act.photo.selections.add({ id: photo, selections }, { idx }))
-
-    this.undo = act.selection.delete({ photo, selections }, { idx })
-    this.redo = act.selection.restore({ photo, selections }, { idx })
-
-    return selection
+    // return selection
+    return null
   }
 }
 

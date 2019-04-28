@@ -76,7 +76,7 @@ class Sync extends Command {
       let syncCover = ''
       if (cache) {
         let coverId = uuid()
-        let coverResult = yield client.put(coverId, join(resolve(cache), '2_512.jpg'))
+        let coverResult = yield client.put(coverId, join(resolve(cache), '2_512.png'))
         syncCover = coverResult.url
       }
       if (result.res.status === 200) {
