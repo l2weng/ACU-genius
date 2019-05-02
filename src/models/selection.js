@@ -4,6 +4,7 @@ const { list } = require('../common/util')
 const { TEMPLATE } = require('../constants/selection')
 const { all } = require('bluebird')
 const { assign } = Object
+const uuid = require('uuid/v4')
 
 const mod = {
   selection: {
@@ -24,6 +25,7 @@ const mod = {
               negative,
               brightness,
               contrast,
+              labelId,
               hue,
               saturation,
               template,
@@ -69,8 +71,8 @@ const mod = {
           VALUES (?,?,?,?,?)`, [id, width, height, angle, mirror])
 
       await db.run(`
-        INSERT INTO selections (id, photo_id, x, y)
-          VALUES (?,?,?,?)`, [id, photo, x, y])
+        INSERT INTO selections (id, photo_id, x, y, labelId)
+          VALUES (?,?,?,?,?)`, [id, photo, x, y, uuid()])
 
       return (await mod.selection.load(db, [id]))[id]
     },
@@ -86,6 +88,15 @@ const mod = {
             WHERE photo_id = ?`,
           ...selections, photo)
       }
+    },
+
+    async update(db, photo, updatedTime) {
+      console.log(photo,updatedTime)
+      return db.run(`
+          UPDATE selections
+            SET updatedTime= ?
+            WHERE photo_id = ?`,
+          updatedTime, photo)
     },
 
     async delete(db, ...ids) {

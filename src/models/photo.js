@@ -22,8 +22,8 @@ const COLUMNS = [
   'size'
 ]
 
-const skel = (id, selections = [], notes = []) => ({
-  id, selections, notes
+const skel = (id, selections = [], notes = [], labels = []) => ({
+  id, selections, notes, labels
 })
 
 module.exports = {
@@ -173,15 +173,17 @@ module.exports = {
       ),
 
       db.each(`
-        SELECT id AS selection, photo_id AS id
+        SELECT id AS selection, labelId AS label, photo_id AS id
           FROM selections
             LEFT OUTER JOIN trash USING (id)
           WHERE ${ids != null ? `photo_id IN (${ids}) AND` : ''}
             deleted IS NULL
           ORDER BY photo_id, position`,
-        ({ selection, id }) => {
-          if (id in photos) photos[id].selections.push(selection)
-          else photos[id] = skel(id, [selection])
+        ({ selection, label, id }) => {
+          if (id in photos) {
+            photos[id].labels.push(label)
+            photos[id].selections.push(selection)
+          } else photos[id] = skel(id, [selection])
         }
       ),
       //

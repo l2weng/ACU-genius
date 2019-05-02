@@ -40,28 +40,29 @@ class Sync extends Command {
   static get ACTION() { return SELECTION.SYNC }
 
   *exec() {
-    const {db} = this.options
-    const {payload} = this.action
-    const {labels} = payload
-    // const idx =  [
-    //   yield select(state => state.photos[payload.photo.id])
-    // ]
-    const existedLabels = yield select(state => state.photos[payload.photo.id].selections)
-    const syncLabels = labels.map(l=>l.id)
-    console.log(existedLabels,syncLabels)
-    let diffLabels = _.difference(existedLabels, syncLabels)
-    console.log(diffLabels)
-    //
-    // const selection = yield call(db.transaction, tx =>
-    //   mod.selection.create(tx, null, payload))
-    //
-    // const photo = selection.photo
-    // const selections = [selection.id]
-    //
-    // yield put(act.photo.selections.add({ id: photo, selections }, { idx }))
-
-    // return selection
-    return null
+    const { db } = this.options
+    const { payload } = this.action
+    const { labels, photo } = payload
+    const idx = yield select(state => state.photos[payload.photo.id].selections.length)
+    console.log(yield select(state => state.photos))
+    // for (let i = 0; i < labels.length; i++) {
+    //   const label = labels[i]
+    //   let nPayload = {}
+    //   nPayload = {
+    //     angle: photo.angle,
+    //     mirror: photo.mirror,
+    //     photo: photo.id,
+    //     width: label.width,
+    //     height: label.height,
+    //     x: label.x,
+    //     y: label.y
+    //   }
+    //   const selection = yield call(db.transaction, tx =>
+    //     mod.selection.create(tx, null, nPayload))
+    //   const existedPhoto = selection.photo
+    //   const selections = [selection.id]
+    //   yield put(act.photo.selections.add({ id: existedPhoto, selections }, { idx }))
+    // }
   }
 }
 
