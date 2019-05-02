@@ -12,6 +12,7 @@ const { getNewOOSClient, getFilesizeInBytes } = require('../common/dataUtil')
 const { error } = require('../common/log')
 const axios = require('axios')
 const uuid = require('uuid/v4')
+const { existsSync: exists } = require('fs')
 
 class Rebase extends Command {
   static get ACTION() { return PROJECT.REBASE }
@@ -75,8 +76,13 @@ class Sync extends Command {
       let result = yield client.put(project.id, project.file)
       let syncCover = ''
       if (cache) {
-        let coverId = uuid()
-        let coverResult = yield client.put(coverId, join(resolve(cache), '2_512.png'))
+        const coverId = uuid()
+        let coverResult = {}
+        if (exists(join(resolve(cache), '2_512.png'))) {
+          coverResult = yield client.put(coverId, join(resolve(cache), '2_512.png'))
+        } else {
+          coverResult = yield client.put(coverId, join(resolve(cache), '2_512.jpg'))
+        }
         syncCover = coverResult.url
       }
       if (result.res.status === 200) {
