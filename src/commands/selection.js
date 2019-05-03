@@ -44,25 +44,37 @@ class Sync extends Command {
     const { payload } = this.action
     const { labels, photo } = payload
     const idx = yield select(state => state.photos[payload.photo.id].selections.length)
-    console.log(yield select(state => state.photos))
-    // for (let i = 0; i < labels.length; i++) {
-    //   const label = labels[i]
-    //   let nPayload = {}
-    //   nPayload = {
-    //     angle: photo.angle,
-    //     mirror: photo.mirror,
-    //     photo: photo.id,
-    //     width: label.width,
-    //     height: label.height,
-    //     x: label.x,
-    //     y: label.y
-    //   }
-    //   const selection = yield call(db.transaction, tx =>
-    //     mod.selection.create(tx, null, nPayload))
-    //   const existedPhoto = selection.photo
-    //   const selections = [selection.id]
-    //   yield put(act.photo.selections.add({ id: existedPhoto, selections }, { idx }))
-    // }
+    const existedLabels = yield select(state => state.photos[payload.photo.id])
+    const labelObjs = existedLabels.labels
+    console.log(labelObjs)
+    for (let i = 0; i < labels.length; i++) {
+      let isNew = false
+      const label = labels[i]
+      if (!labelObjs.hasOwnProperty(label.labelId)) {
+        isNew = true
+      } else {
+        if (labelObjs[label.labelId].updatedTime !== label.updatedTime) {
+          isNew = true
+        }
+      }
+      if (isNew) {
+        const nPayload = {
+          angle: photo.angle,
+          mirror: photo.mirror,
+          photo: photo.id,
+          width: label.width,
+          height: label.height,
+          x: label.x,
+          y: label.y,
+          updatedTime: label.updatedTime
+        }
+        const selection = yield call(db.transaction, tx =>
+          mod.selection.create(tx, null, nPayload))
+        const existedPhoto = selection.photo
+        const selections = [selection.id]
+        yield put(act.photo.selections.add({ id: existedPhoto, selections }, { idx }))
+      }
+    }
   }
 }
 
