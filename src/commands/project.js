@@ -80,8 +80,10 @@ class Sync extends Command {
         let coverResult = {}
         if (exists(join(resolve(cache), '2_512.png'))) {
           coverResult = yield client.put(coverId, join(resolve(cache), '2_512.png'))
-        } else {
+        } else if (exists(join(resolve(cache), '2_512.jpg'))) {
           coverResult = yield client.put(coverId, join(resolve(cache), '2_512.jpg'))
+        } else {
+          return
         }
         syncCover = coverResult.url
       }
