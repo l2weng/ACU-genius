@@ -29,35 +29,27 @@ class LoadProjects extends Command {
         projects = response.data.data.projectQueryByUser
         for (let i = 0; i < projects.length; i++) {
           const project = projects[i]
-          if (project.syncStatus) {
-            const app = remote.app
-            let client = getNewOOSClient()
-            let newPath = app.getPath('userData')
-            newPath = join(newPath, 'project')
-            if (!fs.existsSync(newPath)) {
-              fs.mkdir(newPath, { recursive: true }, (err) => {
-                if (err) throw err
-              })
-            }
-            newPath = join(newPath, `${project.syncProjectFileName}.lbr`)
-            //if project file is his own
-            if (fs.existsSync(project.projectFile)) {
-              //未同步
-              if (project.syncProjectSize !== null &&
-                getFilesizeInBytes(project.projectFile) !==
-                project.syncProjectSize) {
+          //if project file is his own
+          if (!fs.existsSync(project.projectFile)) {
+            if (project.syncStatus) {
+              const app = remote.app
+              let client = getNewOOSClient()
+              let newPath = app.getPath('userData')
+              newPath = join(newPath, 'project')
+              if (!fs.existsSync(newPath)) {
+                fs.mkdir(newPath, { recursive: true }, (err) => {
+                  if (err) throw err
+                })
+              }
+              newPath = join(newPath, `${project.syncProjectFileName}.lbr`)
+              if (!fs.existsSync(newPath)) {
                 let result = yield client.get(project.localProjectId, newPath)
                 if (result.res.status === 200) {
                   project.projectFile = newPath
                 }
-              }
-            } else if (!fs.existsSync(newPath)) {
-              let result = yield client.get(project.localProjectId, newPath)
-              if (result.res.status === 200) {
+              }  else {
                 project.projectFile = newPath
               }
-            }  else {
-              project.projectFile = newPath
             }
           }
         }

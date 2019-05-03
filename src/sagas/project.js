@@ -2,7 +2,6 @@
 
 const assert = require('assert')
 const { OPEN, CLOSE, CLOSED, MIGRATIONS } = require('../constants/project')
-const { WORKSPACE } = require('../constants/header')
 const { Database } = require('../common/db')
 const { Cache } = require('../common/cache')
 const { warn, debug } = require('../common/log')

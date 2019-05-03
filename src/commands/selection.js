@@ -46,13 +46,10 @@ class Sync extends Command {
     const idx = yield select(state => state.photos[payload.photo.id].selections.length)
     const existedLabels = yield select(state => state.photos[payload.photo.id])
     const labelObjs = existedLabels.labels
-    console.log(labelObjs)
-    console.log(labels)
+
     for (let i = 0; i < labels.length; i++) {
       let isNew = false
       const label = labels[i]
-      console.log(labelObjs[label.labelId])
-
       if (!labelObjs.hasOwnProperty(label.labelId)) {
         isNew = true
       } else {
