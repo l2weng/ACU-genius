@@ -47,9 +47,12 @@ class Sync extends Command {
     const existedLabels = yield select(state => state.photos[payload.photo.id])
     const labelObjs = existedLabels.labels
     console.log(labelObjs)
+    console.log(labels)
     for (let i = 0; i < labels.length; i++) {
       let isNew = false
       const label = labels[i]
+      console.log(labelObjs[label.labelId])
+
       if (!labelObjs.hasOwnProperty(label.labelId)) {
         isNew = true
       } else {
@@ -66,13 +69,15 @@ class Sync extends Command {
           height: label.height,
           x: label.x,
           y: label.y,
-          updatedTime: label.updatedTime
+          updatedTime: label.updatedTime,
+          labelId: label.labelId
         }
         const selection = yield call(db.transaction, tx =>
           mod.selection.create(tx, null, nPayload))
         const existedPhoto = selection.photo
         const selections = [selection.id]
         yield put(act.photo.selections.add({ id: existedPhoto, selections }, { idx }))
+        return selections
       }
     }
   }
