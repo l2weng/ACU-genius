@@ -46,7 +46,7 @@ class Sync extends Command {
     const idx = yield select(state => state.photos[payload.photo.id].selections.length)
     const existedLabels = yield select(state => state.photos[payload.photo.id])
     const labelObjs = existedLabels.labels
-
+    let syncedSelections = []
     for (let i = 0; i < labels.length; i++) {
       let isNew = false
       const label = labels[i]
@@ -74,9 +74,10 @@ class Sync extends Command {
         const existedPhoto = selection.photo
         const selections = [selection.id]
         yield put(act.photo.selections.add({ id: existedPhoto, selections }, { idx }))
-        return selections
+        syncedSelections.push(selection)
       }
     }
+    return syncedSelections
   }
 }
 
