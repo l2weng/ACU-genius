@@ -13,6 +13,7 @@ module.exports = {
   REBASE: 'project.rebase',
   SAVE: 'project.save',
   UPDATE: 'project.update',
+  PROJECTS_CACHE: 'project.projectCache',
   UPDATE_USER_INFO: 'project.updateUserInfo',
   SYNC: 'project.sync',
 

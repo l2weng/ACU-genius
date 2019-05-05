@@ -43,8 +43,8 @@ class Sync extends Command {
     const { db } = this.options
     const { payload } = this.action
     const { labels, photo } = payload
-    const idx = yield select(state => state.photos[payload.photo.id].selections.length)
-    const existedLabels = yield select(state => state.photos[payload.photo.id])
+    const idx = yield select(state => state.photos[photo.id].selections.length)
+    const existedLabels = yield select(state => state.photos[photo.id])
     const labelObjs = existedLabels.labels
     let syncedSelections = []
     for (let i = 0; i < labels.length; i++) {
@@ -54,7 +54,7 @@ class Sync extends Command {
         isNew = true
       } else {
         if (labelObjs[label.labelId].updatedTime !== label.updatedTime) {
-          isNew = true
+          // console.log(yield select(state => state.photos[photo.id].selections)
         }
       }
       if (isNew) {
@@ -88,6 +88,7 @@ class Delete extends Command {
     const { db } = this.options
     const { payload } = this.action
     const { photo, selections } = payload
+    console.log(photo,selections)
 
     let ord = yield select(({ photos }) => photos[photo].selections)
     let idx = selections.map(id => ord.indexOf(id))

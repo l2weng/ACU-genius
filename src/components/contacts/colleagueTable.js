@@ -77,7 +77,7 @@ class ColleagueTable extends React.Component {
   }
 
   onSelectChange = (selectedRowKeys) => {
-    this.setState({ selectedUserIds: selectedRowKeys });
+    this.setState({ selectedUserIds: selectedRowKeys })
   }
 
   render() {

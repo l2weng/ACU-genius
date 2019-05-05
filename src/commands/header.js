@@ -7,7 +7,7 @@ const { remote } = require('electron')
 const act = require('../actions')
 const fs = require('fs')
 const axios = require('axios')
-const { getUrlFilterParams, getNewOOSClient, getFilesizeInBytes } = require('../common/dataUtil')
+const { getUrlFilterParams, getNewOOSClient } = require('../common/dataUtil')
 const { join } = require('path')
 const { apiServer } = ARGS
 const { error } = require('../common/log')
@@ -27,13 +27,14 @@ class LoadProjects extends Command {
         `${apiServer}/graphql?query={projectQueryByUser${query} { projectId name desc deadline projectFile type progress cover itemCount syncStatus syncCover remoteProjectFile localProjectId syncProjectFileName syncProjectFile syncProjectSize syncVersion isOwner } } `)
       if (response.status === 200) {
         projects = response.data.data.projectQueryByUser
+        let pCache = {}
         for (let i = 0; i < projects.length; i++) {
           const project = projects[i]
           //if project file is his own
           if (!fs.existsSync(project.projectFile)) {
             if (project.syncStatus) {
               const app = remote.app
-              let client = getNewOOSClient()
+              const client = getNewOOSClient()
               let newPath = app.getPath('userData')
               newPath = join(newPath, 'project')
               if (!fs.existsSync(newPath)) {
@@ -43,7 +44,7 @@ class LoadProjects extends Command {
               }
               newPath = join(newPath, `${project.syncProjectFileName}.lbr`)
               if (!fs.existsSync(newPath)) {
-                let result = yield client.get(project.localProjectId, newPath)
+                const result = yield client.get(project.localProjectId, newPath)
                 if (result.res.status === 200) {
                   project.projectFile = newPath
                 }
@@ -52,7 +53,9 @@ class LoadProjects extends Command {
               }
             }
           }
+          pCache[project.projectId] = project.syncVersion
         }
+        yield put(act.project.cacheProjects(pCache))
       }
       yield put(act.header.projectsLoaded({ projects }))
     } catch (err) {

@@ -49,6 +49,15 @@ module.exports = {
     }
   },
 
+  cacheProjects(payload, meta) {
+    return {
+      type: PROJECT.PROJECTS_CACHE,
+      error: (payload instanceof Error),
+      payload,
+      meta: { ipc: true, ...meta }
+    }
+  },
+
   save(payload, meta = {}) {
     return {
       type: PROJECT.SAVE,

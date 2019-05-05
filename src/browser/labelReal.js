@@ -65,7 +65,8 @@ class LabelReal extends EventEmitter {
     webgl: true,
     win: {},
     userInfo: {},
-    apiServer: 'http://47.105.236.123:8098/lr',
+    apiServer: 'http://127.0.0.1:3000/lr',
+    projectsCache: {},
     zoom: 1.0
   }
   // apiServer: 'http://47.105.236.123:8098/lr',
@@ -852,9 +853,7 @@ class LabelReal extends EventEmitter {
 
     ipc.on(USER.LOGOUT, () => {
       this.state.userInfo = {}
-      if (this.state != null) {
-        this.store.save.sync('state.json', this.state)
-      }
+      this.store.save.sync('state.json', this.state)
       this.showLogin()
       if (this.win) this.win.close()
     })
@@ -865,10 +864,13 @@ class LabelReal extends EventEmitter {
       if (!this.state.recent.hasOwnProperty(this.state.userInfo.user.userId)) {
         this.state.recent[this.state.userInfo.user.userId] = []
       }
-      if (this.state != null) {
-        this.store.save.sync('state.json', this.state)
-      }
+      this.store.save.sync('state.json', this.state)
       return this.open()
+    })
+
+    ipc.on(PROJECT.PROJECTS_CACHE, (_, data) => {
+      this.state.projectsCache = data
+      this.store.save.sync('state.json', this.state)
     })
 
     ipc.on(FLASH.HIDE, (_, { id, confirm }) => {
@@ -920,6 +922,7 @@ class LabelReal extends EventEmitter {
       userInfo: this.state.userInfo,
       machineId: machineIdSync({ original: true }),
       apiServer: this.state.apiServer,
+      projectsCache: this.state.projectsCache,
       version,
       webgl: this.state.webgl
     }
