@@ -35,13 +35,19 @@ class LoadProjects extends Command {
             if (project.syncStatus) {
               const app = remote.app
               const client = getNewOOSClient()
-              let newPath = join(join(app.getPath('userData'), 'project'), `${project.syncProjectFileName}.lbr`)
-              project.projectFile = newPath
+              let newPath = app.getPath('userData')
+              newPath = join(newPath, 'project')
               if (!fs.existsSync(newPath)) {
                 fs.mkdir(newPath, { recursive: true }, (err) => {
                   if (err) throw err
                 })
-                yield client.get(project.localProjectId, newPath)
+              }
+              newPath = join(newPath, `${project.syncProjectFileName}.lbr`)
+              if (!fs.existsSync(newPath)) {
+                const result = yield client.get(project.localProjectId, newPath)
+                if (result.res.status === 200) {
+                  project.projectFile = newPath
+                }
               }  else {
                 const { projectsCache } = ARGS
                 //check project version
