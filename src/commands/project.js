@@ -105,7 +105,7 @@ class Sync extends Command {
         if (syncResult.status === 200) {
           yield all([
             call(mod.project.save, db, { id: project.id, synced: true }),
-            put(act.project.upload({ ...payload, synced: 1 })),
+            put(act.project.updateSyncStatus({ ...payload, synced: 1 })),
             put(act.activity.update(this.action, { total, progress: 1 }))
           ])
         }

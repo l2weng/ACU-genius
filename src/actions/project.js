@@ -89,6 +89,14 @@ module.exports = {
     }
   },
 
+  updateSyncStatus(payload, meta = {}) {
+    return {
+      type: PROJECT.UPDATE_SYNC_STATUS,
+      payload,
+      meta: { ...meta }
+    }
+  },
+
   update(payload, meta = {}) {
     return {
       type: PROJECT.UPDATE,

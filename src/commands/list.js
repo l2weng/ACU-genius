@@ -10,6 +10,7 @@ const act = require('../actions')
 const actionsHeader = require('../actions/header')
 const mod = require('../models/list')
 const pMod = require('../models/photo')
+const projectMod = require('../models/project')
 const axios = require('axios')
 const { userInfo } = ARGS
 
@@ -84,7 +85,7 @@ class Create extends Command {
   *exec() {
     const { payload } = this.action
     const { db } = this.options
-    const { name, parent, syncProjectId } = payload
+    const { name, parent, syncProjectId, projectId } = payload
 
     const { children } = yield select(state => state.lists[parent])
     const idx = children.length
@@ -97,8 +98,12 @@ class Create extends Command {
     if (createResult.status === 200) {
       syncTaskId = createResult.data.obj.taskId
     }
-    let updateList = yield call(mod.update, db, { syncTaskId, id: list.id })
-    if (updateList) { list.syncTaskId = syncTaskId }
+    list.syncTaskId = syncTaskId
+    yield all([
+      call(mod.update, db, { syncTaskId, id: list.id }),
+      call(projectMod.save, db, { id: projectId, synced: false }),
+      put(act.project.updateSyncStatus({ ...payload, synced: 0 }))
+    ])
     this.undo = actions.delete(list.id)
     this.redo = actions.restore(list, { idx })
     return list

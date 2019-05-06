@@ -28,6 +28,8 @@ module.exports = {
         return { ...state, closed: new Date() }
       case PROJECT.UPLOAD:
         return { ...state, ...payload }
+      case PROJECT.UPDATE_SYNC_STATUS:
+        return { ...state, ...payload }
       case ITEM.INSERT:
         return inc(state)
       case ITEM.RESTORE:

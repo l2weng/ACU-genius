@@ -16,6 +16,7 @@ module.exports = {
   PROJECTS_CACHE: 'project.projectCache',
   UPDATE_USER_INFO: 'project.updateUserInfo',
   SYNC: 'project.sync',
+  UPDATE_SYNC_STATUS: 'project.updateSyncStatus',
 
   MODE: {
     HOME: 'home',

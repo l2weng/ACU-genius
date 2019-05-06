@@ -192,7 +192,7 @@ class ProjectSidebar extends React.PureComponent {
   }
 
   handleListSave = (payload) => {
-    this.props.onListSave({ syncProjectId: this.props.project.syncProjectId, ...payload })
+    this.props.onListSave({ syncProjectId: this.props.project.syncProjectId, projectId: this.props.project.id, ...payload })
   }
 
   handleTagCreate = (payload) => {

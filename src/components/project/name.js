@@ -21,7 +21,6 @@ class ProjectName extends React.PureComponent {
   }
 
   render() {
-    console.log(this.props.synced)
     return this.props.dt(
       <li className={cx(this.classes)}>
         <div className="list-node-container">
