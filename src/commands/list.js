@@ -102,7 +102,7 @@ class Create extends Command {
     yield all([
       call(mod.update, db, { syncTaskId, id: list.id }),
       call(projectMod.save, db, { id: projectId, synced: false }),
-      put(act.project.updateSyncStatus({ ...payload, synced: 0 }))
+      put(act.project.updateSyncStatus({ synced: 0 }))
     ])
     this.undo = actions.delete(list.id)
     this.redo = actions.restore(list, { idx })
