@@ -248,14 +248,20 @@ class ListNode extends React.PureComponent {
     return (
       <div>
         {workerView}
-        <span className="functionIcon"><Tooltip placement="top" title="完成任务">
-          <Popconfirm placement="right" title={'提交任务'} onConfirm={()=>this.props.onSubmitTask(this.props.list)} okText="Yes" cancelText="No">
-            <span style={{ color: getTaskColor(this.state.singleTaskStatus) }}> <Icon type="check" size="small"/></span>
-          </Popconfirm>
+        <span className="functionIcon"><Tooltip placement="right" title="分配任务">
+          <Icon type="user-add" size="small" onClick={() => this.props.onAddWorkers(SIDEBAR.TASK, list.syncTaskId, list.id)}/>
         </Tooltip>
         </span>
-        <span className="functionIcon"><Tooltip placement="right" title="分配任务">
-          <Icon type="user-add" size="small" onClick={() => this.props.onAddWorkers(SIDEBAR.TASK, this.props.list.syncTaskId, this.props.list.id)}/>
+      </div>)
+  }
+
+  renderTaskSubmit = (list) =>{
+    return (
+      <div>
+        <span className="functionIcon"><Tooltip placement="top" title="完成任务">
+          <Popconfirm placement="right" title={'提交任务'} onConfirm={()=>this.props.onSubmitTask(list)} okText="Yes" cancelText="No">
+            <span style={{ color: getTaskColor(this.state.singleTaskStatus) }}> <Icon type="check" size="small"/></span>
+          </Popconfirm>
         </Tooltip>
         </span>
       </div>)
@@ -290,6 +296,7 @@ class ListNode extends React.PureComponent {
             onChange={this.handleChange}/>
         </div>
         {this.props.isOwner ? this.renderAssign(this.props.list) : ''}
+        {this.renderTaskSubmit(this.props.list)}
       </div>
     )
   }
