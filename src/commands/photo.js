@@ -481,7 +481,9 @@ class Sync extends Command {
     const { userInfo } = ARGS
     let photosArray = []
     for (let i in photos) {
-      photosArray.push(photos[i])
+      if (!photos[i].syncPhotoId) {
+        photosArray.push(photos[i])
+      }
     }
     let total = photosArray.length
     for (let i = 0; i < photosArray.length; i++) {
@@ -510,12 +512,12 @@ class Sync extends Command {
         if (syncResult.status === 200) {
           yield call(mod.photo.syncPhoto, db, sPhoto.id, result.url, syncResult.data.obj.photoId)
         }
-        yield put(act.photo.upload(payload))
         yield put(act.activity.update(this.action, { total, progress: i + 1 }))
       } catch (e) {
         error(e.toString())
       }
     }
+    yield put(act.photo.upload(payload))
     yield put(act.project.sync(payload))
   }
 }

@@ -23,7 +23,7 @@ module.exports = {
   async load(db) {
     const [project, items] = await all([
       db.get(`
-        SELECT project_id AS id, name, base, owner FROM project LIMIT 1`),
+        SELECT project_id AS id, name, base, owner, synced FROM project LIMIT 1`),
       db.get(`
         SELECT COUNT (id) AS total
           FROM items LEFT OUTER JOIN trash USING (id)

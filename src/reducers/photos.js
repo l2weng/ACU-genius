@@ -29,7 +29,7 @@ module.exports = {
       case PHOTO.UPDATE:
         return update(state, payload, meta)
       case PHOTO.UPLOAD:
-        return state
+        return update(state, payload, meta)
       case PHOTO.LABEL_SYNC_SUCCESS:
         return state
       case PHOTO.NOTE.ADD:

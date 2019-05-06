@@ -345,7 +345,6 @@ class ProjectSidebar extends React.PureComponent {
       onSyncProject2Cloud,
       isOwner
     } = this.props
-
     let root = this.props.lists[this.props.root]
 
     const { modalVisible, colleagues } = this.state
@@ -376,6 +375,7 @@ class ProjectSidebar extends React.PureComponent {
                   <ProjectName
                     onSyncProject2Cloud={onSyncProject2Cloud}
                     name={project.name}
+                    synced={project.synced}
                     isOwner={isOwner}
                     projectId={project.id || ''}
                     onAddWorkers={this.handleAddWorkers}
@@ -479,7 +479,8 @@ class ProjectSidebar extends React.PureComponent {
     project: shape({
       file: string,
       name: string,
-      items: number
+      items: number,
+      synced: number
     }).isRequired,
     root: number.isRequired,
     tagSelection: arrayOf(number).isRequired,

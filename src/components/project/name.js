@@ -8,7 +8,7 @@ const { Editable } = require('../editable')
 const { SIDEBAR } = require('../../constants')
 const { isValidImage } = require('../../image')
 const cx = require('classnames')
-const { bool, func, string } = require('prop-types')
+const { bool, func, string, number } = require('prop-types')
 const {  Tooltip, Icon } = require('antd')
 
 class ProjectName extends React.PureComponent {
@@ -21,6 +21,7 @@ class ProjectName extends React.PureComponent {
   }
 
   render() {
+    console.log(this.props.synced)
     return this.props.dt(
       <li className={cx(this.classes)}>
         <div className="list-node-container">
@@ -35,12 +36,12 @@ class ProjectName extends React.PureComponent {
               onChange={this.props.onChange}/>
           </div>
           {this.props.isOwner ? <div>
-            <span className="functionIcon" onClick={this.props.onSyncProject2Cloud}><Tooltip placement="right" title="同步到云">
-              <Icon type="cloud" />
+            <span className="functionIcon" style={{ fontSize: '20px' }} onClick={this.props.onSyncProject2Cloud}><Tooltip placement="right" title="同步到云">
+              <Icon type="cloud" theme="twoTone" twoToneColor={this.props.synced === 1 ? '#8da7d3' : '#e96529'} />
             </Tooltip>
             </span>
             {/*<span className="functionIcon" onClick={() => this.props.onAddWorkers(SIDEBAR.PROJECT, this.props.projectId)}><Tooltip placement="right" title="分配项目">*/}
-              {/*<Icon type="user-add"/>*/}
+            {/*<Icon type="user-add"/>*/}
             {/*</Tooltip>*/}
             {/*</span>*/}
           </div> : ''}
@@ -69,6 +70,7 @@ class ProjectName extends React.PureComponent {
     onDrop: func.isRequired,
     onSyncProject2Cloud: func.isRequired,
     onAddWorkers: func.isRequired,
+    synced: number,
   }
 }
 

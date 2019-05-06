@@ -65,6 +65,7 @@ class Sync extends Command {
   *exec() {
     let { payload } = this.action
     let { project, cache } = payload
+    let { db, id } = this.options
     let client = getNewOOSClient()
     let total = 1
     let { userInfo } = ARGS
@@ -103,7 +104,8 @@ class Sync extends Command {
         const syncResult = yield axios.post(`${ARGS.apiServer}/projects/syncProject`, syncProject)
         if (syncResult.status === 200) {
           yield all([
-            put(act.project.upload(payload)),
+            call(mod.project.save, db, { id: project.id, synced: true }),
+            put(act.project.upload({ ...payload, synced: 1 })),
             put(act.activity.update(this.action, { total, progress: 1 }))
           ])
         }

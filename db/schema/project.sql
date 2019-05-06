@@ -20,6 +20,7 @@ BEGIN TRANSACTION;
 CREATE TABLE project (
   project_id  TEXT     NOT NULL PRIMARY KEY,
   name        TEXT     NOT NULL,
+  synced  BOOLEAN  NOT NULL DEFAULT 0,
   created     NUMERIC  NOT NULL DEFAULT CURRENT_TIMESTAMP, base TEXT, owner TEXT
 
   CHECK (project_id != ''),

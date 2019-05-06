@@ -27,7 +27,7 @@ module.exports = {
       case PROJECT.CLOSED:
         return { ...state, closed: new Date() }
       case PROJECT.UPLOAD:
-        return state
+        return { ...state, ...payload }
       case ITEM.INSERT:
         return inc(state)
       case ITEM.RESTORE:
