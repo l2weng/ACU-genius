@@ -56,7 +56,7 @@ class Import extends ImportCommand {
   static get ACTION() { return ITEM.IMPORT }
 
   *exec() {
-    let { db } = this.options
+    let { db, id } = this.options
     let { files, list } = this.action.payload
 
     let items = []
@@ -128,6 +128,10 @@ class Import extends ImportCommand {
     }
 
     if (items.length) {
+      yield all([
+        call(mod.project.save, db, { id: id, synced: false }),
+        put(act.project.updateSyncStatus({ synced: 0 }))
+      ])
       this.undo = act.item.delete(items)
       this.redo = act.item.restore(items)
     }
