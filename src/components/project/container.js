@@ -233,6 +233,7 @@ class ProjectContainer extends Component {
       showProject,
       references,
       project,
+      projects,
       ...props
     } = this.props
     const isOwner = project.owner === userInfo.user.userId
@@ -287,18 +288,20 @@ class ProjectContainer extends Component {
           <IconSpin/>
         </div>
       </div>)
-    const projectSummary = dt(<div style={{ height: '100%' }}
+    const projectSummary = (<div style={{ height: '100%' }}
       className={cx(this.classes)}
       ref={this.setContainer}
-      onContextMenu={this.handleContextMenu} ><ProjectSummary {...props}
+      onContextMenu={this.handleContextMenu} >
+      {projects.length > 0 ? <ProjectSummary {...props}
         nav={nav}
         items={items}
         data={data}
         isActive
+        projects={projects}
         isEmpty={this.isEmpty}
         columns={columns}
         offset={this.state.offset}
-        photos={photos}/></div>)
+        photos={photos}/> : ''}</div>)
     return showProject ? mainProject : projectSummary
   }
 

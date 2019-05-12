@@ -12,20 +12,63 @@ const { Members } = require('./members')
 const { array, bool, func, object, } = require('prop-types')
 const TabPane = Tabs.TabPane
 const Option = Select.Option
+const axios = require('axios')
 
 class ProjectSummary extends PureComponent {
-  componentDidMount() {
 
+  constructor(props) {
+    super(props)
+    console.log(props)
+    this.state = {
+      summaryActiveTab: '1',
+      activeProjectId: ''
+    }
+  }
+
+  componentDidMount() {
+    console.log(this.props)
+  }
+
+  handleSelectProject = (projectId) =>{
+    this.setState({ activeProjectId: projectId })
+    this.fetchSummary(projectId)
+  }
+
+  fetchSummary = () =>{
+    const { summaryActiveTab } = this.state
+    let { activeProjectId } = this.state
+
+    switch (summaryActiveTab) {
+      case '1':
+        this.fetchProjectSummary(activeProjectId)
+        break
+      case '2':
+        break
+      default:
+        return
+    }
+  }
+
+  fetchProjectSummary = (projectId) =>{
+    axios.post(`${ARGS.apiServer}/summarys/query`, { projectId }).then((result) =>{
+      console.log(result)
+    }).catch(function (error) {
+      console.log(error)
+    })
+  }
+
+  switchProjectSummaryTab = (tab) =>{
+    this.setState({ summaryActiveTab: tab })
   }
 
   renderTitle() {
     const { projects } = this.props
-    if (projects.length > 0) {
+    if (projects && projects.length > 0) {
       return (
         <div>
           <Form layout="inline">
             <Form.Item  label="项目">
-              <Select style={{ width: 120 }} defaultValue={projects[0].projectId}>
+              <Select style={{ width: 120 }} defaultValue={projects[0].projectId} onChange={this.handleSelectProject}>
                 {projects.map(project=>{
                   return (<Option value={project.projectId} key={project.projectId}>{project.name}</Option>)
                 })}
@@ -47,13 +90,15 @@ class ProjectSummary extends PureComponent {
       isEmpty,
       ...props
     } = this.props
+    const { summaryActiveTab } = this.state
+
     return (
       <div>
         <Row gutter={24}>
           <Col span={24}>
             <Card title={this.renderTitle()} bordered={false}>
-              <Tabs style={{ textAlign: 'left' }}
-                defaultActiveKey="1"
+              <Tabs style={{ textAlign: 'left' }} onChange={this.switchProjectSummaryTab}
+                defaultActiveKey={summaryActiveTab}
                 tabPosition="left">
                 <TabPane tab="项目概述" key="1"><Summary/></TabPane>
                 <TabPane tab="图片数据" key="2"><PhotoData {...props}
