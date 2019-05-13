@@ -87,7 +87,7 @@ class TasksTable extends React.Component {
   render() {
     const columns = [
       {
-        key: '1',
+        key: 'name',
         title: '名称',
         dataIndex: 'name',
         width: '20%',
@@ -95,17 +95,17 @@ class TasksTable extends React.Component {
       }, {
         title: '项目',
         dataIndex: 'project.name',
-        key: '2',
+        key: 'project.name',
         width: '20%',
       }, {
         title: '进度',
         dataIndex: 'progress',
-        key: '3',
+        key: 'progress',
         width: '15%',
       }, {
         title: '状态',
         dataIndex: 'workStatus',
-        key: '4',
+        key: 'workStatus',
         width: '20%',
         render: (text, record) => (
           <div><Badge color={getTaskColor(record.workStatus)} text={getTaskStatusDesc(record.workStatus)} /></div>

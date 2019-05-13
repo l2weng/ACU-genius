@@ -80,13 +80,13 @@ class LoadMyTasks extends Command {
       let response
       if (type === HEAD.MY_TASKS) {
         response = yield axios.get(
-          `${apiServer}/graphql?query={taskQueryByOwner${query}  { taskId name type localTaskId progress projectId createdAt workStatus project { projectId name deadline } }} `)
+          `${apiServer}/graphql?query={taskQueryByOwner${query}  { taskId key:taskId name type localTaskId progress projectId createdAt workStatus project { projectId name deadline } }} `)
         if (response.status === 200) {
           tasks = response.data.data.taskQueryByOwner
         }
       } else if (type === HEAD.JOINED_TASKS) {
         response = yield axios.get(
-          `${apiServer}/graphql?query={taskQueryByUser${query}  { taskId name type localTaskId progress projectId createdAt workStatus project { projectId name deadline } }} `)
+          `${apiServer}/graphql?query={taskQueryByUser${query}  { taskId key:taskId name type localTaskId progress projectId createdAt workStatus project { projectId name deadline } }} `)
         if (response.status === 200) {
           tasks = response.data.data.taskQueryByUser
         }

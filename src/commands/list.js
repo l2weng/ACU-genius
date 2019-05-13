@@ -23,7 +23,7 @@ class Load extends Command {
     const { project } = payload
     const isOwner = project.owner === userInfo.user.userId
     let listResult = {}
-    if (isOwner) { listResult =  yield call(mod.all, db) } else { listResult = yield call(mod.myAll, db) }
+    if (isOwner) { listResult =  yield call(mod.all, db) } else { listResult = yield call(mod.loadMyList, db) }
     const listArr = Object.values(listResult)
     if (listArr.length > 0) {
       for (let i = 0; i < listArr.length; i++) {

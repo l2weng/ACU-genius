@@ -105,7 +105,7 @@ function *setup(db, project) {
     put(act.history.drop()),
     put(act.list.load({ project: project })),
     put(act.tag.load()),
-    put(act.item.load()),
+    put(act.item.load({ project: project })),
     put(act.photo.load()),
     put(act.references.load()),
     put(act.metadata.load()),

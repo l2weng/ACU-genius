@@ -21,6 +21,7 @@ const { isArray } = Array
 const { writeFile: write } = require('fs')
 const { win } = require('../window')
 const { groupedByTemplate } = require('../export')
+const { userInfo } = ARGS
 
 const {
   getGroupedItems,
@@ -192,9 +193,19 @@ class Load extends Command {
   *exec() {
     const { db } = this.options
     const { payload } = this.action
-
-    const items = yield call(db.seq, conn =>
+    const { project } = payload
+    const isOwner = project.owner === userInfo.user.userId
+    let items = {}
+    if (isOwner) {
+      items =  yield call(db.seq, conn =>
       mod.item.load(conn, payload))
+    } else {
+      const myListItems = yield call(mod.list.loadMyListItems, db)
+      if (myListItems.length > 0) {
+        items = yield call(db.seq, conn =>
+          mod.item.load(conn, myListItems))
+      }
+    }
 
     return items
   }

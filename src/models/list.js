@@ -32,7 +32,7 @@ module.exports = mod.list = {
     return lists
   },
 
-  async myAll(db) {
+  async loadMyList(db) {
     let lists = {}
 
     await db.each(
@@ -57,6 +57,26 @@ module.exports = mod.list = {
       })
 
     return lists
+  },
+
+  async loadMyListItems(db) {
+    let listItems = []
+
+    await db.each(
+      ...select({ id: 'list_id', parent: 'parent_list_id', itemId: 'id',  workers: 'workers' })
+        .from('lists')
+      .order('parent, lists.position')
+      .join('list_items', { using: 'list_id' }),
+      ({ itemId, workers }) => {
+        if (!__.isEmpty(workers)) {
+          let filteredResult = JSON.parse(workers).filter(worker=>worker.userId === userInfo.user.userId)
+          if (filteredResult.length > 0) {
+            listItems.push(itemId)
+          }
+        }
+      })
+
+    return listItems
   },
 
   async create(db, { name, parent, position }) {
