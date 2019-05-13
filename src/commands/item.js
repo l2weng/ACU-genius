@@ -198,7 +198,7 @@ class Load extends Command {
     let items = {}
     if (isOwner) {
       items =  yield call(db.seq, conn =>
-      mod.item.load(conn, payload))
+      mod.item.load(conn, null))
     } else {
       const myListItems = yield call(mod.list.loadMyListItems, db)
       if (myListItems.length > 0) {

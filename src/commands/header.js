@@ -51,9 +51,9 @@ class LoadProjects extends Command {
                 const { projectsCache } = ARGS
                 //check project version
                 if (projectsCache[project.projectId] !== project.syncVersion) {
-                  const result = yield client.get(project.localProjectId, newPath)
-                  if (result.res.status === 200) { project.projectFile = newPath }
+                  yield client.get(project.localProjectId, newPath)
                 }
+                project.projectFile = newPath
               }
             }
           }
