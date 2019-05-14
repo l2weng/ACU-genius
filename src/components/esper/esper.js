@@ -15,6 +15,7 @@ const debounce = require('lodash.debounce')
 const throttle = require('lodash.throttle')
 const cx = require('classnames')
 const { floor, min } = Math
+const { message } = require('antd')
 
 const {
   arrayOf, bool, func, node, number, object, shape, string
@@ -89,6 +90,14 @@ class Esper extends PureComponent {
   }
 
   componentWillReceiveProps(props) {
+    // if(props.photo ){
+    //   if(props.photo.hasOwnProperty('labelSynced') && props.photo.labelSynced === true){
+    //     message.success('Save successfully', 1.5)
+    //   }
+    // }
+    // if (props.photo && props.photo.hasOwnProperty('labelSynced') && props.photo.labelSynced === true) {
+    //   message.success('Save successfully', 1.5)
+    // }
     if (!shallow(props, this.props)) {
       const state = this.getStateFromProps(props)
 
@@ -667,8 +676,8 @@ class Esper extends PureComponent {
     this.setState({ hasTabFocus: false })
   }
 
-
   render() {
+    console.log(this.props)
     const { isDisabled, isSelectionActive, tabIndex } = this
     const tool = this.state.quicktool || this.state.tool
 

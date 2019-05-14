@@ -91,7 +91,6 @@ const mod = {
     },
 
     async update(db, photo, updatedTime) {
-      console.log(photo, updatedTime)
       return db.run(`
           UPDATE selections
             SET updatedTime= ?

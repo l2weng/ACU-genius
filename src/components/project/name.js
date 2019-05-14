@@ -26,7 +26,8 @@ class ProjectName extends React.PureComponent {
   }
 
   componentWillReceiveProps(props) {
-    if ((this.props.synced !== props.synced) && (props.synced === 1)) {
+    if (this.props.synced && (this.props.synced !== props.synced) &&
+      (props.synced === 1)) {
       message.success('Sync successfully')
     }
   }

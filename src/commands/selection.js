@@ -88,7 +88,6 @@ class Delete extends Command {
     const { db } = this.options
     const { payload } = this.action
     const { photo, selections } = payload
-    console.log(photo,selections)
 
     let ord = yield select(({ photos }) => photos[photo].selections)
     let idx = selections.map(id => ord.indexOf(id))
