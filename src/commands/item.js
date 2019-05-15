@@ -145,11 +145,15 @@ class Delete extends Command {
   static get ACTION() { return ITEM.DELETE }
 
   *exec() {
-    const { db } = this.options
+    const { db, id } = this.options
     const ids = this.action.payload
 
     yield call(mod.item.delete, db, ids)
     yield put(act.item.bulk.update([ids, { deleted: true }], { search: true }))
+    yield all([
+      call(mod.project.save, db, { id: id, synced: false }),
+      put(act.project.updateSyncStatus({ synced: 0 }))
+    ])
 
     this.undo = act.item.restore(ids)
 
