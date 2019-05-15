@@ -136,7 +136,9 @@ class Delete extends Command {
   static get ACTION() { return LIST.DELETE }
 
   *exec() {
-    const { payload: id } = this.action
+    console.log(this.action)
+    const { payload } = this.action
+    const { id, syncTaskId } = payload
     const { db } = this.options
     const { lists } = yield select()
 
@@ -152,6 +154,7 @@ class Delete extends Command {
     })
 
     yield put(actions.remove(id))
+    yield axios.post(`${ARGS.apiServer}/tasks/remove`, { taskId: syncTaskId })
 
     this.undo = actions.restore(original, { idx })
 

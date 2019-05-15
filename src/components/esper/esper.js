@@ -90,14 +90,6 @@ class Esper extends PureComponent {
   }
 
   componentWillReceiveProps(props) {
-    // if(props.photo ){
-    //   if(props.photo.hasOwnProperty('labelSynced') && props.photo.labelSynced === true){
-    //     message.success('Save successfully', 1.5)
-    //   }
-    // }
-    // if (props.photo && props.photo.hasOwnProperty('labelSynced') && props.photo.labelSynced === true) {
-    //   message.success('Save successfully', 1.5)
-    // }
     if (!shallow(props, this.props)) {
       const state = this.getStateFromProps(props)
 
@@ -677,7 +669,6 @@ class Esper extends PureComponent {
   }
 
   render() {
-    console.log(this.props)
     const { isDisabled, isSelectionActive, tabIndex } = this
     const tool = this.state.quicktool || this.state.tool
 

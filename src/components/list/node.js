@@ -196,7 +196,7 @@ class ListNode extends React.PureComponent {
         this.props.onClick(this.props.list)
       }
 
-      this.props.onContextMenu(event, 'list', this.props.list.id)
+      this.props.onContextMenu(event, 'list', this.props.list)
     }
   }
 
