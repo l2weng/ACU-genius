@@ -113,6 +113,7 @@ class Import extends ImportCommand {
         yield all([
           put(act.item.insert(item)),
           put(act.photo.insert(photo)),
+          put(act.photo.load()),
           put(act.activity.update(this.action, { total, progress: i + 1 }))
         ])
 
