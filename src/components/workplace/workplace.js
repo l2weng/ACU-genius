@@ -34,7 +34,12 @@ class Workplace extends PureComponent {
     if (!item.syncStatus && !exists(item.projectFile)) {
       openNotification('warning', '提示', `项目: ${item.name} 尚未同步, 暂时无法查看`)
     } else {
-      this.props.onProjectOpen(item.projectFile)
+      const { project } = this.props
+      if (project.id === item.localProjectId) {
+        this.props.onProjectOpen(item.projectFile, false)
+      } else {
+        this.props.onProjectOpen(item.projectFile, true)
+      }
     }
   }
 
@@ -162,8 +167,10 @@ module.exports = {
       tasks: state.header.tasks || []
     }),
     dispatch => ({
-      onProjectOpen(path) {
-        dispatch(actions.project.open(path, HEAD.WORKSPACE))
+      onProjectOpen(path, needOpen) {
+        if (needOpen) {
+          dispatch(actions.project.open(path))
+        }
         dispatch(actions.ui.headerSwitch({ activeTab: HEAD.WORKSPACE }))
       },
       fetchProjects(typeFlag = false, id) {
