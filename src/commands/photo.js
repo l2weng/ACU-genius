@@ -522,7 +522,7 @@ class Sync extends Command {
         }
         const syncResult = yield axios.post(`${ARGS.apiServer}/photos/syncPhoto`, syncPhoto)
         if (syncResult.status === 200) {
-          yield call(mod.photo.syncPhoto, db, sPhoto.id, result.url, syncResult.data.obj.photoId, syncPhoto.syncFileName)
+          yield call(mod.photo.syncPhoto, db, sPhoto.id, result.url, syncResult.data.obj.photoId)
         }
         yield put(act.activity.update(this.action, { total, progress: i + 1 }))
       } catch (e) {
