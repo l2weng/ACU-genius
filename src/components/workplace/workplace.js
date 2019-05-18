@@ -108,17 +108,20 @@ class Workplace extends PureComponent {
                 dataSource={[...projects]}
                 renderItem={item =>
                   <List.Item key={item.projectId}>
-                    <Card
-                      hoverable
-                      style={{ width: 180, height: 273 }}
-                      cover={<img alt={item.name}
-                        src={this.getCacheCover(item.syncCover)}/>}>
-                      <Meta
-                        title={
+                    <div onClick={()=>this.openProject(
+                      item)}>
+                      <Card
+                        hoverable
+                        style={{ width: 180, height: 273 }}
+                        cover={<img alt={item.name}
+                          src={this.getCacheCover(item.syncCover)}/>}>
+                        <Meta
+                          title={
                           this.renderTitle(item)
                         }
-                        description={item.name}/>
-                    </Card>
+                          description={item.name}/>
+                      </Card>
+                    </div>
                   </List.Item>
                 }/>
             </Card>
