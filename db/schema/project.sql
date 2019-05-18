@@ -59,6 +59,7 @@ CREATE TABLE photos (
   position     INTEGER,
   path         TEXT     NOT NULL,
   syncFileUrl  TEXT,
+  syncFileName TEXT,
   syncPhotoId  TEXT,
   protocol     TEXT     NOT NULL DEFAULT 'file',
   mimetype     TEXT     NOT NULL,

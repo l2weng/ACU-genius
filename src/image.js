@@ -2,14 +2,13 @@
 
 require('./common/promisify')
 
-const { basename, extname, dirname, join } = require('path')
-const nodePath = require('path')
+const { basename, extname, dirname } = require('path')
 const { createReadStream, statAsync: stat } = require('fs')
 const { createHash } = require('crypto')
 const { exif } = require('./exif')
-const { nativeImage, remote } = require('electron')
+const { nativeImage } = require('electron')
 const { assign } = Object
-const { warn, debug, info } = require('./common/log')
+const { warn, debug } = require('./common/log')
 const MIME = require('./constants/mime')
 const { getNewOOSClient, getOSSOjbectName } = require('./common/dataUtil')
 const fs = require('fs')
@@ -23,15 +22,15 @@ class Image {
 
   static download(path, syncFileUrl, newFileName, newPath) {
     // if(local)
-    let fields = { host: '127.0.0.1', port: '8188', directory: dirname(path), fileName: newFileName, newPath }
+    // let fields = { host: '127.0.0.1', port: '8188', directory: dirname(path), fileName: newFileName, newPath }
     // return (new Image(fields).download(fields))
     //if(cloud)
+    let fields = { directory: dirname(path), fileName: newFileName, newPath }
     return (new Image(fields).downloadFromCloud(fields, syncFileUrl))
   }
 
   static async check({
     path,
-    syncFileUrl,
     consolidated,
     created,
     checksum
@@ -47,30 +46,12 @@ class Image {
         status.hasChanged = (status.image.checksum !== checksum)
       }
     } catch (error) {
-      const app = remote.app
-      let newPath = app.getPath('userData')
-      newPath = join(newPath, 'project')
-      if (!fs.existsSync(newPath)) {
-        fs.mkdir(newPath, { recursive: true }, (err) => {
-          if (err) throw err
-        })
-      }
-      let newFileName = nodePath.win32.basename(path)
-      if (!fs.existsSync(`${newPath}/${newFileName}`)) {
-        await Image.download(path, syncFileUrl, newFileName, newPath)
-      }
-      try {
-        status.image = await Image.read(`${newPath}/${newFileName}`)
-        status.hasChanged = (status.image.checksum !== checksum)
-      } catch (error) {
-        debug(`image check failed for ${path}: ${error.message}`, {
-          stack: error.stack
-        })
-        status.hasChanged = true
-        status.image = null
-        status.error = error
-      }
-      info('after....')
+      debug(`image check failed for ${path}: ${error.message}`, {
+        stack: error.stack
+      })
+      status.hasChanged = true
+      status.image = null
+      status.error = error
     }
 
     return status
@@ -194,7 +175,7 @@ class Image {
   }
 
   downloadFromCloud(fields, syncFileUrl) {
-    let { host, port, directory, fileName, newPath } = fields
+    let { fileName, newPath } = fields
     let objName = getOSSOjbectName(syncFileUrl)
     let client = getNewOOSClient()
     return new Promise(async (resolve)=>{

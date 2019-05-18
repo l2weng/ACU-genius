@@ -380,8 +380,8 @@ module.exports = {
     ))
   },
 
-  async syncPhoto(db, id, syncFileUrl, syncPhotoId) {
+  async syncPhoto(db, id, syncFileUrl, syncPhotoId, syncFileName) {
     return await db.run(
-      ...update('photos').set({ syncFileUrl, syncPhotoId }).where({ id }))
+      ...update('photos').set({ syncFileUrl, syncPhotoId, syncFileName }).where({ id }))
   }
 }

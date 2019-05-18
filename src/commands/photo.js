@@ -2,6 +2,7 @@
 
 const assert = require('assert')
 const { all, call, put, select } = require('redux-saga/effects')
+const { remote } = require('electron')
 const { Command } = require('./command')
 const { ImportCommand } = require('./import')
 const { fail, open } = require('../dialog')
@@ -19,6 +20,7 @@ const { error } = require('../common/log')
 const uuid = require('uuid/v4')
 const nodePath = require('path')
 const axios = require('axios')
+const { existsSync: exists } = require('fs')
 
 class Consolidate extends ImportCommand {
   static get ACTION() { return PHOTO.CONSOLIDATE }
@@ -42,6 +44,16 @@ class Consolidate extends ImportCommand {
 
     for (let i = 0, total = photos.length; i < total; ++i) {
       let photo = photos[i]
+
+      if (photo.path && !exists(photo.path) && photo.syncFileUrl) {
+        const app = remote.app
+        let newPath = nodePath.join(app.getPath('userData'), 'project')
+        let newFileName = nodePath.win32.basename(photo.path)
+        if (!exists(`${newPath}/${newFileName}`)) {
+          yield Image.download(photo.path, photo.syncFileUrl, newFileName, newPath)
+          photo.path = `${newPath}/${newFileName}`
+        }
+      }
 
       try {
         let { image, hasChanged, error } = yield call(Image.check, photo, meta)
@@ -510,7 +522,7 @@ class Sync extends Command {
         }
         const syncResult = yield axios.post(`${ARGS.apiServer}/photos/syncPhoto`, syncPhoto)
         if (syncResult.status === 200) {
-          yield call(mod.photo.syncPhoto, db, sPhoto.id, result.url, syncResult.data.obj.photoId)
+          yield call(mod.photo.syncPhoto, db, sPhoto.id, result.url, syncResult.data.obj.photoId, syncPhoto.syncFileName)
         }
         yield put(act.activity.update(this.action, { total, progress: i + 1 }))
       } catch (e) {
