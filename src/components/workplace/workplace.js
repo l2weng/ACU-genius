@@ -184,9 +184,6 @@ module.exports = {
       },
       auditTask(...args) {
         dispatch(actions.list.submitTask(...args))
-      },
-      fetchSelections(userId) {
-        dispatch(actions.header.loadMyTasks({ userId }))
       }
     }),
   )(Workplace),

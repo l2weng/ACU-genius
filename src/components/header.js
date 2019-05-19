@@ -14,7 +14,7 @@ const { userInfo } = ARGS
 const _ = require('underscore')
 
 const {
-   func, string
+   func, string, object
 } = require('prop-types')
 
 class Header extends React.Component {
@@ -32,7 +32,7 @@ class Header extends React.Component {
         this.props.reloadTasks(userInfo.user.userId, this.state.taskType)
       }
     }
-    this.props.switchTab(tabName)
+    this.props.switchTab(tabName, this.props.project)
   }
 
   switchTask = (taskTab) =>{
@@ -59,6 +59,7 @@ class Header extends React.Component {
     switchTab: func,
     reloadProjects: func,
     reloadTasks: func,
+    project: object
   }
 }
 
@@ -66,10 +67,17 @@ module.exports = {
   Header: connect(
     state => ({
       activeTab: state.ui.activeTab,
+      project: state.project,
     }),
     dispatch => ({
-      switchTab(tabName) {
-        dispatch(actions.ui.headerSwitch({ activeTab: tabName }))
+      switchTab(tabName, project) {
+        if (tabName === HEAD.WORKSPACE) {
+          console.log({ project: project })
+          // dispatch(actions.list.load, { project: project })
+          dispatch(actions.ui.headerSwitch({ activeTab: tabName }))
+        } else {
+          dispatch(actions.ui.headerSwitch({ activeTab: tabName }))
+        }
       },
       reloadProjects(typeFlag = false, id) {
         dispatch(actions.header.loadProjects({ typeFlag, id }))

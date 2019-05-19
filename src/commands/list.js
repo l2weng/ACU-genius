@@ -21,6 +21,7 @@ class Load extends Command {
     const { db } = this.options
     const { payload } = this.action
     const { project } = payload
+    console.log('list...load',project)
     const isOwner = project.owner === userInfo.user.userId
     let listResult = {}
     if (isOwner) { listResult =  yield call(mod.all, db) } else { listResult = yield call(mod.loadMyList, db) }
