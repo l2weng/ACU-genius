@@ -16,7 +16,8 @@ class LoadProjects extends Command {
   static get ACTION() { return HEAD.PROJECTS }
 
   * exec() {
-    let { typeFlag, id } = this.action.payload
+    const { typeFlag, id } = this.action.payload
+    const { projectsCache } = ARGS
     let query
     query = typeFlag ?
       getUrlFilterParams({ userId: id }, ['userId']) :
@@ -28,38 +29,29 @@ class LoadProjects extends Command {
       if (response.status === 200) {
         projects = response.data.data.projectQueryByUser
         let pCache = {}
+        const app = remote.app
+        const client = getNewOOSClient()
+        let newPath = join(app.getPath('userData'), 'project')
         for (let i = 0; i < projects.length; i++) {
           const project = projects[i]
           //if project file is his own
           if (!fs.existsSync(project.projectFile)) {
             if (project.syncStatus) {
-              const app = remote.app
-              const client = getNewOOSClient()
-              let newPath = join(app.getPath('userData'), 'project')
               if (!fs.existsSync(newPath)) {
                 fs.mkdir(newPath, { recursive: true }, (err) => {
                   if (err) throw err
                 })
               }
               newPath = join(newPath, `${project.syncProjectFileName}.lbr`)
-              if (!fs.existsSync(newPath)) {
-                const result = yield client.get(project.localProjectId, newPath)
-                if (result.res.status === 200) {
-                  project.projectFile = newPath
-                }
-              }  else {
-                const { projectsCache } = ARGS
-                //check project version
-                if (projectsCache[project.projectId] !== project.syncVersion) {
-                  yield client.get(project.localProjectId, newPath)
-                }
-                project.projectFile = newPath
+              if (!fs.existsSync(newPath) || projectsCache[project.projectId] !== project.syncVersion) {
+                yield client.get(project.localProjectId, newPath)
+                pCache[project.projectId] = project.syncVersion
+                yield put(act.project.cacheProjects(pCache))
               }
             }
+            project.projectFile = newPath
           }
-          pCache[project.projectId] = project.syncVersion
         }
-        yield put(act.project.cacheProjects(pCache))
       }
       yield put(act.header.projectsLoaded({ projects }))
     } catch (err) {

@@ -44,7 +44,7 @@ class Consolidate extends ImportCommand {
 
     for (let i = 0, total = photos.length; i < total; ++i) {
       let photo = photos[i]
-
+      console.log(photo)
       if (photo.path && !exists(photo.path) && photo.syncFileUrl) {
         const app = remote.app
         let newPath = nodePath.join(app.getPath('userData'), 'project')
