@@ -162,18 +162,6 @@ class Image {
     })
   }
 
-  download(fields) {
-    let { host, port, directory, fileName, newPath } = fields
-    return new Promise(async (resolve)=>{
-      let fw = fs.createWriteStream(`${newPath}/${fileName}`)
-      await request(`http://${host}:${port}/file?directory=${directory}&fileName=${fileName}`)
-      .pipe(fw)
-      .on('finish', (img) => {
-        resolve(img)
-      })
-    })
-  }
-
   downloadFromCloud(fields, syncFileUrl) {
     let { fileName, newPath } = fields
     let objName = getOSSOjbectName(syncFileUrl)
