@@ -31,9 +31,9 @@ class LoadProjects extends Command {
         let pCache = {}
         const app = remote.app
         const client = getNewOOSClient()
-        let newPath = join(app.getPath('userData'), 'project')
         for (let i = 0; i < projects.length; i++) {
           const project = projects[i]
+          let newPath = join(app.getPath('userData'), 'project')
           //if project file is his own
           if (!fs.existsSync(project.projectFile)) {
             if (project.syncStatus) {
@@ -48,8 +48,8 @@ class LoadProjects extends Command {
                 pCache[project.projectId] = project.syncVersion
                 yield put(act.project.cacheProjects(pCache))
               }
+              project.projectFile = newPath
             }
-            project.projectFile = newPath
           }
         }
       }
