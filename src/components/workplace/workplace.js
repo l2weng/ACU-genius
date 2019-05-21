@@ -38,7 +38,7 @@ class Workplace extends PureComponent {
       if (project.id !== item.localProjectId) {
         this.props.onProjectOpen(item.projectFile)
       } else {
-        this.props.switchTab()
+        this.props.switchTab(this.props.project)
       }
     }
   }
