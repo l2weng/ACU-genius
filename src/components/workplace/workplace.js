@@ -35,10 +35,10 @@ class Workplace extends PureComponent {
       openNotification('warning', '提示', `项目: ${item.name} 尚未同步, 暂时无法查看`)
     } else {
       const { project } = this.props
-      if (project.id === item.localProjectId) {
-        this.props.onProjectOpen(item.projectFile, false)
+      if (project.id !== item.localProjectId) {
+        this.props.onProjectOpen(item.projectFile)
       } else {
-        this.props.onProjectOpen(item.projectFile, true)
+        this.props.switchTab()
       }
     }
   }
@@ -89,6 +89,12 @@ class Workplace extends PureComponent {
   onTaskSwitch = (e) =>{
     this.props.fetchTasks(userInfo.user.userId, e.target.value)
     this.props.switchTask(e.target.value)
+  }
+
+  componentWillReceiveProps(props) {
+    if (this.props.project.id !== props.project.id) {
+      this.props.switchTab()
+    }
   }
 
   render() {
@@ -170,11 +176,11 @@ module.exports = {
       tasks: state.header.tasks || []
     }),
     dispatch => ({
-      onProjectOpen(path, needOpen) {
-        if (needOpen) {
-          dispatch(actions.project.open(path))
-        }
+      switchTab() {
         dispatch(actions.ui.headerSwitch({ activeTab: HEAD.WORKSPACE }))
+      },
+      onProjectOpen(path) {
+        dispatch(actions.project.open(path))
       },
       fetchProjects(typeFlag = false, id) {
         dispatch(actions.header.loadProjects({ typeFlag, id }))

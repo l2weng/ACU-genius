@@ -16,7 +16,7 @@ module.exports = {
   project(state = INIT, { type, payload, meta, error }) {
     switch (type) {
       case PROJECT.OPENED:
-        return { ...payload }
+        return { ...payload, opened: true }
       case PROJECT.UPDATE:
         return { ...state, ...payload }
       case PROJECT.UPDATE_USER_INFO:
