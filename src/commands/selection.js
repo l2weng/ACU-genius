@@ -126,7 +126,6 @@ class LoadFromCloud extends Command {
   *exec() {
     const { db } = this.options
     const { payload } = this.action
-    console.log(payload)
     const { listResult } = payload
 
     const listArr = Object.values(listResult)

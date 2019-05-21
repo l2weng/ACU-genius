@@ -93,7 +93,7 @@ class Workplace extends PureComponent {
 
   componentWillReceiveProps(props) {
     if (this.props.project.id !== props.project.id) {
-      this.props.switchTab()
+      this.props.switchTab(this.props.project)
     }
   }
 
@@ -176,7 +176,8 @@ module.exports = {
       tasks: state.header.tasks || []
     }),
     dispatch => ({
-      switchTab() {
+      switchTab(project) {
+        dispatch(actions.list.loadFromCloud({ project: project }))
         dispatch(actions.ui.headerSwitch({ activeTab: HEAD.WORKSPACE }))
       },
       onProjectOpen(path) {
