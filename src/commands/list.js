@@ -6,10 +6,10 @@ const { pluck, splice, warp } = require('../common/util')
 const { LIST } = require('../constants')
 
 const actions = require('../actions/list')
+const sActions = require('../actions/selection')
 const act = require('../actions')
 const actionsHeader = require('../actions/header')
 const mod = require('../models/list')
-const pMod = require('../models/photo')
 const projectMod = require('../models/project')
 const axios = require('axios')
 const { userInfo } = ARGS
@@ -21,32 +21,25 @@ class Load extends Command {
     const { db } = this.options
     const { payload } = this.action
     const { project } = payload
-    console.log('list...load',project)
     const isOwner = project.owner === userInfo.user.userId
     let listResult = {}
     if (isOwner) { listResult =  yield call(mod.all, db) } else { listResult = yield call(mod.loadMyList, db) }
-    const listArr = Object.values(listResult)
-    if (listArr.length > 0) {
-      for (let i = 0; i < listArr.length; i++) {
-        const oList = listArr[i]
-        if (oList.id !== 0) {
-          const labels = yield axios.post(`${ARGS.apiServer}/labels/queryLabels`, { taskId: oList.syncTaskId })
-          const labelArr = labels.data
-          if (labelArr.length > 0) {
-            for (let j = 0; j < labelArr.length; j++) {
-              const oLabel = labelArr[j]
-              const photo = yield call(pMod.loadOne, db, oLabel.photoId )
-
-              yield all([
-                put(act.selection.sync({ photo, labels: oLabel.Labels })),
-                put(act.activity.update(this.action, { total: labelArr.length, progress: j + 1 }))
-              ])
-            }
-          }
-        }
-      }
-    }
+    yield put(sActions.loadFromCloud({ listResult: listResult }))
     return listResult
+  }
+}
+
+class LoadFromCloud extends Command {
+  static get ACTION() { return LIST.LOAD_FROM_CLOUD }
+
+  *exec() {
+    const { db } = this.options
+    const { payload } = this.action
+    const { project } = payload
+    const isOwner = project.owner === userInfo.user.userId
+    let listResult = {}
+    if (isOwner) { listResult =  yield call(mod.all, db) } else { listResult = yield call(mod.loadMyList, db) }
+    yield put(sActions.loadFromCloud({ listResult: listResult }))
   }
 }
 
@@ -283,6 +276,7 @@ module.exports = {
   Delete,
   UpdateOwner,
   Load,
+  LoadFromCloud,
   Restore,
   Save,
   Move,

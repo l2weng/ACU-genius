@@ -49,6 +49,17 @@ module.exports = {
     }
   },
 
+  loadFromCloud(payload,meta) {
+    return {
+      type: SELECTION.LOAD_FROM_CLOUD,
+      payload,
+      meta: {
+        cmd: 'project',
+        ...meta
+      }
+    }
+  },
+
   notes: {
     add(payload, meta = {}) {
       return { type: SELECTION.NOTE.ADD, payload, meta }

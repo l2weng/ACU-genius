@@ -1,12 +1,13 @@
 'use strict'
 
-const { call, put, select } = require('redux-saga/effects')
+const { call, put, select, all } = require('redux-saga/effects')
 const { Command } = require('./command')
 const mod = require('../models')
 const act = require('../actions')
 const { SELECTION } = require('../constants')
 const { pick, splice } = require('../common/util')
 const { keys } = Object
+const axios = require('axios')
 const _ = require('underscore')
 
 class Create extends Command {
@@ -119,6 +120,39 @@ class Load extends Command {
   }
 }
 
+class LoadFromCloud extends Command {
+  static get ACTION() { return SELECTION.LOAD_FROM_CLOUD }
+
+  *exec() {
+    const { db } = this.options
+    const { payload } = this.action
+    console.log(payload)
+    const { listResult } = payload
+
+    const listArr = Object.values(listResult)
+    if (listArr.length > 0) {
+      for (let i = 0; i < listArr.length; i++) {
+        const oList = listArr[i]
+        if (oList.id !== 0) {
+          const labels = yield axios.post(`${ARGS.apiServer}/labels/queryLabels`, { taskId: oList.syncTaskId })
+          const labelArr = labels.data
+          if (labelArr.length > 0) {
+            for (let j = 0; j < labelArr.length; j++) {
+              const oLabel = labelArr[j]
+              const photo = yield call(mod.photo.loadOne, db, oLabel.photoId )
+
+              yield all([
+                put(act.selection.sync({ photo, labels: oLabel.Labels })),
+                put(act.activity.update(this.action, { total: labelArr.length, progress: j + 1 }))
+              ])
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 class Order extends Command {
   static get ACTION() { return SELECTION.ORDER }
 
@@ -191,5 +225,6 @@ module.exports = {
   Order,
   Restore,
   Save,
-  Sync
+  Sync,
+  LoadFromCloud
 }

@@ -72,8 +72,7 @@ module.exports = {
     dispatch => ({
       switchTab(tabName, project) {
         if (tabName === HEAD.WORKSPACE) {
-          console.log({ project: project })
-          // dispatch(actions.list.load, { project: project })
+          dispatch(actions.list.loadFromCloud({ project: project }))
           dispatch(actions.ui.headerSwitch({ activeTab: tabName }))
         } else {
           dispatch(actions.ui.headerSwitch({ activeTab: tabName }))
