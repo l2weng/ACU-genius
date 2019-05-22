@@ -74,7 +74,7 @@ class CoWorkers extends PureComponent {
 
   handleModalVisible = flag => {
     let self = this
-    axios.get(`${ARGS.apiServer}/graphql?query={userQueryActiveContacts { userId name email status phone userType userTypeDesc statusDesc avatarColor }}`)
+    axios.get(`${ARGS.apiServer}/graphql?query={userQueryActiveContacts { key: userId userId name email status phone userType userTypeDesc statusDesc avatarColor }}`)
     .then(function (response) {
       if (response.status === 200) {
         self.setState({ otherWorks: response.data.data.userQueryActiveContacts, modalVisible: !!flag })

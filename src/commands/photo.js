@@ -487,15 +487,19 @@ class Sync extends Command {
   *exec() {
     let { payload } = this.action
     const { db } = this.options
-    let { photos } = payload
+    const { project } = yield select()
+    const photos = yield call(db.seq, conn =>
+      mod.photo.load(conn, null, project))
+    console.log(photos)
     const { userInfo } = ARGS
     let photosArray = []
     for (let i in photos) {
-      if (!photos[i].syncPhotoId) {
+      if (photos[i].tasks.length > 0) {
         photosArray.push(photos[i])
       }
     }
     let total = photosArray.length
+    console.log(photosArray)
     for (let i = 0; i < photosArray.length; i++) {
       let sPhoto = photosArray[i]
       let client = getNewOOSClient()
@@ -514,7 +518,7 @@ class Sync extends Command {
           mimeType: sPhoto.mimetype,
           protocol: sPhoto.protocol,
           orientation: sPhoto.orientation,
-          taskId: sPhoto.syncTaskId,
+          tasks: sPhoto.tasks,
           photoId: sPhoto.syncPhotoId,
           userId: userInfo.user.userId,
         }
@@ -531,6 +535,7 @@ class Sync extends Command {
     yield put(act.project.sync(payload))
   }
 }
+
 class LabelSync extends Command {
   static get ACTION() { return PHOTO.LABEL_SYNC }
 

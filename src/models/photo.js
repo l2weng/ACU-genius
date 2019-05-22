@@ -22,8 +22,8 @@ const COLUMNS = [
   'size'
 ]
 
-const skel = (id, selections = [], notes = [], labels = {}) => ({
-  id, selections, notes, labels
+const skel = (id, selections = [], notes = [], labels = {}, tasks = []) => ({
+  id, selections, notes, labels, tasks
 })
 
 module.exports = {
@@ -208,9 +208,9 @@ module.exports = {
                                                JOIN photos USING (id))`,
         ({ taskId, syncTaskId, item }) => {
           let id = item + 1
-          let tasks = { taskId, syncTaskId }
-          if (id in photos) assign(photos[id], tasks)
-          else photos[id] = assign(skel(id), tasks)
+          let task = syncTaskId
+          if (id in photos) photos[id].tasks.push(task)
+          else photos[id] = skel(id, [], [], [], [task])
         }
       )
     ])
@@ -382,6 +382,6 @@ module.exports = {
 
   async syncPhoto(db, id, syncFileUrl, syncPhotoId) {
     return await db.run(
-      ...update('photos').set({ syncFileUrl, syncPhotoId}).where({ id }))
+      ...update('photos').set({ syncFileUrl, syncPhotoId }).where({ id }))
   }
 }
