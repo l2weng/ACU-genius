@@ -215,7 +215,7 @@ module.exports = mod.item = {
       db.each(`
         SELECT id, list_id AS list
           FROM list_items${
-          (ids != null) ? ` WHERE id IN (${ids})` : ''
+          (ids != null) ? ` WHERE id IN (${ids}) and id != -999` : ' WHERE id != -999'
         }`,
         ({ id, list }) => {
           if (id in items) items[id].lists.push(list)
