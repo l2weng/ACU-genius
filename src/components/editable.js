@@ -114,13 +114,21 @@ class Editable extends PureComponent {
         onKeyDown={this.props.onKeyDown}/>
     )
   }
-
+  // disabled edit input
+  // render() {
+  //   return (
+  //     <div className={cx(this.classes)}>
+  //       {this.isActive ?
+  //         this.renderInput() :
+  //         this.renderContent()}
+  //     </div>
+  //   )
+  // }
+  //
   render() {
     return (
       <div className={cx(this.classes)}>
-        {this.isActive ?
-          this.renderInput() :
-          this.renderContent()}
+        { this.renderContent() }
       </div>
     )
   }
