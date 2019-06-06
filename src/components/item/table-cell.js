@@ -120,7 +120,8 @@ class ItemTableCell extends React.PureComponent {
           {this.renderCoverImage()}
           <Editable
             display={auto(this.props.value, this.props.type)}
-            isActive={this.props.isEditing}
+            // isActive={this.props.isEditing}
+            isActive={false}
             isDisabled={isDisabled}
             resize
             value={isDisabled ? null : this.props.value}

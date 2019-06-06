@@ -52,20 +52,20 @@ class ProjectToolbar extends PureComponent {
                 title="toolbar.import"
                 onClick={this.props.onItemCreate}/>
             </div>
-            <div className="tool-group">
-              <Button
-                icon={<IconPhotoResources/>}
-                isDisabled={isDisabled || !canCreateItems}
-                title="toolbar.import"
-                onClick={this.props.onDataSetsCreate}/>
-            </div>
-            <div className="tool-group">
-              <Button
-                icon={<IconExport/>}
-                isDisabled={isDisabled || !canCreateItems}
-                title="toolbar.import"
-                onClick={this.props.onItemCreate}/>
-            </div>
+            {/*<div className="tool-group">*/}
+            {/*  <Button*/}
+            {/*    icon={<IconPhotoResources/>}*/}
+            {/*    isDisabled={isDisabled || !canCreateItems}*/}
+            {/*    title="toolbar.import"*/}
+            {/*    onClick={this.props.onDataSetsCreate}/>*/}
+            {/*</div>*/}
+            {/*<div className="tool-group">*/}
+            {/*  <Button*/}
+            {/*    icon={<IconExport/>}*/}
+            {/*    isDisabled={isDisabled || !canCreateItems}*/}
+            {/*    title="toolbar.import"*/}
+            {/*    onClick={this.props.onItemCreate}/>*/}
+            {/*</div>*/}
           </div> : ''}
         <div className="toolbar-center">
           <div className="item-count">
