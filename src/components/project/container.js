@@ -34,6 +34,7 @@ const {
   getSortColumn,
   getVisibleItems,
   getVisibleNotes,
+  getVisiblePhotos,
   getVisibleAllPhotos
 } = require('../../selectors')
 
@@ -226,6 +227,7 @@ class ProjectContainer extends Component {
       notes,
       photo,
       photos,
+      visiblePhotos,
       visibleAllPhotos,
       selection,
       selections,
@@ -424,6 +426,7 @@ module.exports = {
       photo: getSelectedPhoto(state),
       photos: state.photos,
       references: state.references,
+      visiblePhotos: getVisiblePhotos(state),
       visibleAllPhotos: getVisibleAllPhotos(state),
       project: state.project,
       properties: state.ontology.props,

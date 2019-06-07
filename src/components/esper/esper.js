@@ -15,7 +15,6 @@ const debounce = require('lodash.debounce')
 const throttle = require('lodash.throttle')
 const cx = require('classnames')
 const { floor, min } = Math
-const { message } = require('antd')
 
 const {
   arrayOf, bool, func, node, number, object, shape, string
