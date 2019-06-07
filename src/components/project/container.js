@@ -34,7 +34,7 @@ const {
   getSortColumn,
   getVisibleItems,
   getVisibleNotes,
-  getVisiblePhotos,
+  getVisibleAllPhotos
 } = require('../../selectors')
 
 const {
@@ -226,7 +226,7 @@ class ProjectContainer extends Component {
       notes,
       photo,
       photos,
-      visiblePhotos,
+      visibleAllPhotos,
       selection,
       selections,
       ui,
@@ -268,7 +268,7 @@ class ProjectContainer extends Component {
           enableReference={nav.enableReference || false}
           photo={photo}
           nav={nav}
-          photos={visiblePhotos}
+          photos={visibleAllPhotos}
           panel={ui.panel}
           offset={this.state.offset}
           mode={this.state.mode}
@@ -326,6 +326,9 @@ class ProjectContainer extends Component {
     photo: object,
     photos: object.isRequired,
     visiblePhotos: arrayOf(
+      shape({ id: number.isRequired })
+    ),
+    visibleAllPhotos: arrayOf(
       shape({ id: number.isRequired })
     ),
 
@@ -421,7 +424,7 @@ module.exports = {
       photo: getSelectedPhoto(state),
       photos: state.photos,
       references: state.references,
-      visiblePhotos: getVisiblePhotos(state),
+      visibleAllPhotos: getVisibleAllPhotos(state),
       project: state.project,
       properties: state.ontology.props,
       selection: getSelectedItems(state),

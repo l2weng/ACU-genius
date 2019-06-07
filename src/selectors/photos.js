@@ -1,7 +1,7 @@
 'use strict'
 
 const { createSelector: memo } = require('reselect')
-const { getSelectedItems, getSkuItems } = require('./items')
+const { getSelectedItems, getSkuItems, getVisibleItems } = require('./items')
 const {
   seq, compose, filter, into, map, cat, keep,
 } = require('transducers.js')
@@ -21,6 +21,26 @@ const getSelectedPhoto = memo(
 const getVisiblePhotos = memo(
   getPhotos,
   getSelectedItems,
+
+  (photos, items) => {
+    let k = 0
+    let idx = {}
+    let lst = seq(items, compose(
+      map(item => item.photos),
+      cat,
+      map(id => photos[id]),
+      keep(),
+      map(photo => (idx[photo.id] = k++, photo))
+    ))
+
+    lst.idx = idx
+    return lst
+  }
+)
+
+const getVisibleAllPhotos = memo(
+  getPhotos,
+  getVisibleItems,
 
   (photos, items) => {
     let k = 0
@@ -66,5 +86,6 @@ module.exports = {
   getPhotosWithErrors,
   getSelectedPhoto,
   getVisiblePhotos,
-  getVisibleReferences
+  getVisibleReferences,
+  getVisibleAllPhotos
 }
