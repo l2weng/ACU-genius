@@ -136,7 +136,7 @@ class Workplace extends PureComponent {
               title="进行中的任务"
               extra={
                 <div>
-                  <RadioGroup defaultValue="myTasks" onChange={this.onTaskSwitch}>
+                  <RadioGroup defaultValue={HEAD.MY_TASKS} onChange={this.onTaskSwitch}>
                     <RadioButton key={HEAD.MY_TASKS} value={HEAD.MY_TASKS}>我的任务</RadioButton>
                     <RadioButton key={HEAD.JOINED_TASKS} value={HEAD.JOINED_TASKS}>参与的任务</RadioButton>
                   </RadioGroup>
