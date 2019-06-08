@@ -4,6 +4,7 @@ const React = require('react')
 const { PureComponent } = React
 const { EsperView } = require('./view')
 const { EsperToolbar } = require('./toolbar')
+const { EsperFootToolbar } = require('./footToolbar')
 const { EsperPanel } = require('./panel')
 const { get, restrict, shallow } = require('../../common/util')
 const { isHorizontal, rotate, round } = require('../../common/math')
@@ -728,6 +729,16 @@ class Esper extends PureComponent {
             onChange={this.handleColorChange}
             onRevert={this.handleRevertToOriginal}/>
         </div>
+        <EsperFooter>
+          <EsperFootToolbar
+            photo={this.props.photo}
+            isDisabled={isDisabled}
+            isSelectionActive={isSelectionActive}
+            isPanelVisible={this.props.isPanelVisible}
+            mode={this.state.mode}
+            tool={tool}
+            zoom={this.state.zoom}/>
+        </EsperFooter>
       </section>
     )
   }
@@ -778,7 +789,15 @@ const EsperHeader = ({ children }) => (
   <header className="esper-header window-draggable">{children}</header>
 )
 
+const EsperFooter = ({ children }) => (
+  <footer className="esper-footer window-draggable">{children}</footer>
+)
+
 EsperHeader.propTypes = {
+  children: node
+}
+
+EsperFooter.propTypes = {
   children: node
 }
 

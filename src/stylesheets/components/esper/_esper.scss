@@ -63,6 +63,12 @@
     height: $toolbar-height;
   }
 
+  .esper-footer {
+    position: relative;
+    z-index: $zindex-esper-header;
+    height: $toolbar-height;
+  }
+
   &.overlay-mode {
     color: $esper-overlay-color;
 

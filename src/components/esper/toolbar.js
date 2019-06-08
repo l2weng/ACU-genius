@@ -23,7 +23,6 @@ const {
   IconRotate,
   IconHand,
   IconSliders,
-  IconSave,
   IconMirror,
   IconMinusCircle,
   IconPlusCircle,
@@ -160,11 +159,6 @@ class EsperToolbar extends PureComponent {
         </ToolbarLeft>
         <ToolbarRight>
           <ToolGroup>
-            <Button
-              noFocus
-              icon={<IconSave/>}
-              title="esper.tool.save"
-              onClick={this.handleLabelSave}/>
             <Button
               noFocus
               icon={<IconSliders/>}

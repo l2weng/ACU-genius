@@ -54,7 +54,7 @@ class ItemContainer extends React.PureComponent {
       <div className="item-container">
         <BufferedResizable
           edge="bottom"
-          value={this.props.esper.height}
+          value={100}
           isRelative
           onChange={this.handleEsperResize}
           margin={38}
