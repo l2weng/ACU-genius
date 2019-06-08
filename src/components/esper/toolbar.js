@@ -49,10 +49,6 @@ class EsperToolbar extends PureComponent {
     this.props.onPanelChange(!this.props.isPanelVisible)
   }
 
-  handleLabelSave = () => {
-    this.props.onLabelSave(this.props.photo)
-  }
-
   handleRotate = () => {
     this.props.onRotationChange(-90)
   }
@@ -185,7 +181,6 @@ class EsperToolbar extends PureComponent {
     onMirrorChange: func.isRequired,
     onModeChange: func.isRequired,
     onPanelChange: func.isRequired,
-    onLabelSave: func.isRequired,
     photo: object,
     onToolChange: func.isRequired,
     onRotationChange: func.isRequired,

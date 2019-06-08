@@ -12,6 +12,7 @@ const { emit } = require('../../dom')
 class EsperFootToolbar extends PureComponent {
 
   confirmPhoto = () => {
+    this.props.onLabelSave(this.props.photo)
     emit(document, 'global:next-photo')
   }
 
@@ -27,11 +28,8 @@ class EsperFootToolbar extends PureComponent {
     emit(document, 'global:prev-photo')
   }
 
-  handleLabelSave = () => {
-    this.props.onLabelSave(this.props.photo)
-  }
-
   render() {
+    console.log(this.props.photo)
     return (
       <Toolbar isDraggable={false}>
         <div className="toolbar-center" style={{ margin: 'auto' }}>

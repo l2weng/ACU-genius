@@ -695,7 +695,6 @@ class Esper extends PureComponent {
             onMirrorChange={this.handleMirrorChange}
             onModeChange={this.handleModeChange}
             onPanelChange={this.handlePanelChange}
-            onLabelSave={this.handleLabelSave}
             onToolChange={this.handleToolChange}
             onRotationChange={this.handleRotationChange}
             onZoomChange={this.handleZoomChange}/>
@@ -732,12 +731,7 @@ class Esper extends PureComponent {
         <EsperFooter>
           <EsperFootToolbar
             photo={this.props.photo}
-            isDisabled={isDisabled}
-            isSelectionActive={isSelectionActive}
-            isPanelVisible={this.props.isPanelVisible}
-            mode={this.state.mode}
-            tool={tool}
-            zoom={this.state.zoom}/>
+            onLabelSave={this.handleLabelSave}/>
         </EsperFooter>
       </section>
     )
