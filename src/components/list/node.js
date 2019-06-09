@@ -13,8 +13,8 @@ const { isValidImage } = require('../../image')
 const lazy = require('./tree')
 const cx = require('classnames')
 const { last, noop, restrict } = require('../../common/util')
-const { getTaskColor, getUrlFilterParams } = require('../../common/dataUtil')
-const {  Tooltip, Icon, Avatar, Popconfirm } = require('antd')
+const { getTaskStatusBadge, getUrlFilterParams, getTaskStatusTooltip } = require('../../common/dataUtil')
+const { Tooltip, Icon, Avatar, Popconfirm, Badge } = require('antd')
 const axios = require('axios')
 const { apiServer } = ARGS
 
@@ -241,28 +241,32 @@ class ListNode extends React.PureComponent {
       workerArray = JSON.parse(workers)
       workerView = (
         <span style={{ float: 'right' }}>{workerArray.map(
-        worker => {
-          return <Avatar size={18} key={worker.userId} style={{ backgroundColor: worker.avatarColor }}>{worker.name.charAt(0)}</Avatar>
-        })}</span>)
+          (worker, idx) => {
+            if (idx < 3) {
+              return <Avatar size={16} key={worker.userId} style={{ backgroundColor: worker.avatarColor }}>{worker.name.charAt(0).toUpperCase()}</Avatar>
+            }
+          })}{workerArray.length > 3 ? '…' : ''}</span>)
     }
     return (
       <div>
-        {workerView}
-        <span className="functionIcon"><Tooltip placement="right" title="分配任务">
+        {workerView === '' ? <span className="functionIcon"><Tooltip placement="right" title="分配任务">
           <Icon type="user-add" size="small" onClick={() => this.props.onAddWorkers(SIDEBAR.TASK, list.syncTaskId, list.id)}/>
         </Tooltip>
-        </span>
+        </span> : ''}
+        {workerView}
       </div>)
   }
 
   renderTaskSubmit = (list) =>{
+    const { singleTaskStatus } = this.state
     return (
       <div>
-        <span className="functionIcon"><Tooltip placement="top" title="完成任务">
-          <Popconfirm placement="right" title={'提交任务'} onConfirm={()=>this.props.onSubmitTask(list)} okText="Yes" cancelText="No">
-            <span style={{ color: getTaskColor(this.state.singleTaskStatus) }}> <Icon type="check" size="small"/></span>
-          </Popconfirm>
-        </Tooltip>
+        <span style={{ paddingLeft: '5px', cursor: 'pointer' }}>
+          <Tooltip placement="top" title={getTaskStatusTooltip(singleTaskStatus)}>
+            {singleTaskStatus === 0 || singleTaskStatus === 1 ? <Popconfirm placement="right" title={getTaskStatusTooltip(singleTaskStatus)} onConfirm={()=>this.props.onSubmitTask(list, singleTaskStatus)} okText="Yes" cancelText="No">
+              <Badge status={getTaskStatusBadge(singleTaskStatus)} />
+            </Popconfirm> : <Badge status={getTaskStatusBadge(singleTaskStatus)} />}
+          </Tooltip>
         </span>
       </div>)
   }

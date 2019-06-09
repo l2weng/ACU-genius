@@ -18,6 +18,7 @@ module.exports = {
   UPDATE: 'list.update',
   UPDATE_OWNER: 'list.updateOwner',
   SUBMIT_TASK: 'list.submitTask',
+  STATUS_OPEN: 0,
   STATUS_WORKING: 1,
   STATUS_COMPLETE: 2,
   STATUS_CONFIRMED: 3,

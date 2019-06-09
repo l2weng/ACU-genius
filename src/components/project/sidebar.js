@@ -215,8 +215,12 @@ class ProjectSidebar extends React.PureComponent {
     })
   }
 
-  handleSubmitTask = (list) => {
-    list.workStatus = LIST.STATUS_COMPLETE
+  handleSubmitTask = (list, currentStatus) => {
+    if (currentStatus === LIST.STATUS_OPEN) {
+      list.workStatus = LIST.STATUS_WORKING
+    } else if (currentStatus === LIST.STATUS_WORKING) {
+      list.workStatus = LIST.STATUS_COMPLETE
+    }
     this.props.onSubmitTask(list)
   }
 

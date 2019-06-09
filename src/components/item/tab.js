@@ -32,16 +32,16 @@ class ItemTabHeader extends PureComponent {
     return (
       <Tabs justified>
         <Tab
-          isActive={this.isActive(METADATA)}
-          onActivate={this.handleSelectMetadata}>
-          <IconMetadata/>
-          <FormattedMessage id="panel.metadata.tab"/>
-        </Tab>
-        <Tab
           isActive={this.isActive(TAGS)}
           onActivate={this.handleSelectTags}>
           <IconHangtag/>
           <FormattedMessage id="panel.tags.tab"/>
+        </Tab>
+        <Tab
+          isActive={this.isActive(METADATA)}
+          onActivate={this.handleSelectMetadata}>
+          <IconMetadata/>
+          <FormattedMessage id="panel.metadata.tab"/>
         </Tab>
       </Tabs>
     )

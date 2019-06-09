@@ -96,6 +96,32 @@ const dataUtil = {
     }
   },
 
+  getTaskStatusBadge(status = 0, lang = 'en') {
+    switch (status) {
+      case 0:
+        return 'default'
+      case 1:
+        return 'processing'
+      case 2:
+        return 'warning'
+      case 3:
+        return 'success'
+    }
+  },
+
+  getTaskStatusTooltip(status = 0, lang = 'en') {
+    switch (status) {
+      case 0:
+        return '开始任务'
+      case 1:
+        return '提交任务'
+      case 2:
+        return '任务审核中'
+      case 3:
+        return '审核成功'
+    }
+  },
+
 }
 
 module.exports = dataUtil
