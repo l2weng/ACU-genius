@@ -240,7 +240,7 @@ class ListNode extends React.PureComponent {
     if (workers) {
       workerArray = JSON.parse(workers)
       workerView = (
-        <span style={{ float: 'right', cursor: 'pointer' }} onClick={() => this.props.onAddWorkers(SIDEBAR.TASK, list.syncTaskId, list.id)}><Tooltip placement="top" title="更改人员">{workerArray.map(
+        <span style={{ float: 'right', cursor: 'pointer' }} onClick={() => this.props.onAddWorkers(SIDEBAR.TASK, list.syncTaskId, list.id, workerArray.map(worker=>worker.userId))}><Tooltip placement="top" title="更改人员">{workerArray.map(
           (worker, idx) => {
             if (idx < 3) {
               return <Avatar size={16} key={worker.userId} style={{ backgroundColor: worker.avatarColor }}>{worker.name.charAt(0).toUpperCase()}</Avatar>

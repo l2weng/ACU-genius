@@ -8,8 +8,11 @@ const { array, func } = require('prop-types')
 class ColleagueTable extends React.Component {
   state = {
     searchText: '',
-    selectedUserIds: [],
+    selectedUserIds: this.props.defaultIdx,
     loading: false,
+  }
+
+  componentDidMount = () =>{
   }
 
   getColumnSearchProps = (dataIndex) => ({
@@ -125,7 +128,8 @@ class ColleagueTable extends React.Component {
   }
   static propTypes = {
     data: array.isRequired,
-    handleAssign: func.isRequired
+    handleAssign: func.isRequired,
+    defaultIdx: array.isRequired
   }
 }
 

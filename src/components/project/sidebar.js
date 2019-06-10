@@ -35,7 +35,7 @@ const {
 
 
 const ColleagueList = Form.create()(props => {
-  const { modalVisible, form, handleAssign, handleModalVisible, colleagues } = props
+  const { modalVisible, form, handleAssign, handleModalVisible, colleagues, defaultIdx } = props
   const okHandle = () => {
     form.validateFields((err, fieldsValue) => {
       if (err) return
@@ -56,7 +56,7 @@ const ColleagueList = Form.create()(props => {
       onOk={okHandle}
       footer={null}
       onCancel={() => handleModalVisible()}>
-      <ColleagueTable data={colleagues} handleAssign={onUserAssign}/>
+      <ColleagueTable data={colleagues} handleAssign={onUserAssign} defaultIdx={defaultIdx}/>
     </Modal>
   )
 })
@@ -66,6 +66,7 @@ class ProjectSidebar extends React.PureComponent {
   state = {
     modalVisible: false,
     colleagues: [],
+    defaultIdx: [],
     assignType: '',
     syncTaskId: '',
     listId: 0,
@@ -201,14 +202,14 @@ class ProjectSidebar extends React.PureComponent {
     this.props.onTagCreate({ ...payload })
   }
 
-  handleAddWorkers = (type, syncTaskId, listId) => {
+  handleAddWorkers = (type, syncTaskId, listId, defaultIdx = []) => {
     let self = this
     let query = getUrlFilterParams({ companyId: userInfo.user.companyId }, ['companyId'])
 
     axios.get(`${ARGS.apiServer}/graphql?query={userQueryActiveContacts${query} { key: userId userId name email status phone userType userTypeDesc statusDesc avatarColor machineId prefix }}`)
     .then(function (response) {
       if (response.status === 200) {
-        self.setState({ colleagues: response.data.data.userQueryActiveContacts, modalVisible: true, assignType: type, syncTaskId: syncTaskId, listId })
+        self.setState({ colleagues: response.data.data.userQueryActiveContacts, defaultIdx, modalVisible: true, assignType: type, syncTaskId: syncTaskId, listId })
       }
     })
     .catch(function () {
@@ -316,13 +317,9 @@ class ProjectSidebar extends React.PureComponent {
 
   handleAssign = selectedUserIdx =>{
     let { syncTaskId, listId } = this.state
-    let colleagueIds = []
-    selectedUserIdx.map(userId=>{
-      colleagueIds.push(userId)
-    })
     let { project } = this.props
     let self = this
-    axios.post(`${ARGS.apiServer}/tasks/addWorker`, { workerIds: colleagueIds, projectId: project.syncProjectId, taskId: syncTaskId })
+    axios.post(`${ARGS.apiServer}/tasks/addWorker`, { workerIds: selectedUserIdx, projectId: project.syncProjectId, taskId: syncTaskId })
     .then(function (response) {
       if (response.status === 200) {
         self.props.updateListOwner({ workers: response.data.workers, syncTaskId: syncTaskId, id: listId })
@@ -352,7 +349,7 @@ class ProjectSidebar extends React.PureComponent {
     } = this.props
     let root = this.props.lists[this.props.root]
 
-    const { modalVisible, colleagues } = this.state
+    const { modalVisible, colleagues, defaultIdx } = this.state
 
     const parentMethods = {
       handleAssign: this.handleAssign,
@@ -459,7 +456,7 @@ class ProjectSidebar extends React.PureComponent {
           </SidebarBody>
           <ActivityPane activities={this.props.activities}/>
         </Sidebar>
-        <ColleagueList {...parentMethods} modalVisible={modalVisible} colleagues={colleagues}/>
+        <ColleagueList {...parentMethods} modalVisible={modalVisible} colleagues={colleagues} defaultIdx={defaultIdx}/>
       </BufferedResizable>
     )
   }
