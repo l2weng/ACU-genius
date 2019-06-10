@@ -15,10 +15,13 @@ const { has, last } = require('../../common/util')
 const { match } = require('../../keymap')
 const { testFocusChange } = require('../../dom')
 const actions = require('../../actions')
-const {  Tooltip, Icon, message, Modal, Form } = require('antd')
+const {  Tooltip, Icon, message, Modal, Form, Input } = require('antd')
 const { ipcRenderer: ipc  } = require('electron')
 const { getUrlFilterParams } = require('../../common/dataUtil')
 const { ColleagueTable } = require('../contacts/colleagueTable')
+const { CirclePicker } = require('react-color')
+
+const FormItem = Form.Item
 const { userInfo } = ARGS
 const axios = require('axios')
 const __ = require('underscore')
@@ -32,7 +35,6 @@ const {
   getListHold,
   getListSubTree
 } = require('../../selectors')
-
 
 const ColleagueList = Form.create()(props => {
   const { modalVisible, form, handleAssign, handleModalVisible, colleagues, defaultIdx } = props
@@ -50,7 +52,7 @@ const ColleagueList = Form.create()(props => {
     <Modal
       destroyOnClose
       style={{ top: 20 }}
-      title="分配任务"
+      title="分配人员"
       centered
       visible={modalVisible}
       onOk={okHandle}
@@ -61,10 +63,59 @@ const ColleagueList = Form.create()(props => {
   )
 })
 
+const SkuForm = Form.create()(props => {
+  const { skuModalVisible, form, handleOk, handleSkuModalVisible } = props
+  let selectedColor = '#f44336'
+  const okHandle = () => {
+    form.validateFields((err, fieldsValue) => {
+      if (err) return
+      form.resetFields()
+      handleOk(fieldsValue)
+    })
+  }
+
+  const formItemLayout = {
+    labelCol: { span: 7 },
+    wrapperCol: { span: 13 },
+  }
+  const handleChange = (color,event)=>{
+    form.setFields({
+      circlePicker: color.hex,
+    })
+    console.log(form.getFieldsValue())
+    return color.hex
+  }
+
+  return (
+    <Modal
+      destroyOnClose
+      style={{ top: 20 }}
+      title="添加目标样本"
+      centered
+      visible={skuModalVisible}
+      onOk={okHandle}
+      footer={null}
+      onCancel={() => handleSkuModalVisible()}>
+      <FormItem {...formItemLayout} label="样本名称">
+        {form.getFieldDecorator('name', {
+          rules: [{ required: true, message: '请输入名称！', min: 1 }],
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+      <FormItem {...formItemLayout} label="标注颜色">
+        {form.getFieldDecorator('circlePicker', {
+          rules: [{ required: true, message: '请选择颜色！', min: 1 }],
+          getValueFromEvent: handleChange
+        })(<CirclePicker/>)}
+      </FormItem>
+    </Modal>
+  )
+})
+
 class ProjectSidebar extends React.PureComponent {
 
   state = {
     modalVisible: false,
+    skuModalVisible: false,
     colleagues: [],
     defaultIdx: [],
     assignType: '',
@@ -306,12 +357,21 @@ class ProjectSidebar extends React.PureComponent {
   }
 
   addNewSKu = () =>{
-    ipc.send('cmd', 'app:create-tag')
+    // ipc.send('cmd', 'app:create-tag')
+    this.setState({
+      skuModalVisible: true,
+    })
   }
 
   handleModalVisible = () => {
     this.setState({
       modalVisible: false,
+    })
+  }
+
+  handleSkuModalVisible = () => {
+    this.setState({
+      skuModalVisible: false,
     })
   }
 
@@ -333,6 +393,10 @@ class ProjectSidebar extends React.PureComponent {
     })
   }
 
+  handleSkuOk = () =>{
+
+  }
+
   render() {
     const {
       edit,
@@ -349,11 +413,15 @@ class ProjectSidebar extends React.PureComponent {
     } = this.props
     let root = this.props.lists[this.props.root]
 
-    const { modalVisible, colleagues, defaultIdx } = this.state
+    const { modalVisible, colleagues, defaultIdx, skuModalVisible } = this.state
 
     const parentMethods = {
       handleAssign: this.handleAssign,
       handleModalVisible: this.handleModalVisible,
+    }
+    const skuParentMethods = {
+      handleOk: this.handleSkuOk,
+      handleSkuModalVisible: this.handleSkuModalVisible
     }
     return (
       <BufferedResizable
@@ -457,6 +525,7 @@ class ProjectSidebar extends React.PureComponent {
           <ActivityPane activities={this.props.activities}/>
         </Sidebar>
         <ColleagueList {...parentMethods} modalVisible={modalVisible} colleagues={colleagues} defaultIdx={defaultIdx}/>
+        <SkuForm {...skuParentMethods} skuModalVisible={skuModalVisible}/>
       </BufferedResizable>
     )
   }

@@ -9,8 +9,6 @@ const { IconPlus, IconList, IconGrid, IconExport, IconPhotoResources } = require
 const { Slider } = require('../slider')
 const { SearchField } = require('../search')
 const { Button } = require('../button')
-const {  Tooltip, Icon } = require('antd')
-
 
 class ProjectToolbar extends PureComponent {
   get isEmpty() {

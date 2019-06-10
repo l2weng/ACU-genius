@@ -233,6 +233,7 @@ class ListNode extends React.PureComponent {
     }
   }
 
+
   renderAssign = (list) =>{
     const workers = list.workers
     let workerArray = []
@@ -240,16 +241,22 @@ class ListNode extends React.PureComponent {
     if (workers) {
       workerArray = JSON.parse(workers)
       workerView = (
-        <span style={{ float: 'right', cursor: 'pointer' }} onClick={() => this.props.onAddWorkers(SIDEBAR.TASK, list.syncTaskId, list.id, workerArray.map(worker=>worker.userId))}><Tooltip placement="top" title="更改人员">{workerArray.map(
-          (worker, idx) => {
-            if (idx < 3) {
-              return <Avatar size={16} key={worker.userId} style={{ backgroundColor: worker.avatarColor }}>{worker.name.charAt(0).toUpperCase()}</Avatar>
-            }
-          })}{workerArray.length > 3 ? '…' : ''}</Tooltip></span>)
+        <span style={{ float: 'right', cursor: 'pointer' }}>
+          <div className="antd-pro-avatar-list-avatarList">
+            <ul>
+              {workerArray.map((worker, idx) => {
+                if (idx < 3) {
+                  return <li key={idx} className="antd-pro-avatar-list-avatarItem antd-pro-avatar-list-avatarItemMini"><Tooltip placement="top" title={worker.name}><Avatar size={20} key={idx} style={{ backgroundColor: worker.avatarColor }}>{worker.name.charAt(0).toUpperCase()}</Avatar></Tooltip></li>
+                }
+              })}
+              {workerArray.length > 3 ?
+                <li onClick={() => this.props.onAddWorkers(SIDEBAR.TASK, list.syncTaskId, list.id, workerArray.map(worker=>worker.userId))} className="antd-pro-avatar-list-avatarItem antd-pro-avatar-list-avatarItemMini"><Avatar size={20} key={workerArray.length} style={{ backgroundColor: '#8DA7D6' }}>+{workerArray.length - 3}</Avatar></li> : ''}
+            </ul></div>
+        </span>)
     }
     return (
       <div>
-        {workerView === '' ? <span className="functionIcon"><Tooltip placement="right" title="分配任务">
+        {workerView === '' ? <span className="functionIcon"><Tooltip placement="right" title="分配人员">
           <Icon type="user-add" size="small" onClick={() => this.props.onAddWorkers(SIDEBAR.TASK, list.syncTaskId, list.id)}/>
         </Tooltip>
         </span> : ''}
