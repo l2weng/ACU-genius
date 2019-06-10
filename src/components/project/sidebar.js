@@ -51,6 +51,7 @@ const ColleagueList = Form.create()(props => {
       destroyOnClose
       style={{ top: 20 }}
       title="分配任务"
+      centered
       visible={modalVisible}
       onOk={okHandle}
       footer={null}
@@ -204,7 +205,7 @@ class ProjectSidebar extends React.PureComponent {
     let self = this
     let query = getUrlFilterParams({ companyId: userInfo.user.companyId }, ['companyId'])
 
-    axios.get(`${ARGS.apiServer}/graphql?query={userQueryActiveContacts${query} { userId name email status phone userType userTypeDesc statusDesc avatarColor machineId prefix }}`)
+    axios.get(`${ARGS.apiServer}/graphql?query={userQueryActiveContacts${query} { key: userId userId name email status phone userType userTypeDesc statusDesc avatarColor machineId prefix }}`)
     .then(function (response) {
       if (response.status === 200) {
         self.setState({ colleagues: response.data.data.userQueryActiveContacts, modalVisible: true, assignType: type, syncTaskId: syncTaskId, listId })
@@ -313,11 +314,11 @@ class ProjectSidebar extends React.PureComponent {
     })
   }
 
-  handleAssign = selectedUserIndexs =>{
-    let { colleagues, syncTaskId, listId } = this.state
+  handleAssign = selectedUserIdx =>{
+    let { syncTaskId, listId } = this.state
     let colleagueIds = []
-    selectedUserIndexs.map(userIndex=>{
-      colleagueIds.push(colleagues[userIndex].userId)
+    selectedUserIdx.map(userId=>{
+      colleagueIds.push(userId)
     })
     let { project } = this.props
     let self = this
@@ -382,7 +383,6 @@ class ProjectSidebar extends React.PureComponent {
                     synced={project.synced}
                     isOwner={isOwner}
                     projectId={project.id || ''}
-                    onAddWorkers={this.handleAddWorkers}
                     isSelected={!this.hasSelection}
                     isEditing={this.isEditing}
                     onChange={this.handleChange}

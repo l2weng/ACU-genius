@@ -76,7 +76,6 @@ class ProjectName extends React.PureComponent {
     onChange: func.isRequired,
     onDrop: func.isRequired,
     onSyncProject2Cloud: func.isRequired,
-    onAddWorkers: func.isRequired,
     synced: number,
   }
 }

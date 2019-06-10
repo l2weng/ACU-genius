@@ -99,26 +99,29 @@ class ColleagueTable extends React.Component {
         key: 'level',
         width: '15%',
       }]
-    const { loading, selectedUserIds } = this.state;
+    const { loading, selectedUserIds } = this.state
     const rowSelection = {
       selectedRowKeys: selectedUserIds,
       onChange: this.onSelectChange,
-    };
-    const hasSelected = selectedUserIds.length > 0;
-    return (<div>
-      <div style={{ marginBottom: 16 }}>
-        <Button
-          type="primary"
-          onClick={this.assignWork}
-          disabled={!hasSelected}
-          loading={loading}>
+    }
+    const hasSelected = selectedUserIds.length > 0
+    return (
+      <div>
+        <div style={{ marginBottom: 16 }}>
+          <Button
+            type="primary"
+            onClick={this.assignWork}
+            disabled={!hasSelected}
+            loading={loading}>
           分配
-        </Button>
-        <span style={{ marginLeft: 8 }}>
-          {hasSelected ? `Selected ${selectedUserIds.length} users` : ''}
-        </span>
-      </div> <Table rowSelection={rowSelection} columns={columns} dataSource={this.props.data}/>
-    </div>)
+          </Button>
+          <span style={{ marginLeft: 8 }}>
+            {hasSelected ? `Selected ${selectedUserIds.length} users` : ''}
+          </span>
+        </div>
+        <Table rowSelection={rowSelection} columns={columns} dataSource={this.props.data}/>
+      </div>
+    )
   }
   static propTypes = {
     data: array.isRequired,
