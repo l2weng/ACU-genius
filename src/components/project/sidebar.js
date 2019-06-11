@@ -20,6 +20,8 @@ const { ipcRenderer: ipc  } = require('electron')
 const { getUrlFilterParams } = require('../../common/dataUtil')
 const { ColleagueTable } = require('../contacts/colleagueTable')
 const { CirclePicker } = require('react-color')
+const { IconPlus } = require('../icons')
+const { Button } = require('../button')
 
 const FormItem = Form.Item
 const { userInfo } = ARGS
@@ -65,7 +67,6 @@ const ColleagueList = Form.create()(props => {
 
 const SkuForm = Form.create()(props => {
   const { skuModalVisible, form, handleOk, handleSkuModalVisible } = props
-  let selectedColor = '#f44336'
   const okHandle = () => {
     form.validateFields((err, fieldsValue) => {
       if (err) return
@@ -101,7 +102,7 @@ const SkuForm = Form.create()(props => {
         {form.getFieldDecorator('circlePicker', {
           rules: [{ required: true, message: '请选择颜色！', min: 1 }],
           getValueFromEvent: onChangeComplete
-        })(<CirclePicker color={form.getFieldValue('circlePicker')}/>)}
+        })(<CirclePicker color={form.getFieldValue('circlePicker')||'#f44336'}/>)}
       </FormItem>
     </Modal>
   )
@@ -456,7 +457,9 @@ class ProjectSidebar extends React.PureComponent {
               <h3>
                 <FormattedMessage id="sidebar.lists"/>
                 {isOwner ? <span className="functionIcon"><Tooltip placement="right" title="添加任务">
-                  <Icon type="plus" onClick={this.addNewTask}/>
+                  <Button
+                    icon={<IconPlus/>}
+                    onClick={this.addNewTask}/>
                 </Tooltip></span> : ''}
               </h3>
               <nav>
@@ -499,8 +502,10 @@ class ProjectSidebar extends React.PureComponent {
             <section>
               <h2><FormattedMessage id="sidebar.tags"/>
                 {isOwner ?
-                  <span style={{ float: 'right' }}><Tooltip placement="right" title="添加样本">
-                    <Icon type="plus" className="functionIcon" onClick={this.addNewSKu}/>
+                  <span className="functionIcon"><Tooltip placement="right" title="添加样本">
+                    <Button
+                      icon={<IconPlus/>}
+                      onClick={this.addNewSKu}/>
                   </Tooltip>
                   </span> : ''}
               </h2>
