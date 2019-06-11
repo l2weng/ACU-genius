@@ -796,7 +796,7 @@ i('Save', (
 ))
 
 i('Setting', (
-  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+  <svg xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 478.703 478.703" xmlSpace="preserve" width="14" height="14">
     <g>
       <g>

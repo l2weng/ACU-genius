@@ -15,13 +15,14 @@ const { has, last } = require('../../common/util')
 const { match } = require('../../keymap')
 const { testFocusChange } = require('../../dom')
 const actions = require('../../actions')
-const {  Tooltip, Icon, message, Modal, Form, Input } = require('antd')
+const {  Tooltip, Icon, message, Modal, Form, Input, Select } = require('antd')
 const { ipcRenderer: ipc  } = require('electron')
 const { getUrlFilterParams } = require('../../common/dataUtil')
 const { ColleagueTable } = require('../contacts/colleagueTable')
 const { CirclePicker } = require('react-color')
-const { IconPlus } = require('../icons')
+const { IconPlus, IconSelection, IconPolygon } = require('../icons')
 const { Button } = require('../button')
+const { Option } = Select
 
 const FormItem = Form.Item
 const { userInfo } = ARGS
@@ -79,7 +80,7 @@ const SkuForm = Form.create()(props => {
     labelCol: { span: 7 },
     wrapperCol: { span: 13 },
   }
-  const onChangeComplete = (color,event)=>{
+  const onChangeComplete = (color, event)=>{
     return color.hex
   }
 
@@ -100,10 +101,30 @@ const SkuForm = Form.create()(props => {
       </FormItem>
       <FormItem {...formItemLayout} label="标注颜色">
         {form.getFieldDecorator('circlePicker', {
-          rules: [{ required: true, message: '请选择颜色！', min: 1 }],
+          rules: [{ required: true, message: '请选择颜色！' }],
           getValueFromEvent: onChangeComplete
-        })(<CirclePicker color={form.getFieldValue('circlePicker')||'#f44336'}/>)}
+        })(<CirclePicker color={form.getFieldValue('circlePicker') || '#f44336'}/>)}
       </FormItem>
+      <Form.Item {...formItemLayout} label="标注类型" >
+        {form.getFieldDecorator('category', {
+          rules: [{ required: true, message: '请选择标注类型！' }],
+          initialValue: 'rect',
+        })(<Select
+          style={{ width: '100%' }}
+          placeholder="select one category"
+          optionLabelProp="label">
+          <Option value="rect" label={<span><IconSelection/>矩形框</span>}>
+            <span role="img" aria-label="矩形框">
+              <IconSelection/>&nbsp;矩形框
+            </span>
+          </Option>
+          <Option value="polygon" label={<span><IconSelection/>多边形框</span>}>
+            <span role="img" aria-label="多边形框">
+              <IconPolygon/>&nbsp;多边形框
+            </span>
+          </Option>
+        </Select>)}
+      </Form.Item>
     </Modal>
   )
 })
