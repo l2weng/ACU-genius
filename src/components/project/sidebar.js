@@ -78,11 +78,7 @@ const SkuForm = Form.create()(props => {
     labelCol: { span: 7 },
     wrapperCol: { span: 13 },
   }
-  const handleChange = (color,event)=>{
-    form.setFields({
-      circlePicker: color.hex,
-    })
-    console.log(form.getFieldsValue())
+  const onChangeComplete = (color,event)=>{
     return color.hex
   }
 
@@ -104,8 +100,8 @@ const SkuForm = Form.create()(props => {
       <FormItem {...formItemLayout} label="标注颜色">
         {form.getFieldDecorator('circlePicker', {
           rules: [{ required: true, message: '请选择颜色！', min: 1 }],
-          getValueFromEvent: handleChange
-        })(<CirclePicker/>)}
+          getValueFromEvent: onChangeComplete
+        })(<CirclePicker color={form.getFieldValue('circlePicker')}/>)}
       </FormItem>
     </Modal>
   )
