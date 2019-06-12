@@ -478,7 +478,7 @@ class ProjectSidebar extends React.PureComponent {
           <ActivityPane activities={this.props.activities}/>
         </Sidebar>
         <ColleagueList {...parentMethods} modalVisible={modalVisible} colleagues={colleagues} defaultIdx={defaultIdx}/>
-        <WrappedSkuForm {...skuParentMethods} skuModalVisible={skuModalVisible}/>
+        <WrappedSkuForm {...skuParentMethods} skuModalVisible={skuModalVisible} tasks={this.props.lists}/>
       </BufferedResizable>
     )
   }

@@ -29,20 +29,6 @@ class Load extends Command {
   }
 }
 
-class LoadFromCloud extends Command {
-  static get ACTION() { return LIST.LOAD_FROM_CLOUD }
-
-  *exec() {
-    const { db } = this.options
-    const { payload } = this.action
-    const { project } = payload
-    const isOwner = project.owner === userInfo.user.userId
-    let listResult = {}
-    if (isOwner) { listResult =  yield call(mod.all, db) } else { listResult = yield call(mod.loadMyList, db) }
-    yield put(sActions.loadFromCloud({ listResult: listResult }))
-  }
-}
-
 class SubmitTask extends Command {
   static get ACTION() { return LIST.SUBMIT_TASK }
 
@@ -276,7 +262,6 @@ module.exports = {
   Delete,
   UpdateOwner,
   Load,
-  LoadFromCloud,
   Restore,
   Save,
   Move,

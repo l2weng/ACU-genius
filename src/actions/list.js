@@ -66,10 +66,6 @@ module.exports = {
     return { type: LIST.LOAD, payload, meta: { cmd: 'project', ...meta } }
   },
 
-  loadFromCloud(payload, meta) {
-    return { type: LIST.LOAD_FROM_CLOUD, payload, meta: { cmd: 'project', ...meta } }
-  },
-
   update(payload, meta) {
     return { type: LIST.UPDATE, payload, meta }
   },

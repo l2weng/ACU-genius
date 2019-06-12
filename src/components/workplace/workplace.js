@@ -177,7 +177,7 @@ module.exports = {
     }),
     dispatch => ({
       switchTab(project) {
-        dispatch(actions.list.loadFromCloud({ project: project }))
+        dispatch(actions.list.load({ project: project }))
         dispatch(actions.ui.headerSwitch({ activeTab: HEAD.WORKSPACE }))
       },
       onProjectOpen(path) {

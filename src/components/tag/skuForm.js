@@ -3,19 +3,19 @@
 const React = require('react')
 const { Component } = React
 const {
-  Form, Input, Tooltip, Icon, Select, Button, message, Modal
+  Form, Input, Select, message, Modal
 } = require('antd')
 const FormItem = Form.Item
 const Option = Select.Option
 const axios = require('axios')
-const { bool, func } = require('prop-types')
+const { bool, func, object } = require('prop-types')
 const { ipcRenderer: ipc  } = require('electron')
 const { USER } = require('../../constants')
 const { getLocalIP } = require('../../common/serviceUtil')
 const { getUrlFilterParams } = require('../../common/dataUtil')
 const { CirclePicker } = require('react-color')
 const { IconSelection, IconPolygon } = require('../icons')
-
+const TagSelect = require('ant-design-pro/lib/TagSelect')
 
 class SkuForm extends Component {
   state = {
@@ -70,6 +70,10 @@ class SkuForm extends Component {
   onChangeComplete = (color, event)=>{
     return color.hex
   }
+  onChange = (taskValue) =>{
+    console.log(taskValue)
+    return taskValue
+  }
 
   okHandle = () => {
     this.props.form.validateFields((err, fieldsValue) => {
@@ -82,7 +86,8 @@ class SkuForm extends Component {
   render() {
 
     const { getFieldDecorator, getFieldValue } = this.props.form
-    const { skuModalVisible, handleSkuModalVisible } = this.props
+    const { skuModalVisible, handleSkuModalVisible, tasks } = this.props
+    console.log(tasks)
     const formItemLayout = {
       labelCol: { span: 7 },
       wrapperCol: { span: 13 },
@@ -129,6 +134,18 @@ class SkuForm extends Component {
               </Option>
             </Select>)}
           </Form.Item>
+          <FormItem {...formItemLayout} label="应用于任务">
+            {getFieldDecorator('taskSelect', {
+              getValueFromEvent: this.onChange
+            })(<TagSelect style={{ maxHeight: '100px' }}>
+              {Object.values(tasks).map(task => {
+                if (task && task.id !== 0) {
+                  return (<TagSelect.Option key={task.syncTaskId}
+                    value={task.id}>{task.name}</TagSelect.Option>)
+                }
+              })}
+            </TagSelect>)}
+          </FormItem>
         </Form>
       </Modal>
     )
@@ -136,7 +153,8 @@ class SkuForm extends Component {
 
   static propTypes = {
     skuModalVisible: bool.isRequired,
-    handleSkuModalVisible: func.isRequired
+    handleSkuModalVisible: func.isRequired,
+    tasks: object.isRequired,
   }
 }
 

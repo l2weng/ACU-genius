@@ -10,6 +10,9 @@ module.exports = {
       case PROJECT.OPEN:
         return {}
       case LIST.LOAD:
+        if (payload.hasOwnProperty('project')) {
+          return state
+        }
         return replace(state, payload, meta, error)
       case LIST.UPDATE_OWNER:
         state[payload.id].workers = JSON.stringify(payload.workers)
