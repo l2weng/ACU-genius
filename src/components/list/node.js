@@ -241,7 +241,7 @@ class ListNode extends React.PureComponent {
     if (workers) {
       workerArray = JSON.parse(workers)
       workerView = (
-        <span style={{ float: 'right', cursor: 'pointer' }}>
+        <span style={{ float: 'right', cursor: 'pointer' }} onClick={() => this.props.onAddWorkers(SIDEBAR.TASK, list.syncTaskId, list.id, workerArray.map(worker=>worker.userId))}>
           <div className="antd-pro-avatar-list-avatarList">
             <ul>
               {workerArray.map((worker, idx) => {
@@ -250,7 +250,7 @@ class ListNode extends React.PureComponent {
                 }
               })}
               {workerArray.length > 3 ?
-                <li onClick={() => this.props.onAddWorkers(SIDEBAR.TASK, list.syncTaskId, list.id, workerArray.map(worker=>worker.userId))} className="antd-pro-avatar-list-avatarItem antd-pro-avatar-list-avatarItemMini"><Avatar size={20} key={workerArray.length} style={{ backgroundColor: '#8DA7D6' }}>+{workerArray.length - 3}</Avatar></li> : ''}
+                <li className="antd-pro-avatar-list-avatarItem antd-pro-avatar-list-avatarItemMini"><Avatar size={20} key={workerArray.length} style={{ backgroundColor: '#8DA7D6' }}>+{workerArray.length - 3}</Avatar></li> : ''}
             </ul></div>
         </span>)
     }

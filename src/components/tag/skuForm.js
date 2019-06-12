@@ -3,16 +3,11 @@
 const React = require('react')
 const { Component } = React
 const {
-  Form, Input, Select, message, Modal
+  Form, Input, Select, Modal
 } = require('antd')
 const FormItem = Form.Item
 const Option = Select.Option
-const axios = require('axios')
 const { bool, func, object } = require('prop-types')
-const { ipcRenderer: ipc  } = require('electron')
-const { USER } = require('../../constants')
-const { getLocalIP } = require('../../common/serviceUtil')
-const { getUrlFilterParams } = require('../../common/dataUtil')
 const { CirclePicker } = require('react-color')
 const { IconSelection, IconPolygon } = require('../icons')
 const TagSelect = require('ant-design-pro/lib/TagSelect')
@@ -24,46 +19,8 @@ class SkuForm extends Component {
 
   handleSubmit = (values) => {
     this.props.form.validateFieldsAndScroll((err, values) => {
-      console.log(values)
-      // if (!err) {
-      //   axios.post(`${ARGS.apiServer}/users/create`, values).then(res => {
-      //     if (res.status === 200) {
-      //       const key = `open${Date.now()}`
-      //       const btn = (
-      //         <Button type="primary" size="small" onClick={() => this.goProject(res.data.obj, notification, key)}>
-      //           Go
-      //         </Button>
-      //       )
-      //       notification.open({
-      //         message: '注册成功',
-      //         description: 'LabelReal带您开启AI标注大门',
-      //         icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
-      //         btn,
-      //         key,
-      //         placement: 'bottomRight',
-      //         onClose: this.close,
-      //       })
-      //     }
-      //   })
-      //   .catch((err)=> {
-      //     message.error('服务器问题, 请联系客服', err)
-      //   })
-      // }
-    })
-  }
-
-  goProject = (userInfo, registerNotification, key) => {
-    registerNotification.close(key)
-    let loginData = { username: userInfo.name, password: userInfo.password }
-    loginData.ip = getLocalIP()
-    axios.post(`${ARGS.apiServer}/auth`, loginData)
-    .then(function (response) {
-      if (response.status === 200) {
-        ipc.send(USER.LOGINED, { data: response.data })
-      }
-    })
-    .catch(function (error) {
-      message.warning('用户名密码错误, 请重试')
+      this.props.saveSku(values)
+      // this.props.form.resetFields()
     })
   }
 
@@ -71,7 +28,6 @@ class SkuForm extends Component {
     return color.hex
   }
   onChange = (taskValue) =>{
-    console.log(taskValue)
     return taskValue
   }
 
@@ -79,7 +35,6 @@ class SkuForm extends Component {
     this.props.form.validateFields((err, fieldsValue) => {
       if (err) return
       this.handleSubmit(fieldsValue)
-      // this.props.form.resetFields()
     })
   }
 
@@ -87,7 +42,6 @@ class SkuForm extends Component {
 
     const { getFieldDecorator, getFieldValue } = this.props.form
     const { skuModalVisible, handleSkuModalVisible, tasks } = this.props
-    console.log(tasks)
     const formItemLayout = {
       labelCol: { span: 7 },
       wrapperCol: { span: 13 },
@@ -99,6 +53,7 @@ class SkuForm extends Component {
         style={{ top: 20 }}
         title="添加目标样本"
         centered
+        maskClosable={false}
         visible={skuModalVisible}
         onOk={this.okHandle}
         onCancel={handleSkuModalVisible}>
@@ -154,6 +109,7 @@ class SkuForm extends Component {
   static propTypes = {
     skuModalVisible: bool.isRequired,
     handleSkuModalVisible: func.isRequired,
+    saveSku: func.isRequired,
     tasks: object.isRequired,
   }
 }

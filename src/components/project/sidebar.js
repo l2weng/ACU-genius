@@ -357,6 +357,7 @@ class ProjectSidebar extends React.PureComponent {
       onTagDelete,
       onTagSave,
       onTagSelect,
+      onSkuSave,
       onSyncProject2Cloud,
       isOwner
     } = this.props
@@ -478,7 +479,7 @@ class ProjectSidebar extends React.PureComponent {
           <ActivityPane activities={this.props.activities}/>
         </Sidebar>
         <ColleagueList {...parentMethods} modalVisible={modalVisible} colleagues={colleagues} defaultIdx={defaultIdx}/>
-        <WrappedSkuForm {...skuParentMethods} skuModalVisible={skuModalVisible} tasks={this.props.lists}/>
+        <WrappedSkuForm {...skuParentMethods} skuModalVisible={skuModalVisible} tasks={this.props.lists} saveSku={onSkuSave}/>
       </BufferedResizable>
     )
   }
@@ -527,6 +528,7 @@ class ProjectSidebar extends React.PureComponent {
     onTagCreate: func.isRequired,
     onTagDelete: func.isRequired,
     onTagSave: func.isRequired,
+    onSkuSave: func.isRequired,
     onTagSelect: func.isRequired,
     onSyncProject2Cloud: func.isRequired,
     updateListOwner: func.isRequired,

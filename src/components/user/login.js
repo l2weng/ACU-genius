@@ -5,15 +5,15 @@ const { PureComponent, Component } = React
 const { injectIntl, intlShape } = require('react-intl')
 const { message } = require('antd')
 const { bool } = require('prop-types')
-const { Toolbar } = require('./toolbar')
+const { Toolbar } = require('../toolbar')
 const axios = require('axios')
 const {
   Form, Icon, Input, Button, Checkbox,
 } = require('antd')
-const { RegistrationForm } = require('./user/RegistrationForm')
+const { RegistrationForm } = require('./RegistrationForm')
 const { ipcRenderer: ipc  } = require('electron')
-const { USER } = require('../constants')
-const { getLocalIP } = require('../common/serviceUtil')
+const { USER } = require('../../constants')
+const { getLocalIP } = require('../../common/serviceUtil')
 
 
 const FormItem = Form.Item

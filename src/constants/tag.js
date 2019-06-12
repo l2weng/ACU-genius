@@ -4,6 +4,7 @@ module.exports = {
   CREATE: 'tag.create',
   DELETE: 'tag.delete',
   SAVE: 'tag.save',
+  SAVE_SKU: 'tag.saveSku',
   SELECT: 'tag.select',
   SELECT_REFERENCE: 'tag.selectReference',
   UPDATE: 'tag.update',

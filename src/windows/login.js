@@ -6,7 +6,7 @@ const { all } = require('bluebird')
 const { ready, $ } = require('../dom')
 const { create } = require('../stores/about')
 const { Main } = require('../components/main')
-const { Login } = require('../components/login')
+const { Login } = require('../components/user/login')
 const act = require('../actions')
 
 const store = create()

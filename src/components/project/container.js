@@ -608,6 +608,10 @@ module.exports = {
         dispatch(actions.edit.cancel())
       },
 
+      onSkuSave(data) {
+        dispatch(actions.tag.saveSku({ ...data }))
+      },
+
       onTagSelect(...args) {
         dispatch(actions.tag.select(...args))
         dispatch(actions.references.load({ tag_id: args[0] }))

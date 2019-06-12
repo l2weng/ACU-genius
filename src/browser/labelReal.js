@@ -70,9 +70,6 @@ class LabelReal extends EventEmitter {
     projectsCache: {},
     zoom: 1.0
   }
-  // apiServer: 'http://127.0.0.1:3000/lr',
-
-  // apiServer: 'http://47.105.236.123:8098/lr',
 
   constructor() {
     super()

@@ -46,6 +46,14 @@ module.exports = {
     }
   },
 
+  saveSku(payload, meta) {
+    return {
+      type: TAG.SAVE_SKU,
+      payload,
+      meta: { cmd: 'project', history: 'add', ...meta }
+    }
+  },
+
   delete(payload, meta) {
     return {
       type: TAG.DELETE,
