@@ -139,7 +139,7 @@ CREATE TABLE list_items (
 CREATE TABLE tags (
   tag_id      INTEGER  PRIMARY KEY,
   name        TEXT     NOT NULL COLLATE NOCASE,
-  color,
+  color       TEXT,
   syncSkuId   INTEGER,
   shapeType   INTEGER,
   created     NUMERIC  NOT NULL DEFAULT CURRENT_TIMESTAMP,

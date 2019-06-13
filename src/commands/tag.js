@@ -75,18 +75,18 @@ class SaveTag extends Command {
   *exec() {
     const { db } = this.options
     const { ...data } = this.action.payload
-    // const hasItems = (items && items.length > 0)
-    // if (data.id != null) data['tag_id'] = data.id
-    // const tag = yield call(db.transaction, async tx => {
-    //   const tg = await mod.tag.create(tx, data)
-    //   if (hasItems) await mod.item.tags.add(tx, { id: items, tag: tg.id })
-    //   return tg
-    // })
+    const { category, circlePicker, name, taskSelect } = data
+    const skuData = { name, shapeType: TAG.SHAPE_TYPE[category], color: circlePicker }
+    if (data.id != null) data['tag_id'] = data.id
+    const tag = yield call(db.transaction, async tx => {
+      const tg = await mod.tag.create(tx, skuData)
+      // if (hasItems) await mod.item.tags.add(tx, { id: items, tag: tg.id })
+      return tg
+    })
     // if (hasItems) {
     //   yield put(act.item.tags.insert({ id: items, tags: [tag.id] }))
     // }
-    // return tag
-    return {}
+    return tag
   }
 }
 

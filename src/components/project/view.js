@@ -143,6 +143,7 @@ class ProjectView extends Component {
     onMaximize: func.isRequired,
     onSearch: func.isRequired,
     onSort: func.isRequired,
+    onSkuSave: func.isRequired,
     onUiUpdate: func.isRequired
   }
 }

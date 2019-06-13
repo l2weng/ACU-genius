@@ -21,7 +21,8 @@ module.exports = mod.tag = {
   },
 
   async create(db, data) {
-    const attr = pick(data, ['tag_id', 'name', 'created', 'modified'])
+    console.log(data)
+    const attr = pick(data, ['tag_id', 'name', 'color', 'shapeType', 'created', 'modified'])
     const cols = keys(attr)
 
     const { id } = await db.run(`

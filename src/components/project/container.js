@@ -364,6 +364,7 @@ class ProjectContainer extends Component {
     onMetadataSave: func.isRequired,
     onSyncProject2Cloud: func.isRequired,
     onSort: func.isRequired,
+    onSkuSave: func.isRequired,
     onTemplateImport: func.isRequired,
     onUiUpdate: func.isRequired
   }

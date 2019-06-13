@@ -29,7 +29,6 @@ class EsperFootToolbar extends PureComponent {
   }
 
   render() {
-    console.log(this.props.photo)
     return (
       <Toolbar isDraggable={false}>
         <div className="toolbar-center" style={{ margin: 'auto' }}>
