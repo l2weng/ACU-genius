@@ -8,7 +8,7 @@ const { Step } = require('../steps')
 const { Button } = require('../button')
 const { FormElement, FormGroup } = require('../form')
 const cx = require('classnames')
-
+const debounce = require('lodash.debounce')
 
 const ProjectName = injectIntl(class extends Component {
   get isBlank() {
@@ -108,7 +108,7 @@ const ProjectStep = (props) => (
       isDefault
       isDisabled={!props.file}
       isPrimary
-      onClick={props.onComplete}
+      onClick={debounce(props.onComplete, 300)}
       size="lg"
       text="wizard.project.submit"/>
   </Step>
