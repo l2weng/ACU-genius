@@ -78,15 +78,18 @@ class SaveTag extends Command {
     const { category, circlePicker, name, taskSelect } = data
     const skuData = { name, shapeType: TAG.SHAPE_TYPE[category], color: circlePicker }
     if (data.id != null) data['tag_id'] = data.id
-    const tag = yield call(db.transaction, async tx => {
+    return yield call(db.transaction, async tx => {
       const tg = await mod.tag.create(tx, skuData)
-      // if (hasItems) await mod.item.tags.add(tx, { id: items, tag: tg.id })
+      if (taskSelect) {
+        const listObjs = await mod.list.loadItems(tx)
+        for (const task of taskSelect) {
+          if (listObjs.hasOwnProperty(task)) {
+            await mod.item.tags.add(tx, { id: listObjs[task].items, tag: tg.id })
+          }
+        }
+      }
       return tg
     })
-    // if (hasItems) {
-    //   yield put(act.item.tags.insert({ id: items, tags: [tag.id] }))
-    // }
-    return tag
   }
 }
 

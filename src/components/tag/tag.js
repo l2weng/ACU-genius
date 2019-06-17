@@ -27,7 +27,7 @@ class Tag extends PureComponent {
 
   get color() {
     const { tag } = this.props
-    return (tag.color) ? `color-${tag.color}` : null
+    return (tag.color) ? `color-${tag.color.replace(/\#/g, '')}` : null
   }
 
   get isDropTarget() {

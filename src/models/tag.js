@@ -21,7 +21,6 @@ module.exports = mod.tag = {
   },
 
   async create(db, data) {
-    console.log(data)
     const attr = pick(data, ['tag_id', 'name', 'color', 'shapeType', 'created', 'modified'])
     const cols = keys(attr)
 

@@ -8,6 +8,10 @@ const mod = {}
 const { userInfo } = ARGS
 const __ = require('underscore')
 
+const skel = (id, items = []) => ({
+  id, items
+})
+
 module.exports = mod.list = {
   async all(db) {
     let lists = {}
@@ -77,6 +81,20 @@ module.exports = mod.list = {
       })
 
     return listItems
+  },
+
+
+  async loadItems(db) {
+    const lists = {}
+    await all([
+      db.each('select list_id as list, id  from list_items group by list_id, id',
+        ({ list, id }) => {
+          if (list in lists) lists[list].items.push(id)
+          else lists[list] = skel(list, [])
+        }
+      )
+    ])
+    return lists
   },
 
   async create(db, { name, parent, position }) {
