@@ -34,11 +34,11 @@ class EsperFootToolbar extends PureComponent {
         <div className="toolbar-center" style={{ margin: 'auto' }}>
           <ToolGroup>
             <ButtonGroup>
-              <Button type="primary" onClick={this.viewPrevPhoto}>
+              <Button type="default" onClick={this.viewPrevPhoto}>
                 <Icon type="left" />
                 上一张
               </Button>
-              <Button type="primary" onClick={this.viewNextPhoto}>
+              <Button type="default" onClick={this.viewNextPhoto}>
                 下一张
                 <Icon type="right" />
               </Button>
@@ -48,7 +48,7 @@ class EsperFootToolbar extends PureComponent {
         <div className="toolbar-right" style={{ opacity: 1 }}>
           <ToolGroup>
             <ButtonGroup>
-              <Button type="primary" onClick={this.confirmPhoto}>
+              <Button type="primary"  onClick={this.confirmPhoto}>
               确认
               </Button>
               <Button type="danger" onClick={this.ignorePhoto}>
