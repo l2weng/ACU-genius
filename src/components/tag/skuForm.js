@@ -3,14 +3,14 @@
 const React = require('react')
 const { Component } = React
 const {
-  Form, Input, Select, Modal
+  Form, Input, Select, Modal, Checkbox
 } = require('antd')
 const FormItem = Form.Item
 const Option = Select.Option
 const { bool, func, object } = require('prop-types')
 const { CirclePicker } = require('react-color')
 const { IconSelection, IconPolygon } = require('../icons')
-const TagSelect = require('ant-design-pro/lib/TagSelect')
+const { LIST } = require('../../constants')
 
 class SkuForm extends Component {
   state = {
@@ -28,6 +28,7 @@ class SkuForm extends Component {
     return color.hex
   }
   onChange = (taskValue) =>{
+    console.log(taskValue)
     return taskValue
   }
 
@@ -46,6 +47,12 @@ class SkuForm extends Component {
       labelCol: { span: 7 },
       wrapperCol: { span: 13 },
     }
+    let taskOptions = []
+    Object.values(tasks).map(task => {
+      if (task.id !== LIST.ROOT) {
+        taskOptions.push({ label: task.name, value: task.id })
+      }
+    })
 
     return (
       <Modal
@@ -92,14 +99,9 @@ class SkuForm extends Component {
           <FormItem {...formItemLayout} label="应用于任务">
             {getFieldDecorator('taskSelect', {
               getValueFromEvent: this.onChange
-            })(<TagSelect style={{ maxHeight: '100px' }}>
-              {Object.values(tasks).map(task => {
-                if (task && task.id !== 0) {
-                  return (<TagSelect.Option key={task.syncTaskId}
-                    value={task.id}>{task.name}</TagSelect.Option>)
-                }
-              })}
-            </TagSelect>)}
+            })(
+              <Checkbox.Group options={taskOptions}/>
+              )}
           </FormItem>
         </Form>
       </Modal>
