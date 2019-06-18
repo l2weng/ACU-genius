@@ -52,9 +52,11 @@ function *open(file) {
     let syncProjectId = ''
     let syncStatus = false
     const syncResult = yield axios.post(`${ARGS.apiServer}/projects/syncLocalProject`, { file: db.path, ...project })
+    console.log('.....',syncResult)
     if (syncResult.status === 200) {
       syncProjectId = syncResult.data.project.projectId
       syncStatus = syncResult.data.project.syncStatus
+      args.update({ syncProjectId })
     }
     // Update window's global ARGS to allow reloading the project!
     if (db.path !== ARGS.file) {

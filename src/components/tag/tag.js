@@ -89,9 +89,9 @@ class Tag extends PureComponent {
             onCancel={onEditCancel}
             onChange={this.handleChange}/>
         </div>
-        <span className="btn btn-icon">
-          <IconSetting/>
-        </span>
+        {/*<span className="btn btn-icon">*/}
+        {/*  <IconSetting/>*/}
+        {/*</span>*/}
       </li>
     )
   }

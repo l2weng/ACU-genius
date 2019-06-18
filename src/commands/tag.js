@@ -78,18 +78,30 @@ class SaveTag extends Command {
     const { category, circlePicker, name, taskSelect } = data
     const skuData = { name, shapeType: TAG.SHAPE_TYPE[category], color: circlePicker }
     if (data.id != null) data['tag_id'] = data.id
-    return yield call(db.transaction, async tx => {
+    let changedItems = []
+    const tag =  yield call(db.transaction, async tx => {
       const tg = await mod.tag.create(tx, skuData)
       if (taskSelect) {
         const listObjs = await mod.list.loadItems(tx)
         for (const task of taskSelect) {
           if (listObjs.hasOwnProperty(task)) {
             await mod.item.tags.add(tx, { id: listObjs[task].items, tag: tg.id })
+            changedItems.push(listObjs[task].items)
           }
         }
       }
       return tg
     })
+    for (const changedItem of changedItems) {
+      yield put(act.item.tags.insert({ id: changedItem, tags: [tag.id] }))
+    }
+    // const project = yield call(mod.project.load, db)
+    // let skuResult = yield axios.post(`${ARGS.apiServer}/skus/create`, { localSkuId: tag.id, name: tag.name, projectId: syncProjectId, userId: userInfo.user.userId })
+    // if (skuResult.status === 200) {
+    //   let updatePayload = { id: tag.id, syncSkuId: skuResult.data.obj.skuId }
+    //   yield call(mod.tag.save, db, updatePayload)
+    // }
+    return tag
   }
 }
 

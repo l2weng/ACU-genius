@@ -26,6 +26,7 @@ class TagColors extends PureComponent {
 
     for (let id of this.props.selection) {
       let color = get(this.props.tags, [id, 'color'])
+      // eslint-disable-next-line no-useless-escape
       if (color) { color = color.replace(/\#/g, '') }
       if (color && !skip[color]) {
         skip[color] = true
