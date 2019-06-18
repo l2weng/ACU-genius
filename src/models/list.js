@@ -90,7 +90,7 @@ module.exports = mod.list = {
       db.each('select list_id as list, id  from list_items group by list_id, id',
         ({ list, id }) => {
           if (list in lists) lists[list].items.push(id)
-          else lists[list] = skel(list, [])
+          else lists[list] = skel(list, [id])
         }
       )
     ])
