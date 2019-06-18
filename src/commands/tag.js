@@ -74,7 +74,7 @@ class SaveTag extends Command {
   static get ACTION() { return TAG.SAVE_SKU }
   *exec() {
     const { db } = this.options
-    const { ...data } = this.action.payload
+    const { data, project } = this.action.payload
     const { category, circlePicker, name, taskSelect } = data
     const skuData = { name, shapeType: TAG.SHAPE_TYPE[category], color: circlePicker }
     if (data.id != null) data['tag_id'] = data.id
@@ -95,12 +95,11 @@ class SaveTag extends Command {
     for (const changedItem of changedItems) {
       yield put(act.item.tags.insert({ id: changedItem, tags: [tag.id] }))
     }
-    // const project = yield call(mod.project.load, db)
-    // let skuResult = yield axios.post(`${ARGS.apiServer}/skus/create`, { localSkuId: tag.id, name: tag.name, projectId: syncProjectId, userId: userInfo.user.userId })
-    // if (skuResult.status === 200) {
-    //   let updatePayload = { id: tag.id, syncSkuId: skuResult.data.obj.skuId }
-    //   yield call(mod.tag.save, db, updatePayload)
-    // }
+    let skuResult = yield axios.post(`${ARGS.apiServer}/skus/create`, { localSkuId: tag.id, name: tag.name, projectId: project.syncProjectId, color: circlePicker, shapeType: TAG.SHAPE_TYPE[category], userId: userInfo.user.userId })
+    if (skuResult.status === 200) {
+      let updatePayload = { id: tag.id, syncSkuId: skuResult.data.obj.skuId }
+      yield call(mod.tag.save, db, updatePayload)
+    }
     return tag
   }
 }

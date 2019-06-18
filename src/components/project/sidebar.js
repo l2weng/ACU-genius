@@ -362,7 +362,6 @@ class ProjectSidebar extends React.PureComponent {
       isOwner
     } = this.props
     let root = this.props.lists[this.props.root]
-
     const { modalVisible, colleagues, defaultIdx, skuModalVisible } = this.state
     const parentMethods = {
       handleAssign: this.handleAssign,

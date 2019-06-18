@@ -168,9 +168,15 @@ class ProjectContainer extends Component {
 
     onMetadataSave(payload, meta)
   }
+
   handleSyncProject2Cloud = () => {
     const { project, cache } = this.props
     this.props.onSyncProject2Cloud({ project, cache })
+  }
+
+  handleSkuSave = (data) => {
+    const { project } = this.props
+    this.props.onSkuSave({ ...data }, project )
   }
 
   handleKeyDown = (event) => {
@@ -255,6 +261,7 @@ class ProjectContainer extends Component {
           photos={photos}
           zoom={ui.zoom}
           isOwner={isOwner}
+          onSkuSave={this.handleSkuSave}
           onSyncProject2Cloud={this.handleSyncProject2Cloud}
           onMetadataSave={this.handleMetadataSave}/>
 
@@ -609,8 +616,8 @@ module.exports = {
         dispatch(actions.edit.cancel())
       },
 
-      onSkuSave(data) {
-        dispatch(actions.tag.saveSku({ ...data }))
+      onSkuSave(data, project) {
+        dispatch(actions.tag.saveSku({ data, project }))
       },
 
       onTagSelect(...args) {

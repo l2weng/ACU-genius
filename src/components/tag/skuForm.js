@@ -17,11 +17,11 @@ class SkuForm extends Component {
     confirmDirty: false,
   };
 
+
   handleSubmit = (values) => {
-    this.props.form.validateFieldsAndScroll((err, values) => {
-      this.props.saveSku(values)
-      // this.props.form.resetFields()
-    })
+    this.props.saveSku(values)
+    this.props.form.resetFields()
+    this.props.handleSkuModalVisible()
   }
 
   onChangeComplete = (color, event)=>{
