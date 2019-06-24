@@ -10,7 +10,7 @@ const { Search } = Input
 
 const { Meta } = Card
 const _ = require('underscore')
-const { userInfo, machineId } = ARGS
+const { userInfo } = ARGS
 const actions = require('../../actions')
 const { func, object, array, string  } = require('prop-types')
 const { HEAD, LIST } = require('../../constants')
@@ -20,6 +20,8 @@ const defaultCover = join(staticRoot, 'images/project', 'default-cover.jpg')
 const { TasksTable } = require('./taskTable')
 const { existsSync: exists } = require('fs')
 const { openNotification } = require('../../common/uiUtil')
+const { ipcRenderer: ipc  } = require('electron')
+
 
 const {
   getCachePrefix,
@@ -86,6 +88,10 @@ class Workplace extends PureComponent {
     return cover ? cover : defaultCover
   }
 
+  createNewProject = () => {
+    ipc.send('cmd', 'app:create-project')
+  }
+
   onTaskSwitch = (e) =>{
     this.props.fetchTasks(userInfo.user.userId, e.target.value)
     this.props.switchTask(e.target.value)
@@ -106,7 +112,8 @@ class Workplace extends PureComponent {
           <Col span={24}>
             <Card
               bordered={false}
-              title="进行中的项目">
+              title="进行中的项目"
+              extra={<a href="#" onClick={this.createNewProject}>新建项目</a>}>
               <List
                 rowKey="id"
                 loading={false}
