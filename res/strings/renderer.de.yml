@@ -81,11 +81,11 @@ de:
     new: new project
   wizard:
     project:
-      title: Create a new project
-      submit: Create project
-      name: Name
-      save_as: Change file name and location
-      change: Change
+      title: 创建一个新项目
+      submit: 创建项目
+      name: 名称
+      save_as: 修改文件名以及文件所在位置
+      change: 修改
   prefs:
     title: Label Real Preferences
     app:
@@ -103,11 +103,11 @@ de:
       template: Default Template
       debug: Enable Developer Mode
       dup:
-        label: During Import
+        label: 导入期间
         option:
-          skip: Skip duplicate photos
-          import: Accept duplicate photos
-          prompt: Ask me every time
+          skip: 跳过重复照片
+          import: 接受重复照片
+          prompt: 每次都需要确认
       ui:
         label: Interface
         option:

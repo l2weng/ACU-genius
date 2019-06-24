@@ -27,36 +27,34 @@ en:
       - label: 'Delete Task'
         command: 'app:delete-list'
     tags: &tags
-      - label: 'New Sku'
-        command: 'app:create-tag'
     tag: &tag
-      - label: 'Sku Color'
-        submenu:
-          - label: 'None'
-            color: null
-            type: checkbox
-          - type: separator
-          - label: 'Red'
-            color: 'red'
-            type: checkbox
-          - label: 'Orange'
-            color: 'orange'
-            type: checkbox
-          - label: 'Yellow'
-            color: 'yellow'
-            type: checkbox
-          - label: 'Green'
-            color: 'green'
-            type: checkbox
-          - label: 'Blue'
-            color: 'blue'
-            type: checkbox
-          - label: 'Purple'
-            color: 'purple'
-            type: checkbox
-          - label: 'Gray'
-            color: 'gray'
-            type: checkbox
+#      - label: 'Sku Color'
+#        submenu:
+#          - label: 'None'
+#            color: null
+#            type: checkbox
+#          - type: separator
+#          - label: 'Red'
+#            color: 'red'
+#            type: checkbox
+#          - label: 'Orange'
+#            color: 'orange'
+#            type: checkbox
+#          - label: 'Yellow'
+#            color: 'yellow'
+#            type: checkbox
+#          - label: 'Green'
+#            color: 'green'
+#            type: checkbox
+#          - label: 'Blue'
+#            color: 'blue'
+#            type: checkbox
+#          - label: 'Purple'
+#            color: 'purple'
+#            type: checkbox
+#          - label: 'Gray'
+#            color: 'gray'
+#            type: checkbox
       - label: 'Rename Sku'
         command: 'app:rename-tag'
       - label: 'Delete Sku'
