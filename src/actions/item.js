@@ -194,6 +194,14 @@ module.exports = {
       }
     },
 
+    assign(payload, meta = {}) {
+      return {
+        type: ITEM.TAG.ASSIGN,
+        payload,
+        meta: { cmd: 'project', history: 'add', search: true, ...meta }
+      }
+    },
+
     clear(payload, meta = {}) {
       return {
         type: ITEM.TAG.CLEAR,

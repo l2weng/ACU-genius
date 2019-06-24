@@ -219,6 +219,7 @@ class ItemPanel extends React.PureComponent {
     onItemPreview: func.isRequired,
     onItemSave: func.isRequired,
     onItemTagAdd: func.isRequired,
+    onItemTagsAdd: func.isRequired,
     onItemTagRemove: func.isRequired,
     onMaximize: func.isRequired,
     onMetadataSave: func.isRequired,

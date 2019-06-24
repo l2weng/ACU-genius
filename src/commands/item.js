@@ -492,7 +492,7 @@ class Export extends Command {
 }
 
 class ToggleTags extends Command {
-  static get ACTION() { return ITEM.TAG.TOGGLE }
+  static get ACTION() { return  ITEM.TAG.TOGGLE }
 
   *exec() {
     const { db } = this.options
@@ -505,6 +505,49 @@ class ToggleTags extends Command {
 
     for (let tag of tags) {
       (current.includes(tag) ? removed : added).push(tag)
+    }
+
+    if (added.length) {
+      yield call(mod.item.tags.set, db, added.map(tag => ({ id, tag })))
+      yield put(act.item.tags.insert({ id, tags: added }))
+    }
+
+    if (removed.length) {
+      yield call(mod.item.tags.remove, db, { id, tags: removed })
+      yield put(act.item.tags.remove({ id, tags: removed }))
+    }
+
+    this.undo = this.action
+  }
+}
+
+class AssignTags extends Command {
+  static get ACTION() { return  ITEM.TAG.ASSIGN }
+
+  *exec() {
+    const { db } = this.options
+    const { id, tags } = this.action.payload
+
+    const current = yield select(({ items }) => items[id].tags)
+
+    let added = []
+    let removed = []
+
+    if (tags.length === 0) {
+      removed = current
+    } else if (current.length === 0) {
+      added = tags
+    } else {
+      for (let cur of current) {
+        if (!tags.includes(cur)) {
+          removed.push(cur)
+        }
+      }
+      for (let tag of tags) {
+        if (!current.includes(tag)) {
+          added.push(tag)
+        }
+      }
     }
 
     if (added.length) {
@@ -605,5 +648,6 @@ module.exports = {
   AddTag,
   RemoveTag,
   ToggleTags,
+  AssignTags,
   ClearTags
 }

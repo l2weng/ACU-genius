@@ -369,6 +369,7 @@ class ProjectContainer extends Component {
     onModeChange: func.isRequired,
     onHandleLogin: func.isRequired,
     onMetadataSave: func.isRequired,
+    onItemTagsAdd: func.isRequired,
     onSyncProject2Cloud: func.isRequired,
     onSort: func.isRequired,
     onSkuSave: func.isRequired,
@@ -535,6 +536,10 @@ module.exports = {
 
       onItemDelete(items) {
         dispatch(actions.item.delete(items))
+      },
+
+      onItemTagsAdd(...args) {
+        dispatch(actions.item.tags.assign(...args))
       },
 
       onItemMerge(...args) {

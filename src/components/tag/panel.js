@@ -87,6 +87,12 @@ class TagPanel extends PureComponent {
     }
   }
 
+  handleTagChange = (tags) => {
+    this.props.items.map(item=>{
+      this.props.onItemTagsAdd({ id: item.id, tags: tags })
+    })
+  }
+
   handleTagCreate = (tag) => {
     this.props.onTagCreate({ ...tag, items: this.props.items.map(toId) })
   }
@@ -138,8 +144,10 @@ class TagPanel extends PureComponent {
           isDisabled={this.props.isDisabled}
           completions={this.props.completions}
           count={this.props.items.length}
+          itemTags={this.props.tags}
           tags={this.props.allTags}
           onAdd={this.handleTagAdd}
+          onItemTagChange={this.handleTagChange}
           onBlur={this.props.onBlur}
           onCancel={this.handleCancel}
           onCreate={this.handleTagCreate}/>
@@ -164,6 +172,7 @@ class TagPanel extends PureComponent {
     onContextMenu: func.isRequired,
     onEditCancel: func.isRequired,
     onItemTagAdd: func.isRequired,
+    onItemTagsAdd: func.isRequired,
     onItemTagRemove: func.isRequired,
     onTagCreate: func.isRequired,
     onTagSave: func.isRequired

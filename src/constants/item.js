@@ -31,6 +31,7 @@ module.exports = {
     REMOVE: 'item.tag.remove',
     CLEAR: 'item.tag.clear',
     TOGGLE: 'item.tag.toggle',
+    ASSIGN: 'item.tag.assign',
   },
 
   PHOTO: {
