@@ -3,7 +3,7 @@
 const React = require('react')
 const { PureComponent } = React
 const { connect } = require('react-redux')
-const { TagList } = require('./list')
+const { PanelTagList } = require('./panelTagList')
 const { TagAdder } = require('./adder')
 const { toId } = require('../../common/util')
 const { TABS } = require('../../constants')
@@ -129,7 +129,7 @@ class TagPanel extends PureComponent {
         tabIndex={this.tabIndex}
         onBlur={this.props.onBlur}
         onKeyDown={this.handleKeyDown}>
-        <TagList
+        <PanelTagList
           hasShapeIcon
           edit={this.props.edit}
           keymap={this.props.keymap}
