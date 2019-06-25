@@ -7,6 +7,7 @@ const { arrayOf, bool, number, string, shape, object, func } = PropTypes
 const { Tag } = require('./tag')
 const { get, noop } = require('../../common/util')
 const { match } = require('../../keymap')
+const __ = require('underscore')
 
 
 class PanelTagList extends PureComponent {
@@ -15,7 +16,7 @@ class PanelTagList extends PureComponent {
     super(props)
 
     this.state = {
-      itemTags: this.props.tags
+      activeTag: 0
     }
   }
 
@@ -27,7 +28,9 @@ class PanelTagList extends PureComponent {
     return this.props.selection.includes(tag.id)
   }
 
-
+  handleSelect = (tag)=>{
+    this.setState({ activeTag: tag })
+  }
   handleContextMenu = (event, tag) => {
     const { selection, onSelect, onContextMenu } = this.props
 
@@ -38,56 +41,36 @@ class PanelTagList extends PureComponent {
     onContextMenu(event, tag)
   }
 
-  handleKeyDown = (event, tag) => {
-    switch (match(this.props.keymap, event)) {
-      case 'remove':
-        this.props.onRemove(tag)
-        break
-      case 'commit':
-        this.props.onCommit(tag)
-        break
-      case 'clear':
-        this.props.onSelect(tag.id, { mod: 'clear' })
-        break
-      default:
-        return
-    }
-
+  handleKeyDown = (event) => {
     event.preventDefault()
     event.stopPropagation()
     event.nativeEvent.stopImmediatePropagation()
-  }
-
-  handleFocusClick = (tag) => {
-    console.log(tag)
-  }
-
-
-  componentWillReceiveProps(props) {
-    if (this.state.itemTags !== props.tags) {
-      this.setState({ itemTags: props.tags })
-    }
   }
 
   render() {
     const {
       hasFocusIcon,
       hasShapeIcon,
+      onCommit,
       onDropItems,
       onEditCancel,
-      onSelect,
+      tags,
       onSave
     } = this.props
-    const { itemTags } = this.state
-    if (itemTags.filter(iTag => iTag.selected === true).length === 0) {
-      itemTags[0].selected = true
+    const { activeTag } = this.state
+    if (activeTag === 0) {
+      tags[0].selected = true
+    } else {
+      for (const tag of tags) {
+        tag.selected = tag.id === activeTag
+      }
     }
     return (
       <ol className="tag-list">
-        {itemTags.map(tag =>
+        {tags.map(tag =>
           <Tag
             isSelected={tag.selected}
-            key={tag.id}
+            key={`${tag.id}-${tag.selected}`}
             tag={tag}
             hasShapeIcon={hasShapeIcon}
             hasFocusIcon={hasFocusIcon}
@@ -95,9 +78,9 @@ class PanelTagList extends PureComponent {
             onChange={onSave}
             onDropItems={onDropItems}
             onEditCancel={onEditCancel}
-            onFocusClick={this.handleFocusClick}
+            onFocusClick={onCommit}
             onKeyDown={this.handleKeyDown}
-            onSelect={onSelect}
+            onSelect={this.handleSelect}
             onContextMenu={this.handleContextMenu}/>)}
       </ol>
     )
