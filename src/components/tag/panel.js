@@ -130,6 +130,7 @@ class TagPanel extends PureComponent {
         onBlur={this.props.onBlur}
         onKeyDown={this.handleKeyDown}>
         <TagList
+          hasShapeIcon
           edit={this.props.edit}
           keymap={this.props.keymap}
           tags={this.props.tags}

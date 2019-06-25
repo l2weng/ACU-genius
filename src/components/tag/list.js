@@ -54,6 +54,7 @@ class TagList extends PureComponent {
     const {
       tags,
       hasFocusIcon,
+      hasShapeIcon,
       onCommit,
       onDropItems,
       onEditCancel,
@@ -67,6 +68,7 @@ class TagList extends PureComponent {
           <Tag
             key={tag.id}
             tag={tag}
+            hasShapeIcon={hasShapeIcon}
             hasFocusIcon={hasFocusIcon}
             isEditing={this.isEditing(tag)}
             isSelected={this.isSelected(tag)}
@@ -88,6 +90,7 @@ class TagList extends PureComponent {
     })).isRequired,
 
     hasFocusIcon: bool,
+    hasShapeIcon: bool,
     selection: arrayOf(number).isRequired,
     keymap: object.isRequired,
     edit: object,

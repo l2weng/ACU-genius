@@ -40,6 +40,7 @@ class ProjectTags extends PureComponent {
     return (
       <nav className="project-tags">
         <TagList
+          hasShapeIcon={false}
           tags={this.props.tags}
           keymap={this.props.keymap}
           selection={this.props.selection}
