@@ -3,16 +3,22 @@
 const React = require('react')
 const { PureComponent } = React
 const { ItemPanel } = require('./panel')
+const { connect } = require('react-redux')
 const { ItemContainer } = require('./container')
 const { Resizable } = require('../resizable')
 const { NOTE, PROJECT: { MODE }, SASS: { PANEL } } = require('../../constants')
 const { pick } = require('../../common/util')
 const debounce = require('lodash.debounce')
+const __ = require('underscore')
 
 const {
   arrayOf, bool, func, object, number, shape, string, array
 } = require('prop-types')
 
+
+const {
+  getItemTags,
+} = require('../../selectors')
 
 function getNoteTemplate() {
   return { text: '' }
@@ -24,7 +30,8 @@ class ItemView extends PureComponent {
     super(props)
 
     this.state = {
-      note: props.note || getNoteTemplate()
+      note: props.note || getNoteTemplate(),
+      activeTag: 0
     }
   }
 
@@ -164,6 +171,11 @@ class ItemView extends PureComponent {
   }
 
 
+  handleTagSelect = (tag)=>{
+    this.setState({ activeTag: tag })
+  }
+
+
   render() {
     const {
       keymap,
@@ -178,7 +190,7 @@ class ItemView extends PureComponent {
       references,
       ...props
     } = this.props
-
+    const { activeTag } = this.state
     const { isItemOpen } = this
     return (
       <section className="item-view" style={this.style}>
@@ -192,11 +204,13 @@ class ItemView extends PureComponent {
           <ItemPanel {...pick(props, ItemPanel.props)}
             panel={panel}
             photo={photo}
+                     activeTag={activeTag}
             note={this.state.note}
             keymap={keymap}
             selections={selections}
             references={references}
             isItemOpen={isItemOpen}
+            onTagSelect={this.handleTagSelect}
             enableReference={enableReference}
             isDisabled={isTrashSelected || isProjectClosing}
             onNoteCreate={this.handleNoteCreate}/>
@@ -229,6 +243,11 @@ class ItemView extends PureComponent {
       })
     ),
 
+    tags: arrayOf(shape({
+      id: number.isRequired,
+      name: string.isRequired
+    })).isRequired,
+
     keymap: object.isRequired,
     nav: object.isRequired,
     offset: number.isRequired,
@@ -256,5 +275,10 @@ delete ItemView.propTypes.isItemOpen
 
 
 module.exports = {
-  ItemView
+
+  ItemView: connect(
+  (state) => ({
+    tags: getItemTags(state)
+  })
+)(ItemView)
 }

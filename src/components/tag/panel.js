@@ -134,6 +134,8 @@ class TagPanel extends PureComponent {
           edit={this.props.edit}
           keymap={this.props.keymap}
           tags={this.props.tags}
+          onTagSelect={this.props.onTagSelect}
+          activeTag={this.props.activeTag}
           hasFocusIcon
           onCommit={this.handleTagAdd}
           onEditCancel={this.props.onEditCancel}
@@ -167,6 +169,7 @@ class TagPanel extends PureComponent {
       id: number.isRequired,
       name: string.isRequired
     })).isRequired,
+    activeTag: number,
 
     onBlur: func.isRequired,
     onFocus: func.isRequired,
@@ -176,7 +179,8 @@ class TagPanel extends PureComponent {
     onItemTagsAdd: func.isRequired,
     onItemTagRemove: func.isRequired,
     onTagCreate: func.isRequired,
-    onTagSave: func.isRequired
+    onTagSave: func.isRequired,
+    onTagSelect: func.isRequired
   }
 }
 

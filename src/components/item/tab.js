@@ -8,7 +8,7 @@ const { IconMetadata, IconHangtag } = require('../icons')
 const { MetadataPanel } = require('../metadata')
 const { TagPanel } = require('../tag')
 const { PANEL: { METADATA, TAGS } } = require('../../constants/ui')
-const { array, func, object, oneOf } = require('prop-types')
+const { array, func, object, oneOf, number } = require('prop-types')
 
 
 class ItemTabHeader extends PureComponent {
@@ -54,7 +54,7 @@ class ItemTabHeader extends PureComponent {
 }
 
 
-const ItemTabBody = ({ items, keymap, setPanel, tab, ...props }) => {
+const ItemTabBody = ({ items, keymap, setPanel, onTagSelect, tab, activeTag, ...props }) => {
   switch (true) {
     case (items.length === 0):
       return null
@@ -70,6 +70,8 @@ const ItemTabBody = ({ items, keymap, setPanel, tab, ...props }) => {
         <TagPanel {...props}
           ref={setPanel}
           items={items}
+          activeTag={activeTag}
+          onTagSelect={onTagSelect}
           keymap={keymap.TagList}/>
       )
     default:
@@ -79,8 +81,10 @@ const ItemTabBody = ({ items, keymap, setPanel, tab, ...props }) => {
 
 ItemTabBody.propTypes = {
   items: array.isRequired,
+  activeTag: number,
   keymap: object.isRequired,
   setPanel: func.isRequired,
+  onTagSelect: func.isRequired,
   tab: oneOf([METADATA, TAGS]).isRequired
 }
 

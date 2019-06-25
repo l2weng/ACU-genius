@@ -85,12 +85,15 @@ class ItemPanel extends React.PureComponent {
       // notes,
       panel,
       photo,
+      references,
+      activeTag,
       selections,
       isDisabled,
       isItemOpen,
       onItemPreview,
       // onNoteCreate,
       // onNoteSelect,
+      onTagSelect,
       onPhotoContract,
       onPhotoDelete,
       onPhotoError,
@@ -98,10 +101,8 @@ class ItemPanel extends React.PureComponent {
       onPhotoSelect,
       onPhotoSort,
       onSelectionSort,
-      references,
       ...props
     } = this.props
-
     const hasMultipleItems = this.props.items.length > 1
     const item = hasMultipleItems ? null : this.props.items[0]
     return (
@@ -121,6 +122,8 @@ class ItemPanel extends React.PureComponent {
             isDisabled={isDisabled}
             isItemOpen={isItemOpen}
             keymap={keymap}
+                       activeTag={activeTag}
+            onTagSelect={onTagSelect}
             setPanel={this.setPanel}
             onBlur={this.handleFirstPanelBlur}
             onFocus={this.handleFirstPanelFocus}/>
@@ -191,6 +194,7 @@ class ItemPanel extends React.PureComponent {
     keymap: object.isRequired,
     isDisabled: bool.isRequired,
     isItemOpen: bool.isRequired,
+    activeTag: number,
     enableReference: bool.isRequired,
     items: array.isRequired,
 
@@ -237,6 +241,7 @@ class ItemPanel extends React.PureComponent {
     onPhotoSort: func.isRequired,
     onTagCreate: func.isRequired,
     onTagSave: func.isRequired,
+    onTagSelect: func.isRequired,
     onSelectionSort: func.isRequired,
     onUiUpdate: func.isRequired
   }

@@ -29,8 +29,9 @@ class PanelTagList extends PureComponent {
   }
 
   handleSelect = (tag)=>{
-    this.setState({ activeTag: tag })
+    this.props.onTagSelect(tag)
   }
+
   handleContextMenu = (event, tag) => {
     const { selection, onSelect, onContextMenu } = this.props
 
@@ -55,10 +56,10 @@ class PanelTagList extends PureComponent {
       onDropItems,
       onEditCancel,
       tags,
+      activeTag,
       onSave
     } = this.props
-    const { activeTag } = this.state
-    if (activeTag === 0) {
+    if (tags.length !== 0 && activeTag === 0) {
       tags[0].selected = true
     } else {
       for (const tag of tags) {
@@ -94,6 +95,7 @@ class PanelTagList extends PureComponent {
 
     hasFocusIcon: bool,
     hasShapeIcon: bool,
+    activeTag: number,
     selection: arrayOf(number).isRequired,
     keymap: object.isRequired,
     edit: object,
@@ -104,6 +106,7 @@ class PanelTagList extends PureComponent {
     onRemove: func.isRequired,
     onSelect: func.isRequired,
     onSave: func.isRequired,
+    onTagSelect: func.isRequired,
     onContextMenu: func.isRequired
   }
 
