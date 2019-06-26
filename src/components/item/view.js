@@ -191,7 +191,7 @@ class ItemView extends PureComponent {
       ...props
     } = this.props
     const { activeTag } = this.state
-    let shapeColor = '#555'
+    let shapeColor = ''
     if (tags.length > 0 && activeTag === 0) {
       shapeColor = tags[0].color
     } else {

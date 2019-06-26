@@ -38,5 +38,29 @@ module.exports = {
         fill: [0xcedef7, 0.8]
       }
     }
+  },
+
+  getSelectionColors(lineColor = '5c93e5') {
+    lineColor = lineColor.replace(/\#/g, '')
+    return {
+      mask: {
+        line: [0xffffff, 1],
+        fill: [0x000000, 0.4]
+      },
+      selection: {
+        default: {
+          line: [`0x${lineColor}`, 1],
+          fill: [0xcedef7, 0.4]
+        },
+        active: {
+          line: [`0x${lineColor}`, 1],
+          fill: [0xcedef7, 0.8]
+        },
+        live: {
+          line: [`0x${lineColor}`, 1],
+          fill: [0xcedef7, 0.8]
+        }
+      }
+    }
   }
 }

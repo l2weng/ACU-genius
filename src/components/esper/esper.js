@@ -706,6 +706,7 @@ class Esper extends PureComponent {
             selection={this.props.selection}
             selections={this.props.selections}
             tool={tool}
+            shapeColor={this.props.shapeColor}
             onChange={this.handleViewChange}
             onSelectionActivate={this.handleSelectionActivate}
             onSelectionCreate={this.handleSelectionCreate}

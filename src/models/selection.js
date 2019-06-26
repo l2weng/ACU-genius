@@ -26,6 +26,7 @@ const mod = {
               brightness,
               contrast,
               labelId,
+              color,
               hue,
               saturation,
               template,
@@ -62,7 +63,7 @@ const mod = {
       return selections
     },
 
-    async create(db, template, { photo, x, y, width, height, angle, mirror, labelId, updatedTime }) {
+    async create(db, template, { photo, x, y, width, height, angle, mirror, labelId, updatedTime, color }) {
       const { id } = await db.run(`
         INSERT INTO subjects (template) VALUES (?)`, template || TEMPLATE)
 
@@ -71,8 +72,8 @@ const mod = {
           VALUES (?,?,?,?,?)`, [id, width, height, angle, mirror])
 
       await db.run(`
-        INSERT INTO selections (id, photo_id, x, y, labelId, updatedTime)
-          VALUES (?,?,?,?,?,?)`, [id, photo, x, y, labelId ? labelId : uuid(), updatedTime])
+        INSERT INTO selections (id, photo_id, x, y, labelId, updatedTime, color)
+          VALUES (?,?,?,?,?,?,?)`, [id, photo, x, y, labelId ? labelId : uuid(), updatedTime, color])
 
       return (await mod.selection.load(db, [id]))[id]
     },

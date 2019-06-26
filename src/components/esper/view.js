@@ -126,6 +126,7 @@ class EsperView extends Component {
   async reset(props) {
     this.fadeOut(this.image)
     this.image = null
+    props.color = this.props.shapeColor
 
     if (props.src != null) {
       this.image = new Picture(props)
@@ -566,7 +567,8 @@ class EsperView extends Component {
       x: round(x),
       y: round(y),
       width: round(width),
-      height: round(height)
+      height: round(height),
+      color: this.props.shapeColor
     })
   }
 
@@ -582,6 +584,7 @@ class EsperView extends Component {
     selection: object,
     selections: array.isRequired,
     tool: string.isRequired,
+    shapeColor: string.isRequired,
     onChange: func.isRequired,
     onDoubleClick: func.isRequired,
     onLoadError: func,
@@ -591,6 +594,9 @@ class EsperView extends Component {
     onWheel: func.isRequired,
     onZoomIn: func.isRequired,
     onZoomOut: func.isRequired
+  }
+  static defaultProps = {
+    shapeColor: '5c93e5'
   }
 }
 

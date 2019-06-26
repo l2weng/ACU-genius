@@ -3,14 +3,15 @@
 const PIXI = require('pixi.js/dist/pixi.js')
 const { Container, Graphics, Rectangle } = PIXI
 const BLANK = Object.freeze({})
-const { COLOR, TOOL } = require('../../constants/esper')
+const { COLOR, TOOL, getSelectionColors } = require('../../constants/esper')
 
 
 class SelectionLayer extends Container {
-  constructor() {
+  constructor(color) {
     super()
     this.on('mousemove', this.handleMouseMove)
     this.visible = false
+    this.color = color
   }
 
   update({ selection } = BLANK) {
@@ -20,10 +21,10 @@ class SelectionLayer extends Container {
     let i = 0
 
     for (; i < this.children.length - 1; ++i) {
-      this.children[i].update(scale)
+      this.children[i].update(this.children[i].data.color ? this.children[i].data.color : this.color, scale)
     }
-
-    this.children[i].update(scale, selection, 'live')
+    this.children[i].update(this.children[i].data.color ? this.children[i].data.color : this.color, scale, selection,
+        'live')
   }
 
   destroy() {
@@ -53,6 +54,7 @@ class SelectionLayer extends Container {
   }
 
   sync(props) {
+    this.color = props.shapeColor
     this.visible = this.isVisible(props)
     this.interactive = this.isInteractive(props)
 
@@ -60,14 +62,14 @@ class SelectionLayer extends Container {
 
     for (let i = 0; i < selections.length; ++i) {
       if (i >= this.children.length) {
-        this.addChild(new Selection())
+        this.addChild(new Selection(props.shapeColor))
       }
 
       this.children[i].sync(selections[i])
     }
 
     if (this.children.length <= selections.length) {
-      this.addChild(new Selection())
+      this.addChild(new Selection(props.shapeColor))
     }
 
     this.children[selections.length].sync(BLANK)
@@ -82,9 +84,10 @@ class SelectionLayer extends Container {
 
 
 class Selection extends Graphics {
-  constructor() {
+  constructor(color) {
     super()
     this.data = BLANK
+    this.color = color
   }
 
   get isBlank() {
@@ -106,14 +109,14 @@ class Selection extends Graphics {
   }
 
   update(
+    color,
     scale = 1,
     { x, y, width, height } = this.data,
-    state = this.state
+    state = this.state,
   ) {
     this.clear()
     if (!width || !height) return
-
-    const colors = COLOR.selection[state]
+    const colors = getSelectionColors(color ? color : this.color).selection[state]
 
     this
       .lineStyle(scale, ...colors.line)

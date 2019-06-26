@@ -65,13 +65,13 @@ class PhotoGrid extends PhotoIterator {
 
     for (; cur < gap && cur < to; ++cur) {
       let photo = photos[cur]
-
-      if (this.isExpanded(photo)) {
-        exp = photo
-        gap = this.getNextRowOffset(cur)
+      if (photo) {
+        if (this.isExpanded(photo)) {
+          exp = photo
+          gap = this.getNextRowOffset(cur)
+        }
+        out.push(fn(this.getIterableProps(photo, cur)))
       }
-
-      out.push(fn(this.getIterableProps(photo, cur)))
     }
 
     if (exp != null) {

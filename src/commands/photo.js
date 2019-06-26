@@ -490,7 +490,6 @@ class Sync extends Command {
     const { project } = yield select()
     const photos = yield call(db.seq, conn =>
       mod.photo.load(conn, null, project))
-    console.log(photos)
     const { userInfo } = ARGS
     let photosArray = []
     for (let i in photos) {

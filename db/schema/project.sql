@@ -198,6 +198,7 @@ CREATE TABLE selections (
   y         NUMERIC  NOT NULL DEFAULT 0,
   position  INTEGER,
   labelId   TEXT,
+  color   TEXT,
   updatedTime INTEGER
 
 ) WITHOUT ROWID;

@@ -15,7 +15,7 @@ const NEGATIVE = [
 
 
 class Picture extends Container {
-  constructor({ width, height }) {
+  constructor({ width, height, color }) {
     super()
 
     this.WIDTH = width
@@ -33,7 +33,7 @@ class Picture extends Container {
 
     this.handleResolutionChange()
 
-    this.selections = new SelectionLayer()
+    this.selections = new SelectionLayer(color)
     this.addChild(this.selections)
 
     this.overlay = new SelectionOverlay({ width, height })
