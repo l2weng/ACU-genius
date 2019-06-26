@@ -683,6 +683,7 @@ class Esper extends PureComponent {
         onKeyUp={this.handleKeyUp}>
         <EsperHeader>
           <EsperToolbar
+            shapeColor={this.props.shapeColor}
             photo={this.props.photo}
             isDisabled={isDisabled}
             isSelectionActive={isSelectionActive}
@@ -757,6 +758,7 @@ class Esper extends PureComponent {
     tabIndex: number.isRequired,
     tool: string.isRequired,
     selection: object,
+    shapeColor: string.isRequired,
     selections: arrayOf(shape({
       id: number.isRequired,
       height: number.isRequired,

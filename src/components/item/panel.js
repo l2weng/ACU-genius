@@ -122,7 +122,7 @@ class ItemPanel extends React.PureComponent {
             isDisabled={isDisabled}
             isItemOpen={isItemOpen}
             keymap={keymap}
-                       activeTag={activeTag}
+            activeTag={activeTag}
             onTagSelect={onTagSelect}
             setPanel={this.setPanel}
             onBlur={this.handleFirstPanelBlur}

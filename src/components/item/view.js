@@ -28,10 +28,9 @@ function getNoteTemplate() {
 class ItemView extends PureComponent {
   constructor(props) {
     super(props)
-
     this.state = {
       note: props.note || getNoteTemplate(),
-      activeTag: 0
+      activeTag: 0,
     }
   }
 
@@ -188,9 +187,20 @@ class ItemView extends PureComponent {
       isTrashSelected,
       enableReference,
       references,
+      tags,
       ...props
     } = this.props
     const { activeTag } = this.state
+    let shapeColor = '#555'
+    if (tags.length > 0 && activeTag === 0) {
+      shapeColor = tags[0].color
+    } else {
+      for (const tag of tags) {
+        if (tag.id === activeTag) {
+          shapeColor = tag.color
+        }
+      }
+    }
     const { isItemOpen } = this
     return (
       <section className="item-view" style={this.style}>
@@ -204,7 +214,7 @@ class ItemView extends PureComponent {
           <ItemPanel {...pick(props, ItemPanel.props)}
             panel={panel}
             photo={photo}
-                     activeTag={activeTag}
+            activeTag={activeTag}
             note={this.state.note}
             keymap={keymap}
             selections={selections}
@@ -220,6 +230,7 @@ class ItemView extends PureComponent {
           note={this.state.note}
           nav={this.props.nav}
           photo={photo}
+          shapeColor={shapeColor}
           isDisabled={isTrashSelected || isProjectClosing}
           isOpen={isItemOpen}
           onContextMenu={this.props.onContextMenu}

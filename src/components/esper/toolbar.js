@@ -90,7 +90,7 @@ class EsperToolbar extends PureComponent {
               onClick={this.setArrowTool}/>
             <Button
               noFocus
-              icon={<IconSelection/>}
+              icon={<IconSelection className={`color-${this.props.shapeColor.replace(/\#/g, '')}`}/>}
               title="esper.tool.select"
               isActive={this.isToolActive(TOOL.SELECT)}
               isDisabled={this.props.isDisabled || this.props.isSelectionActive}
@@ -184,7 +184,8 @@ class EsperToolbar extends PureComponent {
     photo: object,
     onToolChange: func.isRequired,
     onRotationChange: func.isRequired,
-    onZoomChange: func.isRequired
+    onZoomChange: func.isRequired,
+    shapeColor: string.isRequired
   }
 
   static defaultProps = {

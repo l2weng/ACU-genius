@@ -71,6 +71,7 @@ class ItemContainer extends React.PureComponent {
             keymap={this.props.keymap.Esper}
             photo={this.props.photo}
             selection={this.props.selection}
+            shapeColor={this.props.shapeColor}
             selections={this.props.selections}
             tool={this.props.esper.tool}
             onLabelSave={this.handleLabelSave}
@@ -109,6 +110,7 @@ class ItemContainer extends React.PureComponent {
     selection: object,
     selections: arrayOf(object).isRequired,
     settings: object.isRequired,
+    shapeColor: string.isRequired,
     onContextMenu: func.isRequired,
     onEsperChange: func.isRequired,
     onNoteChange: func.isRequired,
