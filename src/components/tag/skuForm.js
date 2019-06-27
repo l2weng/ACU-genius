@@ -48,7 +48,7 @@ class SkuForm extends Component {
     }
     let taskOptions = []
     Object.values(tasks).map(task => {
-      if (task.list_id !== LIST.ROOT) {
+      if (task && (task.id !== LIST.ROOT)) {
         taskOptions.push({ label: task.name, value: task.id })
       }
     })
