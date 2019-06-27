@@ -96,19 +96,19 @@ en:
         checked: true
         command: 'app:toggle-line-wrap'
     items: &items
-      - label: 'New Item'
-        command: 'app:create-item'
+#      - label: 'New Item'
+#        command: 'app:create-item'
     item: &item
-      - label: 'Explode Item'
-        command: 'app:explode-item'
-        condition: 'hasMultiplePhotos'
+#      - label: 'Explode Item'
+#        command: 'app:explode-item'
+#        condition: 'hasMultiplePhotos'
       - label: 'Export Item'
         id: 'export'
         submenu:
           - label: 'JSON-LD'
             command: 'app:export-item'
-      - label: 'Add Photo …'
-        command: 'app:create-item-photo'
+#      - label: 'Add Photo …'
+#        command: 'app:create-item-photo'
       - label: 'Skus'
         id: 'tag'
         submenu:
