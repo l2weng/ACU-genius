@@ -408,11 +408,11 @@ class ProjectSidebar extends React.PureComponent {
 
               <h3>
                 <FormattedMessage id="sidebar.lists"/>
-                {isOwner ? <span className="functionIcon"><Tooltip placement="right" title="添加任务">
+                {isOwner ? <Tooltip placement="right" title="添加任务"><span className="functionIcon">
                   <Button
                     icon={<IconPlus/>}
                     onClick={this.addNewTask}/>
-                </Tooltip></span> : ''}
+                </span></Tooltip> : ''}
               </h3>
               <nav>
                 {root &&
@@ -454,12 +454,11 @@ class ProjectSidebar extends React.PureComponent {
             <section>
               <h2><FormattedMessage id="sidebar.tags"/>
                 {isOwner ?
-                  <span className="functionIcon"><Tooltip placement="right" title="添加样本">
+                  <Tooltip placement="right" title="添加样本"><span className="functionIcon">
                     <Button
                       icon={<IconPlus/>}
                       onClick={this.addNewSKu}/>
-                  </Tooltip>
-                  </span> : ''}
+                  </span></Tooltip> : ''}
               </h2>
               <ProjectTags
                 keymap={this.props.keymap.TagList}

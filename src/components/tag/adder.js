@@ -51,7 +51,7 @@ class TagAdder extends PureComponent {
 
   render() {
 
-    const { itemTags, tags } = this.props
+    const { itemTags, tags, isOwner } = this.props
 
     const children = []
     for (let i = 0; i < tags.length; i++) {
@@ -73,7 +73,7 @@ class TagAdder extends PureComponent {
         {/*  onFocus={this.props.onFocus}*/}
         {/*  onCancel={this.props.onCancel}*/}
         {/*  onCommit={this.handleChange}/>*/}
-        <Select
+        {isOwner ? <Select
           key={defaultTag}
           mode="tags"
           size="small"
@@ -83,7 +83,7 @@ class TagAdder extends PureComponent {
           onChange={this.handleTagChange}
           style={{ width: '100%' }}>
           {children}
-        </Select>
+        </Select> : ''}
       </div>
     )
   }

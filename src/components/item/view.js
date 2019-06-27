@@ -187,6 +187,7 @@ class ItemView extends PureComponent {
       isTrashSelected,
       enableReference,
       references,
+      isOwner,
       tags,
       ...props
     } = this.props
@@ -217,6 +218,7 @@ class ItemView extends PureComponent {
             activeTag={activeTag}
             note={this.state.note}
             keymap={keymap}
+            isOwner={isOwner}
             selections={selections}
             references={references}
             isItemOpen={isItemOpen}
@@ -269,6 +271,7 @@ class ItemView extends PureComponent {
     isTrashSelected: bool.isRequired,
     enableReference: bool.isRequired,
     isProjectClosing: bool.isRequired,
+    isOwner: bool.isRequired,
 
     onNoteCreate: func.isRequired,
     onNoteDelete: func.isRequired,

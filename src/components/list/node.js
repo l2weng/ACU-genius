@@ -4,7 +4,7 @@ const React = require('react')
 const { Button } = require('../button')
 const { Editable } = require('../editable')
 const { Collapse } = require('../fx')
-const { IconFolder, IconGhost, IconTriangle } = require('../icons')
+const { IconTask, IconTriangle } = require('../icons')
 const { DragSource, DropTarget } = require('react-dnd')
 const { NativeTypes, getEmptyImage } = require('react-dnd-electron-backend')
 const { DND, LIST, SASS, SIDEBAR } = require('../../constants')
@@ -34,7 +34,7 @@ class NewListNode extends React.Component {
       <li className="list-node">
         <div className="list new-list list-node-container">
           <div className="icon-truncate">
-            <IconFolder/>
+            <IconTask/>
           </div>
           <div className="name">
             <Editable
@@ -109,7 +109,7 @@ class ListNode extends React.PureComponent {
 
   get icon() {
     return (this.props.depth > 0 && this.isHalloween) ?
-      <IconGhost/> : <IconFolder/>
+      <IconTask/> : <IconTask/>
   }
 
   get isOver() {

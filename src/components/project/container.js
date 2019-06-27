@@ -277,6 +277,7 @@ class ProjectContainer extends Component {
           enableReference={nav.enableReference || false}
           photo={photo}
           nav={nav}
+          isOwner={isOwner}
           photos={visibleAllPhotos}
           panel={ui.panel}
           offset={this.state.offset}

@@ -144,6 +144,7 @@ class TagPanel extends PureComponent {
           onContextMenu={this.handleContextMenu}/>
         <TagAdder
           ref={this.setAdder}
+          isOwner={this.props.isOwner}
           isDisabled={this.props.isDisabled}
           completions={this.props.completions}
           count={this.props.items.length}
@@ -163,6 +164,7 @@ class TagPanel extends PureComponent {
     completions: arrayOf(string).isRequired,
     edit: object,
     isDisabled: bool,
+    isOwner: bool.isRequired,
     items: arrayOf(object).isRequired,
     keymap: object.isRequired,
     tags: arrayOf(shape({

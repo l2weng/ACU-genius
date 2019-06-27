@@ -101,6 +101,7 @@ class ItemPanel extends React.PureComponent {
       onPhotoSelect,
       onPhotoSort,
       onSelectionSort,
+      isOwner,
       ...props
     } = this.props
     const hasMultipleItems = this.props.items.length > 1
@@ -122,6 +123,7 @@ class ItemPanel extends React.PureComponent {
             isDisabled={isDisabled}
             isItemOpen={isItemOpen}
             keymap={keymap}
+            isOwner={isOwner}
             activeTag={activeTag}
             onTagSelect={onTagSelect}
             setPanel={this.setPanel}
@@ -194,6 +196,7 @@ class ItemPanel extends React.PureComponent {
     keymap: object.isRequired,
     isDisabled: bool.isRequired,
     isItemOpen: bool.isRequired,
+    isOwner: bool.isRequired,
     activeTag: number,
     enableReference: bool.isRequired,
     items: array.isRequired,
