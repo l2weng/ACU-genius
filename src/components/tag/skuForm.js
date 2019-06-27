@@ -28,7 +28,6 @@ class SkuForm extends Component {
     return color.hex
   }
   onChange = (taskValue) =>{
-    console.log(taskValue)
     return taskValue
   }
 
@@ -49,10 +48,11 @@ class SkuForm extends Component {
     }
     let taskOptions = []
     Object.values(tasks).map(task => {
-      if (task.id !== LIST.ROOT) {
+      if (task.list_id !== LIST.ROOT) {
         taskOptions.push({ label: task.name, value: task.id })
       }
     })
+    console.log(taskOptions)
 
     return (
       <Modal
@@ -74,7 +74,7 @@ class SkuForm extends Component {
             {getFieldDecorator('circlePicker', {
               rules: [{ required: true, message: '请选择颜色！' }],
               getValueFromEvent: this.onChangeComplete
-            })(<CirclePicker color={getFieldValue('circlePicker') || '#f44336'}/>)}
+            })(<CirclePicker color={getFieldValue('circlePicker')}/>)}
           </FormItem>
           <Form.Item {...formItemLayout} label="标注类型" >
             {getFieldDecorator('category', {

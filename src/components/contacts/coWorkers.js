@@ -28,7 +28,7 @@ const CoWorkerForm = Form.create()(props => {
   return (
     <Modal
       destroyOnClose
-      title="添加合作人"
+      title="添加好友"
       visible={modalVisible}
       onOk={okHandle}
       footer={null}
@@ -93,7 +93,7 @@ class CoWorkers extends PureComponent {
     }
     return (
       <div>
-        <Card title="平台好友" bordered={false} extra={<a href="#" onClick={() => this.handleModalVisible(true)}>添加合作人</a>}>
+        <Card title="平台好友" bordered={false} extra={<a href="#" onClick={() => this.handleModalVisible(true)}>添加好友</a>}>
           <List
             itemLayout="vertical"
             size="large"
