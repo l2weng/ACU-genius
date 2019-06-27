@@ -11,13 +11,14 @@ const { getUrlFilterParams, getNewOOSClient } = require('../common/dataUtil')
 const { join } = require('path')
 const { apiServer } = ARGS
 const { error } = require('../common/log')
+const args = require('../args')
 
 class LoadProjects extends Command {
   static get ACTION() { return HEAD.PROJECTS }
 
   * exec() {
     const { typeFlag, id } = this.action.payload
-    const { projectsCache } = ARGS
+    let { projectsCache } = ARGS
     let query
     query = typeFlag ?
       getUrlFilterParams({ userId: id }, ['userId']) :
@@ -28,7 +29,6 @@ class LoadProjects extends Command {
         `${apiServer}/graphql?query={projectQueryByUser${query} { projectId name desc deadline projectFile type progress cover itemCount syncStatus syncCover remoteProjectFile localProjectId syncProjectFileName syncProjectFile syncProjectSize syncVersion isOwner } } `)
       if (response.status === 200) {
         projects = response.data.data.projectQueryByUser
-        let pCache = {}
         const app = remote.app
         const client = getNewOOSClient()
         for (let i = 0; i < projects.length; i++) {
@@ -45,8 +45,9 @@ class LoadProjects extends Command {
               newPath = join(newPath, `${project.syncProjectFileName}.lbr`)
               if (!fs.existsSync(newPath) || projectsCache[project.projectId] !== project.syncVersion) {
                 yield client.get(project.localProjectId, newPath)
-                pCache[project.projectId] = project.syncVersion
-                yield put(act.project.cacheProjects(pCache))
+                projectsCache[project.projectId] = project.syncVersion
+                args.update({ ...projectsCache })
+                yield put(act.project.cacheProjects(projectsCache))
               }
               project.projectFile = newPath
             }

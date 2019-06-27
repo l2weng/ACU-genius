@@ -52,7 +52,6 @@ class SkuForm extends Component {
         taskOptions.push({ label: task.name, value: task.id })
       }
     })
-    console.log(taskOptions)
 
     return (
       <Modal

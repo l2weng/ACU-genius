@@ -3,7 +3,7 @@
 const React = require('react')
 const { PureComponent } = React
 const { connect } = require('react-redux')
-const { Row, Col, Card, List, Radio, Input, Icon } = require('antd')
+const { Row, Col, Card, List, Radio, Input, Icon, Progress } = require('antd')
 const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
 const { Search } = Input
@@ -34,7 +34,7 @@ class Workplace extends PureComponent {
 
   openProject = (item) => {
     if (!item.syncStatus && !exists(item.projectFile)) {
-      openNotification('warning', '提示', `项目: ${item.name} 尚未同步, 暂时无法查看`)
+      openNotification('warning', '提示', `项目: ${item.name} 尚未同步上云, 暂时无法查看`)
     } else {
       const { project } = this.props
       if (project.id !== item.localProjectId) {
@@ -125,14 +125,18 @@ class Workplace extends PureComponent {
                       item)}>
                       <Card
                         hoverable
-                        style={{ width: 180, height: 273 }}
-                        cover={<img alt={item.name}
-                          src={this.getCacheCover(item.syncCover)}/>}>
+                        style={{ width: 180, height: 260 }}
+                        cover={
+                          <div><img alt={item.name} style={{ width: 180, height: 180 }}
+                            src={this.getCacheCover(item.syncCover)}/>
+                            <div style={{ padding: '0px 5px' }}>
+                              <Progress percent={50} status="active" size="small"/>
+                            </div>
+                          </div>}>
                         <Meta
                           title={
                           this.renderTitle(item)
-                        }
-                          description={item.name}/>
+                        }/>
                       </Card>
                     </div>
                   </List.Item>
