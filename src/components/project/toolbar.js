@@ -28,6 +28,7 @@ class ProjectToolbar extends PureComponent {
       onSearch,
       onZoomChange,
       isDisplay,
+      isOwner,
     } = this.props
 
     return (
@@ -43,13 +44,13 @@ class ProjectToolbar extends PureComponent {
                 minIcon={<IconList/>}
                 maxIcon={<IconGrid/>}/>
             </div>
-            <div className="tool-group">
+            {isOwner?<div className="tool-group">
               <Button
                 icon={<IconPlus/>}
                 isDisabled={isDisabled || !canCreateItems}
                 title="toolbar.import"
                 onClick={this.props.onItemCreate}/>
-            </div>
+            </div>:''}
             {/*<div className="tool-group">*/}
             {/*  <Button*/}
             {/*    icon={<IconPhotoResources/>}*/}
@@ -94,6 +95,7 @@ class ProjectToolbar extends PureComponent {
     onSearch: func.isRequired,
     onZoomChange: func.isRequired,
     isDisplay: bool,
+    isOwner: bool,
   }
 
   static defaultProps = {

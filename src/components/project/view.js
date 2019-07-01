@@ -72,6 +72,7 @@ class ProjectView extends Component {
       onItemCreate,
       onItemSelect,
       onSearch,
+      isOwner
     } = this.props
 
     const { size, maxZoom, ItemIterator, isEmpty } = this
@@ -90,6 +91,7 @@ class ProjectView extends Component {
                 maxZoom={maxZoom}
                 canCreateItems={!nav.trash}
                 isDisabled={!isActive}
+                isOwner={isOwner}
                 isDisplay
                 onItemCreate={this.handleItemImport}
                 onDataSetsCreate={this.handleDataSetsCreate}
