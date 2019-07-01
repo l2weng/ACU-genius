@@ -610,7 +610,7 @@ module.exports = {
       },
 
       onTagDelete(...args) {
-        dispatch(actions.tag.delete(...args))
+        ipc.send('cmd', 'app:delete-tag', { target:{id: args[0] }})
       },
 
       onSyncProject2Cloud(...args) {

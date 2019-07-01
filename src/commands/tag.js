@@ -114,14 +114,13 @@ class Delete extends Command {
 
     const items = yield call(mod.tag.items, db, id)
     const tag = yield select(({ tags }) => tags[id])
-
     yield call(mod.tag.delete, db, [id])
 
     if (items.length > 0) {
       yield put(act.item.tags.remove({ id: items, tags: [id] }))
     }
 
-    this.undo = act.tag.create({ ...tag, items })
+    // this.undo = act.tag.saveSku({ ...tag, items })
 
     return id
   }

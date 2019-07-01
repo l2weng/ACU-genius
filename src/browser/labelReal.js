@@ -607,8 +607,17 @@ class LabelReal extends EventEmitter {
       this.dispatch(act.item.tags.delete({
         id: target.items, tags: [target.id]
       }), win))
-    this.on('app:delete-tag', (win, { target }) =>
-      this.dispatch(act.tag.delete(target.id), win))
+
+    this.on('app:delete-tag', async (win, { target }) => {
+      const chosen = await dialog.show('message-box', this.win, {
+        type: 'warning',
+        ...this.dict.dialogs.removing
+      })
+      switch (chosen.response) {
+        case 0:
+          this.dispatch(act.tag.delete(target.id), win)
+      }
+    })
 
     this.on('app:create-note', (win, { target }) =>
       this.dispatch(act.note.create(target), win))

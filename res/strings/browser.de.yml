@@ -5,7 +5,7 @@ de:
       - Close Window
       - Reload
       - Keep It Open
-      message: Tropy has crashed
+      message: LabelReal 奔溃了
       detail: Please report this issue at https://github.com/tropy/tropy
     unresponsive:
       buttons:
@@ -15,6 +15,11 @@ de:
       detail: >
         Tropy is not responding.
         Would you like to force close it or just keep waiting?
+    removing:
+          buttons:
+            - 删除
+            - 取消
+          message: 是否彻底删除?
   windows:
     prefs:
       title: Tropy Preferences
