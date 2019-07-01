@@ -544,7 +544,8 @@ module.exports = {
       },
 
       onItemMerge(...args) {
-        dispatch(actions.item.merge(...args))
+        //todo disable merge temporally
+        // dispatch(actions.item.merge(...args))
       },
 
       onItemPreview(...args) {
@@ -610,7 +611,7 @@ module.exports = {
       },
 
       onTagDelete(...args) {
-        ipc.send('cmd', 'app:delete-tag', { target:{id: args[0] }})
+        ipc.send('cmd', 'app:delete-tag', { target: { id: args[0] } })
       },
 
       onSyncProject2Cloud(...args) {
