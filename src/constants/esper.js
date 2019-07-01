@@ -44,20 +44,20 @@ module.exports = {
     lineColor = lineColor.replace(/\#/g, '')
     return {
       mask: {
-        line: [0xffffff, 1],
+        line: [`0x${lineColor}`, 2],
         fill: [0x000000, 0.4]
       },
       selection: {
         default: {
-          line: [`0x${lineColor}`, 1],
+          line: [`0x${lineColor}`, 2],
           fill: [`0x${lineColor}`, 0.2]
         },
         active: {
-          line: [`0x${lineColor}`, 1],
+          line: [`0x${lineColor}`, 2],
           fill: [`0x${lineColor}`, 0.4]
         },
         live: {
-          line: [`0x${lineColor}`, 1],
+          line: [`0x${lineColor}`, 2],
           fill: [`0x${lineColor}`, 0.4]
         }
       }

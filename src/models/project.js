@@ -27,7 +27,7 @@ module.exports = {
       db.get(`
         SELECT COUNT (id) AS total
           FROM items LEFT OUTER JOIN trash USING (id)
-          WHERE deleted IS NULL`)
+          WHERE deleted IS NULL AND id!=-999`)
     ])
 
     assert(project != null, 'no project found')
