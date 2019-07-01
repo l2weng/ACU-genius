@@ -44,13 +44,13 @@ class ProjectToolbar extends PureComponent {
                 minIcon={<IconList/>}
                 maxIcon={<IconGrid/>}/>
             </div>
-            {isOwner?<div className="tool-group">
+            {isOwner ? <div className="tool-group">
               <Button
                 icon={<IconPlus/>}
                 isDisabled={isDisabled || !canCreateItems}
                 title="toolbar.import"
                 onClick={this.props.onItemCreate}/>
-            </div>:''}
+            </div> : ''}
             {/*<div className="tool-group">*/}
             {/*  <Button*/}
             {/*    icon={<IconPhotoResources/>}*/}

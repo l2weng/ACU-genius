@@ -162,10 +162,10 @@ class SelectionOverlay extends Graphics {
     if (this.active == null || this.parent == null) return
 
     const scale = 1 / this.parent.scale.y
-    const { x, y, width, height } = this.active
+    const { x, y, width, height, color } = this.active
 
     this.line
-      .lineStyle(scale, ...COLOR.mask.line)
+      .lineStyle(scale, ...getSelectionColors(color).mask.line)
       .beginFill(0, 0)
       .drawRect(x, y, width, height)
 
