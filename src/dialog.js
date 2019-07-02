@@ -46,7 +46,7 @@ function onClosed(_, { id, payload, error }) {
 function show(type, options = {}) {
   return new Promise((resolve, reject) => {
     const id = seq.next().value
-    ipc.send('wm', 'dialog', { id, type, options })
+    ipc.send('dialog', { id, type, options })
     pending[id] = { resolve, reject }
   })
 }

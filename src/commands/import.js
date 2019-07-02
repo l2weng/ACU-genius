@@ -1,77 +1,17 @@
 'use strict'
 
 const { basename } = require('path')
-const { debug, warn } = require('../common/log')
 const { DuplicateError } = require('../common/error')
 const { call, put, select } = require('redux-saga/effects')
 const { Command } = require('./command')
 const mod = require('../models')
 const act = require('../actions')
-const { pick } = require('../common/util')
+const { warn, info } = require('../common/log')
 const { prompt } = require('../dialog')
-const { Image } = require('../image/image')
-const { DC, TERMS } = require('../constants')
-const { date, text } = require('../value')
-
-const {
-  getTemplateValues,
-  getTemplateProperties
-} = require('../selectors')
 
 
 class ImportCommand extends Command {
-  *openImage(path) {
-    let useLocalTimezone = yield select(state => state.settings.localtime)
-    let image = yield call(Image.open, { path, useLocalTimezone })
-    return image
-  }
-
-  *checkPhoto(photo, force) {
-    let useLocalTimezone = yield select(state => state.settings.localtime)
-    return yield call(Image.check, photo, { force, useLocalTimezone })
-
-  }
-
-  *getMetadata(image, templates) {
-    let data = {}
-    let prefs = yield select(state => state.settings)
-
-    for (let type in templates) {
-      data[type] = this.getImageMetadata(type, image, templates[type], prefs)
-    }
-
-    return data
-  }
-
-  getImageMetadata(type, image, template, prefs) {
-    let props = getTemplateProperties(template)
-    let data = {
-      ...getTemplateValues(template),
-      ...pick(image.data, props)
-    }
-
-    let title = prefs.title[type]
-
-    if (title != null) {
-      if (prefs.title.force || !(title in data)) {
-        data[title] = text(image.title)
-      }
-    }
-
-    if (type === 'photo') {
-      if (!(DC.date in data || TERMS.date in data)) {
-        data[DC.date] = date(image.date)
-      }
-    }
-
-    return data
-  }
-
-  *createThumbnails(id, image, {
-    overwrite = true,
-    quality = 100,
-    selection
-  } = {}) {
+  *createThumbnails(id, image, { overwrite = true, quality = 100,selection } = {}) {
     try {
       let { cache } = this.options
       let ext = cache.extname(image.mimetype)
@@ -79,9 +19,8 @@ class ImportCommand extends Command {
       for (let v of image.variants(selection != null)) {
         let path = cache.path(id, v.name, ext)
 
-        if (overwrite || !(yield call(cache.exists, path, false))) {
+        if (overwrite || !(yield call(cache.exists, path))) {
           let dup = image.resize(v.size, selection)
-
           switch (ext) {
             case '.png':
               dup.png()
@@ -99,11 +38,13 @@ class ImportCommand extends Command {
           yield call([dup, dup.toFile], cache.expand(path))
 
         } else {
-          debug(`skipping ${v.name} thumbnail for #${id}: already exists`)
+          info(`Skipping ${v.name}px thumbnail for #${id}: already exists`)
         }
       }
-    } catch (e) {
-      warn({ stack: e.stack }, 'failed to create thumbnail')
+    } catch (error) {
+      warn(`Failed to create thumbnail: ${error.message}`, {
+        stack: error.stack
+      })
     }
   }
 
@@ -151,8 +92,6 @@ class ImportCommand extends Command {
     }
   }
 }
-
-
 
 
 module.exports = {

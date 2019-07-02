@@ -2,12 +2,14 @@
 
 const { clipboard } = require('electron')
 const assert = require('assert')
-const { warn, info, debug } = require('../common/log')
+const { warn, error: logError } = require('../common/log')
 const { DuplicateError } = require('../common/error')
 const { all, call, put, select, cps } = require('redux-saga/effects')
 const { Command } = require('./command')
 const { ImportCommand } = require('./import')
 const { prompt, open, fail, save } = require('../dialog')
+const { Image } = require('../image/image')
+const { text } = require('../value')
 const act = require('../actions')
 const mod = require('../models')
 const { get, pluck, pick, remove } = require('../common/util')
@@ -55,82 +57,75 @@ class Import extends ImportCommand {
   static get ACTION() { return ITEM.IMPORT }
 
   *exec() {
-    let { db } = this.options
+    let { db, id } = this.options
     let { files, list } = this.action.payload
 
     let items = []
 
     if (!files) {
       this.isInteractive = true
-      files = yield call(open.items)
+      files = yield call(open.images)
     }
 
     if (!files) return []
 
     yield put(act.nav.update({ mode: MODE.PROJECT, query: '' }))
 
-    let [base, ttp] = yield select(state => [
+    let [base, itemp, ptemp] = yield select(state => [
       state.project.base,
-      {
-        item: getItemTemplate(state),
-        photo: getPhotoTemplate(state)
-      }
+      getItemTemplate(state),
+      getPhotoTemplate(state)
     ])
+
+    let defaultItemData = getTemplateValues(itemp)
+    let defaultPhotoData = getTemplateValues(ptemp)
+
     for (let i = 0, total = files.length; i < total; ++i) {
-      let file, image, item, data
-      let photos = []
+      let file, image, item, photo
 
       try {
-        yield put(act.activity.update(this.action, { total, progress: i + 1 }))
-
         file = files[i]
+        image = yield call(Image.open, { path: file })
 
-        image = yield* this.openImage(file)
         yield* this.handleDuplicate(image)
-        data = yield* this.getMetadata(image, ttp)
 
         yield call(db.transaction, async tx => {
-          item = await mod.item.create(tx, ttp.item.id, data.item)
+          item = await mod.item.create(tx, itemp.id, {
+            [DC.title]: text(image.title), ...defaultItemData
+          })
 
-          while (!image.done) {
-            let photo = await mod.photo.create(tx,
-              { base, template: ttp.photo.id },
-              { item: item.id, image, data: data.photo })
+          photo = await mod.photo.create(tx, { base, template: ptemp.id }, {
+            item: item.id, image, data: defaultPhotoData
+          })
 
-            if (list) {
-              await mod.list.items.add(tx, list, [item.id])
-              // item.lists.push(list)
-            }
-
-            item.photos.push(photo.id)
-            photos.push(photo)
-            image.next()
+          if (list) {
+            await mod.list.items.add(tx, list, [item.id])
+            // item.lists.push(list)
           }
+
+          item.photos.push(photo.id)
         })
 
-        image.rewind()
+        yield* this.createThumbnails(photo.id, image)
 
-        while (!image.done) {
-          let photo = photos[image.page]
+        yield put(act.metadata.load([item.id, photo.id]))
 
-          yield* this.createThumbnails(photo.id, image)
-          yield put(act.metadata.load([item.id, photo.id]))
-          yield put(act.photo.insert(photo))
+        yield all([
+          put(act.item.insert(item)),
+          put(act.photo.insert(photo)),
+          put(act.photo.load()),
+          put(act.activity.update(this.action, { total, progress: i + 1 }))
+        ])
 
-          image.next()
-        }
-
-        yield put(act.item.insert(item))
         items.push(item.id)
 
-      } catch (e) {
-        if (e instanceof DuplicateError) {
-          debug(`skipping duplicate "${file}"...`)
-          continue
-        }
+      } catch (error) {
+        if (error instanceof DuplicateError) continue
 
-        warn({ stack: e.stack }, `failed to import "${file}"`)
-        fail(e, this.action.type)
+        warn(`Failed to import "${file}": ${error.message}`)
+        logError(error.stack)
+
+        fail(error, this.action.type)
       }
     }
 
@@ -208,7 +203,7 @@ class Load extends Command {
     let items = {}
     if (isOwner) {
       items =  yield call(db.seq, conn =>
-      mod.item.load(conn, null))
+        mod.item.load(conn, null))
     } else {
       const myListItems = yield call(mod.list.loadMyListItems, db)
       if (myListItems.length > 0) {
@@ -489,7 +484,7 @@ class Export extends Command {
       }
     } catch (error) {
       warn(`Failed to export items to ${target}: ${error.message}`)
-      info(error.stack)
+      logError(error.stack)
 
       fail(error, this.action.type)
     }

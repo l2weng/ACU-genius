@@ -1,13 +1,11 @@
 'use strict'
 
-const B = require('bluebird')
-const pad = require('string.prototype.padstart')
 const shortid = require('shortid')
 const { keys } = Object
 
 const util = {
   once(emitter, event) {
-    return new B((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       const on =
         (emitter.on || emitter.addEventListener).bind(emitter)
       const off =
@@ -16,15 +14,13 @@ const util = {
       function success(...args) {
         off(event, success)
         off('error', failure)
-
         resolve(...args)
       }
 
-      function failure(...args) {
+      function failure(reason) {
         off(event, success)
         off('error', failure)
-
-        reject(...args)
+        reject(reason instanceof Error ? reason : new Error(reason))
       }
 
       on('error', failure)
@@ -65,6 +61,10 @@ const util = {
 
   remove(array, ...items) {
     return array.filter(it => items.indexOf(it) < 0)
+  },
+
+  sample(array) {
+    return array[Math.floor(Math.random() * array.length)]
   },
 
   sort(array, ...args) {
@@ -205,7 +205,7 @@ const util = {
     let i, ii
 
     for (i = 0, ii = parts.length; i < ii; ++i) {
-      if (!obj.propertyIsEnumerable(parts[i])) {
+      if (!Object.prototype.propertyIsEnumerable.call(obj, parts[i])) {
         return value
       }
 
@@ -250,11 +250,15 @@ const util = {
     return true
   },
 
+  own(obj, key) {
+    return Object.prototype.hasOwnProperty.call(obj, key)
+  },
+
   pluck(src, props = [], into = [], expand = false) {
     return props.reduce((res, key) => {
       const value = src[key]
 
-      if (expand || typeof value !== 'undefined' || src.hasOwnProperty(key)) {
+      if (expand || typeof value !== 'undefined' || util.own(src, key)) {
         res.push(src[key])
       }
 
@@ -265,7 +269,7 @@ const util = {
 
   any(src, ...props) {
     for (let prop of props) {
-      if (src.hasOwnProperty(prop)) return src[prop]
+      if (util.own(src, prop)) return src[prop]
       if (typeof src[prop] !== 'undefined') return src[prop]
     }
   },
@@ -276,7 +280,7 @@ const util = {
       props.reduce((res, key) => {
         const value = src[key]
 
-        if (expand || typeof value !== 'undefined' || src.hasOwnProperty(key)) {
+        if (expand || typeof value !== 'undefined' || util.own(src, key)) {
           res[key] = value
         }
 
@@ -295,7 +299,7 @@ const util = {
     if (a !== into) Object.assign(into, a)
 
     for (let prop in b) {
-      if (b.hasOwnProperty(prop)) {
+      if (util.own(b, prop)) {
         let value = b[prop]
         let type = typeof value
 
@@ -331,7 +335,7 @@ const util = {
     //if (typeof fn !== 'function') fn = () => fn
 
     for (let prop in src) {
-      if (src.hasOwnProperty(prop)) {
+      if (util.own(src, prop)) {
         into[prop] = fn(prop, src[prop], src)
       }
     }
@@ -355,7 +359,13 @@ const util = {
   },
 
   titlecase(string) {
-    return string.replace(/\b[a-z]/g, (match) => match.toUpperCase())
+    return string
+    .replace(/\b\p{Ll}/ug, (m) => m.toUpperCase())
+    .replace(/(\p{Ll})(\p{Lu})/ug, (m, p1, p2) => `${p1} ${p2}`)
+  },
+
+  capitalize(string) {
+    return string.replace(/^\p{Ll}/u, (m) => m.toUpperCase())
   },
 
   downcase(string) {
@@ -364,7 +374,7 @@ const util = {
 
   camelcase(str) {
     return str.replace(
-        /(?:^\w|[A-Z]|\b\w|\s+)/g,
+      /(?:^\w|\p{Lu}|\b\w|\s+)/ug,
       (match, index) => {
         if (+match === 0) return ''
         return index === 0 ? match.toLowerCase() : match.toUpperCase()
@@ -397,19 +407,19 @@ const util = {
     return format.replace(/%([YymdHMS])/g, (match, code) => {
       switch (code) {
         case 'Y':
-          return pad(date.getFullYear(), 4, '0')
+          return String(date.getFullYear()).padStart(4, '0')
         case 'y':
-          return pad(date.getFullYear() % 100, 2, '0')
+          return String(date.getFullYear() % 100).padStart(2, '0')
         case 'm':
-          return pad(date.getMonth() + 1, 2, '0')
+          return String(date.getMonth() + 1).padStart(2, '0')
         case 'd':
-          return pad(date.getDate(), 2, '0')
+          return String(date.getDate()).padStart(2, '0')
         case 'H':
-          return pad(date.getHours(), 2, '0')
+          return String(date.getHours()).padStart(2, '0')
         case 'M':
-          return pad(date.getMinutes(), 2, '0')
+          return String(date.getMinutes()).padStart(2, '0')
         case 'S':
-          return pad(date.getSeconds(), 2, '0')
+          return String(date.getSeconds()).padStart(2, '0')
         default:
           return match
       }
@@ -468,6 +478,22 @@ const util = {
       acc[obj[key]].push(obj)
       return acc
     }, {})
+  },
+
+  URI: {
+    namespace(uri) {
+      return util.URI.split(uri)[0]
+    },
+
+    getLabel(uri) {
+      return util.titlecase(util.URI.split(uri)[1]) || uri
+    },
+
+    split(uri) {
+      let ns = uri.split(/(#|\/)/)
+      let nm = ns.pop()
+      return [ns.join(''), nm]
+    }
   }
 }
 

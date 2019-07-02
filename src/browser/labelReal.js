@@ -729,7 +729,7 @@ class LabelReal extends EventEmitter {
     })
 
     this.on('app:open-logs', () => {
-      shell.showItemInFolder(join(app.getPath('userData'), 'log', 'main.log'))
+      shell.showItemInFolder(this.log)
     })
 
     this.on('app:open-user-data', () => {
