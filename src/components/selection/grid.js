@@ -117,7 +117,8 @@ class SelectionGrid extends SelectionIterator {
     cols: number.isRequired,
     keymap: object.isRequired,
     onBlur: func.isRequired,
-    onTabFocus: func.isRequired
+    onTabFocus: func.isRequired,
+    onError: func.isRequired
   }
 }
 
