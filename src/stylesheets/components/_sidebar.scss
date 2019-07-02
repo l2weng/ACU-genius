@@ -19,12 +19,18 @@
     cursor: pointer
   }
 
+  .toolbar {
+    .is-full-screen & {
+      display: none;
+    }
+  }
+
   .sidebar-body {
     flex: 1 1 auto;
     overflow-y: auto;
     padding-top: $space-xs;
 
-    .frameless & {
+    .frameless:not(.is-full-screen) & {
       padding-top: 0;
     }
   }
