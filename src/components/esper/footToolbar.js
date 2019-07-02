@@ -45,18 +45,18 @@ class EsperFootToolbar extends PureComponent {
             </ButtonGroup>
           </ToolGroup>
         </div>
-        <div className="toolbar-right" style={{ opacity: 1 }}>
-          <ToolGroup>
-            <ButtonGroup>
-              <Button type="primary"  onClick={this.confirmPhoto}>
-              确认
-              </Button>
-              <Button type="danger" onClick={this.ignorePhoto}>
-              跳过
-              </Button>
-            </ButtonGroup>
-          </ToolGroup>
-        </div>
+        {/*<div className="toolbar-right" style={{ opacity: 1 }}>*/}
+        {/*  <ToolGroup>*/}
+        {/*    <ButtonGroup>*/}
+        {/*      <Button type="primary"  onClick={this.confirmPhoto}>*/}
+        {/*      确认*/}
+        {/*      </Button>*/}
+        {/*      <Button type="danger" onClick={this.ignorePhoto}>*/}
+        {/*      跳过*/}
+        {/*      </Button>*/}
+        {/*    </ButtonGroup>*/}
+        {/*  </ToolGroup>*/}
+        {/*</div>*/}
       </Toolbar>
     )
   }

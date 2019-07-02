@@ -324,6 +324,7 @@ class Window extends EventEmitter {
   }
 
   toggle(state) {
+    console.log(state)
     switch (state) {
       case 'focus':
         toggle(document.body, 'is-blurred', false)
@@ -336,6 +337,19 @@ class Window extends EventEmitter {
         break
       case 'unmaximize':
         toggle(document.body, 'is-maximized', false)
+        break
+      case 'init':
+        toggle(document.body, 'init', true)
+        break
+      case 'ready':
+        toggle(document.body, 'ready', true)
+        break
+      case 'disable':
+      case 'unload':
+        toggle(document.body, 'inactive', true)
+        break
+      case 'enable':
+        toggle(document.body, 'inactive', false)
         break
       case 'enter-full-screen':
         toggle(document.body, 'is-full-screen', true)
