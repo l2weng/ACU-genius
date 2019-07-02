@@ -5,7 +5,7 @@ const { Command } = require('./command')
 const { ONTOLOGY } = require('../constants')
 const { VOCAB, PROPS, CLASS, LABEL, TEMPLATE } = ONTOLOGY
 const { Ontology, Template } = require('../common/ontology')
-const { verbose, warn } = require('../common/log')
+const { info, warn } = require('../common/log')
 const { get, pick, pluck } = require('../common/util')
 const { all, call, select, cps } = require('redux-saga/effects')
 const { getTemplateField, getTemplateFields } = require('../selectors')
@@ -57,7 +57,7 @@ class Import extends Command {
 
             } catch (error) {
               warn(`Failed to import "${id}": ${error.message}`)
-              verbose(error.stack)
+              info(error.stack)
               dialog.fail(error, this.action.type)
             }
           }
@@ -66,7 +66,7 @@ class Import extends Command {
 
       } catch (error) {
         warn(`Failed to import "${file}": ${error.message}`)
-        verbose(error.stack)
+        info(error.stack)
         dialog.fail(error, this.action.type)
       }
     }
@@ -273,7 +273,7 @@ class TemplateImport extends Command {
 
       } catch (error) {
         warn(`Failed to import "${file}": ${error.message}`)
-        verbose(error.stack)
+        info(error.stack)
 
         dialog.fail(error, this.action.type)
       }
@@ -316,7 +316,7 @@ class TemplateExport extends Command {
 
     } catch (error) {
       warn(`Failed to export template ${id} to ${path}: ${error.message}`)
-      verbose(error.stack)
+      info(error.stack)
 
       dialog.fail(error, this.action.type)
     }
@@ -340,7 +340,7 @@ class TemplateCreate extends Command {
 
       } catch (error) {
         warn(`Failed to create template "${id}": ${error.message}`)
-        verbose(error.stack)
+        info(error.stack)
 
         dialog.fail(error, this.action.type)
       }

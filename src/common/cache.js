@@ -32,6 +32,32 @@ class Cache {
   expand(...args) {
     return join(this.root, ...args)
   }
+
+  extname(...args) {
+    return Cache.extname(...args)
+  }
+
+  path(...args) {
+    return Cache.path(...args)
+  }
+
+  url(...args) {
+    return Cache.url(this.root, ...args)
+  }
+
+  static extname() {
+    return '.webp'
+  }
+
+  static path(id, variant, ext) {
+    return `${id}_${variant}${ext}`
+  }
+
+  static url(root, id, variant, mimetype) {
+    return `file://${
+      join(root, Cache.path(id, variant, Cache.extname(mimetype)))
+      }`
+  }
 }
 
 function imageURL(cache, image, size, mimetype) {

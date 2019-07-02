@@ -5,7 +5,7 @@ const { ontology } = require('./ontology')
 const { history } = require('./history')
 const { ipc } = require('./ipc')
 const { shell } = require('./shell')
-const { warn, debug, verbose } = require('../common/log')
+const { warn, debug, info } = require('../common/log')
 const storage = require('./storage')
 
 const {
@@ -45,7 +45,7 @@ module.exports = {
         yield all(aux.map(t => cancel(t)))
       }
 
-      verbose('*prefs.main terminated')
+      info('*prefs.main terminated')
     }
   }
 }

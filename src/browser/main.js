@@ -16,7 +16,8 @@ if (process.env.TROPY_RUN_UNIT_TESTS === 'true') {
 
   const { app, session }  = require('electron')
   const { extname, join } = require('path')
-  const { qualified }  = require('../common/release')
+  const { sync: mkdir } = require('mkdirp')
+  const { exe, qualified, version }  = require('../common/release')
   const { linux, darwin } = require('../common/os')
 
   let USERDATA = opts.dir
@@ -37,6 +38,30 @@ if (process.env.TROPY_RUN_UNIT_TESTS === 'true') {
 
   // Set app name and data location as soon as possible!
   app.setName(qualified.product)
+  if (!opts.data) {
+    opts.data = join(app.getPath('appData'), exe)
+  }
+  let userData = join(opts.data, 'electron')
+  mkdir(userData)
+  app.setPath('userData', userData)
+
+  if (!opts.cache) {
+    opts.cache = join(app.getPath('cache'), exe)
+
+    if (opts.cache === opts.data) { opts.cache = join(opts.data, 'cache') }
+  }
+  mkdir(opts.cache)
+  app.setPath('userCache', opts.cache)
+
+  if (!opts.logs) {
+    try {
+      opts.logs = join(app.getPath('logs', '..', exe))
+    } catch (_) {
+      opts.logs = join(opts.data, 'log')
+    }
+  }
+  mkdir(opts.logs)
+  app.setPath('logs', opts.logs)
   if (USERDATA) {
     app.setPath('userData', USERDATA)
     LOGDIR = join(USERDATA, 'log')
@@ -45,11 +70,17 @@ if (process.env.TROPY_RUN_UNIT_TESTS === 'true') {
   if (!require('./squirrel')()) {
     const { all }  = require('bluebird')
     const { once } = require('../common/util')
-    const { info, verbose } = require('../common/log')(LOGDIR, opts)
+    const { info, warn } = require('../common/log')({
+      dest: join(opts.logs, 'labelreal.log'),
+      name: 'main',
+      rotate: true,
+      debug: opts.debug,
+      trace: opts.trace
+    })
 
     if (opts.environment !== 'test') {
       if (!app.requestSingleInstanceLock()) {
-        verbose('other instance detected, exiting...')
+        info('other instance detected, exiting...')
         app.exit(0)
       }
     }
@@ -62,7 +93,7 @@ if (process.env.TROPY_RUN_UNIT_TESTS === 'true') {
       app.commandLine.appendSwitch('force-device-scale-factor', opts.scale)
     }
 
-    verbose(`using ${app.getPath('userData')}`)
+    info(`using ${app.getPath('userData')}`)
 
     var labelReal = new (require('./labelReal'))()
 
@@ -120,7 +151,7 @@ if (process.env.TROPY_RUN_UNIT_TESTS === 'true') {
     })
 
     app.on('quit', (_, code) => {
-      verbose(`quit with exit code ${code}`)
+      info(`quit with exit code ${code}`)
     })
   }
 }

@@ -9,7 +9,7 @@ const { fail, open } = require('../dialog')
 const mod = require('../models')
 const act = require('../actions')
 const { PHOTO } = require('../constants')
-const { Image } = require('../image')
+const { Image } = require('../image/image')
 const { DuplicateError } = require('../common/error')
 const { warn } = require('../common/log')
 const { blank, pick, pluck, splice } = require('../common/util')
@@ -30,9 +30,10 @@ class Consolidate extends ImportCommand {
     let { payload, meta } = this.action
     let consolidated = []
 
-    let [project, photos] = yield select(state => [
+    let [project, photos, selections] = yield select(state => [
       state.project,
-      blank(payload) ? values(state.photos) : pluck(state.photos, payload)
+      blank(payload) ? values(state.photos) : pluck(state.photos, payload),
+      state.selections
     ])
 
     for (let i = 0, total = photos.length; i < total; ++i) {
@@ -44,7 +45,6 @@ class Consolidate extends ImportCommand {
 
     for (let i = 0, total = photos.length; i < total; ++i) {
       let photo = photos[i]
-      console.log(photo)
       if (photo.path && !exists(photo.path) && photo.syncFileUrl) {
         const app = remote.app
         let newPath = nodePath.join(app.getPath('userData'), 'project')
@@ -82,7 +82,16 @@ class Consolidate extends ImportCommand {
                 overwrite: hasChanged
               })
 
-              const data = { id: photo.id, ...image.toJSON() }
+              for (let id of photo.selections) {
+                if (id in selections) {
+                  yield* this.createThumbnails(id, image, {
+                    overwrite: hasChanged,
+                    selection: selections[id]
+                  })
+                }
+              }
+
+              let data = { id: photo.id, ...image.toJSON() }
 
               yield call(mod.photo.save, db, data, project)
               yield put(act.photo.update({

@@ -2,7 +2,7 @@
 
 const res = require('../common/res')
 const { basename } = require('path')
-const { warn, verbose } = require('../common/log')
+const { warn, info } = require('../common/log')
 const { transduce, map, transformer } = require('transducers.js')
 const { BrowserWindow, Menu: M } = require('electron')
 const __ = require('underscore')
@@ -331,7 +331,7 @@ class ContextMenu extends Menu {
 
     } catch (error) {
       warn(`failed to show context-menu for scope ${scope}: ${error.message}`)
-      verbose(error.stack)
+      info(error.stack)
     }
   }
 }

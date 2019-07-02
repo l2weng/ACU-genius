@@ -22,7 +22,7 @@ module.exports = {
   OWL: {
     ns: 'http://www.w3.org/2002/07/owl#',
     Class: 'http://www.w3.org/2002/07/owl#Class',
-    DatatypeProperty: 'http://www.w3.org/2002/07/owl#DatatypeProerty',
+    DatatypeProperty: 'http://www.w3.org/2002/07/owl#DatatypeProperty',
     FunctionalProperty: 'http://www.w3.org/2002/07/owl#FunctionalProperty',
     InverseFunctionalProperty: 'http://www.w3.org/2002/07/owl#InverseFunctionalProperty',
     ObjectProperty: 'http://www.w3.org/2002/07/owl#ObjectProperty',
@@ -39,6 +39,7 @@ module.exports = {
     publisher: 'http://purl.org/dc/elements/1.1/publisher',
     rights: 'http://purl.org/dc/elements/1.1/rights',
     source: 'http://purl.org/dc/elements/1.1/source',
+    subject: 'http://purl.org/dc/elements/1.1/subject',
     title: 'http://purl.org/dc/elements/1.1/title',
     type: 'http://purl.org/dc/elements/1.1/type'
   },
@@ -50,6 +51,12 @@ module.exports = {
     title: 'http://purl.org/dc/terms/title'
   },
 
+  EXIF: {
+    dateTime: 'http://www.w3.org/2003/12/exif/ns#dateTime',
+    dateTimeOriginal: 'http://www.w3.org/2003/12/exif/ns#dateTimeOriginal',
+    orientation: 'http://www.w3.org/2003/12/exif/ns#orientation'
+  },
+
   SKOS: {
     definition: 'http://www.w3.org/2004/02/skos/core#definition'
   },
@@ -58,5 +65,28 @@ module.exports = {
     ns: 'http://purl.org/vocab/vann/',
     preferredNamespacePrefix: 'http://purl.org/vocab/vann/preferredNamespacePrefix',
     preferredNamespaceUri: 'http://purl.org/vocab/vann/preferredNamespaceUri'
+  },
+
+  TROPY: {
+    ns: 'https://tropy.org/v1/tropy#',
+    Item: 'https://tropy.org/v1/tropy#Item',
+    List: 'https://tropy.org/v1/tropy#List',
+    Note: 'https://tropy.org/v1/tropy#Note',
+    Photo: 'https://tropy.org/v1/tropy#Photo',
+    Selection: 'https://tropy.org/v1/tropy#Selection',
+    Template: 'https://tropy.org/v1/tropy#Template',
+    date: 'https://tropy.org/v1/tropy#date',
+    item: 'https://tropy.org/v1/tropy#item',
+    note: 'https://tropy.org/v1/tropy#note',
+    photo: 'https://tropy.org/v1/tropy#photo',
+    selection: 'https://tropy.org/v1/tropy#selection',
+    template: 'https://tropy.org/v1/tropy#template'
+  },
+
+  XMLNS: 'http://www.w3.org/2000/xmlns/',
+
+  XSD: {
+    integer: 'http://www.w3.org/2001/XMLSchema#integer',
+    string: 'http://www.w3.org/2001/XMLSchema#string'
   }
 }

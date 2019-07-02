@@ -296,8 +296,9 @@ de:
             Are you sure you want to delete the plugin?
             This will permanently remove the plugin and its configuration.
     filter:
-      templates: Tropy Templates
+      templates: LabelReal Templates
       images: Images
+      items: Images and LabelReal Items
       projects: Tropy Projects
       rdf: RDF Vocabularies
       jsonld: JSON-LD

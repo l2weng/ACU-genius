@@ -1,61 +1,60 @@
 'use strict'
 
 const React = require('react')
-const { Component } = React
 const { IconPhoto } = require('../icons')
-const { imageURL } = require('../../common/cache')
-const { pick } = require('../../common/util')
-const { bool, func, number, string } = require('prop-types')
+const { Cache } = require('../../common/cache')
+const { bool, func, instanceOf, number, string } = require('prop-types')
 const { ICON } = require('../../constants/sass')
 const { Rotation } = require('../../common/iiif')
 
 
-class Thumbnail extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      src: this.getSource(props),
-      rot: this.getRotation(props),
-      hasBeenFixed: false,
-      hasFinishedLoading: false
+class Thumbnail extends React.Component {
+  state = {
+    src: null,
+    rotation: '0',
+    consolidated: null,
+    hasFinishedLoading: false,
+    isBroken: false
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    let src = Thumbnail.getUrl(props)
+    let rotation = Thumbnail.getRotation(props)
+    let isBroken = props.broken
+    let consolidated = props.consolidated
+
+    let hasImageChanged = src !== state.src ||
+      consolidated > state.consolidated
+
+    let hasFinishedLoading = (src != null) &&
+      (!(hasImageChanged || isBroken) || state.hasFinishedLoading)
+
+    return {
+      src, rotation, consolidated, hasFinishedLoading, isBroken
     }
   }
 
-  componentWillReceiveProps(props) {
-    const src = this.getSource(props)
-    const rot = this.getRotation(props)
-
-    const hasImageChanged = src !== this.state.src
-
-    const hasBeenFixed =
-      !hasImageChanged && (this.props.broken && !props.broken)
-
-    const hasFinishedLoading =
-      !(hasImageChanged || hasBeenFixed) || this.state.hasFinishedLoading
-
-    this.setState({
-      src, rot, hasBeenFixed, hasFinishedLoading
-    })
-  }
-
-  getSource(props = this.props) {
-    const { cache, id, mimetype, size } = props
-    if (id == null) return null
-
+  static getUrl({ cache, id, mimetype, size }) {
     return (id == null) ?
       null :
-      imageURL(cache, id, size > ICON.SIZE ? ICON.MAX : ICON.SIZE, mimetype)
+      Cache.url(cache, id, size > ICON.SIZE ? ICON.MAX : ICON.SIZE, mimetype)
   }
 
-  getRotation(props = this.props) {
+  static getRotation({ orientation, angle, mirror }) {
     return Rotation
-      .fromExifOrientation(props.orientation)
-      .add(props)
-      .format('x')
+    .fromExifOrientation(orientation)
+    .add({ angle, mirror })
+    .format('x')
   }
 
   get hasFallbackIcon() {
-    return this.props.broken || !this.state.hasFinishedLoading
+    return this.state.isBroken || !this.state.hasFinishedLoading
+  }
+
+  get src() {
+    return (this.state.consolidated == null) ?
+      this.state.src :
+      `${this.state.src}?c=${this.state.consolidated.getTime()}`
   }
 
   handleLoad = () => {
@@ -63,31 +62,26 @@ class Thumbnail extends Component {
   }
 
   handleError = () => {
-    if (this.props.onError != null) {
+    if (this.props.onError != null && !this.state.isBroken) {
       this.props.onError(this.props.id)
     }
   }
 
-  renderImage() {
-    const { hasBeenFixed, rot, src } = this.state
-    return src && (
-      <img
-        className={`iiif rot-${rot}`}
-        src={hasBeenFixed ? `${src}?fixed=true` : src}
-        onLoad={this.handleLoad}
-        onError={this.handleError}/>
-    )
-  }
-
   render() {
-    const listeners = pick(this.props, [
-      'onClick', 'onDoubleClick', 'onMouseDown', 'onContextMenu'
-    ])
-
     return (
-      <figure {...listeners} className="thumbnail">
+      <figure
+        className="thumbnail"
+        onClick={this.props.onClick}
+        onContextMenu={this.props.onContextMenu}
+        onDoubleClick={this.props.onDoubleClick}
+        onMouseDown={this.props.onMouseDown}>
         {this.hasFallbackIcon && <IconPhoto/>}
-        {this.renderImage()}
+        {this.state.src &&
+        <img
+          className={`iiif rot-${this.state.rotation}`}
+          src={this.src}
+          onLoad={this.handleLoad}
+          onError={this.handleError}/>}
       </figure>
     )
   }
@@ -96,6 +90,7 @@ class Thumbnail extends Component {
     angle: number,
     broken: bool,
     cache: string.isRequired,
+    consolidated: instanceOf(Date),
     id: number,
     mimetype: string,
     mirror: bool,
@@ -112,7 +107,6 @@ class Thumbnail extends Component {
     size: ICON.SIZE
   }
 }
-
 
 module.exports = {
   Thumbnail

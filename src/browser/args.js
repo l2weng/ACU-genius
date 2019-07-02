@@ -1,20 +1,36 @@
 'use strict'
 
-const { basename } = require('path')
-const pkg = require('../../package')
-const exe = basename(process.argv[0])
+const { resolve } = require('path')
+const { exe, version } = require('../common/release')
+const yargs = require('yargs')()
 
-module.exports = require('yargs')
-  .usage(`Usage: ${exe} [options]`)
-  .wrap(78)
-  .env(pkg.name.toUpperCase())
+module.exports =
+  yargs
+  .parserConfiguration({
+    'camel-case-expansion': false,
+    'short-option-groups': false
+  })
+
+  .usage(`Usage: ${exe} [options] [project]`)
+  .wrap(process.stdout.columns ? Math.min(process.stdout.columns, 80) : 80)
+  .env('TROPY')
 
   .demand(0, 1)
 
-  .option('dir', {
+  .option('data', {
     type: 'string',
-    normalize: true,
-    describe: 'Set user data directory'
+    coerce: resolve,
+    describe: 'Set data directory'
+  })
+  .option('cache', {
+    type: 'string',
+    coerce: resolve,
+    describe: 'Set cache directory'
+  })
+  .option('logs', {
+    type: 'string',
+    coerce: resolve,
+    describe: 'Set log directory'
   })
 
   .option('environment', {
@@ -24,10 +40,10 @@ module.exports = require('yargs')
     choices: ['development', 'test', 'production']
   })
   .default('environment',
-      () => (process.env.NODE_ENV || 'production'), '"production"')
+    () => (process.env.NODE_ENV || 'production'),
+    '"production"')
 
   .option('scale', {
-    alias: 'force-device-scale-factor',
     type: 'number',
     describe: 'Set the device scale factor'
   })
@@ -50,8 +66,14 @@ module.exports = require('yargs')
     default: false
   })
 
+  .option('trace', {
+    type: 'boolean',
+    describe: 'Set trace flag',
+    default: false
+  })
+
   .help('help')
-  .version(pkg.version)
+  .version(version)
 
   .epilogue([
     'Environment Variables:',

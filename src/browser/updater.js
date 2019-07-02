@@ -3,7 +3,7 @@
 const { autoUpdater } = require('electron')
 const { feed } = require('../common/release')
 const { linux, win32 } = require('../common/os')
-const { warn, info, verbose } = require('../common/log')
+const { warn, info } = require('../common/log')
 const flash  = require('../actions/flash')
 
 const MIN = 1000 * 60
@@ -90,14 +90,14 @@ class Updater {
   }
 
   onCheckingForUpdate = () =>{
-    verbose('checking for updates...')
+    info('checking for updates...')
     this.lastCheck = new Date()
     this.isChecking = true
     this.app.emit('app:reload-menu')
   }
 
   onUpdateNotAvailable = () => {
-    verbose('no updates available')
+    info('no updates available')
     this.isUpdateAvailable = false
     this.isChecking = false
     this.app.emit('app:reload-menu')

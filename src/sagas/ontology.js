@@ -4,7 +4,7 @@ require('../common/promisify')
 
 const { join } = require('path')
 const { Database } = require('../common/db')
-const { verbose, warn } = require('../common/log')
+const { info, warn } = require('../common/log')
 const { ONTOLOGY } = require('../constants')
 const { exec } = require('./cmd')
 const mod = require('../models')
@@ -17,7 +17,7 @@ const command = ({ type, error, meta }) =>
 
 
 function *reset(db) {
-  verbose('*ontology resetting db...')
+  info('*ontology resetting db...')
 
   yield call(db.close)
   yield cps(unlink, db.path)
@@ -55,7 +55,7 @@ function *ontology(file = join(ARGS.home, ONTOLOGY.DB)) {
 
   } catch (error) {
     warn(`unexpected error in *ontology: ${error.message}`)
-    verbose(error.stack)
+    info(error.stack)
 
   } finally {
     if (db) {
@@ -64,7 +64,7 @@ function *ontology(file = join(ARGS.home, ONTOLOGY.DB)) {
       yield call(db.close)
     }
 
-    verbose('*ontology terminated')
+    info('*ontology terminated')
   }
 }
 

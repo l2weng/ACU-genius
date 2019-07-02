@@ -11,7 +11,7 @@ const Bluebird = require('bluebird')
 const { using } = Bluebird
 const { readFileAsync: read } = require('fs')
 const { createPool } = require('generic-pool')
-const { debug, verbose, warn } = require('./log')
+const { debug, info, warn } = require('./log')
 const { entries } = Object
 
 const M = {
@@ -87,7 +87,7 @@ class Database extends EventEmitter {
 
   create(mode) {
     return new Promise((resolve, reject) => {
-      verbose(`opening db ${this.path}`)
+      info(`opening db ${this.path}`)
 
       let db = new sqlite.Database(this.path, M[mode], (error) => {
         if (error) {
@@ -111,7 +111,7 @@ class Database extends EventEmitter {
         }
 
         if (ms > 25) {
-          return verbose(message, { query, time })
+          return info(message, { query, time })
         }
 
         debug(message, { query, time })
@@ -120,7 +120,7 @@ class Database extends EventEmitter {
   }
 
   async destroy(conn) {
-    verbose(`closing db ${this.path}`)
+    info(`closing db ${this.path}`)
 
     await conn.optimize()
     await conn.close()

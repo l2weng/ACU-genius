@@ -50,15 +50,15 @@ module.exports = {
       selection: {
         default: {
           line: [`0x${lineColor}`, 2],
-          fill: [`0x${lineColor}`, 0.2]
+          fill: [`0x${lineColor}`, 0.4]
         },
         active: {
           line: [`0x${lineColor}`, 2],
-          fill: [`0x${lineColor}`, 0.4]
+          fill: [`0x${lineColor}`, 0.8]
         },
         live: {
           line: [`0x${lineColor}`, 2],
-          fill: [`0x${lineColor}`, 0.4]
+          fill: [`0x${lineColor}`, 0.8]
         }
       }
     }

@@ -7,7 +7,7 @@ const {
   app, shell, ipcMain: ipc, BrowserWindow, systemPreferences: pref
 } = require('electron')
 
-const { verbose, warn } = require('../common/log')
+const { info, warn } = require('../common/log')
 const { open, hasOverlayScrollBars } = require('./window')
 const { all } = require('bluebird')
 const { existsSync: exists } = require('fs')
@@ -120,7 +120,7 @@ class LabelReal extends EventEmitter {
       const { apiServer } = this.state
       if (this.state.userInfo.hasProject) {
         const project = this.state.userInfo.lastProject
-        verbose(`User has project (${project.projectId}) already, sync status: ${project.syncStatus}`)
+        info(`User has project (${project.projectId}) already, sync status: ${project.syncStatus}`)
         if (!project.syncStatus) {
           if (fs.existsAsync(project.projectFile)) {
             return this.open(project.projectFile)
@@ -170,7 +170,7 @@ class LabelReal extends EventEmitter {
 
     try {
       file = resolve(file)
-      verbose(`opening ${file}...`)
+      info(`opening ${file}...`)
 
       if (this.win) {
         if (file) {
@@ -445,7 +445,7 @@ class LabelReal extends EventEmitter {
       .tap(state => state.updater && this.updater.start())
 
       .tap(() => this.emit('app:restored'))
-      .tap(() => verbose('app state restored'))
+      .tap(() => info('app state restored'))
   }
 
   load() {
@@ -468,7 +468,7 @@ class LabelReal extends EventEmitter {
   }
 
   persist() {
-    verbose('saving app state')
+    info('saving app state')
 
     if (this.state != null) {
       this.store.save.sync('state.json', this.state)
@@ -644,20 +644,20 @@ class LabelReal extends EventEmitter {
     })
 
     this.on('app:clear-recent-projects', () => {
-      verbose('clearing recent projects...')
+      info('clearing recent projects...')
       this.state.recent[this.state.userInfo.user.userId] = []
       this.emit('app:reload-menu')
     })
 
     this.on('app:switch-theme', (_, theme) => {
-      verbose(`switching to "${theme}" theme...`)
+      info(`switching to "${theme}" theme...`)
       this.state.theme = theme
       this.broadcast('theme', theme)
       this.emit('app:reload-menu')
     })
 
     this.on('app:switch-locale', async (_, locale) => {
-      verbose(`switching to "${locale}" locale...`)
+      info(`switching to "${locale}" locale...`)
       this.state.locale = locale
       await this.load()
       this.updateWindowLocale()
@@ -665,7 +665,7 @@ class LabelReal extends EventEmitter {
     })
 
     this.on('app:toggle-debug-flag', () => {
-      verbose('toggling dev/debug mode...')
+      info('toggling dev/debug mode...')
       this.state.debug = !this.state.debug
       this.broadcast('debug', this.state.debug)
       this.emit('app:reload-menu')
@@ -843,7 +843,7 @@ class LabelReal extends EventEmitter {
         machineId: machineIdSync({ original: true }),
         projectFile: file,
       }).then(function () {
-        verbose('sync new project to cloud')
+        info('sync new project to cloud')
       }).catch(function (error) {
         warn(error)
       })
@@ -923,6 +923,7 @@ class LabelReal extends EventEmitter {
       frameless: this.state.frameless,
       theme: this.state.theme,
       locale: this.state.locale,
+      log: this.log,
       uuid: this.state.uuid,
       update: this.updater.release,
       recent: this.state.recent,
@@ -998,6 +999,10 @@ class LabelReal extends EventEmitter {
 
   get dev() {
     return channel === 'dev' || ARGS.environment === 'development'
+  }
+
+  get log() {
+    return join(app.getPath('logs'), 'labelreal.log')
   }
 
   get isBuild() {

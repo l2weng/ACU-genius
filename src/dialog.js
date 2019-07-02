@@ -1,17 +1,20 @@
 'use strict'
 
 const assert = require('assert')
-const { ipcRenderer: ipc } = require('electron')
+const { ipcRenderer: ipc, shell, clipboard } = require('electron')
 const { counter, get } = require('./common/util')
-const { warn } = require('./common/log')
-const { basename } = require('path')
+const { crashReport, warn } = require('./common/log')
+
+const IMAGE_EXTENSIONS = [
+  'gif', 'jpg', 'jpeg', 'png', 'svg', 'tif', 'tiff', 'webp'
+]
 
 let seq
 let pending
 let STORE
 
-function t(id, prefix = '') {
-  return get(STORE.getState(), ['intl', 'messages', `${prefix}${id}`], id)
+function t(...args) {
+  return get(STORE.getState(), ['intl', 'messages', ...args])
 }
 
 function start(store) {
@@ -33,10 +36,8 @@ function stop() {
 function onClosed(_, { id, payload, error }) {
   try {
     pending[id][error ? 'reject' : 'resolve'](payload)
-
   } catch (error) {
     warn(`failed to resolve dialog #${id}: ${error.message}`)
-
   } finally {
     delete pending[id]
   }
@@ -45,53 +46,55 @@ function onClosed(_, { id, payload, error }) {
 function show(type, options = {}) {
   return new Promise((resolve, reject) => {
     const id = seq.next().value
-    ipc.send('dialog', { id, type, options })
+    ipc.send('wm', 'dialog', { id, type, options })
     pending[id] = { resolve, reject }
   })
 }
 
-function notify(options) {
+function notify(opts) {
   return show('message-box', {
-    type: 'none', buttons: ['OK'], ...options
+    type: 'none',
+    ...t('dialog', 'notify'),
+    ...opts
   })
 }
 
-function fail(error, message = 'Error') {
+function fail(e, msg) {
   return notify({
     type: 'error',
-    title: 'Error',
-    message: t(message, 'error.'),
-    detail: (message === error.message) ? null : error.message
+    ...t('dialog', 'error'),
+    message: t(`error.${msg}`) || e.message,
+    detail: e.stack
+  }).then(({ response }) => {
+    switch (response) {
+      case 1:
+        clipboard.write({ text: crashReport(e, msg) })
+        break
+      case 2:
+        shell.openItem(ARGS.log)
+        break
+    }
   })
 }
 
-async function prompt(message, {
-  buttons = ['cancel', 'ok'],
+function prompt(id, {
   defaultId = 0,
   cancelId = 0,
-  checkbox,
-  isChecked,
-  detail,
-  prefix = '',
-  ...options
+  isChecked = false,
+  ...opts
 } = {}) {
-  const { response, checked } = await show('message-box', {
+  return show('message-box', {
     type: 'question',
-    buttons: buttons.map(id => t(id, prefix)),
-    message: t(message, prefix),
+    ...t('dialog', 'prompt', ...id.split('.')),
     defaultId,
     cancelId,
-    checkboxLabel: (checkbox != null) ? t(checkbox, prefix) : undefined,
     checkboxChecked: isChecked,
-    detail: t(detail, prefix),
-    ...options
-  })
-
-  const ok = response !== cancelId
-
-  return {
-    ok, cancel: !ok, isChecked: checked
-  }
+    ...opts
+  }).then(({ response, checked }) => ({
+    ok: response !== cancelId,
+    cancel: response === cancelId,
+    isChecked: checked
+  }))
 }
 
 function save(options) {
@@ -102,29 +105,20 @@ function open(options) {
   return show('file', options)
 }
 
-prompt.dup = (file, options) =>
-  prompt(basename(file), {
-    checkbox: 'checkbox',
-    isChecked: false,
-    detail: 'message',
-    prefix: 'dialog.prompt.dup.',
-    ...options
-  })
-
-prompt.plugin = {
-  uninstall: (label, options) =>
-    prompt(label, {
-      detail: 'message',
-      prefix: 'dialog.prompt.plugin.uninstall.',
-      type: 'warning',
-      ...options
-    })
-}
+open.items = (options) => open({
+  filters: [{
+    name: t('dialog', 'filter', 'items'),
+    extensions: [...IMAGE_EXTENSIONS, 'json', 'jsonld']
+  }],
+  defaultPath: ARGS.pictures,
+  properties: ['openFile', 'multiSelections'],
+  ...options
+})
 
 open.images = (options) => open({
   filters: [{
-    name: t('dialog.filter.images'),
-    extensions: ['jpg', 'jpeg', 'png', 'svg']
+    name: t('dialog', 'filter', 'images'),
+    extensions: IMAGE_EXTENSIONS
   }],
   defaultPath: ARGS.pictures,
   properties: ['openFile', 'multiSelections'],
@@ -133,7 +127,7 @@ open.images = (options) => open({
 
 open.vocab = (options) => open({
   filters: [{
-    name: t('dialog.filter.rdf'),
+    name: t('dialog', 'filter', 'rdf'),
     extensions: ['n3', 'ttl']
   }],
   defaultPath: ARGS.documents,
@@ -143,7 +137,7 @@ open.vocab = (options) => open({
 
 open.templates = (options) => open({
   filters: [{
-    name: t('dialog.filter.templates'),
+    name: t('dialog', 'filter', 'templates'),
     extensions: ['ttp']
   }],
   defaultPath: ARGS.documents,
@@ -154,8 +148,8 @@ open.templates = (options) => open({
 
 save.project = (options) => save({
   filters: [{
-    name: t('dialog.filter.projects'),
-    extensions: ['lbr']
+    name: t('dialog', 'filter', 'projects'),
+    extensions: ['tpy']
   }],
   defaultPath: ARGS.documents,
   properties: ['createDirectory'],
@@ -163,9 +157,18 @@ save.project = (options) => save({
 })
 
 
+save.csv = (options) => save({
+  filters: [{
+    name: t('dialog', 'filter', 'csv'),
+    extensions: ['csv']
+  }],
+  properties: ['createDirectory'],
+  ...options
+})
+
 save.template = (options) => save({
   filters: [{
-    name: t('dialog.filter.templates'),
+    name: t('dialog', 'filter', 'templates'),
     extensions: ['ttp']
   }],
   properties: ['createDirectory'],
@@ -174,7 +177,7 @@ save.template = (options) => save({
 
 save.items = (options) => save({
   filters: [{
-    name: t('dialog.filter.jsonld'),
+    name: t('dialog', 'filter', 'jsonld'),
     extensions: ['json', 'jsonld']
   }],
   properties: ['createDirectory'],
@@ -183,7 +186,7 @@ save.items = (options) => save({
 
 save.vocab = (options) => save({
   filters: [{
-    name: t('dialog.filter.rdf'),
+    name: t('dialog', 'filter', 'rdf'),
     extensions: ['n3']
   }],
   properties: ['createDirectory'],

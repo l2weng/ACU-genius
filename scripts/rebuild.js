@@ -4,6 +4,8 @@ require('shelljs/make')
 
 const { say } = require('./util')('rebuild')
 const { join, resolve } = require('path')
+const fetch = require('node-fetch')
+const { writeFileSync: write } = require('fs')
 
 const home = resolve(__dirname, '..')
 const mods = join(home, 'node_modules')
@@ -17,24 +19,41 @@ const CONFIG = [
   `--target=${ELECTRON.join('.')}`
 ]
 
-
-target.all = (args) => {
-  target.sqlite3(args)
-  target.jsonld()
+target.all = async (args) => {
+  await target.sqlite3(args)
+  await target.sharp(args)
 }
 
 target.headers = () => {
   exec(`node-gyp install --dist-url=${HEADERS} ${CONFIG.join(' ')}`)
 }
 
-target.sqlite3 = (force) => {
-  const mod = 'sqlite3'
+target.sqlite3 = async (force) => {
+  let mod = 'sqlite3'
 
-  if (force || check(mod)) {
+  if (force || !test('-d', preGypBinding(mod))) {
     say(`${mod} ${force ? '(forced)' : ''}...`)
 
+    let deps = join(mods, mod, 'deps')
+    let url = cat(join(home, 'vendor', mod, 'version.txt')).trim()
+    let tar = join(deps, url.split('/').pop())
+    let version = (/-(\d+)\.tar\.gz/).exec(url)[1]
+
+    if (!test('-f', tar)) {
+      say(`${mod} fetching version ${version}...`)
+      let res = await fetch(url)
+      if (res.status !== 200) { throw new Error(`download failed: ${res.status} ${res.statusText}`) }
+
+      write(tar, await res.buffer())
+    }
+
     say(`${mod} patching...`)
-    cp(join(home, 'ext', mod, '*'), join(mods, mod, 'deps'))
+    sed('-i',
+      /'sqlite_version%':'\d+',/,
+      `'sqlite_version%':'${version}',`,
+      join(deps, 'common-sqlite.gypi'))
+
+    cp(join(home, 'vendor', mod, 'sqlite3.gyp'), deps)
 
     rebuild(mod, {
       params: '--build-from-source'
@@ -43,25 +62,29 @@ target.sqlite3 = (force) => {
     say(`${mod} ...done`)
 
   } else {
-    say(`${mod} ...skipped`)
+    say(`${mod} skipped`)
   }
 }
 
-target.inspector = () => {
-  rebuild('v8-debug', { params: '--build-from-source' })
-  rebuild('v8-profiler', { params: '--build-from-source' })
+target.sharp = (force) => {
+  let mod = 'sharp'
+
+  if (force || !test('-d', buildFragments(mod))) {
+    rebuild(mod, {
+      // params: '--build-from-source'
+    })
+    say(`${mod} ...done`)
+
+  } else {
+    say(`${mod} skipped`)
+  }
 }
 
-target.jsonld = () => {
-  rm('-f', join(mods, 'rdf-canonize', 'build', 'Release', 'urdna2015.node'))
+function buildFragments(mod) {
+  return join(mods, mod, 'build', 'Release', 'obj.target')
 }
 
-
-function check(mod) {
-  return !test('-d', join(binding(mod)))
-}
-
-function binding(mod, platform = process.platform, arch = process.arch) {
+function preGypBinding(mod, platform = process.platform, arch = process.arch) {
   return join(mods, mod, 'lib', 'binding', [
     'electron',
     `v${ELECTRON.slice(0, 2).join('.')}`,
@@ -71,8 +94,9 @@ function binding(mod, platform = process.platform, arch = process.arch) {
 }
 
 function rebuild(mod, opts = {}) {
+  say(mod)
   target.headers()
-  return exec(`npm rebuild ${mod} ${opts.params} ${CONFIG.join(' ')}`)
+  exec(`npm rebuild ${mod} ${opts.params} ${CONFIG.join(' ')}`)
 }
 
 function v(module) {

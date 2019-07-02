@@ -12,8 +12,6 @@ const { warn, debug } = require('./common/log')
 const MIME = require('./constants/mime')
 const { getNewOOSClient, getOSSOjbectName } = require('./common/dataUtil')
 const fs = require('fs')
-const request = require('request')
-
 
 class Image {
   static read(path) {

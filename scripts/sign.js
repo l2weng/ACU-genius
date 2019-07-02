@@ -95,7 +95,7 @@ target.darwin = (args = []) => {
 
   function verify(file) {
     say(`verify ${relative(app, file)}`)
-    exec(`codesign --verify --deep --display --verbose=2 "${file}"`)
+    exec(`codesign --verify --deep --display --info=2 "${file}"`)
     exec(`spctl --ignore-cache --no-cache --assess -t execute --v "${file}"`)
   }
 }

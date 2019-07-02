@@ -1,6 +1,6 @@
 'use strict'
 
-const { warn, log } = require('../common/log')
+const { warn, trace } = require('../common/log')
 const { gray } = require('colors/safe')
 const ms = require('ms')
 
@@ -20,7 +20,7 @@ module.exports = {
           warn(`${type} failed: ${payload.message}`, { error: payload, meta })
           break
         default:
-          log(meta.log || 'verbose', format(type, meta))
+          trace(meta.log || 'verbose', format(type, meta))
       }
 
       return next(action)

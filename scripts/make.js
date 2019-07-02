@@ -32,7 +32,7 @@ target['lint:js'] = (bail) => {
 }
 
 target['lint:css'] = (bail) => {
-  const { code } = exec(`${sasslint} --verbose`)
+  const { code } = exec(`${sasslint} --info`)
   if (bail && code) process.exit(code)
   return code
 }
