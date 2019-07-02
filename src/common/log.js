@@ -3,6 +3,8 @@
 const { Logger, transports } = require('winston')
 const { basename, join } = require('path')
 const { assign } = Object
+const { system } = require('./os')
+const { version } = require('./release')
 const { sync: mkdir } = require('mkdirp')
 
 const ms = require('ms')
@@ -31,18 +33,18 @@ const logger = new Logger({
 })
 
 
-function init(dir) {
+function init(dir, { debug, environment } = {}) {
   logger.clear()
-  if (ARGS.debug) logger.level = 'debug'
+  if (debug) logger.level = 'debug'
 
-  switch (ARGS.environment) {
+  switch (environment) {
     case 'development':
       logger.add(transports.Console, {
         handleExceptions: true,
         humanReadableUnhandledException: true,
         formatter
       })
-      // eslint-disable-next-line no-fallthrough
+    // eslint-disable-next-line no-fallthrough
     case 'production':
       if (dir) {
         mkdir(dir)
@@ -59,7 +61,7 @@ function init(dir) {
       break
   }
 
-  logger.info('logger initialized at level %s', logger.level)
+  logger.info(`log.init ${version}`, { environment, system, version })
 
   return module.exports
 }

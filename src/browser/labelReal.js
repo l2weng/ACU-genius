@@ -201,9 +201,7 @@ class LabelReal extends EventEmitter {
             return this.win.destroy()
         }
       }).on('close', () => {
-        if (!this.win.isFullScreen()) {
-          this.state.win.bounds = this.win.getBounds()
-        }
+        this.state.win.bounds = this.win.getNormalBounds()
       }).on('closed', () => { this.win = undefined })
 
       this.win.webContents.on('crashed', async () => {
