@@ -222,6 +222,12 @@ module.exports = {
     return photos
   },
 
+  async loadOnePhoto(db) {
+    return db.get(
+      'SELECT id,path FROM photos LIMIT 1'
+    )
+  },
+
   async loadOne(db, syncPhotoId) {
     let photo = {}
 

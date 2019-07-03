@@ -7,6 +7,7 @@ const { Row, Col, Card, List, Radio, Input, Icon, Progress } = require('antd')
 const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
 const { Search } = Input
+const { parse } = require('url')
 
 const { Meta } = Card
 const _ = require('underscore')
@@ -127,10 +128,21 @@ class Workplace extends PureComponent {
                         hoverable
                         style={{ width: 180, height: 260 }}
                         cover={
-                          <div><img alt={item.name} style={{ width: 180, height: 180 }}
-                            src={this.getCacheCover(item.syncCover)}/>
+                          <div>
+                            <div style={{
+                              overflow: 'hidden',
+                            }}><img style={{
+                              width: 180,
+                              height: 180,
+                              objectFit: 'cover',
+                            }} alt={item.name}
+                              src={this.getCacheCover(item.syncCover
+                                      ? item.syncCover
+                                      : item.cover)}/>
+                            </div>
                             <div style={{ padding: '0px 5px' }}>
-                              <Progress percent={50} status="active" size="small"/>
+                              <Progress percent={50} status="active"
+                                size="small"/>
                             </div>
                           </div>}>
                         <Meta

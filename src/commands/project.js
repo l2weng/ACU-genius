@@ -75,14 +75,14 @@ class Sync extends Command {
         syncProjectSize = getFilesizeInBytes(project.file)
       }
       let result = yield client.put(project.id, project.file)
+      const firstPhoto = yield call(mod.photo.loadOnePhoto, db)
+
       let syncCover = ''
       if (cache) {
         const coverId = uuid()
         let coverResult = {}
-        if (exists(join(resolve(cache), '2_512.png'))) {
-          coverResult = yield client.put(coverId, join(resolve(cache), '2_512.png'))
-        } else if (exists(join(resolve(cache), '2_512.jpg'))) {
-          coverResult = yield client.put(coverId, join(resolve(cache), '2_512.jpg'))
+        if (exists(join(resolve(cache), `${firstPhoto.id}_512.webp`))) {
+          coverResult = yield client.put(coverId, join(resolve(cache), `${firstPhoto.id}_512.webp`))
         } else {
           return
         }

@@ -19,6 +19,8 @@ const storage = require('./storage')
 const { onErrorPut } = require('./db')
 const args = require('../args')
 const axios = require('axios')
+const { empty } = require('../common/util')
+
 
 const {
   all, fork, cancel, call, put, take, takeEvery: every, race
@@ -46,12 +48,11 @@ function *open(file) {
 
     const project = yield call(mod.project.load, db)
     const access = yield call(mod.access.open, db)
-
-    assert(project != null && project.id != null, 'invalid project')
+    const cover = yield call(mod.photo.loadOnePhoto, db)
 
     let syncProjectId = ''
     let syncStatus = false
-    const syncResult = yield axios.post(`${ARGS.apiServer}/projects/syncLocalProject`, { file: db.path, ...project })
+    const syncResult = yield axios.post(`${ARGS.apiServer}/projects/syncLocalProject`, { file: db.path, ...project, cover: empty(cover) ? '' : cover.path })
     if (syncResult.status === 200) {
       syncProjectId = syncResult.data.project.projectId
       syncStatus = syncResult.data.project.syncStatus
@@ -61,6 +62,7 @@ function *open(file) {
       args.update({ file: db.path })
     }
 
+    assert(project != null && project.id != null, 'invalid project')
     const cache = new Cache(ARGS.cache, project.id)
     yield call([cache, cache.init])
     yield put(act.project.opened({ file: db.path, syncProjectId, syncStatus, ...project }))

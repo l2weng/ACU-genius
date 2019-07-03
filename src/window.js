@@ -324,7 +324,6 @@ class Window extends EventEmitter {
   }
 
   toggle(state) {
-    console.log(state)
     switch (state) {
       case 'focus':
         toggle(document.body, 'is-blurred', false)
