@@ -7,7 +7,6 @@ const { Row, Col, Card, List, Radio, Input, Icon, Progress } = require('antd')
 const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
 const { Search } = Input
-const { parse } = require('url')
 
 const { Meta } = Card
 const _ = require('underscore')
