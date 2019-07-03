@@ -3,7 +3,7 @@
 const React = require('react')
 const { PureComponent } = React
 const { injectIntl, intlShape } = require('react-intl')
-const { Input } = require('../input')
+const { MODE } = require('../../constants/project')
 const { blank, noop } = require('../../common/util')
 const { arrayOf, bool, func, number, shape, string } = require('prop-types')
 const {  Select } = require('antd')
@@ -51,7 +51,7 @@ class TagAdder extends PureComponent {
 
   render() {
 
-    const { itemTags, tags, isOwner } = this.props
+    const { itemTags, tags, isOwner, mode } = this.props
 
     const children = []
     for (let i = 0; i < tags.length; i++) {
@@ -73,7 +73,7 @@ class TagAdder extends PureComponent {
         {/*  onFocus={this.props.onFocus}*/}
         {/*  onCancel={this.props.onCancel}*/}
         {/*  onCommit={this.handleChange}/>*/}
-        {isOwner ? <Select
+        {isOwner && (MODE.ITEM !== mode) ? <Select
           key={defaultTag}
           mode="tags"
           size="small"
@@ -94,6 +94,7 @@ class TagAdder extends PureComponent {
     intl: intlShape.isRequired,
     isDisabled: bool,
     match: func.isRequired,
+    mode: string.isRequired,
     tags: arrayOf(shape({
       id: number.isRequired,
       name: string.isRequired
@@ -102,6 +103,7 @@ class TagAdder extends PureComponent {
       id: number.isRequired,
       name: string.isRequired
     })).isRequired,
+    isOwner: bool.isRequired,
     onAdd: func.isRequired,
     onBlur: func.isRequired,
     onItemTagChange: func.isRequired,

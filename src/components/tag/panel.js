@@ -150,6 +150,7 @@ class TagPanel extends PureComponent {
           count={this.props.items.length}
           itemTags={this.props.tags}
           tags={this.props.allTags}
+          mode={this.props.mode}
           onAdd={this.handleTagAdd}
           onItemTagChange={this.handleTagChange}
           onBlur={this.props.onBlur}
@@ -172,6 +173,7 @@ class TagPanel extends PureComponent {
       name: string.isRequired
     })).isRequired,
     activeTag: number,
+    mode: string.isRequired,
 
     onBlur: func.isRequired,
     onFocus: func.isRequired,

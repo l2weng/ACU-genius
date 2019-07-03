@@ -185,6 +185,7 @@ class ReferencesGrid extends PhotoIterator {
           onTabFocus={this.handleNestedTabFocus}
           onContextMenu={this.props.onContextMenu}
           onDelete={this.handleDelete}
+          onError={this.props.onError}
           onItemOpen={this.handleItemOpen}
           onSelect={this.select}
           onSort={this.props.onSelectionSort}
@@ -213,7 +214,7 @@ class ReferencesGrid extends PhotoIterator {
 
     return this.connect(
       <div className={cx(this.classes)}
-           data-size={this.props.size}>
+        data-size={this.props.size}>
         <div
           className="scroll-container"
           ref={this.setContainer}

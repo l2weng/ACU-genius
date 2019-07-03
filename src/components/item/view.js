@@ -217,6 +217,7 @@ class ItemView extends PureComponent {
             photo={photo}
             activeTag={activeTag}
             note={this.state.note}
+            mode={this.props.mode}
             keymap={keymap}
             isOwner={isOwner}
             selections={selections}

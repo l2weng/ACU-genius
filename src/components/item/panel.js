@@ -200,6 +200,7 @@ class ItemPanel extends React.PureComponent {
     activeTag: number,
     enableReference: bool.isRequired,
     items: array.isRequired,
+    mode: string.isRequired,
 
     note: object,
     notes: array.isRequired,
