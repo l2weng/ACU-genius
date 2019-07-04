@@ -40,7 +40,7 @@ class Image {
       status.hasChanged = (mtime > (consolidated || created))
 
       if (force || created == null || status.hasChanged) {
-        status.image = await Image.read(path)
+        status.image = await Image.open({ path })
         status.hasChanged = (status.image.checksum !== checksum)
       }
     } catch (error) {

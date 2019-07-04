@@ -11,7 +11,7 @@ const { prompt } = require('../dialog')
 
 
 class ImportCommand extends Command {
-  *createThumbnails(id, image, { overwrite = true, quality = 100,selection } = {}) {
+  *createThumbnails(id, image, { overwrite = true, quality = 100, selection } = {}) {
     try {
       let { cache } = this.options
       let ext = cache.extname(image.mimetype)
