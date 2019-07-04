@@ -146,6 +146,14 @@ module.exports = {
     }
   },
 
+  referenceUpload(payload, meta = {}) {
+    return {
+      type: PHOTO.REFERENCE_UPLOAD,
+      payload,
+      meta: { ...meta }
+    }
+  },
+
   move(payload, meta) {
     return {
       type: PHOTO.MOVE,

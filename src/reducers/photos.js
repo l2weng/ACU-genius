@@ -30,6 +30,8 @@ module.exports = {
         return update(state, payload, meta)
       case PHOTO.UPLOAD:
         return update(state, payload, meta)
+      case PHOTO.REFERENCE_UPLOAD:
+        return update(state, payload, meta)
       case PHOTO.LABEL_SYNC_SUCCESS:
         return update(state, payload, meta)
       case PHOTO.NOTE.ADD:

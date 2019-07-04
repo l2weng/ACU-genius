@@ -28,6 +28,17 @@ module.exports = {
     }
   },
 
+  sync(payload, meta) {
+    return {
+      type: REFERENCES.SYNC,
+      payload,
+      meta: {
+        cmd: 'project',
+        ...meta
+      }
+    }
+  },
+
   insert(payload, meta) {
     return {
       type: REFERENCES.INSERT,

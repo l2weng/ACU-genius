@@ -510,7 +510,6 @@ class Sync extends Command {
       }
     }
     let total = photosArray.length
-    console.log(photosArray)
     for (let i = 0; i < photosArray.length; i++) {
       let sPhoto = photosArray[i]
       let client = getNewOOSClient()
@@ -528,6 +527,7 @@ class Sync extends Command {
           height: sPhoto.height,
           mimeType: sPhoto.mimetype,
           protocol: sPhoto.protocol,
+          fileUrl: sPhoto.path,
           orientation: sPhoto.orientation,
           tasks: sPhoto.tasks,
           photoId: sPhoto.syncPhotoId,

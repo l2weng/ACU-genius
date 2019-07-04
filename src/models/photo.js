@@ -251,7 +251,7 @@ module.exports = {
     return photo
   },
 
-  async loadReference(db, tag, { base } = {}) {
+  async loadReference(db, tag = null, { base } = {}) {
     if (!tag) return []
     let { tag_id } = tag
     const photos = {}
@@ -261,6 +261,7 @@ module.exports = {
         SELECT
             id,
             item_id AS item,
+            tag_id AS tagId,
             template,
             datetime(created, "localtime") AS created,
             datetime(modified, "localtime") AS modified,
@@ -282,7 +283,7 @@ module.exports = {
           FROM subjects
             JOIN images USING (id)
             JOIN photos USING (id)${
-            tag_id != null ? ` WHERE tag_id = ${tag_id}` : ' where tag_id notnull'
+            tag_id != null ? ` WHERE tag_id = ${tag_id} order by tag_id` : ' where tag_id notnull order by tag_id'
         }`,
         ({ id, created, modified, mirror, negative, path, ...data }) => {
           data.created = new Date(created)
@@ -293,6 +294,28 @@ module.exports = {
 
           if (id in photos) assign(photos[id], data)
           else photos[id] = assign(skel(id), data)
+        }
+      ),
+    ])
+
+    return photos
+  },
+
+  async loadTagsReference(db) {
+    const photos = []
+
+    await all([
+      db.each(`
+        SELECT
+    id,
+    p.tag_id as tagId,
+    t.syncSkuId as syncSkuId,
+    syncPhotoId,
+    path
+    FROM photos as p left join tags as t where p.tag_id=t.tag_id and p.tag_id notnull order by p.tag_id
+`,
+        ({ ...data }) => {
+          photos.push(data)
         }
       ),
     ])

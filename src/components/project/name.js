@@ -20,9 +20,9 @@ class ProjectName extends React.PureComponent {
   }
 
   handleSyncProject = ()=>{
-    if (this.props.synced === 0) {
+    // if (this.props.synced === 0) {
       this.props.onSyncProject2Cloud()
-    }
+    // }
   }
 
   componentWillReceiveProps(props) {

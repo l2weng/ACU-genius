@@ -2,7 +2,7 @@
 
 const React = require('react')
 const { PhotoIterator } = require('./iterator')
-const { PhotoTile } = require('./tile')
+const { ReferenceTile } = require('./tile')
 const { SelectionGrid } = require('../selection/grid')
 const cx = require('classnames')
 const { match } = require('../../keymap')
@@ -226,7 +226,7 @@ class ReferencesGrid extends PhotoIterator {
               className="viewport"
               style={{ gridTemplateColumns, transform }}>
               {this.mapIterableRange(({ photo, ...props }) => (
-                <PhotoTile {...props} key={photo.id} photo={photo}/>
+                <ReferenceTile {...props} key={photo.id} photo={photo}/>
               ), range)}
             </ul>
           </div>

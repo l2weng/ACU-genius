@@ -8,7 +8,7 @@ const { IconSelectionOverlay, IconWarningOverlay } = require('../icons')
 const { Button } = require('../button')
 
 
-class PhotoTile extends PhotoIterable {
+class ReferenceTile extends PhotoIterable {
   get classes() {
     return [...super.classes, 'tile', {
       active: this.props.isSelected
@@ -17,9 +17,6 @@ class PhotoTile extends PhotoIterable {
 
   handleClick = createClickHandler({
     onClick: this.select,
-    onDoubleClick: () => {
-      this.props.onItemOpen(this.props.photo)
-    }
   })
 
   handleExpansionToggle= () => {
@@ -37,6 +34,7 @@ class PhotoTile extends PhotoIterable {
         ref={this.setContainer}>
         <div className="tile-state">
           {this.renderThumbnail({
+            onClick: this.handleClick,
             onContextMenu: this.handleContextMenu
           })}
           <div className="icon-container">
@@ -60,5 +58,5 @@ class PhotoTile extends PhotoIterable {
 
 
 module.exports = {
-  PhotoTile: PhotoTile.wrap()
+  ReferenceTile: ReferenceTile.wrap()
 }
