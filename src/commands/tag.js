@@ -79,7 +79,7 @@ class SaveTag extends Command {
     const skuData = { name, shapeType: TAG.SHAPE_TYPE[category], color: circlePicker }
     if (data.id != null) data['tag_id'] = data.id
     let changedItems = []
-    const tag =  yield call(db.transaction, async tx => {
+    let tag =  yield call(db.transaction, async tx => {
       const tg = await mod.tag.create(tx, skuData)
       if (taskSelect) {
         const listObjs = await mod.list.loadItems(tx)
@@ -98,6 +98,7 @@ class SaveTag extends Command {
     let skuResult = yield axios.post(`${ARGS.apiServer}/skus/create`, { localSkuId: tag.id, name: tag.name, projectId: project.syncProjectId, color: circlePicker, shapeType: TAG.SHAPE_TYPE[category], userId: userInfo.user.userId })
     if (skuResult.status === 200) {
       let updatePayload = { id: tag.id, syncSkuId: skuResult.data.obj.skuId }
+      tag.syncSkuId = skuResult.data.obj.skuId
       yield call(mod.tag.save, db, updatePayload)
     }
     return tag
@@ -119,6 +120,7 @@ class Delete extends Command {
     if (items.length > 0) {
       yield put(act.item.tags.remove({ id: items, tags: [id] }))
     }
+    console.log(tag)
 
     // this.undo = act.tag.saveSku({ ...tag, items })
 
