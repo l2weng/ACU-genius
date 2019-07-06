@@ -120,8 +120,7 @@ class Delete extends Command {
     if (items.length > 0) {
       yield put(act.item.tags.remove({ id: items, tags: [id] }))
     }
-    console.log(tag)
-
+    yield axios.post(`${ARGS.apiServer}/skus/remove`, { skuId: tag.syncSkuId })
     // this.undo = act.tag.saveSku({ ...tag, items })
 
     return id
