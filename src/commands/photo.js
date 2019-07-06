@@ -543,6 +543,7 @@ class Sync extends Command {
       }
     }
     yield put(act.photo.upload(payload))
+    yield put(act.references.sync(payload))
     yield put(act.project.sync(payload))
   }
 }
