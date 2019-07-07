@@ -7,6 +7,7 @@ const { bool, func, number, string } = require('prop-types')
 const { Toolbar } = require('../toolbar')
 const { IconPlus, IconList, IconGrid, IconExport, IconPhotoResources } = require('../icons')
 const { Slider } = require('../slider')
+const { Button: Abutton } = require('antd')
 const { SearchField } = require('../search')
 const { Button } = require('../button')
 
@@ -72,6 +73,9 @@ class ProjectToolbar extends PureComponent {
           </div>
         </div>
         <div className="toolbar-right">
+          <div className="tool-group">
+            <Abutton icon="play-circle" size="small" style={{ marginRight: 8 }}>Start Labelling</Abutton>
+          </div>
           <SearchField
             query={query}
             isDisabled={isDisabled}
