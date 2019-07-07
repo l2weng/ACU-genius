@@ -485,6 +485,10 @@ class Esper extends PureComponent {
     this.props.onLabelSave(photo)
   }
 
+  handleLabelSkip = (photo) => {
+    this.props.onLabelSkip(photo)
+  }
+
   handleColorChange = (opts) => {
     this.setState(opts, () => {
       this.view.adjust(this.state)
@@ -733,7 +737,8 @@ class Esper extends PureComponent {
         <EsperFooter>
           <EsperFootToolbar
             photo={this.props.photo}
-            onLabelSave={this.handleLabelSave}/>
+            onLabelSave={this.handleLabelSave}
+            onLabelSkip={this.handleLabelSkip}/>
         </EsperFooter>
       </section>
     )
@@ -752,6 +757,7 @@ class Esper extends PureComponent {
     mode: string.isRequired,
     onChange: func.isRequired,
     onLabelSave: func.isRequired,
+    onLabelSkip: func.isRequired,
     onPhotoError: func.isRequired,
     onSelect: func.isRequired,
     onSelectionCreate: func.isRequired,

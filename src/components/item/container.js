@@ -45,6 +45,10 @@ class ItemContainer extends React.PureComponent {
     this.props.onLabelSync({ photo: photo, taskId: this.props.nav.syncTaskId })
   }
 
+  handleLabelSkip = (photo) => {
+    this.props.onLabelSkip({ photo: photo, taskId: this.props.nav.syncTaskId })
+  }
+
   handleEsperResize = (height) => {
     this.props.onUiUpdate({ esper: { height } })
   }
@@ -75,6 +79,7 @@ class ItemContainer extends React.PureComponent {
             selections={this.props.selections}
             tool={this.props.esper.tool}
             onLabelSave={this.handleLabelSave}
+            onLabelSkip={this.handleLabelSkip}
             onChange={this.handleEsperChange}
             onPhotoError={this.props.onPhotoError}
             onSelect={this.props.onPhotoSelect}
@@ -145,6 +150,10 @@ module.exports = {
 
       onLabelSync(...args) {
         dispatch(act.photo.syncLabel(...args))
+      },
+
+      onLabelSkip(...args) {
+        dispatch(act.photo.skipLabel(...args))
       },
 
       onPhotoSelect(...args) {

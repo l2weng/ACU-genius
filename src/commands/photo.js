@@ -580,6 +580,21 @@ class LabelSync extends Command {
   }
 }
 
+class LabelSkip extends Command {
+  static get ACTION() { return PHOTO.LABEL_SKIP }
+
+  *exec() {
+    let { payload } = this.action
+    const { db } = this.options
+    let { photo, taskId } = payload
+    try {
+      yield axios.post(`${ARGS.apiServer}/labels/skipLabel`, { photoId: photo.syncPhotoId, myTaskId: taskId })
+    } catch (e) {
+      error(e.toString())
+    }
+  }
+}
+
 module.exports = {
   Consolidate,
   RefCreate,
@@ -592,5 +607,6 @@ module.exports = {
   Restore,
   Sync,
   LabelSync,
+  LabelSkip,
   Save
 }

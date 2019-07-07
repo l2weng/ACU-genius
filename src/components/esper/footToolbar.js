@@ -17,6 +17,7 @@ class EsperFootToolbar extends PureComponent {
   }
 
   ignorePhoto = () => {
+    this.props.onLabelSkip(this.props.photo)
     emit(document, 'global:next-photo')
   }
 
@@ -34,29 +35,30 @@ class EsperFootToolbar extends PureComponent {
         <div className="toolbar-center" style={{ margin: 'auto' }}>
           <ToolGroup>
             <ButtonGroup>
-              <Button type="default" onClick={this.viewPrevPhoto}>
+              <Button type="default" size="small" onClick={this.viewPrevPhoto}>
                 <Icon type="left" />
                 Prev
               </Button>
-              <Button type="default" onClick={this.viewNextPhoto}>
+              <Button type="default" size="small" onClick={this.viewNextPhoto}>
                 Next
                 <Icon type="right" />
               </Button>
             </ButtonGroup>
           </ToolGroup>
         </div>
-        {/*<div className="toolbar-right" style={{ opacity: 1 }}>*/}
-        {/*  <ToolGroup>*/}
-        {/*    <ButtonGroup>*/}
-        {/*      <Button type="primary"  onClick={this.confirmPhoto}>*/}
-        {/*      确认*/}
-        {/*      </Button>*/}
-        {/*      <Button type="danger" onClick={this.ignorePhoto}>*/}
-        {/*      跳过*/}
-        {/*      </Button>*/}
-        {/*    </ButtonGroup>*/}
-        {/*  </ToolGroup>*/}
-        {/*</div>*/}
+        <div className="toolbar-right" style={{ opacity: 1 }}>
+          <ToolGroup>
+            <ButtonGroup>
+              <Button type="primary" size="small" onClick={this.confirmPhoto}>
+                <Icon type="save" />
+              确认
+              </Button>
+              <Button type="danger" size="small" onClick={this.ignorePhoto}>
+              跳过
+              </Button>
+            </ButtonGroup>
+          </ToolGroup>
+        </div>
       </Toolbar>
     )
   }
@@ -64,6 +66,7 @@ class EsperFootToolbar extends PureComponent {
   static propTypes = {
     photo: object,
     onLabelSave: func.isRequired,
+    onLabelSkip: func.isRequired,
   }
 }
 
