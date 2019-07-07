@@ -18,15 +18,15 @@ const byIdx = ([a], [b]) => (a < b) ? -1 : (a > b) ? 1 : 0
 class PhotoIterator extends Iterator {
   componentDidMount() {
     super.componentDidMount()
-    on(document, 'global:next-photo', this.handleNextPhoto)
-    on(document, 'global:prev-photo', this.handlePrevPhoto)
+    on(document, 'global:next-reference', this.handleNextPhoto)
+    on(document, 'global:prev-reference', this.handlePrevPhoto)
   }
 
   componentWillUnmount() {
     super.componentWillUnmount()
     this.props.onBlur()
-    off(document, 'global:next-photo', this.handleNextPhoto)
-    off(document, 'global:prev-photo', this.handlePrevPhoto)
+    off(document, 'global:next-reference', this.handleNextPhoto)
+    off(document, 'global:prev-reference', this.handlePrevPhoto)
   }
 
   componentWillReceiveProps(props) {

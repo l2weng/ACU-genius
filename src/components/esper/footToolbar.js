@@ -36,10 +36,10 @@ class EsperFootToolbar extends PureComponent {
             <ButtonGroup>
               <Button type="default" onClick={this.viewPrevPhoto}>
                 <Icon type="left" />
-                上一张
+                Prev
               </Button>
               <Button type="default" onClick={this.viewNextPhoto}>
-                下一张
+                Next
                 <Icon type="right" />
               </Button>
             </ButtonGroup>
