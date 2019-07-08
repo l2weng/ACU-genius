@@ -9,21 +9,83 @@ const { fail, open } = require('../dialog')
 const mod = require('../models')
 const act = require('../actions')
 const { PHOTO } = require('../constants')
+const { Image: OldImage } = require('../image')
 const { Image } = require('../image/image')
 const { DuplicateError } = require('../common/error')
-const { warn } = require('../common/log')
+const { info, warn } = require('../common/log')
 const { blank, pick, pluck, splice } = require('../common/util')
 const { getPhotoTemplate, getTemplateValues } = require('../selectors')
 const { keys, values } = Object
 const { getNewOOSClient } = require('../common/dataUtil')
 const { error } = require('../common/log')
 const uuid = require('uuid/v4')
+const { basename, dirname, join, relative, resolve } = require('path')
 const nodePath = require('path')
 const axios = require('axios')
 const { existsSync: exists } = require('fs')
+const { stat } = require('fs').promises
 
 class Consolidate extends ImportCommand {
   static get ACTION() { return PHOTO.CONSOLIDATE }
+
+  lookup = async (photo, paths = {}, checkFileSize) => {
+    let dir = dirname(photo.path)
+    let file = basename(photo.path)
+
+    for (let [from, to] of Object.entries(paths)) {
+      let rel = relative(from, dir)
+
+      for (let x of to) {
+        try {
+          let candidate = join(resolve(x, rel), file)
+          let { size } = await stat(candidate)
+          let isMatch = !checkFileSize || (size === photo.size)
+
+          if (isMatch) {
+            return candidate
+          } else {
+            info({ path: candidate }, 'skipped consolidation candidate')
+          }
+        } catch (e) {
+          if (e.code !== 'ENOENT') throw e
+        }
+      }
+    }
+  }
+
+  *resolve(photo) {
+    let { meta } = this.action
+    let path = yield call(this.lookup, photo, meta.paths, true)
+
+    if (!path && meta.prompt) {
+      try {
+        this.suspend()
+
+        let paths = yield call(open.images, {
+          properties: ['openFile']
+        })
+        path = (paths != null) ? paths[0] : null
+
+        if (path) {
+          let from = dirname(photo.path)
+          let to = dirname(path)
+
+          if (from !== to && basename(photo.path) === basename(path)) {
+            let res = yield call(prompt, 'photo.consolidate')
+            if (res.ok) {
+              yield put(act.photo.consolidate(null, {
+                paths: { [from]: [to] }
+              }))
+            }
+          }
+        }
+      } finally {
+        this.resume()
+      }
+    }
+
+    return path
+  }
 
   *exec() {
     let { db } = this.options
@@ -38,44 +100,31 @@ class Consolidate extends ImportCommand {
 
     for (let i = 0, total = photos.length; i < total; ++i) {
       let photo = photos[i]
-      yield put(act.photo.update({
-        id: photo.id, consolidating: true
-      }))
-    }
-
-    for (let i = 0, total = photos.length; i < total; ++i) {
-      let photo = photos[i]
       if (photo.path && !exists(photo.path) && photo.syncFileUrl) {
         const app = remote.app
         let newPath = nodePath.join(app.getPath('userData'), 'project')
         let newFileName = nodePath.win32.basename(photo.path)
-        yield Image.download(photo.path, photo.syncFileUrl, newFileName, newPath)
+        yield OldImage.download(photo.path, photo.syncFileUrl, newFileName, newPath)
         photo.path = `${newPath}/${newFileName}`
       }
 
       try {
-        let { image, hasChanged, error } = yield call(Image.check, photo, meta)
+        let { image, hasChanged, error } =
+          yield this.checkPhoto(photo, meta.force)
 
         if (meta.force || hasChanged) {
           if (error != null) {
-            warn(`failed to open photo ${photo.id}`, { stack: error.stack })
+            warn({ stack: error.stack }, `failed to open photo ${photo.path}`)
 
-            // TODO Figure out where it is!
-
-            if (meta.prompt) {
-              this.isInteractive = true
-              const paths = yield call(open.images, {
-                properties: ['openFile']
-              })
-
-              image = (blank(paths)) ?
-                null :
-                yield call(Image.open, { path: paths[0] })
+            let path = yield this.resolve(photo)
+            if (path) {
+              image = yield call(Image.open, { path, page: photo.page })
             }
           }
 
           if (image != null) {
-            hasChanged = (image.checksum !== photo.checksum)
+            hasChanged = (image.checksum !== photo.checksum) ||
+              (image.path !== photo.path)
 
             if (meta.force || hasChanged) {
               yield* this.createThumbnails(photo.id, image, {
@@ -114,12 +163,9 @@ class Consolidate extends ImportCommand {
             }))
           }
         }
-      } catch (error) {
-        warn(`Failed to consolidate photo ${photo.id}`, {
-          stack: error.stack
-        })
-
-        fail(error, this.action.type)
+      } catch (e) {
+        warn({ stack: e.stack }, `failed to consolidate photo ${photo.id}`)
+        fail(e, this.action.type)
       }
 
       yield put(act.activity.update(this.action, { total, progress: i + 1 }))

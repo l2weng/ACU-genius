@@ -6,6 +6,7 @@ const { call, put, select } = require('redux-saga/effects')
 const { Command } = require('./command')
 const mod = require('../models')
 const act = require('../actions')
+const { Image } = require('../image/image')
 const { warn, info } = require('../common/log')
 const { prompt } = require('../dialog')
 
@@ -60,6 +61,12 @@ class ImportCommand extends Command {
     }
 
     return this.duplicateHandler
+  }
+
+  *checkPhoto(photo, force) {
+    let useLocalTimezone = false
+    return yield call(Image.check, photo, { force, useLocalTimezone })
+
   }
 
   *setDuplicateHandler(handler) {
