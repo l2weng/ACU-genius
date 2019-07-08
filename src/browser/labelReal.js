@@ -7,7 +7,7 @@ const {
   app, shell, ipcMain: ipc, BrowserWindow, systemPreferences: pref
 } = require('electron')
 
-const { info, warn } = require('../common/log')
+const { info, logger, warn } = require('../common/log')
 const { open, hasOverlayScrollBars } = require('./window')
 const { all } = require('bluebird')
 const { existsSync: exists } = require('fs')
@@ -65,21 +65,24 @@ class LabelReal extends EventEmitter {
     webgl: true,
     win: {},
     userInfo: {},
-    // apiServer: 'http://47.105.236.123:8098/lr',
-    apiServer: 'http://127.0.0.1:3000/lr',
+    apiServer: 'http://47.105.236.123:8098/lr',
+    // apiServer: 'http://127.0.0.1:3000/lr',
     projectsCache: {},
     zoom: 1.0
   }
 
-  constructor() {
+  constructor(opts = {}) {
     super()
 
-    if (LabelReal.instance) return LabelReal.instance
+    if (LabelReal.instance) { return LabelReal.instance }
+    if (!opts.data) { throw new Error('missing data folder') }
+
     LabelReal.instance = this
+
+    this.opts = opts
 
     this.menu = new AppMenu(this)
     this.ctx = new ContextMenu(this)
-
     this.updater = new Updater(this)
 
     prop(this, 'cache', {
@@ -911,7 +914,7 @@ class LabelReal extends EventEmitter {
 
   get hash() {
     return {
-      environment: ARGS.environment,
+      environment: process.env.NODE_ENV,
       debug: this.debug,
       dev: this.dev,
       home: app.getPath('userData'),
@@ -924,6 +927,7 @@ class LabelReal extends EventEmitter {
       theme: this.state.theme,
       locale: this.state.locale,
       log: this.log,
+      level: logger.level,
       uuid: this.state.uuid,
       update: this.updater.release,
       recent: this.state.recent,
@@ -998,19 +1002,15 @@ class LabelReal extends EventEmitter {
   }
 
   get dev() {
-    return channel === 'dev' || ARGS.environment === 'development'
+    return channel === 'dev' || process.env.NODE_ENV === 'development'
   }
 
   get log() {
     return join(app.getPath('logs'), 'labelreal.log')
   }
 
-  get isBuild() {
-    return ARGS.environment === 'production'
-  }
-
   get debug() {
-    return ARGS.debug || this.state.debug
+    return this.opts.debug || this.state.debug
   }
 
   get version() {

@@ -2,15 +2,21 @@
 
 const START = performance.now()
 
-const { home, dev } = require('./args').parse()
+const { dev } = require('./args').parse()
 
-const { info } = require('./common/log')
 const { ready } = require('./dom')
 
 ready.then(() => {
   const READY = performance.now()
   const INIT = Date.now()
-  const { win } = require('./window')
+  const opts = require('./args').parse()
+  const { Window } = require('./window')
+  const win = new Window(opts)
+  const { info } = require('./common/log')({
+    dest: opts.log,
+    level: opts.level,
+    name: win.type
+  })
   info(`initializing ${win.type} window...`)
   const LOAD = Date.now()
 

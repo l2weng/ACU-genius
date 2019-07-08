@@ -12,13 +12,12 @@ if (process.env.TROPY_RUN_UNIT_TESTS === 'true') {
   const opts = args.parse(process.argv.slice(1))
 
   process.env.NODE_ENV = opts.environment
-  global.ARGS = opts
 
   const { app, session }  = require('electron')
   const { extname, join } = require('path')
   const { sync: mkdir } = require('mkdirp')
   const { exe, qualified, version }  = require('../common/release')
-  const { linux, darwin } = require('../common/os')
+  const { linux, darwin, system } = require('../common/os')
 
   let USERDATA = opts.dir
   let LOGDIR
@@ -93,9 +92,14 @@ if (process.env.TROPY_RUN_UNIT_TESTS === 'true') {
       app.commandLine.appendSwitch('force-device-scale-factor', opts.scale)
     }
 
+    info({
+      opts,
+      version
+    }, `main.init ${version} ${system}`)
+
     info(`using ${app.getPath('userData')}`)
 
-    var labelReal = new (require('./labelReal'))()
+    var labelReal = new (require('./labelReal'))(opts)
 
     labelReal.listen()
     labelReal.restore()
