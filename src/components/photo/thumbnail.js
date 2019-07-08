@@ -42,9 +42,9 @@ class Thumbnail extends React.Component {
 
   static getRotation({ orientation, angle, mirror }) {
     return Rotation
-    .fromExifOrientation(orientation)
-    .add({ angle, mirror })
-    .format('x')
+      .fromExifOrientation(orientation)
+      .add({ angle, mirror })
+      .format('x')
   }
 
   get hasFallbackIcon() {
@@ -68,6 +68,7 @@ class Thumbnail extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <figure
         className="thumbnail"
@@ -77,11 +78,11 @@ class Thumbnail extends React.Component {
         onMouseDown={this.props.onMouseDown}>
         {this.hasFallbackIcon && <IconPhoto/>}
         {this.state.src &&
-        <img
-          className={`iiif rot-${this.state.rotation}`}
-          src={this.src}
-          onLoad={this.handleLoad}
-          onError={this.handleError}/>}
+          <img
+            className={`iiif rot-${this.state.rotation}`}
+            src={this.src}
+            onLoad={this.handleLoad}
+            onError={this.handleError}/>}
       </figure>
     )
   }

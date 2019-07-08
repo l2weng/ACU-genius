@@ -17,13 +17,13 @@ function logRotate(file, suffix = '.1') {
 }
 
 function log({
-               dest = 2,
-               level,
-               name = 'log',
-               rotate = false,
-               debug = process.env.TROPY_DEBUG,
-               trace = process.env.TROPY_TRACE
-             } = {}) {
+  dest = 2,
+  level,
+  name = 'log',
+  rotate = false,
+  debug = process.env.TROPY_DEBUG,
+  trace = process.env.TROPY_TRACE
+} = {}) {
 
   if (!level && trace) level = 'trace'
   if (!level && debug) level = 'debug'

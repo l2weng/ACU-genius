@@ -32,11 +32,12 @@ class CoverImage extends PureComponent {
 
   getPhotoProps() {
     return pick(get(this.props.photos, [this.cover]), [
-      'angle', 'mirror', 'mimetype', 'orientation', 'broken'
+      'angle', 'consolidated', 'mirror', 'mimetype', 'orientation', 'broken'
     ])
   }
 
   render() {
+    console.log(this.props)
     return (
       <div className="cover-image">
         {this.isStack && stack }
