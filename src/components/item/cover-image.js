@@ -37,7 +37,6 @@ class CoverImage extends PureComponent {
   }
 
   render() {
-    console.log(this.props)
     return (
       <div className="cover-image">
         {this.isStack && stack }

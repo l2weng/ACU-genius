@@ -68,7 +68,6 @@ class Thumbnail extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <figure
         className="thumbnail"

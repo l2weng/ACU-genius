@@ -44,7 +44,6 @@ function log({
   if (rotate && typeof dest === 'string') {
     logRotate(dest)
   }
-  console.log(':::::::::::',level)
   instance = pino({
     level,
     base: {
