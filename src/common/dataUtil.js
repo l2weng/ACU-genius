@@ -83,19 +83,6 @@ const dataUtil = {
     }
   },
 
-  getTaskColor(status = 0, lang = 'en') {
-    switch (status) {
-      case 0:
-        return '#7D8690'
-      case 1:
-        return '#f5a014'
-      case 2:
-        return '#108ee9'
-      case 3:
-        return '#1fe91d'
-    }
-  },
-
   getTaskStatusBadge(status = 0, lang = 'en') {
     switch (status) {
       case 0:
@@ -112,13 +99,13 @@ const dataUtil = {
   getTaskStatusTooltip(status = 0, lang = 'en') {
     switch (status) {
       case 0:
-        return '开始任务'
+        return '未开始'
       case 1:
-        return '提交任务'
+        return '进行中'
       case 2:
         return '任务审核中'
       case 3:
-        return '审核成功'
+        return '已完成'
     }
   },
 

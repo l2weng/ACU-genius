@@ -24,7 +24,22 @@ class Load extends Command {
     const isOwner = project.owner === userInfo.user.userId
     let listResult = {}
     if (isOwner) { listResult =  yield call(mod.all, db) } else { listResult = yield call(mod.loadMyList, db) }
-    yield put(sActions.loadFromCloud({ listResult: listResult }))
+    let syncTaskIds = []
+    for (const key of Object.keys(listResult)) {
+      if (listResult[key].syncTaskId != null) {
+        syncTaskIds.push(listResult[key].syncTaskId)
+      }
+    }
+    const cloudTasks = yield axios.post(`${ARGS.apiServer}/tasks/loadTasks`, { taskIds: syncTaskIds })
+    for (const key of Object.keys(listResult)) {
+      for (const cloudTask of cloudTasks.data.obj) {
+        if (listResult[key].syncTaskId === cloudTask.taskId) {
+          listResult[key].progress = cloudTask.progress
+          listResult[key].workStatus = cloudTask.workStatus
+        }
+      }
+    }
+    // yield put(sActions.loadFromCloud({ listResult: listResult }))
     return listResult
   }
 }

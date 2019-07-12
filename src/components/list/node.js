@@ -13,13 +13,11 @@ const { isValidImage } = require('../../image')
 const lazy = require('./tree')
 const cx = require('classnames')
 const { last, noop, restrict } = require('../../common/util')
-const { getTaskStatusBadge, getUrlFilterParams, getTaskStatusTooltip } = require('../../common/dataUtil')
-const { Tooltip, Icon, Avatar, Popconfirm, Badge } = require('antd')
-const axios = require('axios')
-const { apiServer } = ARGS
+const { getTaskStatusBadge, getTaskStatusTooltip } = require('../../common/dataUtil')
+const { Tooltip, Icon, Avatar, Badge } = require('antd')
 
 const {
-  arrayOf, bool, func, number, object, shape, string
+  arrayOf, bool, func, number, object, shape, string, array
 } = require('prop-types')
 
 const { INDENT, PADDING } = SASS.LIST
@@ -70,17 +68,10 @@ class ListNode extends React.PureComponent {
     offset: null,
     modalVisible: false,
     loading: false,
-    singleTaskStatus: 0,
     colleagues: []
   }
 
   componentDidMount() {
-    if (this.props.list.syncTaskId) {
-      const query = getUrlFilterParams({ id: this.props.list.syncTaskId }, ['id'])
-      axios.get(`${apiServer}/graphql?query={taskQueryById${query} { taskId type workStatus }} `).then(task=>{
-        this.setState({ singleTaskStatus: task.data.data.taskQueryById.workStatus })
-      })
-    }
     this.props.connectDragPreview(getEmptyImage())
   }
 
@@ -226,14 +217,6 @@ class ListNode extends React.PureComponent {
     })
   }
 
-  componentWillReceiveProps(props) {
-    if (this.props.list !== props.list &&
-      props.list.hasOwnProperty('workStatus')) {
-      this.setState({ singleTaskStatus: props.list.workStatus })
-    }
-  }
-
-
   renderAssign = (list) =>{
     const workers = list.workers
     let workerArray = []
@@ -265,14 +248,11 @@ class ListNode extends React.PureComponent {
   }
 
   renderTaskSubmit = (list) =>{
-    const { singleTaskStatus } = this.state
     return (
       <div>
-        <span style={{ paddingLeft: '5px', cursor: 'pointer' }}>
-          <Tooltip placement="top" title={getTaskStatusTooltip(singleTaskStatus)}>
-            {singleTaskStatus === 0 || singleTaskStatus === 1 ? <Popconfirm placement="right" title={getTaskStatusTooltip(singleTaskStatus)} onConfirm={()=>this.props.onSubmitTask(list, singleTaskStatus)} okText="Yes" cancelText="No">
-              <Badge status={getTaskStatusBadge(singleTaskStatus)} />
-            </Popconfirm> : <Badge status={getTaskStatusBadge(singleTaskStatus)} />}
+        <span>
+          <Tooltip placement="right" title={getTaskStatusTooltip(list.workStatus)}>
+            <Badge status={getTaskStatusBadge(list.workStatus)} />
           </Tooltip>
         </span>
       </div>)
@@ -333,6 +313,7 @@ class ListNode extends React.PureComponent {
     canDrop: bool,
     isOwner: bool.isRequired,
     depth: number.isRequired,
+
     expand: object.isRequired,
     project: object,
     isDragging: bool,
@@ -361,7 +342,6 @@ class ListNode extends React.PureComponent {
     onExpand: func.isRequired,
     onMove: func.isRequired,
     onAddWorkers: func.isRequired,
-    onSubmitTask: func.isRequired,
   }
 
   static defaultProps = {

@@ -221,15 +221,6 @@ class ProjectSidebar extends React.PureComponent {
     })
   }
 
-  handleSubmitTask = (list, currentStatus) => {
-    if (currentStatus === LIST.STATUS_OPEN) {
-      list.workStatus = LIST.STATUS_WORKING
-    } else if (currentStatus === LIST.STATUS_WORKING) {
-      list.workStatus = LIST.STATUS_COMPLETE
-    }
-    this.props.onSubmitTask(list)
-  }
-
   handleClick = () => {
     if (this.hasSelection || this.hasActiveFilters) {
       return this.handleSelect()
@@ -551,8 +542,6 @@ module.exports = {
       hold: getListHold(state),
       isLastImportSelected: state.nav.imports,
       isTrashSelected: state.nav.trash,
-      lists: state.lists,
-      list: state.nav.list,
       listwalk: getListSubTree(state, { root: root || LIST.ROOT }),
       project: state.project,
       tagSelection: state.nav.tags,
