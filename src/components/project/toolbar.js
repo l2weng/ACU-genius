@@ -3,13 +3,14 @@
 const React = require('react')
 const { PureComponent } = React
 const { FormattedMessage } = require('react-intl')
-const { bool, func, number, string } = require('prop-types')
+const { bool, func, number, string, object } = require('prop-types')
 const { Toolbar } = require('../toolbar')
-const { IconPlus, IconList, IconGrid, IconExport, IconPhotoResources } = require('../icons')
+const { IconPlus, IconList, IconGrid } = require('../icons')
 const { Slider } = require('../slider')
-const { Button: Abutton } = require('antd')
+const { Button: Abutton, Popconfirm } = require('antd')
 const { SearchField } = require('../search')
 const { Button } = require('../button')
+const { empty } = require('../../common/util')
 
 class ProjectToolbar extends PureComponent {
   get isEmpty() {
@@ -30,7 +31,13 @@ class ProjectToolbar extends PureComponent {
       onZoomChange,
       isDisplay,
       isOwner,
+      list,
+      lists
     } = this.props
+    let taskWorkStatus = 0
+    if (!empty(lists)) {
+      taskWorkStatus = lists[list].workStatus
+    }
 
     return (
       <Toolbar isDraggable={isDraggable} onDoubleClick={onDoubleClick}>
@@ -74,7 +81,9 @@ class ProjectToolbar extends PureComponent {
         </div>
         <div className="toolbar-right">
           <div className="tool-group">
-            <Abutton icon="play-circle" size="small" style={{ marginRight: 8 }}>Start Labelling</Abutton>
+            <Popconfirm placement="right" title="Confirm" onConfirm={()=>this.props.onSubmitTask(list)} okText="Yes" cancelText="No">
+              {taskWorkStatus !== 2 ? <Abutton icon="play-circle" size="small" style={{ marginRight: 8 }}>{taskWorkStatus === 0 ? 'Start Labelling' : 'Submit Task'}</Abutton> : ''}
+            </Popconfirm>
           </div>
           <SearchField
             query={query}
@@ -93,6 +102,8 @@ class ProjectToolbar extends PureComponent {
     query: string.isRequired,
     maxZoom: number.isRequired,
     zoom: number.isRequired,
+    list: number,
+    lists: object.isRequired,
     onDoubleClick: func,
     onItemCreate: func.isRequired,
     onDataSetsCreate: func.isRequired,
@@ -100,6 +111,7 @@ class ProjectToolbar extends PureComponent {
     onZoomChange: func.isRequired,
     isDisplay: bool,
     isOwner: bool,
+    onSubmitTask: func.isRequired
   }
 
   static defaultProps = {

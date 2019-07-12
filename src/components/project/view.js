@@ -3,12 +3,15 @@
 const React = require('react')
 const { Component } = React
 const { DropTarget } = require('react-dnd')
+const { connect: newConnect } = require('react-redux')
 const { NativeTypes } = require('react-dnd-electron-backend')
 const { ItemGrid, ItemTable } = require('../item')
 const { ProjectSidebar } = require('./sidebar')
 const { ProjectToolbar } = require('./toolbar')
 const { isValidImage } = require('../../image')
-const { pick, } = require('../../common/util')
+const { pick } = require('../../common/util')
+const actions = require('../../actions')
+const { LIST } = require('../../constants')
 const { array, bool, func, object, number } = require('prop-types')
 const { ITEM } = require('../../constants/sass')
 
@@ -50,6 +53,17 @@ class ProjectView extends Component {
     return this.props.onDataSetsCreate()
   }
 
+  handleSubmitTask = (listIdx) => {
+    const { lists } = this.props
+    const list = lists[listIdx]
+    if (list.workStatus === LIST.STATUS_OPEN) {
+      list.workStatus = LIST.STATUS_WORKING
+    } else if (list.workStatus === LIST.STATUS_WORKING) {
+      list.workStatus = LIST.STATUS_COMPLETE
+    }
+    this.props.onSubmitTask(list)
+  }
+
   handleSort = (sort) => {
     this.props.onSort({
       ...sort, list: this.props.nav.list || 0
@@ -72,7 +86,9 @@ class ProjectView extends Component {
       onItemCreate,
       onItemSelect,
       onSearch,
-      isOwner
+      isOwner,
+      lists,
+      list
     } = this.props
 
     const { size, maxZoom, ItemIterator, isEmpty } = this
@@ -93,6 +109,9 @@ class ProjectView extends Component {
                 isDisabled={!isActive}
                 isOwner={isOwner}
                 isDisplay
+                list={list}
+                lists={lists}
+                onSubmitTask={this.handleSubmitTask}
                 onItemCreate={this.handleItemImport}
                 onDataSetsCreate={this.handleDataSetsCreate}
                 onDoubleClick={ARGS.frameless ? onMaximize : null}
@@ -130,6 +149,8 @@ class ProjectView extends Component {
     isOwner: bool.isRequired,
     isOver: bool,
     items: array.isRequired,
+    list: number,
+    lists: object.isRequired,
     keymap: object.isRequired,
     nav: object.isRequired,
     offset: number.isRequired,
@@ -174,5 +195,16 @@ const collect = (connect, monitor) => ({
 })
 
 module.exports = {
-  ProjectView: DropTarget(NativeTypes.FILE, spec, collect)(ProjectView)
+  ProjectView: newConnect(
+    state => ({
+      lists: state.lists,
+      list: state.nav.list,
+    }),
+
+    (dispatch) => ({
+      onSubmitTask(...args) {
+        dispatch(actions.list.submitTask(...args))
+      }
+    })
+  )(DropTarget(NativeTypes.FILE, spec, collect)(ProjectView))
 }
