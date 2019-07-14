@@ -39,7 +39,7 @@ class Load extends Command {
         }
       }
     }
-    // yield put(sActions.loadFromCloud({ listResult: listResult }))
+    yield put(sActions.loadFromCloud({ listResult: listResult }))
     return listResult
   }
 }
