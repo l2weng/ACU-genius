@@ -28,7 +28,7 @@ class Create extends ImportCommand {
 
     let data = { selections: [selection.id] }
 
-    yield* this.createThumbnails(selection.id, image, { selection })
+    yield this.createThumbnails(selection.id, image, { selection })
 
     yield put(act.photo.selections.add({ id: photo.id, ...data }, { idx }))
 

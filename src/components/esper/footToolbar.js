@@ -3,7 +3,7 @@
 const React = require('react')
 const { PureComponent } = React
 const { Toolbar, ToolGroup } = require('../toolbar')
-const { Button, Icon } = require('antd')
+const { Button, Icon, Tooltip } = require('antd')
 const ButtonGroup = Button.Group
 const { func, object } = require('prop-types')
 const { emit } = require('../../dom')
@@ -30,6 +30,7 @@ class EsperFootToolbar extends PureComponent {
   }
 
   render() {
+    const { photo } = this.props
     return (
       <Toolbar isDraggable={false}>
         <div className="toolbar-center" style={{ margin: 'auto' }}>
@@ -48,15 +49,28 @@ class EsperFootToolbar extends PureComponent {
         </div>
         <div className="toolbar-right" style={{ opacity: 1 }}>
           <ToolGroup>
-            <ButtonGroup>
-              <Button type="primary" size="small" onClick={this.confirmPhoto}>
-                <Icon type="save" />
-              确认
-              </Button>
-              <Button type="danger" size="small" onClick={this.ignorePhoto}>
-              跳过
-              </Button>
-            </ButtonGroup>
+            {(photo && photo.syncPhotoId) ?
+              <ButtonGroup>
+                <Button type="primary" size="small" onClick={this.confirmPhoto}>
+                  <Icon type="save"/>
+                  提交
+                </Button>
+                <Button type="danger" size="small" onClick={this.ignorePhoto}>
+                  跳过
+                </Button>
+              </ButtonGroup> :
+              <Tooltip placement="top" title={'请先同步项目'}>
+                <ButtonGroup>
+                  <Button type="primary" size="small" onClick={this.confirmPhoto} disabled>
+                    <Icon type="save"/>
+                    提交
+                  </Button>
+                  <Button type="danger" size="small" onClick={this.ignorePhoto} disabled>
+                    跳过
+                  </Button>
+                </ButtonGroup>
+              </Tooltip>
+            }
           </ToolGroup>
         </div>
       </Toolbar>
