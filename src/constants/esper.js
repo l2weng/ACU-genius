@@ -40,8 +40,9 @@ module.exports = {
     }
   },
 
-  getSelectionColors(lineColor = '5c93e5') {
-    lineColor = lineColor.replace(/\#/g, '')
+  getSelectionColors(lineColor = '#5c93e5') {
+    if (!lineColor) lineColor = '#5c93e5'
+    else { lineColor = lineColor.replace(/\#/g, '') }
     return {
       mask: {
         line: [`0x${lineColor}`, 2],
