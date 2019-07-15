@@ -548,6 +548,7 @@ class EsperView extends Component {
   }
 
   handleSelectStop(wasCancelled) {
+    const { width: maskWidth, height: maskHeight } = this.image.overlay
     let { x, y, width, height } = this.drag.current.selection
 
     if (wasCancelled || !width || !height) return
@@ -562,12 +563,31 @@ class EsperView extends Component {
       y = y + height
       height = -height
     }
+    let newX = x
+    let newY = y
+    let newWidth = width
+    let newHeight = height
+
+    if (x < 0) {
+      newX = 0
+      newWidth = width + x
+    }
+    if (y < 0) {
+      newY = 0
+      newHeight = height + y
+    }
+    if ((x + width) > maskWidth) {
+      newWidth = maskWidth - x
+    }
+    if ((y + height) > maskHeight) {
+      newHeight = maskHeight - y
+    }
 
     this.props.onSelectionCreate({
-      x: round(x),
-      y: round(y),
-      width: round(width),
-      height: round(height),
+      x: round(newX),
+      y: round(newY),
+      width: round(newWidth),
+      height: round(newHeight),
       color: this.props.shapeColor
     })
   }
