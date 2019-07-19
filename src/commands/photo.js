@@ -8,7 +8,7 @@ const { ImportCommand } = require('./import')
 const { fail, open } = require('../dialog')
 const mod = require('../models')
 const act = require('../actions')
-const { PHOTO } = require('../constants')
+const { PHOTO, SELECTION } = require('../constants')
 const { Image: OldImage } = require('../image')
 const { Image } = require('../image/image')
 const { DuplicateError } = require('../common/error')
@@ -611,10 +611,10 @@ class LabelSync extends Command {
       labels.push(selections[i])
     }
     try {
-      const result  = yield axios.post(`${ARGS.apiServer}/labels/saveLabels`, { photoId: photo.syncPhotoId, labels, myTaskId: taskId })
+      const result  = yield axios.post(`${ARGS.apiServer}/labels/saveLabels`, { photoId: photo.syncPhotoId, labels, myTaskId: taskId, status: SELECTION.STATUS.NEW })
       if (result.status === 200) {
         const savedLabels = result.data.obj
-        yield call(mod.selection.update, db, photo.id, savedLabels[0].updatedTime)
+        yield call(mod.selection.update, db, photo.id, savedLabels)
         payload.photo.labelSynced = true
         let updatedPayload = {}
         updatedPayload[photo.id] = payload.photo

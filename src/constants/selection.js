@@ -15,5 +15,11 @@ module.exports = {
     REMOVE: 'selection.note.remove'
   },
 
+  STATUS: {
+    NEW: 0,
+    UPDATE: 1,
+    DELETE: 2,
+  },
+
   TEMPLATE: 'https://tropy.org/v1/templates/selection'
 }
