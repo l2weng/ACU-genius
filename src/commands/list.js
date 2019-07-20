@@ -39,7 +39,9 @@ class Load extends Command {
         }
       }
     }
-    yield put(sActions.loadFromCloud({ listResult: listResult }))
+    if (isOwner) {
+      yield put(sActions.loadFromCloud({ listResult: listResult }))
+    }
     return listResult
   }
 }

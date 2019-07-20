@@ -179,15 +179,15 @@ module.exports = {
       ),
 
       db.each(`
-        SELECT id AS selection, labelId AS label, updatedTime AS updatedT,x AS x, y AS y, photo_id AS id
+        SELECT id AS selection, labelId AS label, status, updatedTime AS updatedT,x AS x, y AS y, photo_id AS id
           FROM selections
             LEFT OUTER JOIN trash USING (id)
           WHERE ${ids != null ? `photo_id IN (${ids}) AND` : ''}
             deleted IS NULL
           ORDER BY photo_id, position`,
-        ({ selection, label, id, updatedT, x, y }) => {
+        ({ selection, label, id, updatedT, x, y, status }) => {
           if (id in photos) {
-            labelObj[label] = { updatedTime: updatedT, x: x, y: y }
+            labelObj[label] = { status,  updatedTime: updatedT, x: x, y: y }
             photos[id].labels = (labelObj)
             photos[id].selections.push(selection)
           } else photos[id] = skel(id, [selection])

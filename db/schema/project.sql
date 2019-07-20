@@ -197,6 +197,7 @@ CREATE TABLE selections (
   x         NUMERIC  NOT NULL DEFAULT 0,
   y         NUMERIC  NOT NULL DEFAULT 0,
   position  INTEGER,
+  status  INTEGER,
   labelId   TEXT,
   color   TEXT,
   updatedTime INTEGER

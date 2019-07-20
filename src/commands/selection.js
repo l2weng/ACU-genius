@@ -48,17 +48,23 @@ class Sync extends Command {
     const { payload } = this.action
     const { labels, photo } = payload
     const idx = yield select(state => state.photos[photo.id].selections.length)
-    const existedLabels = yield select(state => state.photos[photo.id])
-    const labelObjs = existedLabels.labels
+    const originalPhoto = yield select(state => state.photos[photo.id])
+    console.log(originalPhoto)
+    const originalLabels = originalPhoto.labels
     let syncedSelections = []
     for (let i = 0; i < labels.length; i++) {
       let isNew = false
-      const label = labels[i]
-      if (!labelObjs.hasOwnProperty(label.labelId)) {
-        isNew = true
-      } else {
-        if (labelObjs[label.labelId].updatedTime !== label.updatedTime) {
-          // console.log(yield select(state => state.photos[photo.id].selections)
+      const cloudLabel = labels[i]
+      if (!originalLabels.hasOwnProperty(cloudLabel.labelId)) {
+        if (cloudLabel.status === SELECTION.STATUS.NEW) {
+          isNew = true
+        }
+      } else if (originalLabels[cloudLabel.labelId].updatedTime !==
+        cloudLabel.updatedTime) {
+        //todo update selection with cloud label includes two kinds of: 1. update, 2. remove
+        if (cloudLabel.status === SELECTION.STATUS.DELETE) {
+          const data = { selections: originalPhoto.selections }
+          act.selection.delete({ photo: photo.id, ...data }, { idx })
         }
       }
       if (isNew) {
@@ -66,12 +72,13 @@ class Sync extends Command {
           angle: photo.angle,
           mirror: photo.mirror,
           photo: photo.id,
-          width: label.width,
-          height: label.height,
-          x: label.x,
-          y: label.y,
-          updatedTime: label.updatedTime,
-          labelId: label.labelId
+          width: cloudLabel.width,
+          height: cloudLabel.height,
+          x: cloudLabel.x,
+          y: cloudLabel.y,
+          status: cloudLabel.status,
+          updatedTime: cloudLabel.updatedTime,
+          labelId: cloudLabel.labelId
         }
         const selection = yield call(db.transaction, tx =>
           mod.selection.create(tx, null, nPayload))
@@ -105,7 +112,7 @@ class Delete extends Command {
 
     yield put(act.photo.selections.remove({ id: photo, selections }))
 
-    this.undo = act.selection.restore(payload, { idx })
+    // this.undo = act.selection.restore(payload, { idx })
   }
 }
 

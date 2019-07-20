@@ -18,6 +18,7 @@ const mod = {
               photo_id AS photo,
               x,
               y,
+              status,
               width,
               height,
               angle,

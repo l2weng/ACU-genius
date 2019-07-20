@@ -49,7 +49,7 @@ module.exports = {
     }
   },
 
-  loadFromCloud(payload,meta) {
+  loadFromCloud(payload, meta) {
     return {
       type: SELECTION.LOAD_FROM_CLOUD,
       payload,
