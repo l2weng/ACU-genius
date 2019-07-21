@@ -40,7 +40,7 @@ class Create extends ImportCommand {
 }
 
 
-class Sync extends Command {
+class Sync extends ImportCommand {
   static get ACTION() { return SELECTION.SYNC }
 
   *exec() {
@@ -54,6 +54,7 @@ class Sync extends Command {
     for (let i = 0; i < labels.length; i++) {
       let isNew = false
       const cloudLabel = labels[i]
+      console.log(originalLabels.hasOwnProperty(cloudLabel.labelId))
       if (!originalLabels.hasOwnProperty(cloudLabel.labelId)) {
         if (cloudLabel.status === SELECTION.STATUS.NEW) {
           isNew = true
@@ -82,6 +83,9 @@ class Sync extends Command {
         }
         const selection = yield call(db.transaction, tx =>
           mod.selection.create(tx, null, nPayload))
+
+        let image = yield call(Image.open, originalPhoto)
+        yield this.createThumbnails(selection.id, image, { selection })
         const existedPhoto = selection.photo
         const selections = [selection.id]
         yield put(act.photo.selections.add({ id: existedPhoto, selections }, { idx }))
@@ -130,7 +134,6 @@ class Load extends Command {
 
     const selections = yield call(db.seq, conn =>
       mod.selection.load(conn, payload))
-
     return selections
   }
 }
