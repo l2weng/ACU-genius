@@ -102,13 +102,12 @@ class Delete extends Command {
 
     let ord = yield select(({ photos }) => photos[photo].selections)
 
-    // let idx = selections.map(id => ord.indexOf(id))
+    let idx = selections.map(id => ord.indexOf(id))
 
     ord = ord.filter(id => !selections.includes(id))
 
     yield call(db.transaction, async tx => {
       const selection = await mod.selection.loadOne(tx, ...selections)
-      console.log(selection)
       if (selection.status !== null) {
         await axios.post(`${ARGS.apiServer}/labels/remove`, { labelId: selection.labelId })
       }
@@ -118,7 +117,7 @@ class Delete extends Command {
 
     yield put(act.photo.selections.remove({ id: photo, selections }))
 
-    // this.undo = act.selection.restore(payload, { idx })
+    this.undo = act.selection.restore(payload, { idx })
   }
 }
 
@@ -202,6 +201,10 @@ class Restore extends Command {
     ord = splice(ord, idx, 0, ...selections)
 
     yield call(db.transaction, async tx => {
+      const selection = await mod.selection.loadOne(tx, ...selections)
+      if (selection.status !== null) {
+        await axios.post(`${ARGS.apiServer}/labels/revert`, { labelId: selection.labelId, status:selection.status })
+      }
       await mod.selection.restore(tx, ...selections)
       await mod.selection.order(tx, photo, ord)
     })
