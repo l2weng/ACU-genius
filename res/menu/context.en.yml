@@ -130,7 +130,7 @@ en:
       - label: 'Delete Selected Items'
         command: 'app:delete-item'
     item-list: &item-list
-      - label: 'Remove Item From List'
+      - label: 'Remove Item From Task'
         command: 'app:list-item-remove'
     item-bulk-list: &item-bulk-list
       - label: 'Remove Selected Items From List'

@@ -310,9 +310,9 @@ de:
       create: Create List
       delete: Delete List
       item:
-        add: Add Items To List
+        add: Add Items To Task
         merge: Merge Items
-        remove: Remove Item From List
+        remove: Remove Item From Task
         restore: Add Item To List
       order: Sort List
       restore: Restore List

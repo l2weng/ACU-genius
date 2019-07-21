@@ -12,7 +12,7 @@ const { Meta } = Card
 const _ = require('underscore')
 const { userInfo } = ARGS
 const actions = require('../../actions')
-const { func, object, array, string  } = require('prop-types')
+const { func, object, array, bool, string  } = require('prop-types')
 const { HEAD, LIST } = require('../../constants')
 const { resolve, join } = require('path')
 const staticRoot = resolve(__dirname, '../../../', 'static')
@@ -104,7 +104,7 @@ class Workplace extends PureComponent {
   }
 
   render() {
-    const { projects, tasks } = this.props
+    const { projects, tasks, isOwner } = this.props
 
     return (
       <div>
@@ -158,11 +158,14 @@ class Workplace extends PureComponent {
               title="进行中的任务"
               extra={
                 <div>
-                  <RadioGroup defaultValue={HEAD.MY_TASKS} onChange={this.onTaskSwitch}>
+                  {isOwner ? <RadioGroup defaultValue={HEAD.MY_TASKS} onChange={this.onTaskSwitch}>
                     <RadioButton key={HEAD.MY_TASKS} value={HEAD.MY_TASKS}>我的任务</RadioButton>
                     <RadioButton key={HEAD.JOINED_TASKS} value={HEAD.JOINED_TASKS}>参与的任务</RadioButton>
-                  </RadioGroup>
-                  <Search className="extraContentSearch" placeholder="请输入" onSearch={() => ({})} />
+                  </RadioGroup> : <RadioGroup defaultValue={HEAD.MY_TASKS} onChange={this.onTaskSwitch}>
+                    <RadioButton key={HEAD.JOINED_TASKS} value={HEAD.JOINED_TASKS}>参与的任务</RadioButton>
+                    <RadioButton key={HEAD.MY_TASKS} value={HEAD.MY_TASKS}>我的任务</RadioButton>
+                  </RadioGroup>}
+                  {/*<Search className="extraContentSearch" placeholder="请输入" onSearch={() => ({})} />*/}
                 </div>
               }>
               <TasksTable tasks={tasks} openProjectById={this.openProjectById}
@@ -185,6 +188,7 @@ class Workplace extends PureComponent {
     project: object,
     projects: array,
     tasks: array,
+    isOwner: bool,
     currentTaskType: string,
   }
 }

@@ -83,6 +83,10 @@ class ColleagueTable extends React.Component {
     this.setState({ selectedUserIds: selectedRowKeys })
   }
 
+  pickUser = (userId) =>{
+    this.props.handleAssign([userId])
+  }
+
   render() {
     const columns = [
       {
@@ -95,34 +99,43 @@ class ColleagueTable extends React.Component {
         title: '邮箱',
         dataIndex: 'email',
         key: 'email',
-        width: '40%',
+        width: '35%',
         ...this.getColumnSearchProps('email'),
       }, {
         title: '级别',
         key: 'level',
         width: '15%',
+      }, {
+        title: '操作',
+        key: 'action',
+        width: '15%',
+        render: (text, record) => (
+          <span>
+            <a href="javascript:;" onClick={()=>this.pickUser(record.userId)}>分配</a>
+          </span>
+        ),
       }]
-    const { loading, selectedUserIds } = this.state
-    const rowSelection = {
-      selectedRowKeys: selectedUserIds,
-      onChange: this.onSelectChange,
-    }
-    const hasSelected = selectedUserIds.length > 0
+    // const { loading, selectedUserIds } = this.state
+    // const rowSelection = {
+    //   selectedRowKeys: selectedUserIds,
+    //   onChange: this.onSelectChange,
+    // }
+    // const hasSelected = selectedUserIds.length > 0
     return (
       <div>
         <div style={{ marginBottom: 16 }}>
-          <Button
-            type="primary"
-            onClick={this.assignWork}
-            disabled={!hasSelected}
-            loading={loading}>
-          分配
-          </Button>
-          <span style={{ marginLeft: 8 }}>
-            {hasSelected ? `Selected ${selectedUserIds.length} users` : ''}
-          </span>
+          {/*<Button*/}
+          {/*  type="primary"*/}
+          {/*  onClick={this.assignWork}*/}
+          {/*  disabled={!hasSelected}*/}
+          {/*  loading={loading}>*/}
+          {/*分配*/}
+          {/*</Button>*/}
+          {/*<span style={{ marginLeft: 8 }}>*/}
+          {/*  {hasSelected ? `Selected ${selectedUserIds.length} users` : ''}*/}
+          {/*</span>*/}
         </div>
-        <Table rowSelection={rowSelection} columns={columns} dataSource={this.props.data}/>
+        <Table columns={columns} dataSource={this.props.data}/>
       </div>
     )
   }
