@@ -54,7 +54,6 @@ class Sync extends ImportCommand {
     for (let i = 0; i < labels.length; i++) {
       let isNew = false
       const cloudLabel = labels[i]
-      console.log(originalLabels.hasOwnProperty(cloudLabel.labelId))
       if (!originalLabels.hasOwnProperty(cloudLabel.labelId)) {
         if (cloudLabel.status === SELECTION.STATUS.NEW) {
           isNew = true

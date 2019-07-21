@@ -85,11 +85,11 @@ class AppPrefs extends PureComponent {
               name="invertZoom"
               value={this.props.settings.invertZoom}
               onChange={this.props.onSettingsUpdate}/>
-            <Toggle
-              id="prefs.app.ui.option.overlayToolbars"
-              name="overlayToolbars"
-              value={this.props.settings.overlayToolbars}
-              onChange={this.props.onSettingsUpdate}/>
+            {/*<Toggle*/}
+            {/*  id="prefs.app.ui.option.overlayToolbars"*/}
+            {/*  name="overlayToolbars"*/}
+            {/*  value={this.props.settings.overlayToolbars}*/}
+            {/*  onChange={this.props.onSettingsUpdate}/>*/}
           </FormElement>
           <FormToggleGroup
             id="prefs.app.zoomMode"

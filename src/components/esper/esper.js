@@ -130,7 +130,7 @@ class Esper extends PureComponent {
 
   get classes() {
     return ['esper', this.state.tool, {
-      'overlay-mode': this.props.hasOverlayToolbar,
+      'overlay-mode': false,
       'panel-visible': this.props.isPanelVisible,
       'tab-focus': this.state.hasTabFocus,
       'nested-focus': this.state.hasNestedFocus
