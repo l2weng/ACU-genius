@@ -49,7 +49,6 @@ class Sync extends Command {
     const { labels, photo } = payload
     const idx = yield select(state => state.photos[photo.id].selections.length)
     const originalPhoto = yield select(state => state.photos[photo.id])
-    console.log(originalPhoto)
     const originalLabels = originalPhoto.labels
     let syncedSelections = []
     for (let i = 0; i < labels.length; i++) {
@@ -77,6 +76,7 @@ class Sync extends Command {
           x: cloudLabel.x,
           y: cloudLabel.y,
           status: cloudLabel.status,
+          color: cloudLabel.color,
           updatedTime: cloudLabel.updatedTime,
           labelId: cloudLabel.labelId
         }
@@ -203,7 +203,7 @@ class Restore extends Command {
     yield call(db.transaction, async tx => {
       const selection = await mod.selection.loadOne(tx, ...selections)
       if (selection.status !== null) {
-        await axios.post(`${ARGS.apiServer}/labels/revert`, { labelId: selection.labelId, status:selection.status })
+        await axios.post(`${ARGS.apiServer}/labels/revert`, { labelId: selection.labelId, status: selection.status })
       }
       await mod.selection.restore(tx, ...selections)
       await mod.selection.order(tx, photo, ord)
