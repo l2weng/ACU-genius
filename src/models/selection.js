@@ -112,6 +112,12 @@ const mod = {
           VALUES ${ids.map(id => `(${id})`).join(',')}`)
     },
 
+    async loadOne(db, ...ids) {
+      return db.get(
+        `SELECT id,labelId,status FROM selections where id=${ids}`
+      )
+    },
+
     async restore(db, ...ids) {
       return db.run(`
         DELETE FROM trash WHERE id IN (${list(ids)})`

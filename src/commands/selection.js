@@ -101,11 +101,17 @@ class Delete extends Command {
     let { photo, selections } = payload
 
     let ord = yield select(({ photos }) => photos[photo].selections)
-    let idx = selections.map(id => ord.indexOf(id))
+
+    // let idx = selections.map(id => ord.indexOf(id))
 
     ord = ord.filter(id => !selections.includes(id))
 
     yield call(db.transaction, async tx => {
+      const selection = await mod.selection.loadOne(tx, ...selections)
+      console.log(selection)
+      if (selection.status !== null) {
+        await axios.post(`${ARGS.apiServer}/labels/remove`, { labelId: selection.labelId })
+      }
       await mod.selection.delete(tx, ...selections)
       await mod.selection.order(tx, photo, ord)
     })
