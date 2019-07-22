@@ -13,10 +13,10 @@ if (process.env.TROPY_RUN_UNIT_TESTS === 'true') {
 
   process.env.NODE_ENV = opts.environment
 
-  const { app, session }  = require('electron')
+  const { app, session } = require('electron')
   const { extname, join } = require('path')
   const { sync: mkdir } = require('mkdirp')
-  const { exe, qualified, version }  = require('../common/release')
+  const { exe, qualified, version } = require('../common/release')
   const { linux, darwin, system } = require('../common/os')
 
   let USERDATA = opts.dir
@@ -49,32 +49,30 @@ if (process.env.TROPY_RUN_UNIT_TESTS === 'true') {
 
     if (opts.cache === opts.data) { opts.cache = join(opts.data, 'cache') }
   }
+  console.log(opts.cache)
   mkdir(opts.cache)
   app.setPath('userCache', opts.cache)
 
   if (!opts.logs) {
     try {
-      opts.logs = join(app.getPath('logs', '..', exe))
+      opts.logs = join(app.getPath('logs', exe))
     } catch (_) {
       opts.logs = join(opts.data, 'log')
     }
   }
+  console.log(opts.logs)
   mkdir(opts.logs)
   app.setPath('logs', opts.logs)
-  if (USERDATA) {
-    app.setPath('userData', USERDATA)
-    LOGDIR = join(USERDATA, 'log')
-  }
 
   if (!require('./squirrel')()) {
-    const { all }  = require('bluebird')
+    const { all } = require('bluebird')
     const { once } = require('../common/util')
     const { info, warn } = require('../common/log')({
       dest: join(opts.logs, 'labelreal.log'),
       name: 'main',
       rotate: true,
       debug: opts.debug,
-      trace: opts.trace
+      trace: opts.trace,
     })
 
     if (opts.environment !== 'test') {
@@ -94,7 +92,7 @@ if (process.env.TROPY_RUN_UNIT_TESTS === 'true') {
 
     info({
       opts,
-      version
+      version,
     }, `main.init ${version} ${system}`)
 
     info(`using ${app.getPath('userData')}`)
@@ -127,7 +125,7 @@ if (process.env.TROPY_RUN_UNIT_TESTS === 'true') {
 
     all([
       once(app, 'ready'),
-      once(labelReal, 'app:restored')
+      once(labelReal, 'app:restored'),
 
     ]).then(() => {
       // require('./server')
@@ -136,12 +134,12 @@ if (process.env.TROPY_RUN_UNIT_TESTS === 'true') {
           responseHeaders: {
             ...res.responseHeaders,
             'Content-Security-Policy': [
-              "default-src 'none'",
-              "base-uri 'none'",
-              "form-action 'none'",
-              "frame-ancestors 'none'"
-            ].join('; ')
-          }
+              'default-src \'none\'',
+              'base-uri \'none\'',
+              'form-action \'none\'',
+              'frame-ancestors \'none\'',
+            ].join('; '),
+          },
         })
       })
 
