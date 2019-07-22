@@ -8,7 +8,7 @@ const act = require('../actions')
 const fs = require('fs')
 const axios = require('axios')
 const { getUrlFilterParams, getNewOOSClient } = require('../common/dataUtil')
-const { join } = require('path')
+const { join, basename } = require('path')
 const { apiServer } = ARGS
 const { error } = require('../common/log')
 const args = require('../args')
@@ -42,9 +42,10 @@ class LoadProjects extends Command {
                   if (err) throw err
                 })
               }
-              newPath = join(newPath, `${project.syncProjectFileName}.lbr`)
+              newPath = join(newPath, basename(project.projectFile))
+              console.log(newPath)
               if (!fs.existsSync(newPath) || projectsCache[project.projectId] !== project.syncVersion) {
-                yield client.get(project.localProjectId, newPath)
+                yield client.get(basename(project.projectFile, '.lbr'), newPath)
                 projectsCache[project.projectId] = project.syncVersion
                 args.update({ ...projectsCache })
                 yield put(act.project.cacheProjects(projectsCache))

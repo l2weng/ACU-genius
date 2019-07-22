@@ -12,7 +12,7 @@ const { open, hasOverlayScrollBars } = require('./window')
 const { all } = require('bluebird')
 const { existsSync: exists } = require('fs')
 const fs = require('fs')
-const { join } = require('path')
+const { join, basename } = require('path')
 const { into, compose, remove, take } = require('transducers.js')
 const rm = require('rimraf')
 const uuid = require('uuid/v1')
@@ -139,7 +139,7 @@ class LabelReal extends EventEmitter {
             if (err) throw err
           })
         }
-        newPath = join(newPath, `${project.syncProjectFileName}.lbr`)
+        newPath = join(newPath, basename(project.projectFile))
         //if project file is his own
         if (fs.existsSync(project.projectFile)) {
           //未同步
