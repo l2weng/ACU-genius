@@ -7,12 +7,13 @@ const { connect } = require('react-redux')
 const { Steps } = require('../steps')
 const { Toolbar } = require('../toolbar')
 const { ProjectStep } = require('./project')
-const { join } = require('path')
+const { join, dirname, resolve } = require('path')
 const actions = require('../../actions')
 const sanitize = require('sanitize-filename')
 const { blank } = require('../../common/util')
 const { existsSync: exists } = require('fs')
 const { userInfo } = ARGS
+const uuid = require('uuid/v4')
 
 class WizardContainer extends PureComponent {
   get hasDefaultFilename() {
@@ -32,6 +33,8 @@ class WizardContainer extends PureComponent {
   }
 
   handleComplete = () => {
+    const { file } = this.props.project
+    this.props.project.file = resolve(dirname(file), `${uuid()}.lbr`)
     this.props.onComplete({ ...this.props.project, owner: userInfo.user.userId }, { truncate: true })
   }
 

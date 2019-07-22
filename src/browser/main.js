@@ -49,7 +49,6 @@ if (process.env.TROPY_RUN_UNIT_TESTS === 'true') {
 
     if (opts.cache === opts.data) { opts.cache = join(opts.data, 'cache') }
   }
-  console.log(opts.cache)
   mkdir(opts.cache)
   app.setPath('userCache', opts.cache)
 
@@ -60,7 +59,6 @@ if (process.env.TROPY_RUN_UNIT_TESTS === 'true') {
       opts.logs = join(opts.data, 'log')
     }
   }
-  console.log(opts.logs)
   mkdir(opts.logs)
   app.setPath('logs', opts.logs)
 

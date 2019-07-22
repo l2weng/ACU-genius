@@ -27,7 +27,7 @@ module.exports = {
 
         if (meta.truncate) await rm(file)
         file = await Database.create(file, create, { name, base, owner })
-        ipc.send(PROJECT.CREATED, { file })
+        ipc.send(PROJECT.CREATED, { file, name })
 
       } catch (error) {
         warn(`failed to create project: ${error.message}`)

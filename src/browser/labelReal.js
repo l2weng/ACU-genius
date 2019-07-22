@@ -839,12 +839,13 @@ class LabelReal extends EventEmitter {
       this.showWizard()
     })
 
-    ipc.on(PROJECT.CREATED, async (_, { file }) => {
+    ipc.on(PROJECT.CREATED, async (_, { file, name }) => {
       let { userInfo, apiServer } = this.state
       await axios.post(`${apiServer}/projects/create`, {
         userId: __.isEmpty(userInfo) ? '' : userInfo.user.userId,
         machineId: machineIdSync({ original: true }),
         projectFile: file,
+        name,
       }).then(function () {
         info('sync new project to cloud')
       }).catch(function (error) {

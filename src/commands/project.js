@@ -1,7 +1,7 @@
 'use strict'
 
 const { call, put, select, all } = require('redux-saga/effects')
-const { dirname, resolve, join } = require('path')
+const { dirname, resolve, join, basename } = require('path')
 const fs = require('fs')
 const { Command } = require('./command')
 const { PROJECT } = require('../constants')
@@ -74,7 +74,7 @@ class Sync extends Command {
       if (fs.existsSync(project.file)) {
         syncProjectSize = getFilesizeInBytes(project.file)
       }
-      let result = yield client.put(project.id, project.file)
+      let result = yield client.put(basename(project.file, '.lbr'), project.file)
       const firstPhoto = yield call(mod.photo.loadOnePhoto, db)
 
       let syncCover = ''
