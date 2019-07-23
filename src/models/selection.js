@@ -118,6 +118,19 @@ const mod = {
       )
     },
 
+    async loadSome(db, ...ids) {
+      let selections = {}
+      await all([
+        db.each(
+        `SELECT id,labelId,status,updatedTime FROM selections WHERE id in (${ids.join(',')})`,
+        ({ id, labelId, status, updatedTime }) => {
+          selections[labelId] = { id, status, updatedTime }
+        }
+      )
+      ])
+      return selections
+    },
+
     async restore(db, ...ids) {
       return db.run(`
         DELETE FROM trash WHERE id IN (${list(ids)})`

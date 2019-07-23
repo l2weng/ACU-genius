@@ -93,6 +93,18 @@ const util = {
     }
   },
 
+  bulkObj: {
+    update(state, payload, meta = {}) {
+      if (!isArray(payload)) return util.merge(state, payload)
+
+      const [ids, data] = payload
+
+      return into({ ...state }, map(id => ({
+        [id]: meta.replace ? data : { ...state[id], ...data[id] }
+      })), ids)
+    }
+  },
+
   pending(state, payload) {
     if (payload == null || payload.length === 0) return state
 

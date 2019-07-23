@@ -47,10 +47,12 @@ class Sync extends ImportCommand {
     const { db } = this.options
     const { payload } = this.action
     const { labels, photo } = payload
-    const idx = yield select(state => state.photos[photo.id].selections.length)
+    const oSelections = yield select(state => state.photos[photo.id].selections)
+    const idx = oSelections.length
     const originalPhoto = yield select(state => state.photos[photo.id])
-    const originalLabels = originalPhoto.labels
-    let syncedSelections = []
+    const originalLabels = yield call(mod.selection.loadSome, db, oSelections )
+    let selections = []
+    let selectResult = {}
     for (let i = 0; i < labels.length; i++) {
       let isNew = false
       const cloudLabel = labels[i]
@@ -86,12 +88,16 @@ class Sync extends ImportCommand {
         let image = yield call(Image.open, originalPhoto)
         yield this.createThumbnails(selection.id, image, { selection })
         const existedPhoto = selection.photo
-        const selections = [selection.id]
-        yield put(act.photo.selections.add({ id: existedPhoto, selections }, { idx }))
-        syncedSelections.push(selection)
+        let photoSelections = [selection.id]
+        yield put(act.photo.selections.add(
+          { id: existedPhoto, selections: photoSelections }, { idx }))
+        selections.push(selection)
+        selectResult[selection.id] = selection
       }
     }
-    return syncedSelections
+    const ids = selections.map(selection => selection.id)
+    console.log([ids, selectResult])
+    return [ids, selectResult]
   }
 }
 

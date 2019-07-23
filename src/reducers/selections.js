@@ -1,7 +1,7 @@
 'use strict'
 
 const { METADATA, SELECTION, PROJECT } = require('../constants')
-const { insert, nested, replace, touch, update } = require('./util')
+const { insert, nested, replace, touch, bulkObj } = require('./util')
 
 module.exports = {
   // eslint-disable-next-line complexity
@@ -13,7 +13,11 @@ module.exports = {
       case SELECTION.LOAD:
         return (error || !meta.done) ? state : replace(state, payload)
       case SELECTION.SYNC:
-        return (error || !meta.done) ? state : update(state, payload)
+        if (error || !meta.done) {
+          return state
+        }  else {
+          return bulkObj.update(state, payload, meta)
+        }
       case SELECTION.CREATE:
         return (error || !meta.done) ? state : insert(state, payload)
       case SELECTION.SAVE:

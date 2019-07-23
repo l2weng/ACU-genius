@@ -45,6 +45,7 @@ module.exports = {
         return nested.remove('selections', state, payload, meta)
 
       case PHOTO.BULK.UPDATE:
+        console.log(payload)
         return bulk.update(state, payload, meta)
 
       case METADATA.SAVE:
