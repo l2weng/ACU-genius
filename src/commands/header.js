@@ -8,7 +8,7 @@ const act = require('../actions')
 const fs = require('fs')
 const axios = require('axios')
 const { getUrlFilterParams, getNewOOSClient } = require('../common/dataUtil')
-const { join, basename } = require('path')
+const { join, basename, win32 } = require('path')
 const { apiServer } = ARGS
 const { error } = require('../common/log')
 const args = require('../args')
@@ -26,7 +26,7 @@ class LoadProjects extends Command {
     let projects = []
     try {
       let response = yield axios.get(
-        `${apiServer}/graphql?query={projectQueryByUser${query} { projectId name desc deadline projectFile type progress cover itemCount syncStatus syncCover remoteProjectFile localProjectId syncProjectFileName syncProjectFile syncProjectSize syncVersion isOwner } } `)
+        `${apiServer}/graphql?query={projectQueryByUser${query} { projectId name desc deadline projectFile type progress cover itemCount syncStatus syncCover remoteProjectFile localProjectId syncProjectFileName syncProjectFile syncProjectSize syncVersion isOwner fileUuid } } `)
       if (response.status === 200) {
         projects = response.data.data.projectQueryByUser
         const app = remote.app
@@ -42,10 +42,9 @@ class LoadProjects extends Command {
                   if (err) throw err
                 })
               }
-              newPath = join(newPath, basename(project.projectFile))
-              console.log(newPath)
+              newPath = join(newPath, `${project.fileUuid}.lbr`)
               if (!fs.existsSync(newPath) || projectsCache[project.projectId] !== project.syncVersion) {
-                yield client.get(basename(project.projectFile, '.lbr'), newPath)
+                yield client.get(project.fileUuid, newPath)
                 projectsCache[project.projectId] = project.syncVersion
                 args.update({ ...projectsCache })
                 yield put(act.project.cacheProjects(projectsCache))
