@@ -65,8 +65,8 @@ class LabelReal extends EventEmitter {
     webgl: true,
     win: {},
     userInfo: {},
-    apiServer: 'http://47.105.236.123:8098/lr',
-    // apiServer: 'http://127.0.0.1:3000/lr',
+    // apiServer: 'http://47.105.236.123:8098/lr',
+    apiServer: 'http://127.0.0.1:3000/lr',
     projectsCache: {},
     zoom: 1.0
   }
@@ -150,7 +150,7 @@ class LabelReal extends EventEmitter {
           const response = await axios.post(`${apiServer}/graphql?query={projectQueryById${query} { syncVersion }}`).catch(err=>{ warn(err) })
           const freshProject = response.data.data
           if (freshProject.projectQueryById.syncVersion !== project.syncVersion) {
-            let result = await client.get(project.localProjectId, newPath)
+            let result = await client.get(project.fileUuid, newPath)
             if (result.res.status === 200) {
               return this.open(newPath)
             }
@@ -159,7 +159,7 @@ class LabelReal extends EventEmitter {
           }
         } else {
           if (!fs.existsSync(newPath)) {
-            let result = await client.get(project.localProjectId, newPath)
+            let result = await client.get(project.fileUuid, newPath)
             if (result.res.status === 200) {
               return this.open(newPath)
             }
