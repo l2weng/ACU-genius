@@ -3,6 +3,7 @@
 module.exports = {
   CREATE: 'selection.create',
   DELETE: 'selection.delete',
+  SYNC_DELETE: 'selection.syncDelete',
   LOAD: 'selection.load',
   ORDER: 'selection.order',
   RESTORE: 'selection.restore',

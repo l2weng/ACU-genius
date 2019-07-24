@@ -64,8 +64,7 @@ class Sync extends ImportCommand {
         cloudLabel.updatedTime) {
         //todo update selection with cloud label includes two kinds of: 1. update, 2. remove
         if (cloudLabel.status === SELECTION.STATUS.DELETE) {
-          const data = { selections: originalPhoto.selections }
-          act.selection.delete({ photo: photo.id, ...data }, { idx })
+          yield put(act.selection.syncDelete({ photo: photo.id, selections:[originalLabels[cloudLabel.labelId].id] }, { idx }))
         }
       }
       if (isNew) {
@@ -109,6 +108,7 @@ class Delete extends Command {
     let { payload } = this.action
     let { photo, selections } = payload
 
+    console.log(photo, selections)
     let ord = yield select(({ photos }) => photos[photo].selections)
 
     let idx = selections.map(id => ord.indexOf(id))
@@ -127,6 +127,28 @@ class Delete extends Command {
     yield put(act.photo.selections.remove({ id: photo, selections }))
 
     this.undo = act.selection.restore(payload, { idx })
+  }
+}
+
+class SyncDelete extends Command {
+  static get ACTION() { return SELECTION.SYNC_DELETE }
+
+  *exec() {
+    let { db } = this.options
+    let { payload } = this.action
+    let { photo, selections } = payload
+
+    console.log(photo, selections)
+    let ord = yield select(({ photos }) => photos[photo].selections)
+
+    ord = ord.filter(id => !selections.includes(id))
+
+    yield call(db.transaction, async tx => {
+      await mod.selection.delete(tx, ...selections)
+      await mod.selection.order(tx, photo, ord)
+    })
+
+    yield put(act.photo.selections.remove({ id: photo, selections }))
   }
 }
 
@@ -252,5 +274,6 @@ module.exports = {
   Restore,
   Save,
   Sync,
+  SyncDelete,
   LoadFromCloud
 }

@@ -27,6 +27,18 @@ module.exports = {
     }
   },
 
+  syncDelete(payload, meta) {
+    return {
+      type: SELECTION.SYNC_DELETE,
+      payload,
+      meta: {
+        cmd: 'project',
+        history: 'add',
+        ...meta
+      }
+    }
+  },
+
   load(payload, meta) {
     return {
       type: SELECTION.LOAD,
