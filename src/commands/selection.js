@@ -95,7 +95,6 @@ class Sync extends ImportCommand {
       }
     }
     const ids = selections.map(selection => selection.id)
-    console.log([ids, selectResult])
     return [ids, selectResult]
   }
 }
