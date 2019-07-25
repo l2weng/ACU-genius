@@ -19,7 +19,7 @@ const {  Tooltip, message, Modal, Form } = require('antd')
 const { ipcRenderer: ipc  } = require('electron')
 const { getUrlFilterParams } = require('../../common/dataUtil')
 const { ColleagueTable } = require('../contacts/colleagueTable')
-const { IconPlus, } = require('../icons')
+const { IconPlus } = require('../icons')
 const { Button } = require('../button')
 const { SkuForm } = require('../tag/skuForm')
 
@@ -399,7 +399,7 @@ class ProjectSidebar extends React.PureComponent {
 
               <h3>
                 <FormattedMessage id="sidebar.lists"/>
-                {isOwner ? <Tooltip placement="right" title="添加任务"><span className="functionIcon">
+                {isOwner ? <Tooltip placement="right" title="添加任务"><span className="functionIcon" style={{ padding: 0 }}>
                   <Button
                     icon={<IconPlus/>}
                     onClick={this.addNewTask}/>

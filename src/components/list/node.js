@@ -238,7 +238,7 @@ class ListNode extends React.PureComponent {
         </span>)
     }
     return (
-      <div>
+      <div className="functionIcon">
         {workerView === '' ? <span className="functionIcon"><Tooltip placement="right" title="分配人员">
           <Icon type="user-add" size="small" onClick={() => this.props.onAddWorkers(SIDEBAR.TASK, list.syncTaskId, list.id)}/>
         </Tooltip>

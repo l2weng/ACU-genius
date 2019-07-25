@@ -149,6 +149,7 @@ class LabelReal extends EventEmitter {
           let query = getUrlFilterParams({ projectId: project.projectId }, ['projectId'])
           const response = await axios.post(`${apiServer}/graphql?query={projectQueryById${query} { syncVersion fileUuid }}`).catch(err=>{ warn(err) })
           const freshProject = response.data.data
+          info('fresh project', freshProject)
           if (freshProject.projectQueryById.syncVersion !== project.syncVersion) {
             let result = await client.get(project.fileUuid, newPath)
             if (result.res.status === 200) {

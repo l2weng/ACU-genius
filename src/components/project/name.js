@@ -3,12 +3,13 @@
 const React = require('react')
 const { DropTarget } = require('react-dnd')
 const { NativeTypes } = require('react-dnd-electron-backend')
-const { IconMaze } = require('../icons')
+const { IconMaze, IconSync } = require('../icons')
 const { Editable } = require('../editable')
 const { isValidImage } = require('../../image')
 const cx = require('classnames')
 const { bool, func, string, number } = require('prop-types')
 const {  Tooltip, Icon, message } = require('antd')
+const { Button } = require('../button')
 
 class ProjectName extends React.PureComponent {
   get classes() {
@@ -21,7 +22,7 @@ class ProjectName extends React.PureComponent {
 
   handleSyncProject = ()=>{
     // if (this.props.synced === 0) {
-      this.props.onSyncProject2Cloud()
+    this.props.onSyncProject2Cloud()
     // }
   }
 
@@ -52,10 +53,17 @@ class ProjectName extends React.PureComponent {
             </Tooltip>
             </span>
           </div> : ''}
-          <span className="functionIcon"><Tooltip placement="right" title="项目详情">
-            <Icon type="info-circle"/>
-          </Tooltip>
-          </span>
+          <div>
+            <span onClick={this.handleSyncProject} className="functionIcon" style={{ width: '20px' }}>
+              <Tooltip placement="right" title="数据手动同步">
+                <IconSync/>
+              </Tooltip>
+            </span>
+          </div>
+          {/*<span className="functionIcon"><Tooltip placement="right" title="项目详情">*/}
+          {/*  <Icon type="info-circle"/>*/}
+          {/*</Tooltip>*/}
+          {/*</span>*/}
         </div>
       </li>
     )
