@@ -46,52 +46,57 @@ class Sync extends ImportCommand {
   *exec() {
     const { db } = this.options
     const { payload } = this.action
-    const { labels, photo } = payload
-    const oSelections = yield select(state => state.photos[photo.id].selections)
-    const idx = oSelections.length
-    const originalPhoto = yield select(state => state.photos[photo.id])
-    const originalLabels = yield call(mod.selection.loadSome, db, oSelections )
+    const { labelArr, photos } = payload
     let selections = []
     let selectResult = {}
-    for (let i = 0; i < labels.length; i++) {
-      let isNew = false
-      const cloudLabel = labels[i]
-      if (!originalLabels.hasOwnProperty(cloudLabel.labelId)) {
-        if (cloudLabel.status === SELECTION.STATUS.NEW) {
-          isNew = true
+    for (let j = 0; j < labelArr.length; j++) {
+      const oLabel = labelArr[j]
+      const labels = oLabel.Labels
+      const photo = photos[oLabel.photoId]
+      const oSelections = yield select(state => state.photos[photo.id].selections)
+      const idx = oSelections.length
+      const originalPhoto = yield select(state => state.photos[photo.id])
+      const originalLabels = yield call(mod.selection.loadSome, db, oSelections )
+      for (let i = 0; i < labels.length; i++) {
+        let isNew = false
+        const cloudLabel = labels[i]
+        if (!originalLabels.hasOwnProperty(cloudLabel.labelId)) {
+          if (cloudLabel.status === SELECTION.STATUS.NEW) {
+            isNew = true
+          }
+        } else if (originalLabels[cloudLabel.labelId].updatedTime !==
+          cloudLabel.updatedTime) {
+          //todo update selection with cloud label includes two kinds of: 1. update, 2. remove
+          if (cloudLabel.status === SELECTION.STATUS.DELETE) {
+            yield put(act.selection.syncDelete({ photo: photo.id, selections: [originalLabels[cloudLabel.labelId].id] }, { idx }))
+          }
         }
-      } else if (originalLabels[cloudLabel.labelId].updatedTime !==
-        cloudLabel.updatedTime) {
-        //todo update selection with cloud label includes two kinds of: 1. update, 2. remove
-        if (cloudLabel.status === SELECTION.STATUS.DELETE) {
-          yield put(act.selection.syncDelete({ photo: photo.id, selections:[originalLabels[cloudLabel.labelId].id] }, { idx }))
-        }
-      }
-      if (isNew) {
-        const nPayload = {
-          angle: photo.angle,
-          mirror: photo.mirror,
-          photo: photo.id,
-          width: cloudLabel.width,
-          height: cloudLabel.height,
-          x: cloudLabel.x,
-          y: cloudLabel.y,
-          status: cloudLabel.status,
-          color: cloudLabel.color,
-          updatedTime: cloudLabel.updatedTime,
-          labelId: cloudLabel.labelId
-        }
-        const selection = yield call(db.transaction, tx =>
-          mod.selection.create(tx, null, nPayload))
+        if (isNew) {
+          const nPayload = {
+            angle: photo.angle,
+            mirror: photo.mirror,
+            photo: photo.id,
+            width: cloudLabel.width,
+            height: cloudLabel.height,
+            x: cloudLabel.x,
+            y: cloudLabel.y,
+            status: cloudLabel.status,
+            color: cloudLabel.color,
+            updatedTime: cloudLabel.updatedTime,
+            labelId: cloudLabel.labelId
+          }
+          const selection = yield call(db.transaction, tx =>
+            mod.selection.create(tx, null, nPayload))
 
-        let image = yield call(Image.open, originalPhoto)
-        yield this.createThumbnails(selection.id, image, { selection })
-        const existedPhoto = selection.photo
-        let photoSelections = [selection.id]
-        yield put(act.photo.selections.add(
-          { id: existedPhoto, selections: photoSelections }, { idx }))
-        selections.push(selection)
-        selectResult[selection.id] = selection
+          let image = yield call(Image.open, originalPhoto)
+          yield this.createThumbnails(selection.id, image, { selection })
+          const existedPhoto = selection.photo
+          let photoSelections = [selection.id]
+          yield put(act.photo.selections.add(
+            { id: existedPhoto, selections: photoSelections }, { idx }))
+          selections.push(selection)
+          selectResult[selection.id] = selection
+        }
       }
     }
     const ids = selections.map(selection => selection.id)
@@ -179,16 +184,13 @@ class LoadFromCloud extends Command {
         if (oList.id !== 0) {
           const labels = yield axios.post(`${ARGS.apiServer}/labels/queryLabels`, { taskId: oList.syncTaskId })
           const labelArr = labels.data
+          const labeledPhotos = labelArr.map(obj=>`'${obj.photoId}'`)
           if (labelArr.length > 0) {
-            for (let j = 0; j < labelArr.length; j++) {
-              const oLabel = labelArr[j]
-              const photo = yield call(mod.photo.loadOne, db, oLabel.photoId )
-
-              yield all([
-                put(act.selection.sync({ photo, labels: oLabel.Labels })),
-                put(act.activity.update(this.action, { total: labelArr.length, progress: j + 1 }))
-              ])
-            }
+            const photos = yield call(mod.photo.loadSome, db, labeledPhotos )
+            yield all([
+              put(act.selection.sync({ photos, labelArr: labelArr })),
+              put(act.activity.update(this.action, { total: labelArr.length, progress: i + 1 }))
+            ])
           }
         }
       }

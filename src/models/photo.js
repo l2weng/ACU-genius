@@ -211,7 +211,7 @@ module.exports = {
           and items.id in (SELECT item_id AS item FROM subjects
                                                JOIN images USING (id)
                                                JOIN photos USING (id))`,
-        ({ taskId, syncTaskId, item }) => {
+        ({ syncTaskId, item }) => {
           let id = item + 1
           let task = syncTaskId
           if (id in photos) photos[id].tasks.push(task)
@@ -228,27 +228,28 @@ module.exports = {
     )
   },
 
-  async loadOne(db, syncPhotoId) {
-    let photo = {}
+  async loadSome(db, syncPhotoIds) {
+    let photos = []
 
     await all([
       db.each(`
         SELECT
             id,
             angle,
-            mirror
+            mirror,
+            syncPhotoId
           FROM subjects
             JOIN images USING (id)
             JOIN photos USING (id)${
-            ` WHERE syncPhotoId = '${syncPhotoId}' and tag_id isnull`
+            ` WHERE syncPhotoId in (${syncPhotoIds.join(',')}) and tag_id isnull`
         }`,
-        ({ mirror, ...data }) => {
+        ({ mirror, syncPhotoId, ...data }) => {
           data.mirror = !!mirror
-          photo = data
+          photos[syncPhotoId] = {syncPhotoId,...data}
         }
       ),
     ])
-    return photo
+    return photos
   },
 
   async loadReference(db, tag = null, { base } = {}) {
