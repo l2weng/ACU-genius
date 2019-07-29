@@ -125,7 +125,7 @@ class LabelReal extends EventEmitter {
         const project = this.state.userInfo.lastProject
         info(`User has project (${project.projectId}) already, sync status: ${project.syncStatus}`)
         if (!project.syncStatus) {
-          if (fs.existsAsync(project.projectFile)) {
+          if (fs.existsSync(project.projectFile)) {
             return this.open(project.projectFile)
           } else {
             return this.showWizard()

@@ -9,6 +9,7 @@ const { warn } = require('../common/log')
 
 const consolidator = {
   DELAY: 1000,
+  currentPhotos: [],
 
   needsConsolidation({ meta }) {
     return meta.consolidate
@@ -17,11 +18,15 @@ const consolidator = {
   *consolidate() {
     try {
       yield call(delay, consolidator.DELAY)
-
+      console.log(consolidator.currentPhotos)
       const photos = yield select(getPhotosWithErrors)
-
       if (photos.length > 0) {
-        yield put(act.photo.consolidate(photos, { force: true }))
+        if (!consolidator.currentPhotos.some(r=> photos.indexOf(r) >= 0)) {
+          if (consolidator.currentPhotos.length === 0) {
+            consolidator.currentPhotos = photos
+          }
+          yield put(act.photo.consolidate(photos, { force: true }))
+        }
       }
 
     } catch (error) {

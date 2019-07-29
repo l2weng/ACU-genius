@@ -9,7 +9,7 @@ const {
 const getPhotos = ({ photos }) => photos
 const getReferences = ({ references }) => references
 
-const withErrors = ([, photo]) => (!!photo.broken && !photo.consolidated && !photo.consolidating)
+const withErrors = ([, photo]) => (!!photo.broken && !photo.consolidated)
 const toId = ([id]) => Number(id)
 
 const getSelectedPhoto = memo(

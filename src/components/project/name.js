@@ -9,7 +9,6 @@ const { isValidImage } = require('../../image')
 const cx = require('classnames')
 const { bool, func, string, number } = require('prop-types')
 const {  Tooltip, Icon, message } = require('antd')
-const { Button } = require('../button')
 
 class ProjectName extends React.PureComponent {
   get classes() {
@@ -20,10 +19,14 @@ class ProjectName extends React.PureComponent {
     }
   }
 
+  handleSync2Cloud = ()=>{
+    if (this.props.synced === 0) {
+      this.props.onSyncProject2Cloud()
+    }
+  }
+
   handleSyncProject = ()=>{
-    // if (this.props.synced === 0) {
-    this.props.onSyncProject2Cloud()
-    // }
+    this.props.onSyncProjectData()
   }
 
   componentWillReceiveProps(props) {
@@ -48,17 +51,17 @@ class ProjectName extends React.PureComponent {
               onChange={this.props.onChange}/>
           </div>
           {this.props.isOwner ? <div>
-            <span className="functionIcon" style={{ fontSize: '20px' }} onClick={this.handleSyncProject}><Tooltip placement="right" title="同步到云">
+            <span className="functionIcon" style={{ fontSize: '20px' }} onClick={this.handleSync2Cloud}><Tooltip placement="right" title="同步到云">
               <Icon type="cloud" theme="twoTone" twoToneColor={this.props.synced === 1 ? '#8da7d3' : '#e96529'} />
             </Tooltip>
             </span>
           </div> : ''}
           <div>
-            <span onClick={this.handleSyncProject} className="functionIcon" style={{ width: '20px' }}>
-              <Tooltip placement="right" title="数据手动同步">
+            <Tooltip placement="right" title="数据同步">
+              <span onClick={this.handleSyncProject} className="functionIcon" style={{ width: '20px' }}>
                 <IconSync/>
-              </Tooltip>
-            </span>
+              </span>
+            </Tooltip>
           </div>
           {/*<span className="functionIcon"><Tooltip placement="right" title="项目详情">*/}
           {/*  <Icon type="info-circle"/>*/}
@@ -84,6 +87,7 @@ class ProjectName extends React.PureComponent {
     onChange: func.isRequired,
     onDrop: func.isRequired,
     onSyncProject2Cloud: func.isRequired,
+    onSyncProjectData: func.isRequired,
     synced: number,
   }
 }

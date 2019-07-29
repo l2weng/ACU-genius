@@ -32,6 +32,8 @@
     "debug": "node scripts/make test -- --debug",
     "build": "node scripts/build",
     "devtools:install": "electron ./scripts/devtools ./tmp",
+    "log:view": "cat tmp/log/labelreal.log | node scripts/log-viewer",
+    "log:tail": "tail -q -F tmp/log/labelreal.log 2> /dev/null | node scripts/log-viewer",
     "lint": "node scripts/make lint || true",
     "make": "node scripts/make",
     "prestart": "node scripts/compile",
@@ -74,6 +76,7 @@
     "shelljs": "^0.8.2",
     "sinon": "^7.1.0",
     "sinon-chai": "^3.2.0",
+    "split2": "^3.1.1",
     "sqleton": "^1.4.0"
   },
   "dependencies": {

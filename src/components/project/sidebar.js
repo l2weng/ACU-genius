@@ -237,6 +237,10 @@ class ProjectSidebar extends React.PureComponent {
     this.props.onProjectSave({ name })
   }
 
+  handleSyncProjectData = () => {
+    this.props.onSyncProjectData({ project: this.props.project })
+  }
+
   handleTrashSelect = () => {
     this.props.onSelect({ trash: true }, { throttle: true })
   }
@@ -384,6 +388,7 @@ class ProjectSidebar extends React.PureComponent {
                   <h2><FormattedMessage id="sidebar.project"/></h2>
                   <ProjectName
                     onSyncProject2Cloud={onSyncProject2Cloud}
+                    onSyncProjectData={this.handleSyncProjectData}
                     name={project.name}
                     synced={project.synced}
                     isOwner={isOwner}
@@ -520,6 +525,7 @@ class ProjectSidebar extends React.PureComponent {
     onSkuSave: func.isRequired,
     onTagSelect: func.isRequired,
     onSyncProject2Cloud: func.isRequired,
+    onSyncProjectData: func.isRequired,
     updateListOwner: func.isRequired,
     onSubmitTask: func.isRequired
   }
@@ -559,6 +565,11 @@ module.exports = {
 
       onSubmitTask(...args) {
         dispatch(actions.list.submitTask(...args))
+      },
+
+      onSyncProjectData(...args) {
+        console.log(args)
+        dispatch(actions.list.load(...args))
       },
 
       onListItemsAdd({ list, items }) {
