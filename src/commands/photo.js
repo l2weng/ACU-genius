@@ -131,14 +131,14 @@ class Consolidate extends ImportCommand {
                 overwrite: hasChanged
               })
 
-              // for (let id of photo.selections) {
-              //   if (id in selections) {
-              //     yield* this.createThumbnails(id, image, {
-              //       overwrite: hasChanged,
-              //       selection: selections[id]
-              //     })
-              //   }
-              // }
+              for (let id of photo.selections) {
+                if (id in selections) {
+                  yield* this.createThumbnails(id, image, {
+                    overwrite: hasChanged,
+                    selection: selections[id]
+                  })
+                }
+              }
 
               let data = { id: photo.id, ...image.toJSON() }
 

@@ -139,7 +139,7 @@ class LabelReal extends EventEmitter {
             if (err) throw err
           })
         }
-        newPath = join(newPath, basename(project.projectFile))
+        newPath = join(newPath, `${project.fileUuid}.lbr`)
         //if project file is his own
         if (fs.existsSync(project.projectFile)) {
           //未同步
