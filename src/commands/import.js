@@ -7,7 +7,7 @@ const { Command } = require('./command')
 const mod = require('../models')
 const act = require('../actions')
 const { Image } = require('../image/image')
-const { warn, info } = require('../common/log')
+const { warn, debug } = require('../common/log')
 const { prompt } = require('../dialog')
 
 
@@ -19,7 +19,6 @@ class ImportCommand extends Command {
 
       for (let v of image.variants(selection != null)) {
         let path = cache.path(id, v.name, ext)
-
         if (overwrite || !(yield call(cache.exists, path))) {
           let dup = image.resize(v.size, selection)
           switch (ext) {
@@ -39,7 +38,7 @@ class ImportCommand extends Command {
           yield call([dup, dup.toFile], cache.expand(path))
 
         } else {
-          info(`Skipping ${v.name}px thumbnail for #${id}: already exists`)
+          debug(`Skipping ${v.name}px thumbnail for #${id}: already exists`)
         }
       }
     } catch (error) {
