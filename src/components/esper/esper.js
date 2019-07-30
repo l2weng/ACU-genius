@@ -327,7 +327,7 @@ class Esper extends PureComponent {
 
   handleSlideIn = () => {
     this.setState({ isVisible: true })
-    //this.view.start()
+    this.view.resume()
   }
 
   handleSlideOut = () => {

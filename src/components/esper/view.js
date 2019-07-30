@@ -94,6 +94,11 @@ class EsperView extends Component {
     this.pixi.stop()
   }, 2000)
 
+  resume = () => {
+    this.start()
+    this.stop()
+  }
+
   get screen() {
     return this.pixi.screen
   }
