@@ -27,6 +27,7 @@ const mod = {
               brightness,
               contrast,
               labelId,
+              updatedTime,
               color,
               hue,
               saturation,

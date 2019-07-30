@@ -2,11 +2,12 @@
 
 const React = require('react')
 const { PureComponent } = React
-const { Toolbar, ToolGroup } = require('../toolbar')
+const { Toolbar, ToolGroup, ToolbarLeft } = require('../toolbar')
 const { Button, Icon, Tooltip } = require('antd')
 const ButtonGroup = Button.Group
-const { func, object } = require('prop-types')
+const { func, object, array } = require('prop-types')
 const { emit } = require('../../dom')
+const moment = require('moment')
 
 
 class EsperFootToolbar extends PureComponent {
@@ -22,9 +23,17 @@ class EsperFootToolbar extends PureComponent {
   }
 
   render() {
-    const { photo } = this.props
+    const { photo, selections } = this.props
+    let modifiedTime = ''
+    if (photo) modifiedTime = moment(new Date(photo.modified)).format('MMMM Do YYYY, h:mm:ss a')
     return (
       <Toolbar isDraggable={false}>
+        <ToolbarLeft>
+          <ToolGroup>
+            {(selections && selections.length > 0) ? `Date modified:${moment(new Date(selections[0].updatedTime)).format('MMMM Do YYYY, h:mm:ss a')}` :
+              `Date modified:${modifiedTime}`}
+          </ToolGroup>
+        </ToolbarLeft>
         <div className="toolbar-center" style={{ margin: 'auto' }}>
           <ToolGroup>
             {(photo && photo.syncPhotoId) ?
@@ -59,6 +68,7 @@ class EsperFootToolbar extends PureComponent {
     photo: object,
     onLabelSave: func.isRequired,
     onLabelSkip: func.isRequired,
+    selections: array.isRequired
   }
 }
 

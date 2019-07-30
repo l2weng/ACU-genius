@@ -736,6 +736,7 @@ class Esper extends PureComponent {
         </div>
         <EsperFooter>
           <EsperFootToolbar
+            selections={this.props.selections}
             photo={this.props.photo}
             onLabelSave={this.handleLabelSave}
             onLabelSkip={this.handleLabelSkip}/>
