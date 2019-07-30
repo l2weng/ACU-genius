@@ -159,11 +159,11 @@ class Workplace extends PureComponent {
               extra={
                 <div>
                   {isOwner ? <RadioGroup defaultValue={HEAD.MY_TASKS} onChange={this.onTaskSwitch}>
-                    <RadioButton key={HEAD.MY_TASKS} value={HEAD.MY_TASKS}>我的任务</RadioButton>
-                    <RadioButton key={HEAD.JOINED_TASKS} value={HEAD.JOINED_TASKS}>参与的任务</RadioButton>
+                    <RadioButton key={HEAD.MY_TASKS} value={HEAD.MY_TASKS}>我创建的任务</RadioButton>
+                    <RadioButton key={HEAD.JOINED_TASKS} value={HEAD.JOINED_TASKS}>分配给我的任务</RadioButton>
                   </RadioGroup> : <RadioGroup defaultValue={HEAD.MY_TASKS} onChange={this.onTaskSwitch}>
-                    <RadioButton key={HEAD.JOINED_TASKS} value={HEAD.JOINED_TASKS}>参与的任务</RadioButton>
-                    <RadioButton key={HEAD.MY_TASKS} value={HEAD.MY_TASKS}>我的任务</RadioButton>
+                    <RadioButton key={HEAD.JOINED_TASKS} value={HEAD.JOINED_TASKS}>分配给我的任务</RadioButton>
+                    <RadioButton key={HEAD.MY_TASKS} value={HEAD.MY_TASKS}>我创建的任务</RadioButton>
                   </RadioGroup>}
                   {/*<Search className="extraContentSearch" placeholder="请输入" onSearch={() => ({})} />*/}
                 </div>

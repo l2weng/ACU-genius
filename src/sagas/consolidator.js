@@ -18,7 +18,6 @@ const consolidator = {
   *consolidate() {
     try {
       yield call(delay, consolidator.DELAY)
-      console.log(consolidator.currentPhotos)
       const photos = yield select(getPhotosWithErrors)
       if (photos.length > 0) {
         if (!consolidator.currentPhotos.some(r=> photos.indexOf(r) >= 0)) {

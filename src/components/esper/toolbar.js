@@ -3,10 +3,14 @@
 const React = require('react')
 const { PureComponent } = React
 const { Toolbar, ToolbarLeft, ToolbarRight, ToolGroup } = require('../toolbar')
+const { Button: AntButton, Icon } = require('antd')
+const ButtonGroup = AntButton.Group
+
 const { Button } = require('../button')
 const { Slider } = require('../slider')
 const { arrayOf, bool, func, number, string, object } = require('prop-types')
 const throttle = require('lodash.throttle')
+const { emit } = require('../../dom')
 
 const { TOOL, MODE } = require('../../constants/esper')
 
@@ -75,6 +79,14 @@ class EsperToolbar extends PureComponent {
 
   setSelectTool = () => {
     this.props.onToolChange(TOOL.SELECT)
+  }
+
+  viewNextPhoto = () =>{
+    emit(document, 'global:next-photo')
+  }
+
+  viewPrevPhoto = () =>{
+    emit(document, 'global:prev-photo')
   }
 
   render() {
@@ -151,6 +163,18 @@ class EsperToolbar extends PureComponent {
               maxIcon={<IconPlusCircle/>}
               isDisabled={this.props.isDisabled}
               onChange={this.handleZoomChange}/>
+          </ToolGroup>
+          <ToolGroup>
+            <ButtonGroup>
+              <AntButton type="default" size="small" onClick={this.viewPrevPhoto}>
+                <Icon type="left" />
+                Prev
+              </AntButton>
+              <AntButton type="default" size="small" onClick={this.viewNextPhoto}>
+                Next
+                <Icon type="right" />
+              </AntButton>
+            </ButtonGroup>
           </ToolGroup>
         </ToolbarLeft>
         <ToolbarRight>

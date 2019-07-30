@@ -21,51 +21,29 @@ class EsperFootToolbar extends PureComponent {
     emit(document, 'global:next-photo')
   }
 
-  viewNextPhoto = () =>{
-    emit(document, 'global:next-photo')
-  }
-
-  viewPrevPhoto = () =>{
-    emit(document, 'global:prev-photo')
-  }
-
   render() {
     const { photo } = this.props
     return (
       <Toolbar isDraggable={false}>
         <div className="toolbar-center" style={{ margin: 'auto' }}>
           <ToolGroup>
-            <ButtonGroup>
-              <Button type="default" size="small" onClick={this.viewPrevPhoto}>
-                <Icon type="left" />
-                Prev
-              </Button>
-              <Button type="default" size="small" onClick={this.viewNextPhoto}>
-                Next
-                <Icon type="right" />
-              </Button>
-            </ButtonGroup>
-          </ToolGroup>
-        </div>
-        <div className="toolbar-right" style={{ opacity: 1 }}>
-          <ToolGroup>
             {(photo && photo.syncPhotoId) ?
               <ButtonGroup>
-                <Button type="primary" size="small" onClick={this.confirmPhoto}>
+                <Button type="default" size="small" onClick={this.confirmPhoto}>
                   <Icon type="save"/>
                   提交
                 </Button>
-                <Button type="danger" size="small" onClick={this.ignorePhoto}>
+                <Button type="default" size="small" onClick={this.ignorePhoto}>
                   跳过
                 </Button>
               </ButtonGroup> :
               <Tooltip placement="top" title={'请先同步项目'}>
                 <ButtonGroup>
-                  <Button type="primary" size="small" onClick={this.confirmPhoto} disabled>
+                  <Button type="default" size="small" onClick={this.confirmPhoto} disabled>
                     <Icon type="save"/>
                     提交
                   </Button>
-                  <Button type="danger" size="small" onClick={this.ignorePhoto} disabled>
+                  <Button type="default" size="small" onClick={this.ignorePhoto} disabled>
                     跳过
                   </Button>
                 </ButtonGroup>
