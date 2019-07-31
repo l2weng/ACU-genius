@@ -567,9 +567,8 @@ module.exports = {
         dispatch(actions.list.submitTask(...args))
       },
 
-      onSyncProjectData(...args) {
-        console.log(args)
-        dispatch(actions.list.load(...args))
+      onSyncProjectData(project) {
+        dispatch(actions.list.load(project))
       },
 
       onListItemsAdd({ list, items }) {
