@@ -196,6 +196,7 @@ CREATE TABLE selections (
   photo_id  INTEGER  NOT NULL REFERENCES photos ON DELETE CASCADE,
   x         NUMERIC  NOT NULL DEFAULT 0,
   y         NUMERIC  NOT NULL DEFAULT 0,
+  skuId         NUMERIC  NOT NULL DEFAULT 0,
   position  INTEGER,
   status  INTEGER,
   labelId   TEXT,

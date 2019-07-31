@@ -18,6 +18,7 @@ const mod = {
               photo_id AS photo,
               x,
               y,
+              skuId,
               status,
               width,
               height,
@@ -49,23 +50,23 @@ const mod = {
           else selections[id] = assign({ id, notes: [] }, data)
         }),
 
-        db.each(`
-          SELECT id, note_id AS note
-            FROM notes JOIN selections USING (id)
-            WHERE ${(ids != null) ? `id IN (${list(ids)}) AND` : ''}
-              deleted IS NULL
-            ORDER BY id, created`,
-          ({ id, note }) => {
-            if (id in selections) selections[id].notes.push(note)
-            else selections[id] = { id, notes: [note] }
-          }
-        )
+        // db.each(`
+        //   SELECT id, note_id AS note
+        //     FROM notes JOIN selections USING (id)
+        //     WHERE ${(ids != null) ? `id IN (${list(ids)}) AND` : ''}
+        //       deleted IS NULL
+        //     ORDER BY id, created`,
+        //   ({ id, note }) => {
+        //     if (id in selections) selections[id].notes.push(note)
+        //     else selections[id] = { id, notes: [note] }
+        //   }
+        // )
       ])
 
       return selections
     },
 
-    async create(db, template, { photo, x, y, width, height, angle, mirror, labelId, updatedTime, color, status }) {
+    async create(db, template, { photo, x, y, width, height, angle, mirror, labelId, updatedTime, color, status, skuId }) {
       const { id } = await db.run(`
         INSERT INTO subjects (template) VALUES (?)`, template || TEMPLATE)
 
@@ -74,8 +75,8 @@ const mod = {
           VALUES (?,?,?,?,?)`, [id, width, height, angle, mirror])
 
       await db.run(`
-        INSERT INTO selections (id, photo_id, x, y, labelId, updatedTime, color, status)
-          VALUES (?,?,?,?,?,?,?,?)`, [id, photo, x, y, labelId ? labelId : uuid(), updatedTime, color, status])
+        INSERT INTO selections (id, photo_id, x, y, labelId, updatedTime, color, status,skuId)
+          VALUES (?,?,?,?,?,?,?,?,?)`, [id, photo, x, y, labelId ? labelId : uuid(), updatedTime, color, status, skuId])
 
       return (await mod.selection.load(db, [id]))[id]
     },

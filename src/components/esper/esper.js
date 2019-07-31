@@ -546,6 +546,7 @@ class Esper extends PureComponent {
 
     this.props.onSelectionCreate({
       photo: this.props.photo.id,
+      skuId: this.props.skuId,
       angle,
       mirror,
       ...selection
@@ -767,6 +768,7 @@ class Esper extends PureComponent {
     tool: string.isRequired,
     selection: object,
     shapeColor: string.isRequired,
+    skuId: number.isRequired,
     selections: arrayOf(shape({
       id: number.isRequired,
       height: number.isRequired,

@@ -245,7 +245,7 @@ module.exports = {
         }`,
         ({ mirror, syncPhotoId, ...data }) => {
           data.mirror = !!mirror
-          photos[syncPhotoId] = {syncPhotoId,...data}
+          photos[syncPhotoId] = { syncPhotoId, ...data }
         }
       ),
     ])

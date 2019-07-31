@@ -83,7 +83,8 @@ class Sync extends ImportCommand {
             status: cloudLabel.status,
             color: cloudLabel.color,
             updatedTime: cloudLabel.updatedTime,
-            labelId: cloudLabel.labelId
+            labelId: cloudLabel.labelId,
+            skuId: cloudLabel.skuId,
           }
           const selection = yield call(db.transaction, tx =>
             mod.selection.create(tx, null, nPayload))
