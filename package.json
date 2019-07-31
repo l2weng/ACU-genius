@@ -27,6 +27,7 @@
   },
   "main": "lib/browser/main.js",
   "scripts": {
+    "clean": "rimraf coverage doc lib .nyc_output npm-debug.log",
     "compile": "node scripts/compile",
     "console": "electron --interactive",
     "debug": "node scripts/make test -- --debug",
@@ -36,6 +37,7 @@
     "log:tail": "tail -q -F tmp/log/labelreal.log 2> /dev/null | node scripts/log-viewer",
     "lint": "node scripts/make lint || true",
     "make": "node scripts/make",
+    "purge": "npm run clean && rimraf dist",
     "prestart": "node scripts/compile",
     "start": "electron --app . --env development --data tmp --cache tmp/cache --logs tmp/log",
     "rebuild": "node scripts/rebuild",
