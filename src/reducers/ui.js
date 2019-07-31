@@ -16,7 +16,7 @@ const init = {
       { height: 40, isClosed: false },
       { height: 20, isClosed: false }
     ],
-    tab: 'metadata',
+    tab: 'tags',
     width: SASS.PANEL.DEFAULT_WIDTH,
     zoom: 0,
     refZoom: 1
