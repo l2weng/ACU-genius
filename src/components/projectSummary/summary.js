@@ -4,15 +4,10 @@ const React = require('react')
 const { PureComponent } = React
 const { Row, Col } = require('antd')
 const { Chart, Geom, Axis, Tooltip, Coord } = require('bizcharts')
+const { array } = require('prop-types')
 
 class Summary extends PureComponent {
-  componentDidMount() {
 
-  }
-
-  componentWillUnmount() {
-
-  }
   render() {
     const data = [
       { year: '4 Dec 2018', value: 3 },
@@ -25,13 +20,6 @@ class Summary extends PureComponent {
       { year: '11 Dec 2018', value: 9 },
       { year: '12 Dec 2018', value: 13 }
     ]
-    const data2 = [
-      { country: '中国', count: 101744 },
-      { country: '印度', count: 74970 },
-      { country: '美国', count: 29034 },
-      { country: '印尼', count: 23489 },
-      { country: '巴西', count: 18203 }
-    ]
     const data3 = [
       { name: '鲁班', count: 30 },
       { name: '韩信', count: 89 },
@@ -43,6 +31,8 @@ class Summary extends PureComponent {
       value: { min: 0 },
       year: { range: [0, 1] }
     }
+    const { skuData } = this.props
+    console.log(skuData)
     return (
       <div className="project-summary">
         <Row gutter={24}>
@@ -70,12 +60,12 @@ class Summary extends PureComponent {
           <Col span={12}>
             <div>
               <div className="title">Skus:</div>
-              <Chart height={300} data={data2} forceFit>
+              <Chart height={300} data={skuData} forceFit placeholder="暂无数据">
                 <Coord transpose />
-                <Axis name="country" label={{ offset: 12 }} />
+                <Axis name="name" label={{ offset: 12 }} />
                 <Axis name="count" />
                 <Tooltip />
-                <Geom type="interval" position="country*count" />
+                <Geom type="interval" position="name*count" />
               </Chart>
             </div>
             <div>
@@ -92,6 +82,9 @@ class Summary extends PureComponent {
         </Row>
       </div>
     )
+  }
+  static propTypes = {
+    skuData: array.isRequired,
   }
 }
 

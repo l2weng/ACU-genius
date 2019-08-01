@@ -18,29 +18,26 @@ class ProjectSummary extends PureComponent {
 
   constructor(props) {
     super(props)
-    console.log(props)
     this.state = {
       summaryActiveTab: '1',
-      activeProjectId: ''
+      skuData: [],
     }
   }
 
   componentDidMount() {
-    console.log(this.props)
+    this.fetchSummary(this.props.projects ? this.props.projects[0].projectId : '')
   }
 
   handleSelectProject = (projectId) =>{
-    this.setState({ activeProjectId: projectId })
     this.fetchSummary(projectId)
   }
 
-  fetchSummary = () =>{
+  fetchSummary = (projectId) =>{
     const { summaryActiveTab } = this.state
-    let { activeProjectId } = this.state
 
     switch (summaryActiveTab) {
       case '1':
-        this.fetchProjectSummary(activeProjectId)
+        this.fetchProjectSummary(projectId)
         break
       case '2':
         break
@@ -50,8 +47,10 @@ class ProjectSummary extends PureComponent {
   }
 
   fetchProjectSummary = (projectId) =>{
-    axios.post(`${ARGS.apiServer}/summarys/query`, { projectId }).then((result) =>{
-      console.log(result)
+    axios.post(`${ARGS.apiServer}/summaries/countSkus`, { projectId }).then((result) =>{
+      if (result.data.length > 0) {
+        this.setState({ skuData: result.data })
+      }
     }).catch(function (error) {
       console.log(error)
     })
@@ -90,8 +89,8 @@ class ProjectSummary extends PureComponent {
       isEmpty,
       ...props
     } = this.props
-    const { summaryActiveTab } = this.state
-
+    const { summaryActiveTab, skuData } = this.state
+console.log(skuData)
     return (
       <div>
         <Row gutter={24}>
@@ -100,7 +99,7 @@ class ProjectSummary extends PureComponent {
               <Tabs style={{ textAlign: 'left' }} onChange={this.switchProjectSummaryTab}
                 defaultActiveKey={summaryActiveTab}
                 tabPosition="left">
-                <TabPane tab="项目概述" key="1"><Summary/></TabPane>
+                <TabPane tab="项目概述" key="1"><Summary skuData={skuData}/></TabPane>
                 <TabPane tab="图片数据" key="2"><PhotoData {...props}
                   nav={nav}
                   items={items}
