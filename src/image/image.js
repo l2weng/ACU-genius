@@ -237,8 +237,8 @@ class Image {
     ])
   }
 
-  variants(isSelection = false) {
-    let SIZE = isSelection ? Image.SELECTION_SIZE : Image.PHOTO_SIZE
+  variants(isSelection = false, isReference = false) {
+    let SIZE = (isSelection || isReference) ? Image.SELECTION_SIZE : Image.PHOTO_SIZE
     let variants = [48, 512]
 
     if (!isSelection) {

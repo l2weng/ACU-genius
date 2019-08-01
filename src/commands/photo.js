@@ -305,7 +305,7 @@ class RefCreate extends ImportCommand {
 
         photos.push(photo.id)
 
-        yield* this.createThumbnails(photo.id, image)
+        yield* this.createThumbnails(photo.id, image, { isReference: true })
 
       } catch (error) {
         if (error instanceof DuplicateError) continue

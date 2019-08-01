@@ -194,7 +194,6 @@ class ItemView extends PureComponent {
     const { activeTag } = this.state
     let shapeColor = '5c93e5'
     let skuId = 0
-    console.log(tags)
     if (tags.length > 0 && activeTag === 0) {
       shapeColor = tags[0].color
       skuId = tags[0].syncSkuId

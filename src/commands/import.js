@@ -12,12 +12,12 @@ const { prompt } = require('../dialog')
 
 
 class ImportCommand extends Command {
-  *createThumbnails(id, image, { overwrite = true, quality = 100, selection } = {}) {
+  *createThumbnails(id, image, { overwrite = true, quality = 100, selection, isReference } = {}) {
     try {
       let { cache } = this.options
       let ext = cache.extname(image.mimetype)
 
-      for (let v of image.variants(selection != null)) {
+      for (let v of image.variants(selection != null, isReference)) {
         let path = cache.path(id, v.name, ext)
         if (overwrite || !(yield call(cache.exists, path))) {
           let dup = image.resize(v.size, selection)

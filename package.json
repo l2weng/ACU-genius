@@ -27,8 +27,8 @@
   },
   "main": "lib/browser/main.js",
   "scripts": {
-    "clean": "rimraf coverage doc lib .nyc_output npm-debug.log",
     "compile": "node scripts/compile",
+    "clean": "rimraf coverage doc lib .nyc_output npm-debug.log",
     "console": "electron --interactive",
     "debug": "node scripts/make test -- --debug",
     "build": "node scripts/build",
