@@ -38,9 +38,9 @@ class Window extends EventEmitter {
   }
 
   init(done) {
-    this.plugins.reload()
-      .then(plugins => plugins.create().emit('change'))
-    this.unloaders.push(this.plugins.flush)
+    // this.plugins.reload()
+    //   .then(plugins => plugins.create().emit('change'))
+    // this.unloaders.push(this.plugins.flush)
 
     this.handleUnload()
     this.handleTabFocus()
@@ -164,6 +164,7 @@ class Window extends EventEmitter {
 
       this.isUnloading = true
 
+      this.toggle('unload')
       toggle(document.body, 'quitting', true)
 
       each(this.unloaders, unload => {

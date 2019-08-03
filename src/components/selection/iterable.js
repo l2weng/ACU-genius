@@ -82,7 +82,7 @@ class SelectionIterable extends React.PureComponent {
   renderThumbnail(props) {
     return (
       <Thumbnail {...props}
-        id={this.props.selection.id}
+        id={this.props.selection.labelId}
         angle={this.props.selection.angle}
         broken={this.props.photo.broken}
         mimetype={this.props.photo.mimetype}

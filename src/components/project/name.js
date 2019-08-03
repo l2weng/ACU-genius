@@ -2,6 +2,7 @@
 
 const React = require('react')
 const { DropTarget } = require('react-dnd')
+const { ipcRenderer: ipc  } = require('electron')
 const { NativeTypes } = require('react-dnd-electron-backend')
 const { IconMaze, IconSync } = require('../icons')
 const { Editable } = require('../editable')
@@ -26,7 +27,12 @@ class ProjectName extends React.PureComponent {
   }
 
   handleSyncProject = ()=>{
-    this.props.onSyncProjectData()
+    if (this.props.isOwner) {
+      this.props.onSyncProjectData()
+    } else {
+      console.log('reload windows')
+      ipc.send('win-reload')
+    }
   }
 
   componentWillReceiveProps(props) {
@@ -57,7 +63,7 @@ class ProjectName extends React.PureComponent {
             </span>
           </div> : ''}
           <div>
-            <Tooltip placement="right" title="数据同步">
+            <Tooltip placement="right" title="刷新">
               <span onClick={this.handleSyncProject} className="functionIcon" style={{ width: '20px' }}>
                 <IconSync/>
               </span>

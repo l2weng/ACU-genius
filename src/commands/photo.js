@@ -132,8 +132,9 @@ class Consolidate extends ImportCommand {
               })
 
               for (let id of photo.selections) {
+                console.log(selections)
                 if (id in selections) {
-                  yield* this.createThumbnails(id, image, {
+                  yield* this.createThumbnails(selections[id].labelId, image, {
                     overwrite: hasChanged,
                     selection: selections[id]
                   })

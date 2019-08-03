@@ -28,7 +28,7 @@ class Create extends ImportCommand {
 
     let data = { selections: [selection.id] }
 
-    yield this.createThumbnails(selection.id, image, { selection })
+    yield this.createThumbnails(selection.labelId, image, { selection })
 
     yield put(act.photo.selections.add({ id: photo.id, ...data }, { idx }))
 
@@ -90,13 +90,13 @@ class Sync extends ImportCommand {
             mod.selection.create(tx, null, nPayload))
 
           let image = yield call(Image.open, originalPhoto)
-          yield this.createThumbnails(selection.id, image, { selection })
+          yield this.createThumbnails(selection.labelId, image, { selection })
           const existedPhoto = selection.photo
           let photoSelections = [selection.id]
           yield put(act.photo.selections.add(
             { id: existedPhoto, selections: photoSelections }, { idx }))
           selections.push(selection)
-          selectResult[selection.id] = selection
+          selectResult[selection.labelId] = selection
         }
       }
     }

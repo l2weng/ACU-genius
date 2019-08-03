@@ -65,8 +65,8 @@ class LabelReal extends EventEmitter {
     webgl: true,
     win: {},
     userInfo: {},
-    // apiServer: 'http://47.105.236.123:8098/lr',
-    apiServer: 'http://127.0.0.1:3000/lr',
+    apiServer: 'http://47.105.236.123:8098/lr',
+    // apiServer: 'http://127.0.0.1:3000/lr',
     projectsCache: {},
     zoom: 1.0
   }
@@ -868,6 +868,11 @@ class LabelReal extends EventEmitter {
       this.store.save.sync('state.json', this.state)
       this.showLogin()
       if (this.win) this.win.close()
+    })
+
+    ipc.on('win-reload', ()=>{
+      let win = BrowserWindow.getFocusedWindow()
+      win.webContents.send('reload')
     })
 
     ipc.on(USER.LOGINED, (_, { data }) => {
