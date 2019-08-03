@@ -96,7 +96,7 @@ class Sync extends ImportCommand {
           yield put(act.photo.selections.add(
             { id: existedPhoto, selections: photoSelections }, { idx }))
           selections.push(selection)
-          selectResult[selection.labelId] = selection
+          selectResult[selection.id] = selection
         }
       }
     }

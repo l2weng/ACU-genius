@@ -30,7 +30,6 @@ class Sync extends Command {
   *exec() {
     let { payload } = this.action
     const { db } = this.options
-    const { project } = yield select()
     const photosArray = yield call(db.seq, conn =>
       mod.photo.loadTagsReference(conn))
     const { userInfo } = ARGS

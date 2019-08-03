@@ -90,7 +90,6 @@ class ProjectSummary extends PureComponent {
       ...props
     } = this.props
     const { summaryActiveTab, skuData } = this.state
-console.log(skuData)
     return (
       <div>
         <Row gutter={24}>
