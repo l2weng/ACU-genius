@@ -20,6 +20,7 @@ const { keys } = Object
 const { isArray } = Array
 const { writeFile: write } = require('fs')
 const { win } = require('../window')
+const { ipcRenderer: ipc  } = require('electron')
 const { groupedByTemplate } = require('../export')
 const { userInfo } = ARGS
 
@@ -131,8 +132,6 @@ class Import extends ImportCommand {
 
     if (items.length) {
       yield all([
-        call(mod.project.save, db, { id: id, synced: false }),
-        put(act.project.updateSyncStatus({ synced: 0 }))
       ])
       this.undo = act.item.delete(items)
       this.redo = act.item.restore(items)
@@ -151,11 +150,7 @@ class Delete extends Command {
 
     yield call(mod.item.delete, db, ids)
     yield put(act.item.bulk.update([ids, { deleted: true }], { search: true }))
-    yield all([
-      call(mod.project.save, db, { id: id, synced: false }),
-      put(act.project.updateSyncStatus({ synced: 0 }))
-    ])
-
+    ipc.send('cmd', 'app:sync-project-file')
     this.undo = act.item.restore(ids)
 
     return ids
