@@ -22,6 +22,7 @@ const uuid = require('uuid/v4')
 const { basename, dirname, join, relative, resolve } = require('path')
 const nodePath = require('path')
 const axios = require('axios')
+const { ipcRenderer: ipc  } = require('electron')
 const { existsSync: exists } = require('fs')
 const { stat } = require('fs').promises
 
@@ -319,6 +320,7 @@ class RefCreate extends ImportCommand {
       }
     }
 
+    ipc.send('cmd', 'app:sync-whole-project')
     yield put(act.references.load({ tag_id }))
     this.undo = act.photo.delete({ item, photos })
     this.redo = act.photo.restore({ item, photos }, { idx })

@@ -58,7 +58,7 @@ class Import extends ImportCommand {
   static get ACTION() { return ITEM.IMPORT }
 
   *exec() {
-    let { db, id } = this.options
+    let { db } = this.options
     let { files, list } = this.action.payload
 
     let items = []
@@ -131,8 +131,7 @@ class Import extends ImportCommand {
     }
 
     if (items.length) {
-      yield all([
-      ])
+      ipc.send('cmd', 'app:sync-whole-project')
       this.undo = act.item.delete(items)
       this.redo = act.item.restore(items)
     }
@@ -145,7 +144,7 @@ class Delete extends Command {
   static get ACTION() { return ITEM.DELETE }
 
   *exec() {
-    const { db, id } = this.options
+    const { db } = this.options
     const ids = this.action.payload
 
     yield call(mod.item.delete, db, ids)
@@ -183,6 +182,7 @@ class Destroy extends Command {
 
     } finally {
       yield put(act.history.drop(null, { search: true }))
+      ipc.send('cmd', 'app:sync-project-file')
     }
   }
 }
@@ -222,6 +222,7 @@ class Restore extends Command {
     yield call(mod.item.restore, db, ids)
     yield put(act.item.bulk.update([ids, { deleted: false }], { search: true }))
 
+    ipc.send('cmd', 'app:sync-project-file')
     this.undo = act.item.delete(ids)
 
     return ids

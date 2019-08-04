@@ -21,7 +21,7 @@ class ProjectName extends React.PureComponent {
   }
 
   handleSync2Cloud = ()=>{
-    this.props.onSyncProject2Cloud()
+    ipc.send('cmd', 'app:sync-whole-project')
   }
 
   handleSyncProject = ()=>{
