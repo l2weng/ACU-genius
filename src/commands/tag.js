@@ -8,6 +8,7 @@ const { keys } = Object
 const mod = require('../models')
 const act = require('../actions')
 const axios = require('axios')
+const { ipcRenderer: ipc  } = require('electron')
 const { userInfo } = ARGS
 
 class Load extends Command {
@@ -100,6 +101,7 @@ class SaveTag extends Command {
       let updatePayload = { id: tag.id, syncSkuId: skuResult.data.obj.skuId }
       tag.syncSkuId = skuResult.data.obj.skuId
       yield call(mod.tag.save, db, updatePayload)
+      ipc.send('cmd', 'app:sync-project-file')
     }
     return tag
   }

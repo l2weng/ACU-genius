@@ -81,6 +81,17 @@ module.exports = {
     }
   },
 
+  syncProjectFile(payload, meta = {}) {
+    return {
+      type: PROJECT.SYNC_PROJECT_FILE,
+      payload,
+      meta: {
+        cmd: 'project',
+        ...meta
+      }
+    }
+  },
+
   upload(payload, meta = {}) {
     return {
       type: PROJECT.UPLOAD,

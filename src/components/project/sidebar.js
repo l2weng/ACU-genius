@@ -333,6 +333,7 @@ class ProjectSidebar extends React.PureComponent {
         self.props.updateListOwner({ workers: response.data.workers, syncTaskId: syncTaskId, id: listId })
         message.success('任务分配成功', 0.5, ()=>{
           self.setState({ modalVisible: false })
+          ipc.send('cmd', 'app:sync-project-file')
         })
       }
     })

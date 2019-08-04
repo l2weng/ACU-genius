@@ -116,8 +116,49 @@ class Sync extends Command {
   }
 }
 
+class SyncProjectFile extends Command {
+  static get ACTION() { return PROJECT.SYNC_PROJECT_FILE }
+
+  *exec() {
+    let { payload } = this.action
+    let { project } = yield select()
+    let { db } = this.options
+    let client = getNewOOSClient()
+    let { userInfo } = ARGS
+    if (project.synced) {
+      console.log('sync project file start!!')
+      try {
+        let result = yield client.put(basename(project.file, '.lbr'), project.file)
+        if (result.res.status === 200) {
+          let syncProject = {
+            syncStatus: true,
+            syncProjectFile: result.url,
+            projectFile: project.file,
+            itemCount: project.items,
+            syncProjectId: project.syncProjectId,
+            name: project.name,
+            userId: userInfo.user.userId,
+            syncProjectFileName: project.name,
+          }
+          const syncResult = yield axios.post(`${ARGS.apiServer}/projects/syncProject`, syncProject)
+          if (syncResult.status === 200) {
+            yield all([
+              call(mod.project.save, db, { id: project.id, synced: true, syncVersion: syncResult.data.obj.syncVersion }),
+              put(act.project.updateSyncStatus({ ...payload, synced: 1 })),
+            ])
+            console.log('sync project file end!!')
+          }
+        }
+      } catch (e) {
+        error(e)
+      }
+    }
+  }
+}
+
 module.exports = {
   Rebase,
   Save,
-  Sync
+  Sync,
+  SyncProjectFile
 }

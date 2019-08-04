@@ -12,7 +12,7 @@ const { open, hasOverlayScrollBars } = require('./window')
 const { all } = require('bluebird')
 const { existsSync: exists } = require('fs')
 const fs = require('fs')
-const { join, basename } = require('path')
+const { join } = require('path')
 const { into, compose, remove, take } = require('transducers.js')
 const rm = require('rimraf')
 const uuid = require('uuid/v1')
@@ -65,8 +65,8 @@ class LabelReal extends EventEmitter {
     webgl: true,
     win: {},
     userInfo: {},
-    apiServer: 'http://47.105.236.123:8098/lr',
-    // apiServer: 'http://127.0.0.1:3000/lr',
+    // apiServer: 'http://47.105.236.123:8098/lr',
+    apiServer: 'http://127.0.0.1:3000/lr',
     projectsCache: {},
     zoom: 1.0
   }
@@ -500,6 +500,9 @@ class LabelReal extends EventEmitter {
 
     this.on('app:rebase-project', () =>
       this.dispatch(act.project.rebase(), this.win))
+
+    this.on('app:sync-project-file', () =>
+      this.dispatch(act.project.syncProjectFile(), this.win))
 
     this.on('app:import-photos', () =>
       this.import())

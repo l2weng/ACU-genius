@@ -21,9 +21,7 @@ class ProjectName extends React.PureComponent {
   }
 
   handleSync2Cloud = ()=>{
-    if (this.props.synced === 0) {
-      this.props.onSyncProject2Cloud()
-    }
+    this.props.onSyncProject2Cloud()
   }
 
   handleSyncProject = ()=>{
@@ -35,12 +33,12 @@ class ProjectName extends React.PureComponent {
     }
   }
 
-  componentWillReceiveProps(props) {
-    if (this.props.synced !== undefined && (this.props.synced !== props.synced) &&
-      (props.synced === 1)) {
-      message.success('Sync successfully', 0.5)
-    }
-  }
+  // componentWillReceiveProps(props) {
+  //   if (this.props.synced !== undefined && (this.props.synced !== props.synced) &&
+  //     (props.synced === 1)) {
+  //     message.success('Sync successfully', 0.5)
+  //   }
+  // }
 
   render() {
     return this.props.dt(
