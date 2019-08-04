@@ -64,8 +64,9 @@ class Sync extends Command {
 
   *exec() {
     let { payload } = this.action
-    let { project, cache } = payload
-    let { db, id } = this.options
+    let { cache } = payload
+    let { project } = yield select()
+    let { db } = this.options
     let client = getNewOOSClient()
     let total = 1
     let { userInfo } = ARGS
@@ -81,8 +82,9 @@ class Sync extends Command {
       if (cache) {
         const coverId = uuid()
         let coverResult = {}
-        if (exists(join(resolve(cache), `${firstPhoto.id}_512.webp`))) {
-          coverResult = yield client.put(coverId, join(resolve(cache), `${firstPhoto.id}_512.webp`))
+        const cacheCoverPath = join(resolve(join(cache.root, project.id)), `${firstPhoto.id}_512.webp`)
+        if (exists(cacheCoverPath)) {
+          coverResult = yield client.put(coverId, cacheCoverPath)
         } else {
           return
         }

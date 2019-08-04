@@ -504,6 +504,9 @@ class LabelReal extends EventEmitter {
     this.on('app:sync-project-file', () =>
       this.dispatch(act.project.syncProjectFile(), this.win))
 
+    this.on('app:sync-whole-project', () =>
+      this.dispatch(act.photo.sync({ cache: this.cache }), this.win))
+
     this.on('app:import-photos', () =>
       this.import())
 

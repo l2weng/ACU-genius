@@ -170,8 +170,7 @@ class ProjectContainer extends Component {
   }
 
   handleSyncProject2Cloud = () => {
-    const { project, cache } = this.props
-    this.props.onSyncProject2Cloud({ project, cache })
+    ipc.send('cmd', 'app:sync-whole-project')
   }
 
   handleSkuSave = (data) => {
