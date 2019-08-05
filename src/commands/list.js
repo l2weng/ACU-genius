@@ -7,10 +7,9 @@ const { LIST } = require('../constants')
 
 const actions = require('../actions/list')
 const sActions = require('../actions/selection')
-const act = require('../actions')
 const actionsHeader = require('../actions/header')
 const mod = require('../models/list')
-const projectMod = require('../models/project')
+const { ipcRenderer: ipc  } = require('electron')
 const axios = require('axios')
 const { userInfo } = ARGS
 
@@ -116,6 +115,10 @@ class Save extends Command {
 
     yield put(actions.update(payload))
     yield call(mod.save, db, payload)
+    if (this.original.name !== payload.name) {
+      yield axios.post(`${ARGS.apiServer}/tasks/update`, { name: payload.name, taskId: this.original.syncTaskId })
+      ipc.send('cmd', 'app:sync-project-file')
+    }
     this.undo = actions.save(this.original)
   }
 
