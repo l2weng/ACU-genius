@@ -12,6 +12,7 @@ const { getNewOOSClient, getFilesizeInBytes } = require('../common/dataUtil')
 const { error } = require('../common/log')
 const axios = require('axios')
 const uuid = require('uuid/v4')
+const { ipcRenderer: ipc  } = require('electron')
 const { existsSync: exists } = require('fs')
 
 class Rebase extends Command {
@@ -53,7 +54,11 @@ class Save extends Command {
         await mod.photo.rebase(tx, payload.base, this.original.base)
       }
     })
-
+    if (original.name !== payload.name) {
+      let { project } = yield select()
+      yield axios.post(`${ARGS.apiServer}/projects/update`, { name: payload.name, projectId: project.syncProjectId })
+      ipc.send('cmd', 'app:sync-project-file')
+    }
     yield put(act.project.update(payload))
     this.undo = act.project.save(original)
   }
