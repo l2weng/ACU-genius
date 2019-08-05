@@ -164,7 +164,7 @@ module.exports = {
           FROM subjects
             JOIN images USING (id)
             JOIN photos USING (id)${
-            ids != null ? ` WHERE id IN (${ids}) and tag_id isnull` : ' where tag_id isnull'
+            ids != null ? ` WHERE id IN (${ids})` : ' '
         }`,
         ({ id, created, modified, mirror, negative, path, ...data }) => {
           data.created = new Date(created)
@@ -272,6 +272,8 @@ module.exports = {
             brightness,
             contrast,
             hue,
+            syncFileUrl,
+            syncPhotoId,
             saturation,
             width,
             height,

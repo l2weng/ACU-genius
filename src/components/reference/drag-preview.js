@@ -6,7 +6,7 @@ const cx = require('classnames')
 const { arrayOf, func, number, shape, string } = require('prop-types')
 
 
-class PhotoDragPreview extends React.PureComponent {
+class ReferenceDragPreview extends React.PureComponent {
   get classes() {
     return ['photo', 'drag-preview', 'center', { multiple: this.count > 1 }]
   }
@@ -56,5 +56,5 @@ class PhotoDragPreview extends React.PureComponent {
 }
 
 module.exports = {
-  PhotoDragPreview
+  ReferenceDragPreview
 }

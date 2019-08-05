@@ -4,6 +4,7 @@ const React = require('react')
 const ReactDnD = require('react-dnd')
 const { ItemDragPreview } = require('./item')
 const { PhotoDragPreview } = require('./photo')
+const { ReferenceDragPreview } = require('./reference')
 const { SelectionDragPreview } = require('./selection')
 const { ListDragPreview } = require('./list')
 const { DND } = require('../constants')
@@ -58,6 +59,8 @@ class DragLayer extends React.Component {
         return <ItemDragPreview {...props} items={item.items}/>
       case DND.PHOTO:
         return <PhotoDragPreview {...props} items={[item]}/>
+      case DND.REFERENCE:
+        return <ReferenceDragPreview {...props} items={[item]}/>
       case DND.SELECTION:
         return <SelectionDragPreview {...props} items={[item]}/>
       case DND.LIST:
