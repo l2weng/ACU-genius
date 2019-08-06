@@ -549,51 +549,58 @@ class Sync extends Command {
     let { payload } = this.action
     const { db } = this.options
     const { project } = yield select()
-    const photos = yield call(db.seq, conn =>
-      mod.photo.load(conn, null, project))
-    const { userInfo } = ARGS
-    let photosArray = []
-    for (let i in photos) {
-      if (photos[i].tasks.length > 0) {
-        photosArray.push(photos[i])
+    if (project.synced) {
+      const photos = yield call(db.seq, conn =>
+        mod.photo.load(conn, null, project))
+      const {userInfo} = ARGS
+      let photosArray = []
+      for (let i in photos) {
+        if (photos[i].tasks.length > 0) {
+          photosArray.push(photos[i])
+        }
       }
-    }
-    let total = photosArray.length
-    for (let i = 0; i < photosArray.length; i++) {
-      let sPhoto = photosArray[i]
-      let client = getNewOOSClient()
-      try {
-        let result = { res: { status: 500 }, url: sPhoto.syncFileUrl }
-        if (!sPhoto.syncFileUrl) {
-          result = yield client.put(uuid(), sPhoto.path)
+      let total = photosArray.length
+      for (let i = 0; i < photosArray.length; i++) {
+        let sPhoto = photosArray[i]
+        let client = getNewOOSClient()
+        try {
+          let result = {res: {status: 500}, url: sPhoto.syncFileUrl}
+          if (!sPhoto.syncFileUrl) {
+            result = yield client.put(uuid(), sPhoto.path)
+          }
+          let syncPhoto = {
+            syncStatus: true,
+            syncFileUrl: result.url,
+            syncFileName: nodePath.win32.basename(sPhoto.path).
+              split('.').
+              slice(0, -1).
+              join('.'),
+            size: sPhoto.size,
+            width: sPhoto.width,
+            height: sPhoto.height,
+            mimeType: sPhoto.mimetype,
+            protocol: sPhoto.protocol,
+            fileUrl: sPhoto.path,
+            orientation: sPhoto.orientation,
+            tasks: sPhoto.tasks,
+            photoId: sPhoto.syncPhotoId,
+            userId: userInfo.user.userId,
+          }
+          const syncResult = yield axios.post(
+            `${ARGS.apiServer}/photos/syncPhoto`, syncPhoto)
+          if (syncResult.status === 200) {
+            yield call(mod.photo.syncPhoto, db, sPhoto.id, result.url,
+              syncResult.data.obj.photoId)
+          }
+          yield put(act.activity.update(this.action, {total, progress: i + 1}))
+        } catch (e) {
+          error(e.toString())
         }
-        let syncPhoto = {
-          syncStatus: true,
-          syncFileUrl: result.url,
-          syncFileName: nodePath.win32.basename(sPhoto.path).split('.').slice(0, -1).join('.'),
-          size: sPhoto.size,
-          width: sPhoto.width,
-          height: sPhoto.height,
-          mimeType: sPhoto.mimetype,
-          protocol: sPhoto.protocol,
-          fileUrl: sPhoto.path,
-          orientation: sPhoto.orientation,
-          tasks: sPhoto.tasks,
-          photoId: sPhoto.syncPhotoId,
-          userId: userInfo.user.userId,
-        }
-        const syncResult = yield axios.post(`${ARGS.apiServer}/photos/syncPhoto`, syncPhoto)
-        if (syncResult.status === 200) {
-          yield call(mod.photo.syncPhoto, db, sPhoto.id, result.url, syncResult.data.obj.photoId)
-        }
-        yield put(act.activity.update(this.action, { total, progress: i + 1 }))
-      } catch (e) {
-        error(e.toString())
       }
+      yield put(act.photo.upload(payload))
+      yield put(act.references.sync(payload))
+      yield put(act.project.sync(payload))
     }
-    yield put(act.photo.upload(payload))
-    yield put(act.references.sync(payload))
-    yield put(act.project.sync(payload))
   }
 }
 
