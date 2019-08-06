@@ -451,7 +451,7 @@ class ProjectSidebar extends React.PureComponent {
             <section>
               <h2><FormattedMessage id="sidebar.tags"/>
                 {isOwner ?
-                  <Tooltip placement="right" title="添加样本"><span className="functionIcon">
+                  <Tooltip placement="right" title="添加样本"><span style={{ padding: 0 }} className="functionIcon">
                     <Button
                       icon={<IconPlus/>}
                       onClick={this.addNewSKu}/>

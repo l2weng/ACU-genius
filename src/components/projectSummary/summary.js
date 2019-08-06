@@ -3,7 +3,7 @@
 const React = require('react')
 const { PureComponent } = React
 const { Row, Col } = require('antd')
-const { Chart, Geom, Axis, Tooltip, Coord } = require('bizcharts')
+const { Chart, Geom, Axis, Tooltip, Coord, Legend } = require('bizcharts')
 const { array } = require('prop-types')
 
 class Summary extends PureComponent {
@@ -21,11 +21,11 @@ class Summary extends PureComponent {
       { year: '12 Dec 2018', value: 13 }
     ]
     const data3 = [
-      { name: '鲁班', count: 30 },
-      { name: '韩信', count: 89 },
-      { name: '张亮', count: 80 },
-      { name: '孙尚香', count: 99 },
-      { name: '孙悟空', count: 66 }
+      { name: '鲁班', count: 30, cut: '#ff1e66' },
+      { name: '韩信', count: 89, cut: '#ff1e66' },
+      { name: '张亮', count: 80, cut: '#ff1e66' },
+      { name: '孙尚香', count: 99, cut: '#ff1e66' },
+      { name: '孙悟空', count: 66, cut: '#ff1e66' }
     ]
     const cols = {
       value: { min: 0 },
@@ -65,7 +65,9 @@ class Summary extends PureComponent {
                 <Axis name="name" label={{ offset: 12 }} />
                 <Axis name="count" />
                 <Tooltip />
-                <Geom type="interval" position="name*count" />
+                <Geom type="interval" color={['color', (color)=>{
+                  return color
+                }]} position="name*count" />
               </Chart>
             </div>
             <div>
@@ -75,7 +77,7 @@ class Summary extends PureComponent {
                 <Axis name="name" label={{ offset: 12 }} />
                 <Axis name="count" />
                 <Tooltip />
-                <Geom type="interval" position="name*count" />
+                <Geom type="interval"  position="name*count" />
               </Chart>
             </div>
           </Col>
