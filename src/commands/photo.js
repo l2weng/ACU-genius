@@ -552,7 +552,7 @@ class Sync extends Command {
     if (project.synced) {
       const photos = yield call(db.seq, conn =>
         mod.photo.load(conn, null, project))
-      const {userInfo} = ARGS
+      const { userInfo } = ARGS
       let photosArray = []
       for (let i in photos) {
         if (photos[i].tasks.length > 0) {
@@ -564,17 +564,17 @@ class Sync extends Command {
         let sPhoto = photosArray[i]
         let client = getNewOOSClient()
         try {
-          let result = {res: {status: 500}, url: sPhoto.syncFileUrl}
+          let result = { res: { status: 500 }, url: sPhoto.syncFileUrl }
           if (!sPhoto.syncFileUrl) {
             result = yield client.put(uuid(), sPhoto.path)
           }
           let syncPhoto = {
             syncStatus: true,
             syncFileUrl: result.url,
-            syncFileName: nodePath.win32.basename(sPhoto.path).
-              split('.').
-              slice(0, -1).
-              join('.'),
+            syncFileName: nodePath.win32.basename(sPhoto.path)
+              .split('.')
+              .slice(0, -1)
+              .join('.'),
             size: sPhoto.size,
             width: sPhoto.width,
             height: sPhoto.height,
@@ -592,7 +592,7 @@ class Sync extends Command {
             yield call(mod.photo.syncPhoto, db, sPhoto.id, result.url,
               syncResult.data.obj.photoId)
           }
-          yield put(act.activity.update(this.action, {total, progress: i + 1}))
+          yield put(act.activity.update(this.action, { total, progress: i + 1 }))
         } catch (e) {
           error(e.toString())
         }

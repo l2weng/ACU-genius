@@ -83,9 +83,9 @@ class ProjectToolbar extends PureComponent {
         </div>
         <div className="toolbar-right">
           <div className="tool-group">
-            <Popconfirm placement="right" title="Confirm" onConfirm={()=>this.props.onSubmitTask(list)} okText="Yes" cancelText="No">
+            {!isOwner ? <Popconfirm placement="right" title="Confirm" onConfirm={()=>this.props.onSubmitTask(list)} okText="Yes" cancelText="No">
               {list && taskWorkStatus !== 2 ? <Abutton icon="play-circle" size="small" style={{ marginRight: 8, height: '28px' }}>{taskWorkStatus === 0 ? 'Start Labelling' : 'Submit Task'}</Abutton> : ''}
-            </Popconfirm>
+            </Popconfirm> : ''}
           </div>
           <SearchField
             query={query}
