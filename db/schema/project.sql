@@ -200,6 +200,7 @@ CREATE TABLE selections (
   skuId         NUMERIC  NOT NULL DEFAULT 0,
   position  INTEGER,
   status  INTEGER,
+  spendTime  INTEGER,
   labelId   TEXT,
   color   TEXT,
   updatedTime INTEGER

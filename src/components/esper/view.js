@@ -31,6 +31,8 @@ class EsperView extends Component {
     const { width, height } = bounds(this.container)
 
     this.tweens = new TWEEN.Group()
+    this.selectionStartTime = 0
+    this.photoStartTime = 0
 
     skipHello()
 
@@ -78,6 +80,7 @@ class EsperView extends Component {
       this.image.selections.sync(props)
       this.image.cursor = props.tool
       this.pixi.render()
+      this.selectionStartTime = performance.now()
     }
   }
 
@@ -134,6 +137,7 @@ class EsperView extends Component {
     props.color = this.props.shapeColor
 
     if (props.src != null) {
+      this.photoStartTime = performance.now()
       this.image = new Picture(props)
 
       try {
@@ -593,7 +597,9 @@ class EsperView extends Component {
       y: round(newY),
       width: round(newWidth),
       height: round(newHeight),
-      color: this.props.shapeColor
+      color: this.props.shapeColor,
+      spendTime: performance.now() - this.selectionStartTime,
+      photoStartTime: this.photoStartTime
     })
   }
 
