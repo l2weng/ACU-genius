@@ -548,8 +548,9 @@ class Sync extends Command {
   *exec() {
     let { payload } = this.action
     const { db } = this.options
+    const { force } = payload
     const { project } = yield select()
-    if (project.synced) {
+    if (project.synced || force) {
       const photos = yield call(db.seq, conn =>
         mod.photo.load(conn, null, project))
       const { userInfo } = ARGS
@@ -610,7 +611,7 @@ class LabelSync extends Command {
   *exec() {
     let { payload } = this.action
     const { db } = this.options
-    let { photo, taskId } = payload
+    let { photo, taskId, spendTime } = payload
     const { userInfo } = ARGS
     const selections = yield call(db.seq, conn =>
       mod.selection.load(conn, photo.selections))
@@ -621,7 +622,7 @@ class LabelSync extends Command {
       labels.push(selections[i])
     }
     try {
-      const result  = yield axios.post(`${ARGS.apiServer}/labels/saveLabels`, { photoId: photo.syncPhotoId, labels, myTaskId: taskId, status: SELECTION.STATUS.NEW })
+      const result  = yield axios.post(`${ARGS.apiServer}/labels/savePhotoLabels`, { photoId: photo.syncPhotoId, spendTime, labels, myTaskId: taskId })
       if (result.status === 200) {
         const savedLabels = result.data.obj
         yield call(mod.selection.update, db, photo.id, savedLabels)

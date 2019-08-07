@@ -54,6 +54,7 @@ class Esper extends PureComponent {
   }
 
   componentDidMount() {
+    this.photoStartTime = 0
     this.ro = new ResizeObserver(([e]) => {
       this.handleResize(e.contentRect)
     })
@@ -74,6 +75,7 @@ class Esper extends PureComponent {
     }
 
     this.setState(this.getStateFromProps(), () => {
+      this.photoStartTime = performance.now()
       this.view.reset(this.state)
     })
   }
@@ -96,6 +98,7 @@ class Esper extends PureComponent {
       switch (true) {
         case (this.shouldViewReset(props, state)):
           state.quicktool = null
+          this.photoStartTime = performance.now()
           this.view.reset(state)
           break
         case (this.shouldViewSync(props, state)):
@@ -482,7 +485,7 @@ class Esper extends PureComponent {
   }
 
   handleLabelSave = (photo) => {
-    this.props.onLabelSave(photo)
+    this.props.onLabelSave(photo, (performance.now() - this.photoStartTime).toFixed(2))
   }
 
   handleLabelSkip = (photo) => {

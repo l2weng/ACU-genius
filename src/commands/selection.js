@@ -113,7 +113,6 @@ class Delete extends Command {
     let { payload } = this.action
     let { photo, selections } = payload
 
-    console.log(photo, selections)
     let ord = yield select(({ photos }) => photos[photo].selections)
 
     let idx = selections.map(id => ord.indexOf(id))
@@ -143,7 +142,6 @@ class SyncDelete extends Command {
     let { payload } = this.action
     let { photo, selections } = payload
 
-    console.log(photo, selections)
     let ord = yield select(({ photos }) => photos[photo].selections)
 
     ord = ord.filter(id => !selections.includes(id))

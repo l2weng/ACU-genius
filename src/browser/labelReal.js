@@ -65,8 +65,8 @@ class LabelReal extends EventEmitter {
     webgl: true,
     win: {},
     userInfo: {},
-    apiServer: 'http://47.105.236.123:8098/lr',
-    // apiServer: 'http://127.0.0.1:3000/lr',
+    // apiServer: 'http://47.105.236.123:8098/lr',
+    apiServer: 'http://127.0.0.1:3000/lr',
     projectsCache: {},
     zoom: 1.0
   }
@@ -504,8 +504,9 @@ class LabelReal extends EventEmitter {
     this.on('app:sync-project-file', () =>
       this.dispatch(act.project.syncProjectFile(), this.win))
 
-    this.on('app:sync-whole-project', () =>
-      this.dispatch(act.photo.sync({ cache: this.cache }), this.win))
+    this.on('app:sync-whole-project', (win, { force }) =>
+      this.dispatch(act.photo.sync({ cache: this.cache, force: force }),
+        win))
 
     this.on('app:import-photos', () =>
       this.import())

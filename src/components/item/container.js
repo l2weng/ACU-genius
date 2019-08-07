@@ -41,8 +41,8 @@ class ItemContainer extends React.PureComponent {
     }
   }
 
-  handleLabelSave = (photo) => {
-    this.props.onLabelSync({ photo: photo, taskId: this.props.nav.syncTaskId })
+  handleLabelSave = (photo, photoSpendTime) => {
+    this.props.onLabelSync({ photo: photo, taskId: this.props.nav.syncTaskId, photoSpendTime })
   }
 
   handleLabelSkip = (photo) => {

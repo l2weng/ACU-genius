@@ -13,6 +13,7 @@ const { constrain, Picture } = require('./picture')
 const { Selection  } = require('./selection')
 const TWEEN = require('@tweenjs/tween.js')
 const { TOOL } = require('../../constants/esper')
+const { SELECTION } = require('../../constants')
 const debounce = require('lodash.debounce')
 const { PI, floor, round } = Math
 
@@ -32,7 +33,6 @@ class EsperView extends Component {
 
     this.tweens = new TWEEN.Group()
     this.selectionStartTime = 0
-    this.photoStartTime = 0
 
     skipHello()
 
@@ -81,6 +81,7 @@ class EsperView extends Component {
       this.image.cursor = props.tool
       this.pixi.render()
       this.selectionStartTime = performance.now()
+      console.log(this.selectionStartTime)
     }
   }
 
@@ -137,7 +138,6 @@ class EsperView extends Component {
     props.color = this.props.shapeColor
 
     if (props.src != null) {
-      this.photoStartTime = performance.now()
       this.image = new Picture(props)
 
       try {
@@ -598,8 +598,8 @@ class EsperView extends Component {
       width: round(newWidth),
       height: round(newHeight),
       color: this.props.shapeColor,
-      spendTime: performance.now() - this.selectionStartTime,
-      photoStartTime: this.photoStartTime
+      status: SELECTION.STATUS.NEW,
+      spendTime: (performance.now() - this.selectionStartTime).toFixed(2)
     })
   }
 
