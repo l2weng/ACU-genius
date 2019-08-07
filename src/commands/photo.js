@@ -320,7 +320,7 @@ class RefCreate extends ImportCommand {
       }
     }
 
-    ipc.send('cmd', 'app:sync-whole-project')
+    ipc.send('cmd', 'app:sync-whole-project', { force: false })
     yield put(act.references.load({ tag_id }))
     this.undo = act.photo.delete({ item, photos })
     this.redo = act.photo.restore({ item, photos }, { idx })
@@ -611,7 +611,7 @@ class LabelSync extends Command {
   *exec() {
     let { payload } = this.action
     const { db } = this.options
-    let { photo, taskId, spendTime } = payload
+    let { photo, taskId, photoSpendTime } = payload
     const { userInfo } = ARGS
     const selections = yield call(db.seq, conn =>
       mod.selection.load(conn, photo.selections))
@@ -622,7 +622,7 @@ class LabelSync extends Command {
       labels.push(selections[i])
     }
     try {
-      const result  = yield axios.post(`${ARGS.apiServer}/labels/savePhotoLabels`, { photoId: photo.syncPhotoId, spendTime, labels, myTaskId: taskId })
+      const result  = yield axios.post(`${ARGS.apiServer}/labels/savePhotoLabels`, { photoId: photo.syncPhotoId, spendTime: photoSpendTime, labels, myTaskId: taskId })
       if (result.status === 200) {
         const savedLabels = result.data.obj
         yield call(mod.selection.update, db, photo.id, savedLabels)

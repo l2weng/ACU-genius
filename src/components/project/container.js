@@ -170,7 +170,7 @@ class ProjectContainer extends Component {
   }
 
   handleSyncProject2Cloud = () => {
-    ipc.send('cmd', 'app:sync-whole-project')
+    ipc.send('cmd', 'app:sync-whole-project', { force: false })
   }
 
   handleSkuSave = (data) => {

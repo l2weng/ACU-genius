@@ -131,7 +131,7 @@ class Import extends ImportCommand {
     }
 
     if (items.length) {
-      ipc.send('cmd', 'app:sync-whole-project')
+      ipc.send('cmd', 'app:sync-whole-project', { force: false })
       this.undo = act.item.delete(items)
       this.redo = act.item.restore(items)
     }
