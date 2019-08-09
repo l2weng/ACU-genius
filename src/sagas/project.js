@@ -19,10 +19,7 @@ const storage = require('./storage')
 const { onErrorPut } = require('./db')
 const args = require('../args')
 const axios = require('axios')
-const { empty } = require('../common/util')
-const nodePath = require('path')
-
-
+const { basename } = require('path')
 
 const {
   all, fork, cancel, call, put, take, takeEvery: every, race
@@ -50,12 +47,10 @@ function *open(file) {
 
     const project = yield call(mod.project.load, db)
     const access = yield call(mod.access.open, db)
-    const firstPhoto = yield call(mod.photo.loadOnePhoto, db)
-    let coverLocalPath = empty(firstPhoto) ? '' : nodePath.join(nodePath.win32.dirname(firstPhoto.path), encodeURIComponent(nodePath.win32.basename(firstPhoto.path)))
 
     let syncProjectId = ''
     let syncStatus = false
-    const syncResult = yield axios.post(`${ARGS.apiServer}/projects/syncLocalProject`, { file: db.path, ...project, cover: coverLocalPath })
+    const syncResult = yield axios.post(`${ARGS.apiServer}/projects/syncProjectByUuid`, { fileUuid: basename(db.path, '.lbr')})
     if (syncResult.status === 200) {
       syncProjectId = syncResult.data.project.projectId
       syncStatus = syncResult.data.project.syncStatus
