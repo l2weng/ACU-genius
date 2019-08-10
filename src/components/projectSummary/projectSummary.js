@@ -4,7 +4,7 @@ const React = require('react')
 const { PureComponent } = React
 const { Row, Col, Card, Tabs, Select, Form } = require('antd')
 const { Summary } = require('./summary')
-const { PhotoData } = require('./photoData')
+// const { PhotoData } = require('./photoData')
 const { TaskList } = require('./taskList')
 const { WorkLog } = require('./workLog')
 const { QualitySetting } = require('./qualitySetting')
@@ -20,26 +20,30 @@ class ProjectSummary extends PureComponent {
     super(props)
     this.state = {
       summaryActiveTab: '1',
+      cProjectId: this.props.projects ? this.props.projects[0].projectId : '',
       skuData: [],
+      logData: []
     }
   }
 
   componentDidMount() {
-    this.fetchSummary(this.props.projects ? this.props.projects[0].projectId : '')
+    this.fetchSummary()
   }
 
   handleSelectProject = (projectId) =>{
-    this.fetchSummary(projectId)
+    this.setState({ cProjectId: projectId })
+    this.fetchSummary()
   }
 
-  fetchSummary = (projectId) =>{
-    const { summaryActiveTab } = this.state
+  fetchSummary = () =>{
+    const { summaryActiveTab, cProjectId } = this.state
 
     switch (summaryActiveTab) {
       case '1':
-        this.fetchProjectSummary(projectId)
+        this.fetchProjectSummary(cProjectId)
         break
-      case '2':
+      case '5':
+        this.fetchWorkLog(cProjectId)
         break
       default:
         return
@@ -56,8 +60,19 @@ class ProjectSummary extends PureComponent {
     })
   }
 
+  fetchWorkLog = (projectId) =>{
+    axios.post(`${ARGS.apiServer}/activities/queryLog`, { projectId }).then((result) =>{
+      if (result.data.length > 0) {
+        this.setState({ logData: result.data })
+      }
+    }).catch(function (error) {
+      console.log(error)
+    })
+  }
+
   switchProjectSummaryTab = (tab) =>{
     this.setState({ summaryActiveTab: tab })
+    this.fetchSummary()
   }
 
   renderTitle() {
@@ -80,16 +95,16 @@ class ProjectSummary extends PureComponent {
   }
 
   render() {
-    const {
-      columns,
-      data,
-      items,
-      nav,
-      photos,
-      isEmpty,
-      ...props
-    } = this.props
-    const { summaryActiveTab, skuData } = this.state
+    // const {
+    //   columns,
+    //   data,
+    //   items,
+    //   nav,
+    //   photos,
+    //   isEmpty,
+    //   ...props
+    // } = this.props
+    const { summaryActiveTab, skuData, logData } = this.state
     return (
       <div>
         <Row gutter={24}>
@@ -99,17 +114,17 @@ class ProjectSummary extends PureComponent {
                 defaultActiveKey={summaryActiveTab}
                 tabPosition="left">
                 <TabPane tab="项目概述" key="1"><Summary skuData={skuData}/></TabPane>
-                <TabPane tab="图片数据" key="2"><PhotoData {...props}
-                  nav={nav}
-                  items={items}
-                  data={data}
-                  isActive
-                  isEmpty={isEmpty}
-                  columns={columns}
-                  photos={photos}/></TabPane>
+                {/*<TabPane tab="图片数据" key="2"><PhotoData {...props}*/}
+                {/*  nav={nav}*/}
+                {/*  items={items}*/}
+                {/*  data={data}*/}
+                {/*  isActive*/}
+                {/*  isEmpty={isEmpty}*/}
+                {/*  columns={columns}*/}
+                {/*  photos={photos}/></TabPane>*/}
                 <TabPane tab="项目参与者" key="3"><Members/></TabPane>
                 <TabPane tab="任务列表" key="4"><TaskList/></TabPane>
-                <TabPane tab="工作日志" key="5"><WorkLog/></TabPane>
+                <TabPane tab="工作日志" key="5"><WorkLog logData={logData}/></TabPane>
                 <TabPane tab="质量设置" key="6"><QualitySetting/></TabPane>
                 <TabPane tab="数据导出" key="7">Content of Tab Pane 6</TabPane>
               </Tabs>
@@ -122,13 +137,13 @@ class ProjectSummary extends PureComponent {
   static propTypes = {
     canDrop: bool,
     edit: object.isRequired,
-    isActive: bool,
-    isEmpty: bool.isRequired,
+    // isActive: bool,
+    // isEmpty: bool.isRequired,
     isOver: bool,
-    items: array.isRequired,
+    // items: array.isRequired,
     keymap: object.isRequired,
-    nav: object.isRequired,
-    photos: object.isRequired,
+    // nav: object.isRequired,
+    // photos: object.isRequired,
     tags: object.isRequired,
     onItemCreate: func.isRequired,
     onDataSetsCreate: func.isRequired,
@@ -138,7 +153,8 @@ class ProjectSummary extends PureComponent {
     onMaximize: func.isRequired,
     onSearch: func.isRequired,
     onSort: func.isRequired,
-    onUiUpdate: func.isRequired
+    onUiUpdate: func.isRequired,
+    projects: array
   }
 }
 

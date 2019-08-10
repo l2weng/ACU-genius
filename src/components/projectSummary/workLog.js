@@ -78,13 +78,7 @@ const rowSelection = {
 }
 
 class WorkLog extends PureComponent {
-  componentDidMount() {
 
-  }
-
-  componentWillUnmount() {
-
-  }
   render() {
     return (
       <div>
