@@ -6,12 +6,18 @@ const { Row, Col, Card, Tabs, Select, Form } = require('antd')
 const { Summary } = require('./summary')
 const { TaskList } = require('./taskList')
 const { WorkLog } = require('./workLog')
-const { QualitySetting } = require('./qualitySetting')
-const { Members } = require('./members')
+// const { QualitySetting } = require('./qualitySetting')
+// const { Members } = require('./members')
+const __ = require('underscore')
 const { array } = require('prop-types')
 const TabPane = Tabs.TabPane
 const Option = Select.Option
 const axios = require('axios')
+const INIT_PAGINATION = {
+  page: 1,
+  results: 10,
+  sortField: 'count',
+  sortOrder: 'descend' }
 
 class ProjectSummary extends PureComponent {
 
@@ -19,7 +25,9 @@ class ProjectSummary extends PureComponent {
     super(props)
     this.state = {
       skuData: [],
-      logData: []
+      logData: [],
+      logPagination: INIT_PAGINATION,
+      logLoading: false,
     }
   }
 
@@ -31,33 +39,37 @@ class ProjectSummary extends PureComponent {
 
   handleSelectProject = (projectId) =>{
     this.cProjectId = projectId
+    this.setState({ logPagination: INIT_PAGINATION })
     this.fetchSummary()
   }
 
   fetchSummary = () =>{
     switch (this.summaryTab) {
       case '1':
-        this.fetchProjectSummary(this.cProjectId)
+        this.fetchProjectSummary()
         break
       case '5':
-        this.fetchWorkLog(this.cProjectId)
+        this.fetchWorkLog(this.state.logPagination)
         break
       default:
         return
     }
   }
 
-  fetchProjectSummary = (projectId) =>{
-    axios.post(`${ARGS.apiServer}/summaries/countSkus`, { projectId }).then((result) =>{
+  fetchProjectSummary = () =>{
+    axios.post(`${ARGS.apiServer}/summaries/countSkus`, { projectId: this.cProjectId }).then((result) =>{
       this.setState({ skuData: result.data })
     }).catch(function (error) {
       console.log(error)
     })
   }
 
-  fetchWorkLog = (projectId) =>{
-    axios.post(`${ARGS.apiServer}/activities/queryLog`, { projectId }).then((result) =>{
-      this.setState({ logData: result.data.obj })
+  fetchWorkLog = (pagination) =>{
+    this.setState({ logLoading: true })
+    axios.post(`${ARGS.apiServer}/activities/queryLog`, { projectId: this.cProjectId, ...pagination }).then((result) =>{
+      const logPagination = { ...this.state.logPagination }
+      logPagination.total = result.data.total
+      this.setState({ logData: result.data.obj, logLoading: false, logPagination })
     }).catch(function (error) {
       console.log(error)
     })
@@ -66,6 +78,21 @@ class ProjectSummary extends PureComponent {
   switchProjectSummaryTab = (tab) =>{
     this.summaryTab = tab
     this.fetchSummary()
+  }
+
+  handleLogTableChange = (pagination, filters, sorter) => {
+    console.log(sorter)
+    const pager = { ...this.state.logPagination }
+    pager.page = pagination.current
+    this.setState({
+      pagination: pager,
+    })
+    this.fetchWorkLog({
+      results: pagination.results,
+      page: pagination.current,
+      sortField: !__.isEmpty(sorter) ? sorter.field : pagination.sortField,
+      sortOrder: !__.isEmpty(sorter) ? sorter.order : pagination.sortOrder,
+    })
   }
 
   renderTitle() {
@@ -88,7 +115,7 @@ class ProjectSummary extends PureComponent {
   }
 
   render() {
-    const { summaryTab, skuData, logData } = this.state
+    const { summaryTab, skuData, logData, logPagination } = this.state
     return (
       <div>
         <Row gutter={24}>
@@ -108,7 +135,13 @@ class ProjectSummary extends PureComponent {
                 {/*  photos={photos}/></TabPane>*/}
                 {/*<TabPane tab="项目参与者" key="3"><Members/></TabPane>*/}
                 <TabPane tab="任务列表" key="4"><TaskList/></TabPane>
-                <TabPane tab="工作日志" key="5"><WorkLog logData={logData}/></TabPane>
+                <TabPane tab="工作日志" key="5">
+                  <WorkLog
+                    logData={logData}
+                    pagination={logPagination}
+                    loading={this.state.logLoading}
+                    onChange={this.handleLogTableChange}/>
+                </TabPane>
                 {/*<TabPane tab="质量设置" key="6"><QualitySetting/></TabPane>*/}
                 <TabPane tab="数据导出" key="7">Content of Tab Pane 6</TabPane>
               </Tabs>
