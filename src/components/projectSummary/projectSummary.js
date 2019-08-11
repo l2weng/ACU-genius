@@ -19,31 +19,29 @@ class ProjectSummary extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {
-      summaryActiveTab: '1',
-      cProjectId: this.props.projects ? this.props.projects[0].projectId : '',
       skuData: [],
       logData: []
     }
   }
 
   componentDidMount() {
+    this.cProjectId = this.props.projects ? this.props.projects[0].projectId : ''
+    this.summaryTab = '1'
     this.fetchSummary()
   }
 
   handleSelectProject = (projectId) =>{
-    this.setState({ cProjectId: projectId })
+    this.cProjectId = projectId
     this.fetchSummary()
   }
 
   fetchSummary = () =>{
-    const { summaryActiveTab, cProjectId } = this.state
-
-    switch (summaryActiveTab) {
+    switch (this.summaryTab) {
       case '1':
-        this.fetchProjectSummary(cProjectId)
+        this.fetchProjectSummary(this.cProjectId)
         break
       case '5':
-        this.fetchWorkLog(cProjectId)
+        this.fetchWorkLog(this.cProjectId)
         break
       default:
         return
@@ -52,9 +50,7 @@ class ProjectSummary extends PureComponent {
 
   fetchProjectSummary = (projectId) =>{
     axios.post(`${ARGS.apiServer}/summaries/countSkus`, { projectId }).then((result) =>{
-      if (result.data.length > 0) {
-        this.setState({ skuData: result.data })
-      }
+      this.setState({ skuData: result.data })
     }).catch(function (error) {
       console.log(error)
     })
@@ -62,16 +58,14 @@ class ProjectSummary extends PureComponent {
 
   fetchWorkLog = (projectId) =>{
     axios.post(`${ARGS.apiServer}/activities/queryLog`, { projectId }).then((result) =>{
-      if (result.data.length > 0) {
-        this.setState({ logData: result.data })
-      }
+      this.setState({ logData: result.data.obj })
     }).catch(function (error) {
       console.log(error)
     })
   }
 
   switchProjectSummaryTab = (tab) =>{
-    this.setState({ summaryActiveTab: tab })
+    this.summaryTab = tab
     this.fetchSummary()
   }
 
@@ -104,14 +98,15 @@ class ProjectSummary extends PureComponent {
     //   isEmpty,
     //   ...props
     // } = this.props
-    const { summaryActiveTab, skuData, logData } = this.state
+    const { summaryTab, skuData, logData } = this.state
+    console.log(skuData)
     return (
       <div>
         <Row gutter={24}>
           <Col span={24}>
             <Card title={this.renderTitle()} bordered={false}>
               <Tabs style={{ textAlign: 'left' }} onChange={this.switchProjectSummaryTab}
-                defaultActiveKey={summaryActiveTab}
+                defaultActiveKey={summaryTab}
                 tabPosition="left">
                 <TabPane tab="项目概述" key="1"><Summary skuData={skuData}/></TabPane>
                 {/*<TabPane tab="图片数据" key="2"><PhotoData {...props}*/}
