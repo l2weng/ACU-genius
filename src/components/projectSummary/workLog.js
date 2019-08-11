@@ -4,6 +4,9 @@ const React = require('react')
 const { PureComponent } = React
 const { array, object, bool, func } = require('prop-types')
 const { Table } = require('antd')
+const moment = require('moment')
+const { ACTIVITY } = require('../../constants')
+
 const columns = [
   {
     title: '工作人员',
@@ -14,7 +17,8 @@ const columns = [
     dataIndex: 'role',
   }, {
     title: '类型',
-    dataIndex: 'type',
+    dataIndex: 'category',
+    render: category => <div>{ACTIVITY.CATEGORY[category]}</div>,
   }, {
     title: '图片地址',
     dataIndex: 'address',
@@ -25,9 +29,11 @@ const columns = [
   }, {
     title: '耗时',
     dataIndex: 'spendTime',
+    render: spendTime=><div>{(spendTime / 1000).toFixed(2)}s</div>,
   }, {
     title: '完成日期',
     dataIndex: 'finishedTime',
+    render: finishedTime=><div>{moment(new Date(finishedTime)).format('YYYY-MM-DD, HH:mm:ss')}</div>,
   }, {
     title: '操作',
     dataIndex: '',
