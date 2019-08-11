@@ -4,12 +4,11 @@ const React = require('react')
 const { PureComponent } = React
 const { Row, Col, Card, Tabs, Select, Form } = require('antd')
 const { Summary } = require('./summary')
-// const { PhotoData } = require('./photoData')
 const { TaskList } = require('./taskList')
 const { WorkLog } = require('./workLog')
 const { QualitySetting } = require('./qualitySetting')
 const { Members } = require('./members')
-const { array, bool, func, object, } = require('prop-types')
+const { array } = require('prop-types')
 const TabPane = Tabs.TabPane
 const Option = Select.Option
 const axios = require('axios')
@@ -89,17 +88,7 @@ class ProjectSummary extends PureComponent {
   }
 
   render() {
-    // const {
-    //   columns,
-    //   data,
-    //   items,
-    //   nav,
-    //   photos,
-    //   isEmpty,
-    //   ...props
-    // } = this.props
     const { summaryTab, skuData, logData } = this.state
-    console.log(skuData)
     return (
       <div>
         <Row gutter={24}>
@@ -117,10 +106,10 @@ class ProjectSummary extends PureComponent {
                 {/*  isEmpty={isEmpty}*/}
                 {/*  columns={columns}*/}
                 {/*  photos={photos}/></TabPane>*/}
-                <TabPane tab="项目参与者" key="3"><Members/></TabPane>
+                {/*<TabPane tab="项目参与者" key="3"><Members/></TabPane>*/}
                 <TabPane tab="任务列表" key="4"><TaskList/></TabPane>
                 <TabPane tab="工作日志" key="5"><WorkLog logData={logData}/></TabPane>
-                <TabPane tab="质量设置" key="6"><QualitySetting/></TabPane>
+                {/*<TabPane tab="质量设置" key="6"><QualitySetting/></TabPane>*/}
                 <TabPane tab="数据导出" key="7">Content of Tab Pane 6</TabPane>
               </Tabs>
             </Card>
@@ -130,25 +119,6 @@ class ProjectSummary extends PureComponent {
     )
   }
   static propTypes = {
-    canDrop: bool,
-    edit: object.isRequired,
-    // isActive: bool,
-    // isEmpty: bool.isRequired,
-    isOver: bool,
-    // items: array.isRequired,
-    keymap: object.isRequired,
-    // nav: object.isRequired,
-    // photos: object.isRequired,
-    tags: object.isRequired,
-    onItemCreate: func.isRequired,
-    onDataSetsCreate: func.isRequired,
-    onItemImport: func.isRequired,
-    onItemSelect: func.isRequired,
-    onItemTagAdd: func.isRequired,
-    onMaximize: func.isRequired,
-    onSearch: func.isRequired,
-    onSort: func.isRequired,
-    onUiUpdate: func.isRequired,
     projects: array
   }
 }

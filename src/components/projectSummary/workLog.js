@@ -43,7 +43,7 @@ class WorkLog extends PureComponent {
     console.log(logData)
     return (
       <div>
-        <Table columns={columns} dataSource={logData} />
+        <Table columns={columns} rowKey={record => record.activityId} dataSource={logData} />
       </div>
     )
   }

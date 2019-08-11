@@ -302,15 +302,9 @@ class ProjectContainer extends Component {
       ref={this.setContainer}
       onContextMenu={this.handleContextMenu} >
       {projects.length > 0 ? <ProjectSummary {...props}
-        nav={nav}
-        items={items}
-        data={data}
-        isActive
         projects={projects}
-        isEmpty={this.isEmpty}
         columns={columns}
-        offset={this.state.offset}
-        photos={photos}/> : ''}</div>)
+        offset={this.state.offset}/> : ''}</div>)
     return showProject ? mainProject : projectSummary
   }
 
