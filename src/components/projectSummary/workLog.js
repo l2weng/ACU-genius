@@ -60,7 +60,7 @@ class WorkLog extends PureComponent {
     return (
       <div>
         <Table columns={columns} pagination={pagination} loading={loading}
-          rowKey={record => record.activityId} dataSource={logData}
+          rowKey={record => `${record.activityId}-${record.labelId}`} dataSource={logData}
           onChange={onChange}/>
       </div>
     )
