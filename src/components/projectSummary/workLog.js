@@ -20,8 +20,8 @@ const columns = [
     dataIndex: 'category',
     render: category => <div>{ACTIVITY.CATEGORY[category]}</div>,
   }, {
-    title: '图片地址',
-    dataIndex: 'address',
+    title: '图片名称',
+    dataIndex: 'photoName',
   }, {
     title: '标注数',
     sorter: true,

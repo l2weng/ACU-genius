@@ -14,7 +14,7 @@ const TabPane = Tabs.TabPane
 const Option = Select.Option
 const axios = require('axios')
 const INIT_PAGINATION = {
-  page: 0,
+  page: 1,
   results: 10,
   sortField: 'count',
   sortOrder: 'descend' }
@@ -81,7 +81,6 @@ class ProjectSummary extends PureComponent {
   }
 
   handleLogTableChange = (pagination, filters, sorter) => {
-    console.log(sorter)
     const pager = { ...this.state.logPagination }
     pager.page = pagination.current
     this.setState({
