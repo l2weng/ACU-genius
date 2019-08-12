@@ -11,6 +11,7 @@ const { bool, func, object } = require('prop-types')
 const { CirclePicker } = require('react-color')
 const { IconSelection, IconPolygon } = require('../icons')
 const { LIST } = require('../../constants')
+const __ = require('underscore')
 
 class SkuForm extends Component {
   state = {
@@ -48,7 +49,7 @@ class SkuForm extends Component {
     }
     let taskOptions = []
     Object.values(tasks).map(task => {
-      if (task && (task.id !== LIST.ROOT)) {
+      if (!__.isEmpty(task) && (task.id !== LIST.ROOT)) {
         taskOptions.push({ label: task.name, value: task.id })
       }
     })

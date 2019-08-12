@@ -21,6 +21,7 @@ const columns = [
     render: category => <div>{ACTIVITY.CATEGORY[category]}</div>,
   }, {
     title: '图片名称',
+    width: '20%',
     dataIndex: 'photoName',
   }, {
     title: '标注数',
