@@ -14,7 +14,7 @@ const TabPane = Tabs.TabPane
 const Option = Select.Option
 const axios = require('axios')
 const INIT_PAGINATION = {
-  page: 1,
+  page: 0,
   results: 10,
   sortField: 'count',
   sortOrder: 'descend' }
