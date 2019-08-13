@@ -36,28 +36,32 @@ class Sync extends Command {
     let total = photosArray.length
     for (let i = 0; i < photosArray.length; i++) {
       let sPhoto = photosArray[i]
-      let client = getNewOOSClient()
-      try {
-        let result = { res: { status: 500 }, url: sPhoto.syncFileUrl }
-        if (!sPhoto.syncFileUrl) {
-          result = yield client.put(uuid(), sPhoto.path)
+      if (!sPhoto.syncPhotoId) {
+        let client = getNewOOSClient()
+        try {
+          let result = { res: { status: 500 }, url: sPhoto.syncFileUrl }
+          if (!sPhoto.syncFileUrl) {
+            result = yield client.put(uuid(), sPhoto.path)
+          }
+          let syncPhoto = {
+            syncFileUrl: result.url,
+            syncFileName: nodePath.win32.basename(sPhoto.path).split('.').slice(0, -1).join('.'),
+            referenceId: sPhoto.syncPhotoId,
+            userId: userInfo.user.userId,
+            skuId: sPhoto.syncSkuId,
+            fileUrl: sPhoto.path,
+            fileType: REFERENCES.PHOTO_FILE_TYPE,
+          }
+          const syncResult = yield axios.post(`${ARGS.apiServer}/references/syncReferences`, syncPhoto)
+          if (syncResult.status === 200) {
+            yield call(mod.photo.syncPhoto, db, sPhoto.id, result.url, syncResult.data.obj.referenceId)
+          }
+          yield put(act.activity.update(this.action, { total, progress: i + 1 }))
+        } catch (e) {
+          error(e.toString())
         }
-        let syncPhoto = {
-          syncFileUrl: result.url,
-          syncFileName: nodePath.win32.basename(sPhoto.path).split('.').slice(0, -1).join('.'),
-          referenceId: sPhoto.syncPhotoId,
-          userId: userInfo.user.userId,
-          skuId: sPhoto.syncSkuId,
-          fileUrl: sPhoto.path,
-          fileType: REFERENCES.PHOTO_FILE_TYPE,
-        }
-        const syncResult = yield axios.post(`${ARGS.apiServer}/references/syncReferences`, syncPhoto)
-        if (syncResult.status === 200) {
-          yield call(mod.photo.syncPhoto, db, sPhoto.id, result.url, syncResult.data.obj.referenceId)
-        }
+      } else {
         yield put(act.activity.update(this.action, { total, progress: i + 1 }))
-      } catch (e) {
-        error(e.toString())
       }
     }
     yield put(act.photo.upload(payload))

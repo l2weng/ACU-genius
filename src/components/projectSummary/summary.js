@@ -3,7 +3,7 @@
 const React = require('react')
 const { PureComponent } = React
 const { Row, Col } = require('antd')
-const { Chart, Geom, Axis, Tooltip, Coord, Legend } = require('bizcharts')
+const { Chart, Geom, Axis, Tooltip, Coord } = require('bizcharts')
 const { array } = require('prop-types')
 
 class Summary extends PureComponent {

@@ -563,44 +563,48 @@ class Sync extends Command {
       let total = photosArray.length
       for (let i = 0; i < photosArray.length; i++) {
         let sPhoto = photosArray[i]
-        let client = getNewOOSClient()
-        try {
-          let result = { res: { status: 500 }, url: sPhoto.syncFileUrl }
-          if (!sPhoto.syncFileUrl) {
-            result = yield client.put(uuid(), sPhoto.path)
-          }
-          let syncPhoto = {
-            syncStatus: true,
-            syncFileUrl: result.url,
-            syncFileName: nodePath.win32.basename(sPhoto.path)
+        if (!sPhoto.syncPhotoId) {
+          let client = getNewOOSClient()
+          try {
+            let result = { res: { status: 500 }, url: sPhoto.syncFileUrl }
+            if (!sPhoto.syncFileUrl) {
+              result = yield client.put(uuid(), sPhoto.path)
+            }
+            let syncPhoto = {
+              syncStatus: true,
+              syncFileUrl: result.url,
+              syncFileName: nodePath.win32.basename(sPhoto.path)
               .split('.')
               .slice(0, -1)
               .join('.'),
-            size: sPhoto.size,
-            width: sPhoto.width,
-            height: sPhoto.height,
-            mimeType: sPhoto.mimetype,
-            protocol: sPhoto.protocol,
-            fileUrl: sPhoto.path,
-            orientation: sPhoto.orientation,
-            tasks: sPhoto.tasks,
-            photoId: sPhoto.syncPhotoId,
-            userId: userInfo.user.userId,
+              size: sPhoto.size,
+              width: sPhoto.width,
+              height: sPhoto.height,
+              mimeType: sPhoto.mimetype,
+              protocol: sPhoto.protocol,
+              fileUrl: sPhoto.path,
+              orientation: sPhoto.orientation,
+              tasks: sPhoto.tasks,
+              photoId: sPhoto.syncPhotoId,
+              userId: userInfo.user.userId,
+              projectId: project.syncProjectId,
+            }
+            const syncResult = yield axios.post(
+              `${ARGS.apiServer}/photos/syncPhoto`, syncPhoto)
+            if (syncResult.status === 200) {
+              yield call(mod.photo.syncPhoto, db, sPhoto.id, result.url,
+                syncResult.data.obj.photoId)
+            }
+            yield put(act.activity.update(this.action, { total, progress: i + 1 }))
+          } catch (e) {
+            error(e.toString())
           }
-          const syncResult = yield axios.post(
-            `${ARGS.apiServer}/photos/syncPhoto`, syncPhoto)
-          if (syncResult.status === 200) {
-            yield call(mod.photo.syncPhoto, db, sPhoto.id, result.url,
-              syncResult.data.obj.photoId)
-          }
+        } else {
           yield put(act.activity.update(this.action, { total, progress: i + 1 }))
-        } catch (e) {
-          error(e.toString())
         }
       }
       yield put(act.photo.upload(payload))
       yield put(act.references.sync(payload))
-      yield put(act.project.sync(payload))
     }
   }
 }
