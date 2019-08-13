@@ -38,5 +38,9 @@ module.exports = {
     REMOVE: 'photo.selection.remove'
   },
 
+  STATUS: {
+    OPEN: 0, SKIPPED: 1, SUBMITTED: 2
+  },
+
   TEMPLATE: 'https://tropy.org/v1/templates/photo'
 }

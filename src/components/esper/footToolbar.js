@@ -26,6 +26,7 @@ class EsperFootToolbar extends PureComponent {
     const { photo, selections } = this.props
     let modifiedTime = ''
     if (photo) modifiedTime = moment(new Date(photo.modified)).format('MMMM Do YYYY, h:mm:ss a')
+    console.log(photo)
     return (
       <Toolbar isDraggable={false}>
         <ToolbarLeft>
@@ -36,28 +37,15 @@ class EsperFootToolbar extends PureComponent {
         </ToolbarLeft>
         <div className="toolbar-center" style={{ margin: 'auto' }}>
           <ToolGroup>
-            {(photo && photo.syncPhotoId) ?
-              <ButtonGroup>
-                <Button type="default" size="small" onClick={this.confirmPhoto}>
-                  <Icon type="save"/>
-                  提交
-                </Button>
-                <Button type="default" size="small" onClick={this.ignorePhoto}>
-                  跳过
-                </Button>
-              </ButtonGroup> :
-              <Tooltip placement="top" title={'请先同步项目'}>
-                <ButtonGroup>
-                  <Button type="default" size="small" onClick={this.confirmPhoto} disabled>
-                    <Icon type="save"/>
-                    提交
-                  </Button>
-                  <Button type="default" size="small" onClick={this.ignorePhoto} disabled>
-                    跳过
-                  </Button>
-                </ButtonGroup>
-              </Tooltip>
-            }
+            <ButtonGroup>
+              <Button type="default" size="small" onClick={this.confirmPhoto}>
+                <Icon type="save"/>
+                提交
+              </Button>
+              <Button type="default" size="small" onClick={this.ignorePhoto}>
+                跳过
+              </Button>
+            </ButtonGroup>
           </ToolGroup>
         </div>
       </Toolbar>

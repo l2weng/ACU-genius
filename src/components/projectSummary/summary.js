@@ -4,7 +4,7 @@ const React = require('react')
 const { PureComponent } = React
 const { Row, Col } = require('antd')
 const { Chart, Geom, Axis, Tooltip, Coord } = require('bizcharts')
-const { array } = require('prop-types')
+const { array, object } = require('prop-types')
 
 class Summary extends PureComponent {
 
@@ -31,8 +31,8 @@ class Summary extends PureComponent {
       value: { min: 0 },
       year: { range: [0, 1] }
     }
-    const { skuData } = this.props
-    console.log(skuData)
+    const { skuData, taskStatuses } = this.props
+    console.log(taskStatuses)
     return (
       <div className="project-summary">
         <Row gutter={24}>
@@ -40,10 +40,10 @@ class Summary extends PureComponent {
             <div>
               <div className="title">项目进度:</div>
               <div className="details">
-                <div className="summary-progress"><div className="label">3</div><div className="val">Submitted</div></div>
-                <div className="summary-progress"><div className="label">0</div><div className="val">Remaining</div></div>
-                <div className="summary-progress"><div className="label">0</div><div className="val">Skipped</div></div>
-                <div className="summary-progress"><div className="label">100%</div><div className="val">Complete</div></div>
+                <div className="summary-progress"><div className="label">{taskStatuses.submitted}</div><div className="val">Submitted</div></div>
+                <div className="summary-progress"><div className="label">{taskStatuses.open}</div><div className="val">Remaining</div></div>
+                <div className="summary-progress"><div className="label">{taskStatuses.skipped}</div><div className="val">Skipped</div></div>
+                <div className="summary-progress"><div className="label">{taskStatuses.progress}%</div><div className="val">Complete</div></div>
               </div>
             </div>
             <div style={{ paddingTop: '24px' }}>
@@ -87,6 +87,7 @@ class Summary extends PureComponent {
   }
   static propTypes = {
     skuData: array.isRequired,
+    taskStatuses: object.isRequired
   }
 }
 

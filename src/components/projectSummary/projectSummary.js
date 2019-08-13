@@ -9,10 +9,13 @@ const { WorkLog } = require('./workLog')
 // const { QualitySetting } = require('./qualitySetting')
 // const { Members } = require('./members')
 const __ = require('underscore')
+const { PHOTO } = require('../../constants')
 const { array } = require('prop-types')
 const TabPane = Tabs.TabPane
 const Option = Select.Option
 const axios = require('axios')
+const { error } = require('../../common/log')
+
 const INIT_PAGINATION = {
   page: 1,
   results: 10,
@@ -26,6 +29,7 @@ class ProjectSummary extends PureComponent {
     this.state = {
       skuData: [],
       logData: [],
+      taskStatuses: {},
       logPagination: INIT_PAGINATION,
       logLoading: false,
     }
@@ -59,8 +63,32 @@ class ProjectSummary extends PureComponent {
   fetchProjectSummary = () =>{
     axios.post(`${ARGS.apiServer}/summaries/countSkus`, { projectId: this.cProjectId }).then((result) =>{
       this.setState({ skuData: result.data })
-    }).catch(function (error) {
-      console.log(error)
+    }).catch(function (err) {
+      error(err.toString())
+    })
+    axios.post(`${ARGS.apiServer}/summaries/countPhotoStatus`, { projectId: this.cProjectId }).then((result) =>{
+      const taskStatusArr = result.data
+      let _taskStatuses = { total: 0, progress: 100, open: 0, skipped: 0, submitted: 0 }
+      if (taskStatusArr.length > 0) {
+        for (const statusElement of taskStatusArr) {
+          if (statusElement.photoStatus === PHOTO.STATUS.OPEN) {
+            _taskStatuses.open = statusElement.count
+            _taskStatuses.total += statusElement.count
+          }
+          if (statusElement.photoStatus === PHOTO.STATUS.SKIPPED) {
+            _taskStatuses.skipped = statusElement.count
+            _taskStatuses.total += statusElement.count
+          }
+          if (statusElement.photoStatus === PHOTO.STATUS.SUBMITTED) {
+            _taskStatuses.submitted = statusElement.count
+            _taskStatuses.total += statusElement.count
+          }
+        }
+      }
+      _taskStatuses.progress = _taskStatuses.total === 0 ? 0 : (((_taskStatuses.total - _taskStatuses.open) / _taskStatuses.total) * 100).toFixed(2)
+      this.setState({ taskStatuses: _taskStatuses })
+    }).catch(function (err) {
+      error(err.toString())
     })
   }
 
@@ -114,7 +142,7 @@ class ProjectSummary extends PureComponent {
   }
 
   render() {
-    const { summaryTab, skuData, logData, logPagination } = this.state
+    const { summaryTab, skuData, logData, logPagination, taskStatuses } = this.state
     return (
       <div>
         <Row gutter={24}>
@@ -123,7 +151,7 @@ class ProjectSummary extends PureComponent {
               <Tabs style={{ textAlign: 'left' }} onChange={this.switchProjectSummaryTab}
                 defaultActiveKey={summaryTab}
                 tabPosition="left">
-                <TabPane tab="项目概述" key="1"><Summary skuData={skuData}/></TabPane>
+                <TabPane tab="项目概述" key="1"><Summary skuData={skuData} taskStatuses={taskStatuses}/></TabPane>
                 {/*<TabPane tab="图片数据" key="2"><PhotoData {...props}*/}
                 {/*  nav={nav}*/}
                 {/*  items={items}*/}
