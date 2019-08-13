@@ -31,8 +31,7 @@ class Summary extends PureComponent {
       value: { min: 0 },
       year: { range: [0, 1] }
     }
-    const { skuData, taskStatuses } = this.props
-    console.log(taskStatuses)
+    const { skuData, taskStatuses, activityData } = this.props
     return (
       <div className="project-summary">
         <Row gutter={24}>
@@ -48,12 +47,12 @@ class Summary extends PureComponent {
             </div>
             <div style={{ paddingTop: '24px' }}>
               <div className="title">Labeling Activity:</div>
-              <Chart height={400} data={data} scale={cols} forceFit>
-                <Axis name="year" />
-                <Axis name="value" />
+              <Chart height={400} data={activityData} scale={cols} forceFit>
+                <Axis name="Time" />
+                <Axis name="SumCount" />
                 <Tooltip crosshairs={{ type: 'y' }}/>
-                <Geom type="line" position="year*value" size={2} />
-                <Geom type="point" position="year*value" size={4} shape={'circle'} style={{ stroke: '#fff', lineWidth: 1 }} />
+                <Geom type="line" position="Time*SumCount" size={2} />
+                <Geom type="point" position="Time*SumCount" size={4} shape={'circle'} style={{ stroke: '#fff', lineWidth: 1 }} />
               </Chart>
             </div>
           </Col>
@@ -87,7 +86,8 @@ class Summary extends PureComponent {
   }
   static propTypes = {
     skuData: array.isRequired,
-    taskStatuses: object.isRequired
+    taskStatuses: object.isRequired,
+    activityData: array.isRequired
   }
 }
 

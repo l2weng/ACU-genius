@@ -29,6 +29,7 @@ class ProjectSummary extends PureComponent {
     this.state = {
       skuData: [],
       logData: [],
+      activityData: [],
       taskStatuses: {},
       logPagination: INIT_PAGINATION,
       logLoading: false,
@@ -61,11 +62,28 @@ class ProjectSummary extends PureComponent {
   }
 
   fetchProjectSummary = () =>{
+    this.fetchSkuCount()
+    this.fetchPhotoStatuses()
+    this.fetchActivityData()
+  }
+
+  fetchSkuCount = () =>{
     axios.post(`${ARGS.apiServer}/summaries/countSkus`, { projectId: this.cProjectId }).then((result) =>{
       this.setState({ skuData: result.data })
     }).catch(function (err) {
       error(err.toString())
     })
+  }
+
+  fetchActivityData = () =>{
+    axios.post(`${ARGS.apiServer}/activities/queryByDate`, { projectId: this.cProjectId }).then((result) =>{
+      this.setState({ activityData: result.data })
+    }).catch(function (err) {
+      error(err.toString())
+    })
+  }
+
+  fetchPhotoStatuses = () =>{
     axios.post(`${ARGS.apiServer}/summaries/countPhotoStatus`, { projectId: this.cProjectId }).then((result) =>{
       const taskStatusArr = result.data
       let _taskStatuses = { total: 0, progress: 100, open: 0, skipped: 0, submitted: 0 }
@@ -142,7 +160,7 @@ class ProjectSummary extends PureComponent {
   }
 
   render() {
-    const { summaryTab, skuData, logData, logPagination, taskStatuses } = this.state
+    const { summaryTab, skuData, logData, logPagination, taskStatuses, activityData } = this.state
     return (
       <div>
         <Row gutter={24}>
@@ -151,7 +169,7 @@ class ProjectSummary extends PureComponent {
               <Tabs style={{ textAlign: 'left' }} onChange={this.switchProjectSummaryTab}
                 defaultActiveKey={summaryTab}
                 tabPosition="left">
-                <TabPane tab="项目概述" key="1"><Summary skuData={skuData} taskStatuses={taskStatuses}/></TabPane>
+                <TabPane tab="项目概述" key="1"><Summary skuData={skuData} taskStatuses={taskStatuses} activityData={activityData}/></TabPane>
                 {/*<TabPane tab="图片数据" key="2"><PhotoData {...props}*/}
                 {/*  nav={nav}*/}
                 {/*  items={items}*/}
