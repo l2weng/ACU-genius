@@ -298,7 +298,7 @@ class ProjectContainer extends Component {
         </div>
       </div>)
     const projectSummary = (<div style={{ height: '100%' }}
-      className={cx(this.classes)}
+      // className={cx(this.classes)}
       ref={this.setContainer}
       onContextMenu={this.handleContextMenu} >
       {projects.length > 0 ? <ProjectSummary {...props}
