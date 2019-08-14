@@ -2,24 +2,14 @@
 
 const React = require('react')
 const { PureComponent } = React
-const { Row, Col } = require('antd')
+const { Row, Col, Radio } = require('antd')
 const { Chart, Geom, Axis, Tooltip, Coord } = require('bizcharts')
-const { array, object } = require('prop-types')
+const { array, object, func } = require('prop-types')
 
 class Summary extends PureComponent {
 
   render() {
-    const data = [
-      { year: '4 Dec 2018', value: 3 },
-      { year: '5 Dec 2018', value: 4 },
-      { year: '6 Dec 2018', value: 3.5 },
-      { year: '7 Dec 2018', value: 5 },
-      { year: '8 Dec 2018', value: 4.9 },
-      { year: '9 Dec 2018', value: 6 },
-      { year: '10 Dec 2018', value: 7 },
-      { year: '11 Dec 2018', value: 9 },
-      { year: '12 Dec 2018', value: 13 }
-    ]
+
     const data3 = [
       { name: '鲁班', count: 30, cut: '#ff1e66' },
       { name: '韩信', count: 89, cut: '#ff1e66' },
@@ -46,8 +36,14 @@ class Summary extends PureComponent {
               </div>
             </div>
             <div style={{ paddingTop: '24px' }}>
+              <div style={{ paddingBottom: '5px' }}>
+                <Radio.Group defaultValue="HH" size="small" onChange={this.props.switchActivityData}>
+                  <Radio.Button value="HH">Today</Radio.Button>
+                  <Radio.Button value="DD">Last 7 days</Radio.Button>
+                </Radio.Group>
+              </div>
               <div className="title">Labeling Activity:</div>
-              <Chart height={400} data={activityData} scale={cols} forceFit>
+              <Chart height={400} data={activityData} scale={cols} forceFit placeholder="暂无数据">
                 <Axis name="Time" />
                 <Axis name="SumCount" />
                 <Tooltip crosshairs={{ type: 'y' }}/>
@@ -87,7 +83,8 @@ class Summary extends PureComponent {
   static propTypes = {
     skuData: array.isRequired,
     taskStatuses: object.isRequired,
-    activityData: array.isRequired
+    activityData: array.isRequired,
+    switchActivityData: func.isRequired
   }
 }
 

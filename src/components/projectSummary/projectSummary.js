@@ -75,8 +75,8 @@ class ProjectSummary extends PureComponent {
     })
   }
 
-  fetchActivityData = () =>{
-    axios.post(`${ARGS.apiServer}/activities/queryByDate`, { projectId: this.cProjectId }).then((result) =>{
+  fetchActivityData = (type = 'HH') =>{
+    axios.post(`${ARGS.apiServer}/activities/queryByDate`, { projectId: this.cProjectId, type: type }).then((result) =>{
       this.setState({ activityData: result.data })
     }).catch(function (err) {
       error(err.toString())
@@ -126,6 +126,10 @@ class ProjectSummary extends PureComponent {
     this.fetchSummary()
   }
 
+  handleSwitchActivity = (e)=>{
+    this.fetchActivityData(e.target.value)
+  }
+
   handleLogTableChange = (pagination, filters, sorter) => {
     const pager = { ...this.state.logPagination }
     pager.page = pagination.current
@@ -169,7 +173,11 @@ class ProjectSummary extends PureComponent {
               <Tabs style={{ textAlign: 'left' }} onChange={this.switchProjectSummaryTab}
                 defaultActiveKey={summaryTab}
                 tabPosition="left">
-                <TabPane tab="项目概述" key="1"><Summary skuData={skuData} taskStatuses={taskStatuses} activityData={activityData}/></TabPane>
+                <TabPane tab="项目概述" key="1"><Summary
+                  skuData={skuData}
+                  taskStatuses={taskStatuses}
+                  switchActivityData={this.handleSwitchActivity}
+                  activityData={activityData}/></TabPane>
                 {/*<TabPane tab="图片数据" key="2"><PhotoData {...props}*/}
                 {/*  nav={nav}*/}
                 {/*  items={items}*/}
