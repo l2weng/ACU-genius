@@ -9,19 +9,11 @@ const { array, object, func } = require('prop-types')
 class Summary extends PureComponent {
 
   render() {
-
-    const data3 = [
-      { name: '鲁班', count: 30, cut: '#ff1e66' },
-      { name: '韩信', count: 89, cut: '#ff1e66' },
-      { name: '张亮', count: 80, cut: '#ff1e66' },
-      { name: '孙尚香', count: 99, cut: '#ff1e66' },
-      { name: '孙悟空', count: 66, cut: '#ff1e66' }
-    ]
     const cols = {
       value: { min: 0 },
       year: { range: [0, 1] }
     }
-    const { skuData, taskStatuses, activityData } = this.props
+    const { skuData, taskStatuses, activityData, userPhotoStatusData } = this.props
     return (
       <div className="project-summary">
         <Row gutter={24}>
@@ -67,12 +59,12 @@ class Summary extends PureComponent {
             </div>
             <div>
               <div className="title">任务完成率:</div>
-              <Chart height={300} data={data3} forceFit>
+              <Chart height={300} data={userPhotoStatusData} forceFit>
                 <Coord transpose />
                 <Axis name="name" label={{ offset: 12 }} />
-                <Axis name="count" />
+                <Axis name="procentage" />
                 <Tooltip />
-                <Geom type="interval"  position="name*count" />
+                <Geom type="interval"  position="name*procentage" />
               </Chart>
             </div>
           </Col>
@@ -84,7 +76,8 @@ class Summary extends PureComponent {
     skuData: array.isRequired,
     taskStatuses: object.isRequired,
     activityData: array.isRequired,
-    switchActivityData: func.isRequired
+    switchActivityData: func.isRequired,
+    userPhotoStatusData: array.isRequired
   }
 }
 

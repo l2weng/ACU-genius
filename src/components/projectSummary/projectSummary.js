@@ -30,6 +30,7 @@ class ProjectSummary extends PureComponent {
       skuData: [],
       logData: [],
       activityData: [],
+      userPhotoStatusData: [],
       taskStatuses: {},
       logPagination: INIT_PAGINATION,
       logLoading: false,
@@ -66,11 +67,20 @@ class ProjectSummary extends PureComponent {
     this.fetchSkuCount()
     this.fetchPhotoStatuses()
     this.fetchActivityData(this.cActivityType)
+    this.fetchUserPhotoStatusData()
   }
 
   fetchSkuCount = () =>{
     axios.post(`${ARGS.apiServer}/summaries/countSkus`, { projectId: this.cProjectId }).then((result) =>{
       this.setState({ skuData: result.data })
+    }).catch(function (err) {
+      error(err.toString())
+    })
+  }
+
+  fetchUserPhotoStatusData = () =>{
+    axios.post(`${ARGS.apiServer}/summaries/countUserPhotoStatus`, { projectId: this.cProjectId }).then((result) =>{
+      this.setState({ userPhotoStatusData: result.data })
     }).catch(function (err) {
       error(err.toString())
     })
@@ -168,7 +178,7 @@ class ProjectSummary extends PureComponent {
   }
 
   render() {
-    const { summaryTab, skuData, logData, logPagination, taskStatuses, activityData } = this.state
+    const { summaryTab, skuData, logData, logPagination, taskStatuses, activityData, userPhotoStatusData } = this.state
     return (
       <div>
         <Row gutter={24}>
@@ -180,6 +190,7 @@ class ProjectSummary extends PureComponent {
                 <TabPane tab="项目概述" key="1"><Summary
                   skuData={skuData}
                   taskStatuses={taskStatuses}
+                  userPhotoStatusData={userPhotoStatusData}
                   switchActivityData={this.handleSwitchActivity}
                   activityData={activityData}/></TabPane>
                 {/*<TabPane tab="图片数据" key="2"><PhotoData {...props}*/}
