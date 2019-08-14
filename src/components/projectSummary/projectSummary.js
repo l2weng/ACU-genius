@@ -39,6 +39,7 @@ class ProjectSummary extends PureComponent {
   componentDidMount() {
     this.cProjectId = this.props.projects ? this.props.projects[0].projectId : ''
     this.summaryTab = '1'
+    this.cActivityType = 'HH'
     this.fetchSummary()
   }
 
@@ -64,7 +65,7 @@ class ProjectSummary extends PureComponent {
   fetchProjectSummary = () =>{
     this.fetchSkuCount()
     this.fetchPhotoStatuses()
-    this.fetchActivityData()
+    this.fetchActivityData(this.cActivityType)
   }
 
   fetchSkuCount = () =>{
@@ -75,8 +76,11 @@ class ProjectSummary extends PureComponent {
     })
   }
 
-  fetchActivityData = (type = 'HH') =>{
-    axios.post(`${ARGS.apiServer}/activities/queryByDate`, { projectId: this.cProjectId, type: type }).then((result) =>{
+  fetchActivityData = (type) =>{
+    if (this.cActivityType !== type) {
+      this.cActivityType = type
+    }
+    axios.post(`${ARGS.apiServer}/activities/queryByDate`, { projectId: this.cProjectId, type: this.cActivityType }).then((result) =>{
       this.setState({ activityData: result.data })
     }).catch(function (err) {
       error(err.toString())
