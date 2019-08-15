@@ -15,6 +15,7 @@ const columns = [
   }, {
     title: '角色',
     dataIndex: 'role',
+    render: role => <div>{role === 0 ? '同事' : '好友'}</div>,
   }, {
     title: '类型',
     dataIndex: 'category',
