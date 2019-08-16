@@ -22,7 +22,7 @@ class Create extends ImportCommand {
     let photo = yield select(state => state.photos[payload.photo])
     let image = yield call(Image.open, photo)
     let idx = (meta.idx != null) ? meta.idx : [photo.selections.length]
-
+    payload = { updatedTime: new Date().getTime(), ...payload }
     let selection = yield call(db.transaction, tx =>
       mod.selection.create(tx, null, payload))
 

@@ -62,9 +62,9 @@ class Summary extends PureComponent {
               <Chart height={300} data={userPhotoStatusData} forceFit>
                 <Coord transpose />
                 <Axis name="name" label={{ offset: 12 }} />
-                <Axis name="procentage" />
+                <Axis name="percentage" />
                 <Tooltip />
-                <Geom type="interval"  position="name*procentage" />
+                <Geom type="interval"  position="name*percentage" />
               </Chart>
             </div>
           </Col>

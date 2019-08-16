@@ -15,14 +15,14 @@ const columns = [
     dataIndex: 'total',
   }, {
     title: '已提交图片(张)',
-    dataIndex: 'submmitted',
+    dataIndex: 'submitted',
   }, {
     title: '剩余(张)',
     dataIndex: 'open',
   },{
     title: '完成率',
-    dataIndex: 'procentage',
-    render: procentage => <div>{procentage}%</div>,
+    dataIndex: 'percentage',
+    render: percentage => <div>{percentage}%</div>,
   }, {
     title: '截止日期',
     dataIndex: 'endTime',

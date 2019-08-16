@@ -97,15 +97,13 @@ const mod = {
 
     async update(db, photo, labels) {
       if (labels.length) {
-        const uTime = labels[0].updatedTime
         return db.run(`
           UPDATE selections
-            SET updatedTime = ?, status = CASE id
+            SET status = CASE id
               ${labels.map(label =>
             (`WHEN ${label.id} THEN ${label.status}`)).join(' ')}
               END
-            WHERE photo_id = ?`,
-          uTime, photo)
+            WHERE photo_id = ?`, photo)
       }
     },
 
