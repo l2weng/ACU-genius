@@ -55,6 +55,9 @@ class ProjectSummary extends PureComponent {
       case '1':
         this.fetchProjectSummary()
         break
+      case '4':
+        this.fetchUserPhotoStatusData()
+        break
       case '5':
         this.fetchWorkLog(this.state.logPagination)
         break
@@ -202,7 +205,7 @@ class ProjectSummary extends PureComponent {
                 {/*  columns={columns}*/}
                 {/*  photos={photos}/></TabPane>*/}
                 {/*<TabPane tab="项目参与者" key="3"><Members/></TabPane>*/}
-                <TabPane tab="任务列表" key="4"><TaskList/></TabPane>
+                <TabPane tab="任务列表" key="4"><TaskList userPhotoStatusData={userPhotoStatusData}/></TabPane>
                 <TabPane tab="工作日志" key="5">
                   <WorkLog
                     logData={logData}
