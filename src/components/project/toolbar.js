@@ -37,7 +37,7 @@ class ProjectToolbar extends PureComponent {
       lists
     } = this.props
     let taskWorkStatus = 999
-    if (!empty(lists) && list) {
+    if (!empty(lists) && lists[list] && list) {
       taskWorkStatus = lists[list].workStatus
     }
 
