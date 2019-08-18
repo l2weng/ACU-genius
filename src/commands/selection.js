@@ -61,7 +61,7 @@ class Sync extends ImportCommand {
         let isNew = false
         const cloudLabel = labels[i]
         if (!originalLabels.hasOwnProperty(cloudLabel.labelId)) {
-          if (cloudLabel.status === SELECTION.STATUS.NEW) {
+          if (cloudLabel.status === SELECTION.STATUS.SAVED) {
             isNew = true
           }
         } else if (originalLabels[cloudLabel.labelId].updatedTime !==
