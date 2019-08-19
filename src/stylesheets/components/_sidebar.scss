@@ -82,7 +82,7 @@
           }
         }
 
-        .icon-folder {
+        .icon-task {
           @include state("li.holding:not(.active)") {
             position: relative;
 

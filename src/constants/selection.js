@@ -20,6 +20,7 @@ module.exports = {
     NEW: 0,
     UPDATE: 1,
     DELETE: 2,
+    SAVED:3
   },
 
   TEMPLATE: 'https://tropy.org/v1/templates/selection'
