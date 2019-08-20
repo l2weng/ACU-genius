@@ -615,7 +615,7 @@ class LabelSync extends Command {
   *exec() {
     let { payload } = this.action
     const { db } = this.options
-    let { photo, taskId, photoSpendTime } = payload
+    const { photo, photoSpendTime } = payload
     const { userInfo } = ARGS
     const selections = yield call(db.seq, conn =>
       mod.selection.load(conn, photo.selections))
@@ -626,7 +626,7 @@ class LabelSync extends Command {
       labels.push(selections[i])
     }
     try {
-      const result  = yield axios.post(`${ARGS.apiServer}/labels/savePhotoLabels`, { photoId: photo.syncPhotoId, spendTime: photoSpendTime, labels, myTaskId: taskId })
+      const result  = yield axios.post(`${ARGS.apiServer}/labels/savePhotoLabels`, { photoId: photo.syncPhotoId, spendTime: photoSpendTime, labels, myTaskId: photo.tasks[0] })
       if (result.status === 200) {
         const savedLabels = result.data.obj
         yield call(mod.selection.update, db, photo.id, savedLabels)
