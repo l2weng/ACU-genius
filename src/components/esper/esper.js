@@ -489,7 +489,7 @@ class Esper extends PureComponent {
   }
 
   handleLabelSkip = (photo) => {
-    this.props.onLabelSkip(photo)
+    this.props.onLabelSkip(photo, (performance.now() - this.photoStartTime).toFixed(2))
   }
 
   handleColorChange = (opts) => {

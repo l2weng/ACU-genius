@@ -21,6 +21,10 @@ const columns = [
     dataIndex: 'category',
     render: category => <div>{ACTIVITY.CATEGORY[category]}</div>,
   }, {
+    title: '行为',
+    dataIndex: 'type',
+    render: type => <div>{ACTIVITY.EVENT[type]}</div>,
+  }, {
     title: '图片名称',
     width: '20%',
     dataIndex: 'photoName',
@@ -59,6 +63,12 @@ class WorkLog extends PureComponent {
 
   render() {
     const { logData, pagination, loading, onChange } = this.props
+    for (const oneLog of logData) {
+      if (oneLog.children.length === 0) {
+        delete oneLog['children']
+      }
+    }
+    console.log(logData)
     return (
       <div>
         <Table columns={columns} pagination={pagination} loading={loading}

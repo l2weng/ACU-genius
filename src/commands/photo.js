@@ -615,7 +615,7 @@ class LabelSync extends Command {
   *exec() {
     let { payload } = this.action
     const { db } = this.options
-    const { photo, photoSpendTime } = payload
+    const { photo, photoSpendTime, userId } = payload
     const { userInfo } = ARGS
     const selections = yield call(db.seq, conn =>
       mod.selection.load(conn, photo.selections))
@@ -626,7 +626,7 @@ class LabelSync extends Command {
       labels.push(selections[i])
     }
     try {
-      const result  = yield axios.post(`${ARGS.apiServer}/labels/savePhotoLabels`, { photoId: photo.syncPhotoId, spendTime: photoSpendTime, labels, myTaskId: photo.tasks[0] })
+      const result  = yield axios.post(`${ARGS.apiServer}/labels/savePhotoLabels`, { photoId: photo.syncPhotoId, spendTime: photoSpendTime, labels, myTaskId: photo.tasks[0], userId })
       if (result.status === 200) {
         const savedLabels = result.data.obj
         yield call(mod.selection.update, db, photo.id, savedLabels)
@@ -646,9 +646,9 @@ class LabelSkip extends Command {
 
   *exec() {
     let { payload } = this.action
-    let { photo } = payload
+    let { photo, photoSpendTime, userId } = payload
     try {
-      yield axios.post(`${ARGS.apiServer}/labels/skipLabel`, { photoId: photo.syncPhotoId, myTaskId: photo.tasks[0] })
+      yield axios.post(`${ARGS.apiServer}/labels/skipLabel`, { photoId: photo.syncPhotoId, spendTime: photoSpendTime, myTaskId: photo.tasks[0], userId })
     } catch (e) {
       error(e.toString())
     }

@@ -7,6 +7,7 @@ const { Esper } = require('../esper')
 // const { NotePad } = require('../note')
 const act = require('../../actions')
 const { SASS: { ESPER } } = require('../../constants')
+const { userInfo } = ARGS
 
 const {
   arrayOf, bool, func, number, object, shape, string
@@ -42,11 +43,11 @@ class ItemContainer extends React.PureComponent {
   }
 
   handleLabelSave = (photo, photoSpendTime) => {
-    this.props.onLabelSync({ photo: photo, photoSpendTime })
+    this.props.onLabelSync({ photo: photo, photoSpendTime, userId: userInfo.user.userId })
   }
 
-  handleLabelSkip = (photo) => {
-    this.props.onLabelSkip({ photo: photo, taskId: this.props.nav.syncTaskId })
+  handleLabelSkip = (photo, photoSpendTime) => {
+    this.props.onLabelSkip({ photo: photo, photoSpendTime, userId: userInfo.user.userId })
   }
 
   handleEsperResize = (height) => {
