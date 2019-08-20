@@ -646,7 +646,7 @@ class LabelSkip extends Command {
 
   *exec() {
     let { payload } = this.action
-    let { photo, taskId } = payload
+    let { photo } = payload
     try {
       yield axios.post(`${ARGS.apiServer}/labels/skipLabel`, { photoId: photo.syncPhotoId, myTaskId: photo.tasks[0] })
     } catch (e) {
