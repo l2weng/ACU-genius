@@ -6,7 +6,6 @@ const { connect } = require('react-redux')
 const { Row, Col, Card, List, Radio, Input, Icon, Progress } = require('antd')
 const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
-const { Search } = Input
 
 const { Meta } = Card
 const _ = require('underscore')
@@ -37,7 +36,7 @@ class Workplace extends PureComponent {
       openNotification('warning', '提示', `项目: ${item.name} 尚未同步上云, 暂时无法查看`)
     } else {
       const { project } = this.props
-      if (project.id !== item.localProjectId) {
+      if (project.syncProjectId !== item.projectId) {
         this.props.onProjectOpen(item.projectFile)
       } else {
         this.props.switchTab(this.props.project)
