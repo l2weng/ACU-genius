@@ -4,7 +4,7 @@ const React = require('react')
 const { PureComponent } = React
 const { Row, Col, Tabs, Input } = require('antd')
 const TabPane = Tabs.TabPane
-const Search = Input.Search
+// const Search = Input.Search
 const { Teams } = require('./teams')
 const { CoWorkers } = require('./coWorkers')
 const { Colleague } = require('./colleague')
@@ -14,20 +14,13 @@ class Contacts extends PureComponent {
     super(props)
 
     this.state = {
-      teamModalVisible: false
     }
   }
 
   render() {
     return (
-      <div>
+      <div style={{ paddingTop: '20px' }}>
         <Row gutter={24}>
-          <Col span={24} style={{ display: 'inline-flex', justifyContent: 'center', alignItems: 'center', paddingTop: '5px', paddingBottom: '5px', paddingRight: '78px' }}>
-            <Search
-              placeholder="搜索联系人"
-              onSearch={value => console.log(value)}
-              style={{ width: 300 }}/>
-          </Col>
           <Col span={24}>
             <Tabs style={{ textAlign: 'left' }}
               defaultActiveKey="1"
@@ -52,3 +45,8 @@ class Contacts extends PureComponent {
 module.exports = {
   Contacts
 }
+//
+// <Search
+//   placeholder="搜索联系人"
+//   onSearch={value => console.log(value)}
+//   style={{ width: 300 }}/>
