@@ -33,7 +33,7 @@ class LoadProjects extends Command {
         const client = getNewOOSClient()
         for (let i = 0; i < projects.length; i++) {
           const project = projects[i]
-          let newPath = join(app.getPath('userData'), 'project')
+          let newPath = join(app.getPath('userData'), `project/${project.fileUuid}`)
           //if project file is his own
           if (!fs.existsSync(project.projectFile)) {
             if (project.syncStatus) {

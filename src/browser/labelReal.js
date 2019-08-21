@@ -133,7 +133,7 @@ class LabelReal extends EventEmitter {
         }
         let client = getNewOOSClient()
         let newPath = app.getPath('userData')
-        newPath = join(newPath, 'project')
+        newPath = join(newPath, `project/${project.fileUuid}`)
         if (!fs.existsSync(newPath)) {
           fs.mkdir(newPath, { recursive: true }, (err) => {
             if (err) throw err

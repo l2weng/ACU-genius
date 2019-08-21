@@ -50,7 +50,8 @@ function *open(file) {
 
     let syncProjectId = ''
     let syncStatus = false
-    const syncResult = yield axios.post(`${ARGS.apiServer}/projects/syncProjectByUuid`, { fileUuid: basename(db.path, '.lbr')})
+    const fileUuid = basename(db.path, '.lbr')
+    const syncResult = yield axios.post(`${ARGS.apiServer}/projects/syncProjectByUuid`, { fileUuid })
     if (syncResult.status === 200) {
       syncProjectId = syncResult.data.project.projectId
       syncStatus = syncResult.data.project.syncStatus
@@ -63,7 +64,7 @@ function *open(file) {
     assert(project != null && project.id != null, 'invalid project')
     const cache = new Cache(ARGS.cache, project.id)
     yield call([cache, cache.init])
-    yield put(act.project.opened({ file: db.path, syncProjectId, syncStatus, ...project }))
+    yield put(act.project.opened({ file: db.path, syncProjectId, syncStatus, fileUuid, ...project }))
 
     try {
       yield fork(setup, db, project)
