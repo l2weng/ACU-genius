@@ -63,7 +63,7 @@ class WorkLog extends PureComponent {
 
   render() {
     const { logData, pagination, loading, onChange } = this.props
-    if (logData) {
+    if (logData && logData.length > 0) {
       for (const oneLog of logData) {
         if (oneLog.children.length === 0) {
           delete oneLog['children']

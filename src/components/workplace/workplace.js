@@ -3,12 +3,11 @@
 const React = require('react')
 const { PureComponent } = React
 const { connect } = require('react-redux')
-const { Row, Col, Card, List, Radio, Input, Icon, Progress } = require('antd')
+const { Row, Col, Card, List, Radio, Icon, Progress } = require('antd')
 const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
 
 const { Meta } = Card
-const _ = require('underscore')
 const { userInfo } = ARGS
 const actions = require('../../actions')
 const { func, object, array, bool, string  } = require('prop-types')
