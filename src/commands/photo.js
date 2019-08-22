@@ -557,9 +557,7 @@ class Sync extends Command {
       const { userInfo } = ARGS
       let photosArray = []
       for (let i in photos) {
-        if (photos[i].tasks.length > 0) {
-          photosArray.push(photos[i])
-        }
+        photosArray.push(photos[i])
       }
       let total = photosArray.length
       for (let i = 0; i < photosArray.length; i++) {
