@@ -221,7 +221,7 @@ class Move extends Command {
         { id: parent.id, children }
       ]))
     }
-
+    ipc.send('cmd', 'app:sync-project-file')
     this.undo = actions.move({ id: list.id, parent: original.parent }, { idx })
     return list
   }
@@ -236,7 +236,7 @@ class AddItems extends Command {
 
     let res = yield call(db.transaction, tx =>
       mod.items.add(tx, id, items))
-
+    ipc.send('cmd', 'app:sync-project-file')
     this.undo = actions.items.remove({ id, items: res.items })
     this.redo = actions.items.restore({ id, items: res.items })
 
@@ -252,7 +252,7 @@ class RemoveItems extends Command {
     let { id, items } = this.action.payload
 
     yield call(mod.items.remove, db, id, items)
-
+    ipc.send('cmd', 'app:sync-project-file')
     this.undo = actions.items.restore({ id, items })
 
     return { id, items }
