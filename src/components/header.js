@@ -8,13 +8,14 @@ const TabPane = Tabs.TabPane
 const { ProjectContainer } = require('../components/project')
 const { Contacts } = require('../components/contacts')
 const { Workplace } = require('../components/workplace')
+const { ProjectSummary } = require('../components/projectSummary')
 const actions = require('../actions')
 const { HEAD } = require('../constants')
 const { userInfo } = ARGS
 const _ = require('underscore')
 
 const {
-   func, string, object
+   func, string, object, array
 } = require('prop-types')
 
 class Header extends React.Component {
@@ -40,7 +41,7 @@ class Header extends React.Component {
   }
 
   render() {
-    const { activeTab, project } = this.props
+    const { activeTab, project, projects } = this.props
     const { taskType } = this.state
     const isOwner = project.owner === userInfo.user.userId
     return (
@@ -48,8 +49,8 @@ class Header extends React.Component {
         <TabPane tab={<span><Icon type="home" size="small"/>首页</span>} key={HEAD.HOME} className="tab-container">
           <Workplace switchTab={this.switchTab} switchTask={this.switchTask} isOwner={isOwner} currentTaskType={taskType}/>
         </TabPane>
-        <TabPane tab={<span><Icon type="form" size="small"/>工作台</span>} key={HEAD.WORKSPACE} className="tab-container"><ProjectContainer showProject/></TabPane>
-        <TabPane tab={<span><Icon type="project" size="small"/>项目</span>} key={HEAD.PROJECT} className="tab-container"><ProjectContainer showProject={false}/></TabPane>
+        <TabPane tab={<span><Icon type="form" size="small"/>工作台</span>} key={HEAD.WORKSPACE} className="tab-container"><ProjectContainer/></TabPane>
+        <TabPane tab={<span><Icon type="project" size="small"/>项目</span>} key={HEAD.PROJECT} className="tab-container"><ProjectSummary activeTab={activeTab} activeProject={project} projects={projects}/></TabPane>
         <TabPane tab={<span><Icon type="contacts" size="small"/>联系人</span>}  key={HEAD.FRIENDS} className="tab-container"><Contacts/></TabPane>
       </Tabs>
     )
@@ -60,7 +61,8 @@ class Header extends React.Component {
     switchTab: func,
     reloadProjects: func,
     reloadTasks: func,
-    project: object
+    project: object,
+    projects: array,
   }
 }
 
@@ -69,6 +71,7 @@ module.exports = {
     state => ({
       activeTab: state.ui.activeTab,
       project: state.project,
+      projects: state.header.projects || [],
     }),
     dispatch => ({
       switchTab(tabName, project) {

@@ -104,6 +104,7 @@ class Consolidate extends ImportCommand {
       if (photo.path && !exists(photo.path) && photo.syncFileUrl) {
         const app = remote.app
         let newPath = nodePath.join(app.getPath('userData'), `project/${project.fileUuid}`)
+        console.log('new path', newPath)
         let newFileName = nodePath.win32.basename(photo.path)
         yield OldImage.download(photo.path, photo.syncFileUrl, newFileName, newPath)
         photo.path = `${newPath}/${newFileName}`

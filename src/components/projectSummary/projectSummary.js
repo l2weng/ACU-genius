@@ -9,8 +9,8 @@ const { WorkLog } = require('./workLog')
 // const { QualitySetting } = require('./qualitySetting')
 // const { Members } = require('./members')
 const __ = require('underscore')
-const { PHOTO } = require('../../constants')
-const { array } = require('prop-types')
+const { PHOTO, HEAD } = require('../../constants')
+const { array, object, string } = require('prop-types')
 const TabPane = Tabs.TabPane
 const Option = Select.Option
 const axios = require('axios')
@@ -29,6 +29,7 @@ class ProjectSummary extends PureComponent {
     this.state = {
       skuData: [],
       logData: [],
+      cProjectId: props.activeProject.syncProjectId,
       activityData: [],
       userPhotoStatusData: [],
       taskStatuses: {},
@@ -38,70 +39,67 @@ class ProjectSummary extends PureComponent {
   }
 
   componentDidMount() {
-    this.cProjectId = this.props.projects ? this.props.projects[0].projectId : ''
     this.summaryTab = '1'
     this.cActivityType = 'HH'
-    this.fetchSummary()
   }
 
   handleSelectProject = (projectId) =>{
-    this.cProjectId = projectId
-    this.setState({ logPagination: INIT_PAGINATION })
-    this.fetchSummary()
+    this.setState({ cProjectId: projectId, logPagination: INIT_PAGINATION })
+    this.fetchSummary(projectId)
   }
 
-  fetchSummary = () =>{
+  fetchSummary = (projectId) =>{
     switch (this.summaryTab) {
       case '1':
-        this.fetchProjectSummary()
+        this.fetchProjectSummary(projectId)
         break
       case '4':
-        this.fetchUserPhotoStatusData()
+        this.fetchUserPhotoStatusData(projectId)
         break
       case '5':
-        this.fetchWorkLog(this.state.logPagination)
+        this.fetchWorkLog(this.state.logPagination, projectId)
         break
       default:
         return
     }
   }
 
-  fetchProjectSummary = () =>{
-    this.fetchSkuCount()
-    this.fetchPhotoStatuses()
-    this.fetchActivityData(this.cActivityType)
-    this.fetchUserPhotoStatusData()
+  fetchProjectSummary = (projectId) =>{
+    this.fetchSkuCount(projectId)
+    this.fetchPhotoStatuses(projectId)
+    this.fetchActivityData(this.cActivityType, projectId)
+    this.fetchUserPhotoStatusData(projectId)
   }
 
-  fetchSkuCount = () =>{
-    axios.post(`${ARGS.apiServer}/summaries/countSkus`, { projectId: this.cProjectId }).then((result) =>{
+  fetchSkuCount = (projectId) =>{
+    axios.post(`${ARGS.apiServer}/summaries/countSkus`, { projectId }).then((result) =>{
       this.setState({ skuData: result.data })
     }).catch(function (err) {
       error(err.toString())
     })
   }
 
-  fetchUserPhotoStatusData = () =>{
-    axios.post(`${ARGS.apiServer}/summaries/countUserPhotoStatus`, { projectId: this.cProjectId }).then((result) =>{
+  fetchUserPhotoStatusData = (projectId) =>{
+    axios.post(`${ARGS.apiServer}/summaries/countUserPhotoStatus`, { projectId }).then((result) =>{
       this.setState({ userPhotoStatusData: result.data })
     }).catch(function (err) {
       error(err.toString())
     })
   }
 
-  fetchActivityData = (type) =>{
+  fetchActivityData = (type, projectId) =>{
     if (this.cActivityType !== type) {
       this.cActivityType = type
     }
-    axios.post(`${ARGS.apiServer}/activities/queryByDate`, { projectId: this.cProjectId, type: this.cActivityType }).then((result) =>{
+    axios.post(`${ARGS.apiServer}/activities/queryByDate`, { projectId, type: this.cActivityType }).then((result) =>{
       this.setState({ activityData: result.data })
     }).catch(function (err) {
       error(err.toString())
     })
   }
 
-  fetchPhotoStatuses = () =>{
-    axios.post(`${ARGS.apiServer}/summaries/countPhotoStatus`, { projectId: this.cProjectId }).then((result) =>{
+  fetchPhotoStatuses = (projectId) =>{
+    axios.post(`${ARGS.apiServer}/summaries/countPhotoStatus`, { projectId }).then((result) =>{
       const taskStatusArr = result.data
       let _taskStatuses = { total: 0, progress: 100, open: 0, skipped: 0, submitted: 0 }
       if (taskStatusArr.length > 0) {
@@ -127,9 +125,9 @@ class ProjectSummary extends PureComponent {
     })
   }
 
-  fetchWorkLog = (pagination) =>{
+  fetchWorkLog = (pagination, projectId) =>{
     this.setState({ logLoading: true })
-    axios.post(`${ARGS.apiServer}/activities/queryLog`, { projectId: this.cProjectId, ...pagination }).then((result) =>{
+    axios.post(`${ARGS.apiServer}/activities/queryLog`, { projectId, ...pagination }).then((result) =>{
       const logPagination = { ...this.state.logPagination }
       logPagination.total = result.data.total
       this.setState({ logData: result.data.obj, logLoading: false, logPagination })
@@ -161,14 +159,22 @@ class ProjectSummary extends PureComponent {
     })
   }
 
+  componentWillReceiveProps(props) {
+    if ((this.state.cProjectId !== props.activeProject.syncProjectId) && props.activeTab === HEAD.PROJECT) {
+      console.log('load new')
+      this.handleSelectProject(props.activeProject.syncProjectId)
+    }
+  }
+
   renderTitle() {
     const { projects } = this.props
+    const { cProjectId } = this.state
     if (projects && projects.length > 0) {
       return (
         <div>
           <Form layout="inline">
             <Form.Item  label="项目">
-              <Select style={{ width: 120 }} defaultValue={projects[0].projectId} onChange={this.handleSelectProject}>
+              <Select style={{ width: 120 }} defaultValue={cProjectId} value={cProjectId} onChange={this.handleSelectProject}>
                 {projects.map(project=>{
                   return (<Option value={project.projectId} key={project.projectId}>{project.name}</Option>)
                 })}
@@ -223,7 +229,9 @@ class ProjectSummary extends PureComponent {
     )
   }
   static propTypes = {
-    projects: array
+    projects: array,
+    activeProject: object,
+    activeTab: string
   }
 }
 

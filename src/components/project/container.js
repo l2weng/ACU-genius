@@ -21,7 +21,6 @@ const actions = require('../../actions')
 const debounce = require('lodash.debounce')
 const { match } = require('../../keymap')
 const { IconSpin } = require('../icons')
-const { ProjectSummary } = require('../projectSummary')
 const { userInfo } = ARGS
 
 const {
@@ -237,10 +236,8 @@ class ProjectContainer extends Component {
       selection,
       selections,
       ui,
-      showProject,
       references,
       project,
-      projects,
       ...props
     } = this.props
     const isOwner = project.owner === userInfo.user.userId
@@ -297,21 +294,12 @@ class ProjectContainer extends Component {
           <IconSpin/>
         </div>
       </div>)
-    const projectSummary = (<div style={{ height: '100%' }}
-      // className={cx(this.classes)}
-      ref={this.setContainer}
-      onContextMenu={this.handleContextMenu} >
-      {projects.length > 0 ? <ProjectSummary {...props}
-        projects={projects}
-        columns={columns}
-        offset={this.state.offset}/> : ''}</div>)
-    return showProject ? mainProject : projectSummary
+    return mainProject
   }
 
 
   static propTypes = {
     expanded: arrayOf(object).isRequired,
-    showProject: bool.isRequired,
     project: shape({
       file: string
     }).isRequired,
@@ -438,7 +426,6 @@ module.exports = {
       sort: getSortColumn(state),
       tags: state.tags,
       ui: state.ui,
-      projects: state.header.projects || [],
       tasks: state.header.tasks || []
     }),
 

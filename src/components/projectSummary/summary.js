@@ -60,7 +60,7 @@ class Summary extends PureComponent {
             </div>
             <div>
               <div className="title">任务完成率:</div>
-              <Chart height={300} data={userPhotoStatusData} forceFit>
+              <Chart height={300} data={userPhotoStatusData} forceFit placeholder="暂无数据">
                 <Coord transpose />
                 <Axis name="name" label={{ offset: 12 }} />
                 <Axis name="percentage" />
