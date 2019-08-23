@@ -8,7 +8,7 @@ const { ImportCommand } = require('./import')
 const { fail, open } = require('../dialog')
 const mod = require('../models')
 const act = require('../actions')
-const { PHOTO, SELECTION } = require('../constants')
+const { PHOTO } = require('../constants')
 const { Image: OldImage } = require('../image')
 const { Image } = require('../image/image')
 const { DuplicateError } = require('../common/error')
@@ -348,7 +348,7 @@ class Delete extends Command {
     })
 
     yield put(act.item.photos.remove({ id: item, photos }))
-    ipc.send('cmd', 'app:sync-project-file')
+    ipc.send('cmd', 'app:sync-whole-project', { force: false })
     this.undo = act.photo.restore({ item, photos }, { idx })
   }
 }
@@ -462,7 +462,7 @@ class Move extends Command {
       put(act.item.photos.remove({ id: original.id, photos: ids })),
       put(act.item.photos.add({ id: item, photos: ids }, { idx }))
     ])
-    ipc.send('cmd', 'app:sync-project-file')
+    ipc.send('cmd', 'app:sync-whole-project', { force: false })
     this.undo = act.photo.move({
       photos: photos.map(({ id }) => ({ id, item })),
       item: original.id
@@ -486,7 +486,7 @@ class Order extends Command {
 
     yield call(mod.photo.order, db, item, photos)
     yield put(act.item.update({ id: item, photos }))
-    ipc.send('cmd', 'app:sync-project-file')
+    ipc.send('cmd', 'app:sync-whole-project', { force: false })
     this.undo = act.photo.order({ item, photos: original })
   }
 }

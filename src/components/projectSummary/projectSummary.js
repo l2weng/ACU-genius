@@ -138,11 +138,11 @@ class ProjectSummary extends PureComponent {
 
   switchProjectSummaryTab = (tab) =>{
     this.summaryTab = tab
-    this.fetchSummary()
+    this.fetchSummary(this.state.cProjectId)
   }
 
   handleSwitchActivity = (e)=>{
-    this.fetchActivityData(e.target.value)
+    this.fetchActivityData(e.target.value, this.state.cProjectId)
   }
 
   handleLogTableChange = (pagination, filters, sorter) => {
@@ -156,12 +156,11 @@ class ProjectSummary extends PureComponent {
       page: pagination.current,
       sortField: !__.isEmpty(sorter) ? sorter.field : pagination.sortField,
       sortOrder: !__.isEmpty(sorter) ? sorter.order : pagination.sortOrder,
-    })
+    }, this.state.cProjectId)
   }
 
   componentWillReceiveProps(props) {
-    if ((this.state.cProjectId !== props.activeProject.syncProjectId) && props.activeTab === HEAD.PROJECT) {
-      console.log('load new')
+    if (props.activeTab === HEAD.PROJECT) {
       this.handleSelectProject(props.activeProject.syncProjectId)
     }
   }
