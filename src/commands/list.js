@@ -258,7 +258,6 @@ class RemoveItems extends Command {
 
     yield call(mod.items.remove, db, id, items)
 
-    ipc.send('cmd', 'app:sync-whole-project', { force: true })
     this.undo = actions.items.restore({ id, items })
 
     return { id, items }
@@ -274,7 +273,6 @@ class RestoreItems extends Command {
 
     yield call(mod.items.restore, db, id, items)
 
-    ipc.send('cmd', 'app:sync-whole-project', { force: true })
     this.undo = actions.items.remove({ id, items })
 
     return { id, items }

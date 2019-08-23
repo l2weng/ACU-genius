@@ -321,7 +321,6 @@ class RefCreate extends ImportCommand {
       }
     }
 
-    ipc.send('cmd', 'app:sync-whole-project', { force: false })
     yield put(act.references.load({ tag_id }))
     this.undo = act.photo.delete({ item, photos })
     this.redo = act.photo.restore({ item, photos }, { idx })
@@ -348,7 +347,6 @@ class Delete extends Command {
     })
 
     yield put(act.item.photos.remove({ id: item, photos }))
-    ipc.send('cmd', 'app:sync-whole-project', { force: false })
     this.undo = act.photo.restore({ item, photos }, { idx })
   }
 }
@@ -462,7 +460,6 @@ class Move extends Command {
       put(act.item.photos.remove({ id: original.id, photos: ids })),
       put(act.item.photos.add({ id: item, photos: ids }, { idx }))
     ])
-    ipc.send('cmd', 'app:sync-whole-project', { force: false })
     this.undo = act.photo.move({
       photos: photos.map(({ id }) => ({ id, item })),
       item: original.id
@@ -486,7 +483,6 @@ class Order extends Command {
 
     yield call(mod.photo.order, db, item, photos)
     yield put(act.item.update({ id: item, photos }))
-    ipc.send('cmd', 'app:sync-whole-project', { force: false })
     this.undo = act.photo.order({ item, photos: original })
   }
 }
@@ -562,7 +558,7 @@ class Sync extends Command {
       let total = photosArray.length
       for (let i = 0; i < photosArray.length; i++) {
         let sPhoto = photosArray[i]
-        if (!sPhoto.syncPhotoId) {
+        if (!sPhoto.syncPhotoId || force) {
           let client = getNewOOSClient()
           try {
             let result = { res: { status: 500 }, url: sPhoto.syncFileUrl }

@@ -149,7 +149,6 @@ class Delete extends Command {
 
     yield call(mod.item.delete, db, ids)
     yield put(act.item.bulk.update([ids, { deleted: true }], { search: true }))
-    ipc.send('cmd', 'app:sync-project-file')
     this.undo = act.item.restore(ids)
 
     return ids
@@ -182,7 +181,6 @@ class Destroy extends Command {
 
     } finally {
       yield put(act.history.drop(null, { search: true }))
-      ipc.send('cmd', 'app:sync-project-file')
     }
   }
 }
@@ -222,7 +220,6 @@ class Restore extends Command {
     yield call(mod.item.restore, db, ids)
     yield put(act.item.bulk.update([ids, { deleted: false }], { search: true }))
 
-    ipc.send('cmd', 'app:sync-project-file')
     this.undo = act.item.delete(ids)
 
     return ids
