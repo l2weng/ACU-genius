@@ -41,6 +41,7 @@ class ProjectSummary extends PureComponent {
   componentDidMount() {
     this.summaryTab = '1'
     this.cActivityType = 'HH'
+    this.fetchSummary(this.state.cProjectId)
   }
 
   handleSelectProject = (projectId) =>{

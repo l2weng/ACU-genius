@@ -28,7 +28,7 @@ class Summary extends PureComponent {
               </div>
             </div>
             <div style={{ paddingTop: '24px' }}>
-              <div style={{ paddingBottom: '5px' }}>
+              <div style={{ paddingBottom: '5px', float:'right' }}>
                 <Radio.Group defaultValue="HH" size="small" onChange={this.props.switchActivityData}>
                   <Radio.Button value="MM">Last Hour</Radio.Button>
                   <Radio.Button value="HH">Today</Radio.Button>
