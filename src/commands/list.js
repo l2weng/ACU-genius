@@ -81,7 +81,7 @@ class Create extends Command {
   *exec() {
     const { payload } = this.action
     const { db } = this.options
-    const { name, parent, syncProjectId, projectId } = payload
+    const { name, parent, syncProjectId } = payload
 
     const { children } = yield select(state => state.lists[parent])
     const idx = children.length
@@ -153,6 +153,7 @@ class Delete extends Command {
     yield put(actions.remove(id))
     yield axios.post(`${ARGS.apiServer}/tasks/remove`, { taskId: syncTaskId })
 
+    ipc.send('cmd', 'app:sync-project-file')
     this.undo = actions.restore(original, { idx })
 
     return [original, idx]
@@ -177,6 +178,8 @@ class Restore extends Command {
     })
 
     yield put(actions.insert(list, { idx }))
+
+    ipc.send('cmd', 'app:sync-project-file')
     yield axios.post(`${ARGS.apiServer}/tasks/revert`, { taskId: list.syncTaskId })
 
     this.undo = actions.delete(list.id)
@@ -221,6 +224,7 @@ class Move extends Command {
         { id: parent.id, children }
       ]))
     }
+
     ipc.send('cmd', 'app:sync-project-file')
     this.undo = actions.move({ id: list.id, parent: original.parent }, { idx })
     return list
@@ -236,7 +240,8 @@ class AddItems extends Command {
 
     let res = yield call(db.transaction, tx =>
       mod.items.add(tx, id, items))
-    ipc.send('cmd', 'app:sync-project-file')
+
+    ipc.send('cmd', 'app:sync-whole-project', { force: true })
     this.undo = actions.items.remove({ id, items: res.items })
     this.redo = actions.items.restore({ id, items: res.items })
 
@@ -252,7 +257,8 @@ class RemoveItems extends Command {
     let { id, items } = this.action.payload
 
     yield call(mod.items.remove, db, id, items)
-    ipc.send('cmd', 'app:sync-project-file')
+
+    ipc.send('cmd', 'app:sync-whole-project', { force: true })
     this.undo = actions.items.restore({ id, items })
 
     return { id, items }
@@ -268,6 +274,7 @@ class RestoreItems extends Command {
 
     yield call(mod.items.restore, db, id, items)
 
+    ipc.send('cmd', 'app:sync-whole-project', { force: true })
     this.undo = actions.items.remove({ id, items })
 
     return { id, items }
