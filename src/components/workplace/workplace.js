@@ -137,9 +137,15 @@ class Workplace extends PureComponent {
                                       ? item.syncCover
                                       : item.cover)}/>
                             </div>
-                            <div style={{ padding: '0px 5px' }}>
-                              <Progress percent={50} status="active"
-                                size="small"/>
+                            <div style={{ padding: '0 10px 0 5px' }}>
+                              <Progress
+                                strokeColor={{
+                                  from: '#108ee9',
+                                  to: '#87d068',
+                                }}
+                                percent={item.progress}
+                                size="small"
+                                status="active"/>
                             </div>
                           </div>}>
                         <Meta

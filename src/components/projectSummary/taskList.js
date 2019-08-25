@@ -23,10 +23,12 @@ const columns = [
     title: '完成率',
     dataIndex: 'percentage',
     render: percentage => <div>{percentage}%</div>,
-  }, {
-    title: '截止日期',
-    dataIndex: 'endTime',
-  }, {
+  },
+  // {
+  //   title: '截止日期',
+  //   dataIndex: 'endTime',
+  // },
+  {
     title: '操作',
     dataIndex: '',
     key: 'x',

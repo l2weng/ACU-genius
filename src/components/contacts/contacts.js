@@ -28,9 +28,9 @@ class Contacts extends PureComponent {
               <TabPane tab="公司同事" key="1">
                 <Colleague/>
               </TabPane>
-              <TabPane tab="人员分组" key="2">
-                <Teams/>
-              </TabPane>
+              {/*<TabPane tab="人员分组" key="2">*/}
+              {/*  <Teams/>*/}
+              {/*</TabPane>*/}
               <TabPane tab="平台好友" key="3">
                 <CoWorkers/>
               </TabPane>
@@ -45,8 +45,3 @@ class Contacts extends PureComponent {
 module.exports = {
   Contacts
 }
-//
-// <Search
-//   placeholder="搜索联系人"
-//   onSearch={value => console.log(value)}
-//   style={{ width: 300 }}/>

@@ -119,7 +119,7 @@ class ProjectSummary extends PureComponent {
           }
         }
       }
-      _taskStatuses.progress = _taskStatuses.total === 0 ? 0 : (((_taskStatuses.total - _taskStatuses.open) / _taskStatuses.total) * 100).toFixed(2)
+      _taskStatuses.progress = _taskStatuses.total === 0 ? 0 : (((_taskStatuses.total - _taskStatuses.open) / _taskStatuses.total) * 100).toFixed(0)
       this.setState({ taskStatuses: _taskStatuses })
     }).catch(function (err) {
       error(err.toString())
