@@ -97,7 +97,7 @@ class Workplace extends PureComponent {
 
   componentWillReceiveProps(props) {
     if (this.props.project.id !== props.project.id) {
-      this.props.switchTab(this.props.project)
+      this.props.switch2Workspace()
     }
   }
 
@@ -178,6 +178,7 @@ class Workplace extends PureComponent {
   static propTypes = {
     onProjectOpen: func.isRequired,
     switchTab: func.isRequired,
+    switch2Workspace: func.isRequired,
     fetchProjects: func.isRequired,
     fetchTasks: func.isRequired,
     switchTask: func.isRequired,
@@ -202,6 +203,9 @@ module.exports = {
     dispatch => ({
       switchTab(project) {
         dispatch(actions.list.load({ project: project }))
+        dispatch(actions.ui.headerSwitch({ activeTab: HEAD.WORKSPACE }))
+      },
+      switch2Workspace() {
         dispatch(actions.ui.headerSwitch({ activeTab: HEAD.WORKSPACE }))
       },
       onProjectOpen(path) {
