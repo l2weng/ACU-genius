@@ -11,14 +11,14 @@ class TasksTable extends React.Component {
     searchText: '',
   }
 
-  getColumnSearchProps = (dataIndex) => ({
+  getColumnSearchProps = (dataIndex, subIndex = '') => ({
     filterDropdown: ({
                        setSelectedKeys, selectedKeys, confirm, clearFilters,
                      }) => (
                        <div style={{ padding: 8 }}>
                          <Input
                            ref={node => { this.searchInput = node }}
-                           placeholder={`Search ${dataIndex}`}
+                           placeholder={`Search ${dataIndex} ${subIndex}`}
                            value={selectedKeys[0]}
                            onChange={e => setSelectedKeys(
             e.target.value ? [e.target.value] : [])}
@@ -45,9 +45,13 @@ class TasksTable extends React.Component {
         ? '#1890ff'
         : undefined,
     }}/>,
-    onFilter: (value, record) => record[dataIndex].toString()
-      .toLowerCase()
-      .includes(value.toLowerCase()),
+    onFilter: (value, record) => {
+      if (subIndex !== '') {
+        return record[dataIndex][subIndex].toString().toLowerCase().includes(value.toLowerCase())
+      } else {
+        return record[dataIndex].toString().toLowerCase().includes(value.toLowerCase())
+      }
+    },
     onFilterDropdownVisibleChange: (visible) => {
       if (visible) {
         setTimeout(() => this.searchInput.select())
@@ -97,6 +101,7 @@ class TasksTable extends React.Component {
         dataIndex: 'project.name',
         key: 'project.name',
         width: '20%',
+        ...this.getColumnSearchProps('project','name'),
       }, {
         title: '进度',
         dataIndex: 'progress',
@@ -128,7 +133,7 @@ class TasksTable extends React.Component {
           </span>
         ),
       }]
-    return <Table columns={columns} dataSource={this.props.tasks}/>
+    return <Table columns={columns} rowkey={record=>record.taskId} dataSource={this.props.tasks}/>
   }
   static propTypes = {
     tasks: array.isRequired,
