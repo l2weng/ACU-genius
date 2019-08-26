@@ -128,6 +128,9 @@ class ProjectContainer extends Component {
       willModeChange: false,
       isModeChanging: false
     })
+    if (this.props.nav.mode === MODE.PROJECT) {
+      this.props.onProjectFlush(this.props.project)
+    }
   }
 
   projectWillChange = debounce(project => {
@@ -346,6 +349,7 @@ class ProjectContainer extends Component {
     onContextMenu: func.isRequired,
     onPhotoError: func.isRequired,
     onProjectCreate: func.isRequired,
+    onProjectFlash: func.isRequired,
     onProjectOpen: func.isRequired,
     onMaximize: func.isRequired,
     onModeChange: func.isRequired,
@@ -453,6 +457,10 @@ module.exports = {
 
       onProjectCreate() {
         dispatch(actions.project.create())
+      },
+
+      onProjectFlush(project) {
+        dispatch(actions.list.load({ project }))
       },
 
       onProjectOpen(path) {

@@ -11,7 +11,6 @@ const { Button: Abutton, Popconfirm } = require('antd')
 const { SearchField } = require('../search')
 const { Button } = require('../button')
 const { empty } = require('../../common/util')
-const { LIST } = require('../../constants')
 
 
 class ProjectToolbar extends PureComponent {
@@ -36,11 +35,10 @@ class ProjectToolbar extends PureComponent {
       list,
       lists
     } = this.props
-    let taskWorkStatus = 999
-    if (!empty(lists) && lists[list] && list) {
+    let taskWorkStatus = 0
+    if (!empty(lists) && lists[list] && list && lists[list].hasOwnProperty('workStatus')) {
       taskWorkStatus = lists[list].workStatus
     }
-
     return (
       <Toolbar isDraggable={isDraggable} onDoubleClick={onDoubleClick}>
         {isDisplay ?
@@ -83,9 +81,9 @@ class ProjectToolbar extends PureComponent {
         </div>
         <div className="toolbar-right">
           <div className="tool-group">
-            {!isOwner ? <Popconfirm placement="right" title="Confirm" onConfirm={()=>this.props.onSubmitTask(list)} okText="Yes" cancelText="No">
+            <Popconfirm placement="right" title="Confirm" onConfirm={()=>this.props.onSubmitTask(list)} okText="Yes" cancelText="No">
               {list && taskWorkStatus !== 2 ? <Abutton icon="play-circle" size="small" style={{ marginRight: 8, height: '28px' }}>{taskWorkStatus === 0 ? 'Start Labelling' : 'Submit Task'}</Abutton> : ''}
-            </Popconfirm> : ''}
+            </Popconfirm>
           </div>
           <SearchField
             query={query}

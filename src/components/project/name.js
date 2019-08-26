@@ -9,7 +9,7 @@ const { Editable } = require('../editable')
 const { isValidImage } = require('../../image')
 const cx = require('classnames')
 const { bool, func, string, number } = require('prop-types')
-const {  Tooltip, Icon, message } = require('antd')
+const {  Tooltip, Icon } = require('antd')
 
 class ProjectName extends React.PureComponent {
   get classes() {
