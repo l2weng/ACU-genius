@@ -112,6 +112,24 @@ class TasksTable extends React.Component {
         dataIndex: 'workStatus',
         key: 'workStatus',
         width: '20%',
+        filters: [
+          {
+            text: getTaskStatusDesc(0),
+            value: 0,
+          },
+          {
+            text: getTaskStatusDesc(1),
+            value: 1,
+          },
+          {
+            text: getTaskStatusDesc(2),
+            value: 2,
+          },
+          {
+            text: getTaskStatusDesc(3),
+            value: 3,
+          }],
+        onFilter: (value, record) => record.workStatus === value,
         render: (text, record) => (
           <div><Badge status={getTaskStatusBadge(record.workStatus)} text={getTaskStatusDesc(record.workStatus)} /></div>
         ),
