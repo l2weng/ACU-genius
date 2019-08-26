@@ -20,7 +20,7 @@ const {
 
 class Header extends React.Component {
 
-  state = { taskType: HEAD.MY_TASKS }
+  state = { taskType: HEAD.JOINED_TASKS }
 
   constructor(props) {
     super(props)

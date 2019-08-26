@@ -3,7 +3,8 @@
 const React = require('react')
 const { Table, Input, Button, Icon, Badge, Divider, Popconfirm } = require('antd')
 const Highlighter = require('react-highlight-words')
-const { array, func } = require('prop-types')
+const { array, func, string } = require('prop-types')
+const { HEAD } = require('../../constants')
 const { getTaskStatusDesc, getTaskStatusBadge } = require('../../common/dataUtil')
 
 class TasksTable extends React.Component {
@@ -88,7 +89,12 @@ class TasksTable extends React.Component {
     this.props.onRollbackTask(task)
   }
 
+  submitTask = (task)=>{
+    this.props.onSubmitTask(task)
+  }
+
   render() {
+    const { taskType } = this.props
     const columns = [
       {
         key: 'name',
@@ -101,7 +107,7 @@ class TasksTable extends React.Component {
         dataIndex: 'project.name',
         key: 'project.name',
         width: '20%',
-        ...this.getColumnSearchProps('project','name'),
+        ...this.getColumnSearchProps('project', 'name'),
       }, {
         title: '进度',
         dataIndex: 'progress',
@@ -111,7 +117,7 @@ class TasksTable extends React.Component {
         title: '状态',
         dataIndex: 'workStatus',
         key: 'workStatus',
-        width: '20%',
+        width: '15%',
         filters: [
           {
             text: getTaskStatusDesc(0),
@@ -139,15 +145,21 @@ class TasksTable extends React.Component {
         width: '20%',
         render: (text, record) => (
           <span>
-            <Popconfirm placement="top" title={'审核任务'} onConfirm={()=>this.auditTask(record)} okText="通过" cancelText="取消">
-              <a href="javascript:;">审核</a>
-            </Popconfirm>
-            <Divider type="vertical" />
-            <Popconfirm placement="top" title={'撤回任务'} onConfirm={()=>this.rollbackTask(record)} okText="撤回" cancelText="取消">
-              <a href="javascript:;">撤回</a>
-            </Popconfirm>
-            <Divider type="vertical" />
-            <a href="javascript:;" onClick={()=>this.checkProject(record.project.projectId)}>查看</a>
+            {taskType === HEAD.MY_TASKS ? <span>
+              <Popconfirm placement="top" title={'审核任务'} onConfirm={()=>this.auditTask(record)} okText="通过" cancelText="取消">
+                <a href="javascript:">审核</a>
+                <Divider type="vertical" />
+              </Popconfirm>
+              <Popconfirm placement="top" title={'撤回任务'} onConfirm={()=>this.rollbackTask(record)} okText="撤回" cancelText="取消">
+                <a href="javascript:">撤回</a>
+                 <Divider type="vertical" />
+              </Popconfirm>
+            </span> : ''}
+            {taskType === HEAD.JOINED_TASKS ? <Popconfirm placement="top" title={'提交任务'} onConfirm={()=>this.submitTask(record)} okText="确认" cancelText="取消">
+              {record.workStatus === 0 || record.workStatus === 1 ? <span><a href="javascript:">提交</a>             <Divider type="vertical" /></span>
+                : ''}
+            </Popconfirm> : ''}
+            <a href="javascript:" onClick={()=>this.checkProject(record.project.projectId)}>查看</a>
           </span>
         ),
       }]
@@ -157,7 +169,9 @@ class TasksTable extends React.Component {
     tasks: array.isRequired,
     openProjectById: func.isRequired,
     onPassTask: func.isRequired,
-    onRollbackTask: func.isRequired
+    onRollbackTask: func.isRequired,
+    onSubmitTask: func.isRequired,
+    taskType: string.isRequired
   }
 }
 

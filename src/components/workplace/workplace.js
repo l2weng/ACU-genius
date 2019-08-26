@@ -52,6 +52,15 @@ class Workplace extends PureComponent {
     })
   }
 
+  handleSubmitTask = (task) =>{
+    this.props.auditTask({
+      id: task.localTaskId,
+      syncTaskId: task.taskId,
+      workStatus: LIST.STATUS_COMPLETE,
+      taskType: this.props.currentTaskType,
+    })
+  }
+
   handlePassTask = (task) =>{
     this.props.auditTask({
       id: task.localTaskId,
@@ -102,7 +111,7 @@ class Workplace extends PureComponent {
   }
 
   render() {
-    const { projects, tasks, isOwner } = this.props
+    const { projects, tasks, currentTaskType } = this.props
 
     return (
       <div>
@@ -162,18 +171,19 @@ class Workplace extends PureComponent {
               title="进行中的任务"
               extra={
                 <div>
-                  {isOwner ? <RadioGroup defaultValue={HEAD.MY_TASKS} onChange={this.onTaskSwitch}>
-                    <RadioButton key={HEAD.MY_TASKS} value={HEAD.MY_TASKS}>我创建的任务</RadioButton>
-                    <RadioButton key={HEAD.JOINED_TASKS} value={HEAD.JOINED_TASKS}>分配给我的任务</RadioButton>
-                  </RadioGroup> : <RadioGroup defaultValue={HEAD.MY_TASKS} onChange={this.onTaskSwitch}>
+                  <RadioGroup defaultValue={HEAD.JOINED_TASKS} onChange={this.onTaskSwitch}>
                     <RadioButton key={HEAD.JOINED_TASKS} value={HEAD.JOINED_TASKS}>分配给我的任务</RadioButton>
                     <RadioButton key={HEAD.MY_TASKS} value={HEAD.MY_TASKS}>我创建的任务</RadioButton>
-                  </RadioGroup>}
-                  {/*<Search className="extraContentSearch" placeholder="请输入" onSearch={() => ({})} />*/}
+                  </RadioGroup>
+                  {/*<Input.Search className="extraContentSearch" placeholder="请输入" onSearch={() => ({})} />*/}
                 </div>
               }>
-              <TasksTable tasks={tasks} openProjectById={this.openProjectById}
+              <TasksTable
+                tasks={tasks}
+                taskType={currentTaskType}
+                openProjectById={this.openProjectById}
                 onPassTask={this.handlePassTask}
+                onSubmitTask={this.handleSubmitTask}
                 onRollbackTask={this.handleRollbackTask}/>
             </Card>
           </Col>
