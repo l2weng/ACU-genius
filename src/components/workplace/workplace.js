@@ -19,7 +19,7 @@ const { TasksTable } = require('./taskTable')
 const { existsSync: exists } = require('fs')
 const { openNotification } = require('../../common/uiUtil')
 const { ipcRenderer: ipc  } = require('electron')
-
+const debounce = require('lodash.debounce')
 
 const {
   getCachePrefix,
@@ -120,7 +120,7 @@ class Workplace extends PureComponent {
             <Card
               bordered={false}
               title="进行中的项目"
-              extra={<a href="#" onClick={this.createNewProject}>新建项目</a>}>
+              extra={<a href="#" onClick={debounce(this.createNewProject, 300)}>新建项目</a>}>
               <List
                 rowKey="id"
                 loading={false}

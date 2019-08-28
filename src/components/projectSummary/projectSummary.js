@@ -41,7 +41,9 @@ class ProjectSummary extends PureComponent {
   componentDidMount() {
     this.summaryTab = '1'
     this.cActivityType = 'HH'
-    this.fetchSummary(this.state.cProjectId)
+    if (this.state.cProjectId !== undefined) {
+      this.fetchSummary(this.state.cProjectId)
+    }
   }
 
   handleSelectProject = (projectId) =>{
@@ -161,7 +163,7 @@ class ProjectSummary extends PureComponent {
   }
 
   componentWillReceiveProps(props) {
-    if (props.activeTab === HEAD.PROJECT) {
+    if (props.activeTab === HEAD.PROJECT && this.state.cProjectId !== props.activeProject.syncProjectId) {
       this.handleSelectProject(props.activeProject.syncProjectId)
     }
   }
