@@ -94,7 +94,7 @@ class WorkersTable extends React.Component {
           </span>
         ),
       }]
-    return <Table columns={columns} dataSource={this.props.data}/>
+    return <Table columns={columns} rowKey={record=>record.userId} dataSource={this.props.data}/>
   }
 }
 

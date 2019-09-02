@@ -135,7 +135,7 @@ class ColleagueTable extends React.Component {
           {/*  {hasSelected ? `Selected ${selectedUserIds.length} users` : ''}*/}
           {/*</span>*/}
         </div>
-        <Table columns={columns} dataSource={this.props.data}/>
+        <Table columns={columns} rowKey={record=>record.userId} dataSource={this.props.data}/>
       </div>
     )
   }
