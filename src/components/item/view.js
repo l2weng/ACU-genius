@@ -9,7 +9,6 @@ const { Resizable } = require('../resizable')
 const { NOTE, PROJECT: { MODE }, SASS: { PANEL } } = require('../../constants')
 const { pick } = require('../../common/util')
 const debounce = require('lodash.debounce')
-const __ = require('underscore')
 
 const {
   arrayOf, bool, func, object, number, shape, string, array
@@ -243,6 +242,8 @@ class ItemView extends PureComponent {
           onContextMenu={this.props.onContextMenu}
           onNoteChange={this.handleNoteChange}
           onNoteCommit={this.handleNoteCommit}
+          onLabelSync={this.props.onLabelSync}
+          onLabelSkip={this.props.onLabelSkip}
           onPhotoError={this.props.onPhotoError}
           onUiUpdate={this.props.onUiUpdate}/>
       </section>
@@ -283,6 +284,8 @@ class ItemView extends PureComponent {
     onNoteSave: func.isRequired,
     onNoteSelect: func.isRequired,
     onPhotoError: func.isRequired,
+    onLabelSync: func.isRequired,
+    onLabelSkip: func.isRequired,
     onPanelResize: func.isRequired,
     onPanelDragStop: func.isRequired,
     onUiUpdate: func.isRequired

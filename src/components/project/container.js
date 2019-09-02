@@ -51,6 +51,7 @@ class ProjectContainer extends Component {
       isClosing: this.isClosing(props),
       mode: props.nav.mode,
       offset: props.ui.panel.width,
+      forceFlush: false,
       willModeChange: false,
       isModeChanging: false
     }
@@ -129,7 +130,9 @@ class ProjectContainer extends Component {
       isModeChanging: false
     })
     if (this.props.nav.mode === MODE.PROJECT) {
+      console.log(this.state.forceFlush)
       this.props.onProjectFlush(this.props.project)
+      this.setState({ forceFlush: false })
     }
   }
 
@@ -154,6 +157,20 @@ class ProjectContainer extends Component {
 
   handlePanelResize = (offset) => {
     this.setState({ offset })
+  }
+
+  handleLabelSync = (args) =>{
+    if (!this.state.forceFlush) {
+      this.setState({ forceFlush: true })
+    }
+    this.props.onLabelSync(args)
+  }
+
+  handleLabelSkip = (args) =>{
+    if (!this.state.forceFlush) {
+      this.setState({ forceFlush: true })
+    }
+    this.props.onLabelSkip(args)
   }
 
   handlePanelDragStop = () => {
@@ -284,6 +301,8 @@ class ProjectContainer extends Component {
           isModeChanging={this.state.isModeChanging}
           isTrashSelected={!!nav.trash}
           isProjectClosing={this.isClosing()}
+          onLabelSync={this.handleLabelSync}
+          onLabelSkip={this.handleLabelSkip}
           onPanelResize={this.handlePanelResize}
           onPanelDragStop={this.handlePanelDragStop}
           onMetadataSave={this.handleMetadataSave}/>
@@ -349,7 +368,7 @@ class ProjectContainer extends Component {
     onContextMenu: func.isRequired,
     onPhotoError: func.isRequired,
     onProjectCreate: func.isRequired,
-    onProjectFlash: func.isRequired,
+    onProjectFlush: func.isRequired,
     onProjectOpen: func.isRequired,
     onMaximize: func.isRequired,
     onModeChange: func.isRequired,
@@ -465,6 +484,14 @@ module.exports = {
 
       onProjectOpen(path) {
         dispatch(actions.project.open(path))
+      },
+
+      onLabelSync(...args) {
+        dispatch(actions.photo.syncLabel(...args))
+      },
+
+      onLabelSkip(...args) {
+        dispatch(actions.photo.skipLabel(...args))
       },
 
       onColumnInsert(...args) {

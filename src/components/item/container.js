@@ -151,14 +151,6 @@ module.exports = {
         dispatch(act.photo.save(...args))
       },
 
-      onLabelSync(...args) {
-        dispatch(act.photo.syncLabel(...args))
-      },
-
-      onLabelSkip(...args) {
-        dispatch(act.photo.skipLabel(...args))
-      },
-
       onPhotoSelect(...args) {
         dispatch(act.photo.select(...args))
       },
