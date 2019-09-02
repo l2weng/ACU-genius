@@ -25,14 +25,14 @@ class EsperFootToolbar extends PureComponent {
   render() {
     const { photo, selections } = this.props
     let modifiedTime = ''
-    if (photo) modifiedTime = moment(new Date(photo.modified)).format('MMMM Do YYYY, h:mm:ss a')
+    if (photo) modifiedTime = moment(new Date(photo.modified)).format('MMM Do YYYY, h:mm:ss a')
     console.log(photo)
     return (
       <Toolbar isDraggable={false}>
         <ToolbarLeft>
           <ToolGroup>
-            {(selections && selections.length > 0) ? `Date modified: ${moment(new Date(selections[0].updatedTime)).format('MMMM Do YYYY, h:mm:ss a')}` :
-              `Date modified:${modifiedTime}`}
+            {(selections && selections.length > 0) ? `Date modified: ${moment(new Date(selections[selections.length - 1].updatedTime)).format('MMM Do YYYY, h:mm:ss a')}` :
+              `Date modified: ${modifiedTime}`}
           </ToolGroup>
         </ToolbarLeft>
         <div className="toolbar-center" style={{ margin: 'auto' }}>

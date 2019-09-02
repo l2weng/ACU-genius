@@ -129,8 +129,7 @@ class ProjectContainer extends Component {
       willModeChange: false,
       isModeChanging: false
     })
-    if (this.props.nav.mode === MODE.PROJECT) {
-      console.log(this.state.forceFlush)
+    if (this.props.nav.mode === MODE.PROJECT && this.state.forceFlush) {
       this.props.onProjectFlush(this.props.project)
       this.setState({ forceFlush: false })
     }
