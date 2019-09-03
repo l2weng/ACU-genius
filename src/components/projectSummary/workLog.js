@@ -70,7 +70,6 @@ class WorkLog extends PureComponent {
         }
       }
     }
-    console.log(logData)
     return (
       <div>
         <Table columns={columns} pagination={pagination} loading={loading}

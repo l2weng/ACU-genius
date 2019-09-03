@@ -95,7 +95,6 @@ class TasksTable extends React.Component {
 
   render() {
     const { tasks } = this.props
-    console.log(tasks)
     const columns = [
       {
         key: 'name',
