@@ -30,10 +30,12 @@ class EsperFootToolbar extends PureComponent {
     return (
       <Toolbar isDraggable={false}>
         <ToolbarLeft>
-          <ToolGroup>
-            {(selections && selections.length > 0) ? `Date modified: ${moment(new Date(selections[selections.length - 1].updatedTime)).format('MMM Do YYYY, h:mm:ss a')}` :
+          <div style={{ position: 'fixed' }}>
+            <ToolGroup>
+              {(selections && selections.length > 0) ? `Date modified: ${moment(new Date(selections[selections.length - 1].updatedTime)).format('MMM Do YYYY, h:mm:ss a')}` :
               `Date modified: ${modifiedTime}`}
-          </ToolGroup>
+            </ToolGroup>
+          </div>
         </ToolbarLeft>
         <div className="toolbar-center" style={{ margin: 'auto' }}>
           <ToolGroup>
