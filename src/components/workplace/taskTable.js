@@ -3,7 +3,7 @@
 const React = require('react')
 const { Table, Input, Button, Icon, Badge, Divider, Popconfirm } = require('antd')
 const Highlighter = require('react-highlight-words')
-const { array, func, string } = require('prop-types')
+const { array, func, number } = require('prop-types')
 const { HEAD } = require('../../constants')
 const { getTaskStatusDesc, getTaskStatusBadge } = require('../../common/dataUtil')
 
@@ -94,7 +94,8 @@ class TasksTable extends React.Component {
   }
 
   render() {
-    const { taskType } = this.props
+    const { tasks } = this.props
+    console.log(tasks)
     const columns = [
       {
         key: 'name',
@@ -145,17 +146,17 @@ class TasksTable extends React.Component {
         width: '20%',
         render: (text, record) => (
           <span>
-            {taskType === HEAD.MY_TASKS ? <span>
+            {record.category === HEAD.MY_TASKS ? <span>
               <Popconfirm placement="top" title={'审核任务'} onConfirm={()=>this.auditTask(record)} okText="通过" cancelText="取消">
                 <a href="javascript:">审核</a>
                 <Divider type="vertical" />
               </Popconfirm>
               <Popconfirm placement="top" title={'撤回任务'} onConfirm={()=>this.rollbackTask(record)} okText="撤回" cancelText="取消">
                 <a href="javascript:">撤回</a>
-                 <Divider type="vertical" />
+                <Divider type="vertical" />
               </Popconfirm>
             </span> : ''}
-            {taskType === HEAD.JOINED_TASKS ? <Popconfirm placement="top" title={'提交任务'} onConfirm={()=>this.submitTask(record)} okText="确认" cancelText="取消">
+            {record.category === HEAD.JOINED_TASKS ? <Popconfirm placement="top" title={'提交任务'} onConfirm={()=>this.submitTask(record)} okText="确认" cancelText="取消">
               {record.workStatus === 0 || record.workStatus === 1 ? <span><a href="javascript:">提交</a>             <Divider type="vertical" /></span>
                 : ''}
             </Popconfirm> : ''}
@@ -163,7 +164,7 @@ class TasksTable extends React.Component {
           </span>
         ),
       }]
-    return <Table columns={columns} rowkey={record=>record.taskId} dataSource={this.props.tasks}/>
+    return <Table columns={columns} rowkey={record=>record.taskId} dataSource={tasks}/>
   }
   static propTypes = {
     tasks: array.isRequired,
@@ -171,7 +172,7 @@ class TasksTable extends React.Component {
     onPassTask: func.isRequired,
     onRollbackTask: func.isRequired,
     onSubmitTask: func.isRequired,
-    taskType: string.isRequired
+    taskType: number.isRequired
   }
 }
 

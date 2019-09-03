@@ -66,23 +66,13 @@ class LoadMyTasks extends Command {
 
   * exec() {
     let { userId, type } = this.action.payload
-    let query
-    query = getUrlFilterParams({ userId: userId }, ['userId'])
+    let query = getUrlFilterParams({ userId: userId, type: type }, ['userId', 'type'])
     let tasks = []
     try {
-      let response
-      if (type === HEAD.MY_TASKS) {
-        response = yield axios.get(
-          `${apiServer}/graphql?query={taskQueryByOwner${query}  { taskId key:taskId name type localTaskId progress projectId createdAt workStatus project { projectId name deadline } }} `)
-        if (response.status === 200) {
-          tasks = response.data.data.taskQueryByOwner
-        }
-      } else if (type === HEAD.JOINED_TASKS) {
-        response = yield axios.get(
-          `${apiServer}/graphql?query={taskQueryByUser${query}  { taskId key:taskId name type localTaskId progress projectId createdAt workStatus project { projectId name deadline } }} `)
-        if (response.status === 200) {
-          tasks = response.data.data.taskQueryByUser
-        }
+      let response = yield axios.get(
+        `${apiServer}/graphql?query={taskQuery${query}  { taskId key:taskId name type category localTaskId progress projectId createdAt workStatus project { projectId name deadline } }} `)
+      if (response.status === 200) {
+        tasks = response.data.data.taskQuery
       }
       yield put(act.header.tasksLoaded({ tasks }))
     } catch (err) {

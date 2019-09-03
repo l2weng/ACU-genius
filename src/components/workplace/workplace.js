@@ -10,7 +10,7 @@ const RadioGroup = Radio.Group
 const { Meta } = Card
 const { userInfo } = ARGS
 const actions = require('../../actions')
-const { func, object, array, bool, string  } = require('prop-types')
+const { func, object, array, bool, string ,number } = require('prop-types')
 const { HEAD, LIST } = require('../../constants')
 const { resolve, join } = require('path')
 const staticRoot = resolve(__dirname, '../../../', 'static')
@@ -168,16 +168,14 @@ class Workplace extends PureComponent {
             </Card>
             <Card
               bordered={false}
-              title="进行中的任务"
-              extra={
-                <div>
-                  <RadioGroup defaultValue={HEAD.JOINED_TASKS} onChange={this.onTaskSwitch}>
-                    <RadioButton key={HEAD.JOINED_TASKS} value={HEAD.JOINED_TASKS}>分配给我的任务</RadioButton>
-                    <RadioButton key={HEAD.MY_TASKS} value={HEAD.MY_TASKS}>我创建的任务</RadioButton>
-                  </RadioGroup>
-                  {/*<Input.Search className="extraContentSearch" placeholder="请输入" onSearch={() => ({})} />*/}
-                </div>
-              }>
+              title={<div>
+                <RadioGroup defaultValue={HEAD.JOINED_TASKS} onChange={this.onTaskSwitch}>
+                  <RadioButton key={HEAD.ALL_TASKS} value={HEAD.ALL_TASKS}>全部任务</RadioButton>
+                  <RadioButton key={HEAD.JOINED_TASKS} value={HEAD.JOINED_TASKS}>参与的任务</RadioButton>
+                  <RadioButton key={HEAD.MY_TASKS} value={HEAD.MY_TASKS}>我的任务</RadioButton>
+                </RadioGroup>
+                {/*<Input.Search className="extraContentSearch" placeholder="请输入" onSearch={() => ({})} />*/}
+              </div>}>
               <TasksTable
                 tasks={tasks}
                 taskType={currentTaskType}
@@ -204,7 +202,7 @@ class Workplace extends PureComponent {
     projects: array,
     tasks: array,
     isOwner: bool,
-    currentTaskType: string,
+    currentTaskType: number,
   }
 }
 

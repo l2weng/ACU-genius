@@ -46,12 +46,12 @@ class Header extends React.Component {
     const isOwner = project.owner === userInfo.user.userId
     return (
       <Tabs defaultActiveKey={activeTab} activeKey={activeTab} onChange={this.switchTab} style={{ height: '100%' }} tabBarExtraContent={<UserInfoContainer/>} >
-        <TabPane tab={<span><Icon type="home" size="small"/>首页</span>} key={HEAD.HOME} className="tab-container">
+        <TabPane tab={<span><Icon type="dashboard" size="small"/>首页</span>} key={HEAD.HOME} className="tab-container">
           <Workplace switchTab={this.switchTab} switchTask={this.switchTask} isOwner={isOwner} currentTaskType={taskType}/>
         </TabPane>
-        <TabPane tab={<span><Icon type="form" size="small"/>工作台</span>} key={HEAD.WORKSPACE} className="tab-container"><ProjectContainer/></TabPane>
-        <TabPane tab={<span><Icon type="project" size="small"/>项目</span>} key={HEAD.PROJECT} className="tab-container"><ProjectSummary activeTab={activeTab} activeProject={project} projects={projects}/></TabPane>
-        <TabPane tab={<span><Icon type="contacts" size="small"/>联系人</span>}  key={HEAD.FRIENDS} className="tab-container"><Contacts/></TabPane>
+        <TabPane tab={<span><Icon type="edit" size="small"/>工作台</span>} key={HEAD.WORKSPACE} className="tab-container"><ProjectContainer/></TabPane>
+        <TabPane tab={<span><Icon type="line-chart" size="small"/>项目</span>} key={HEAD.PROJECT} className="tab-container"><ProjectSummary activeTab={activeTab} activeProject={project} projects={projects}/></TabPane>
+        <TabPane tab={<span><Icon type="team" size="small"/>联系人</span>}  key={HEAD.FRIENDS} className="tab-container"><Contacts/></TabPane>
       </Tabs>
     )
   }

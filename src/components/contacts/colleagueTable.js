@@ -4,6 +4,7 @@ const React = require('react')
 const { Table, Input, Button, Icon } = require('antd')
 const Highlighter = require('react-highlight-words')
 const { array, func } = require('prop-types')
+const debounce = require('lodash.debounce')
 
 class ColleagueTable extends React.Component {
   state = {
@@ -111,7 +112,7 @@ class ColleagueTable extends React.Component {
         width: '15%',
         render: (text, record) => (
           <span>
-            <a href="javascript:;" onClick={()=>this.pickUser(record.userId)}>分配</a>
+            <a href="javascript:;" onClick={()=>debounce(this.pickUser(record.userId))}>分配</a>
           </span>
         ),
       }]
