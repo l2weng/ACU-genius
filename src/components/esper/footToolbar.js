@@ -3,7 +3,7 @@
 const React = require('react')
 const { PureComponent } = React
 const { Toolbar, ToolGroup, ToolbarLeft } = require('../toolbar')
-const { Button, Icon, Tooltip } = require('antd')
+const { Button, Icon } = require('antd')
 const ButtonGroup = Button.Group
 const { func, object, array } = require('prop-types')
 const { emit } = require('../../dom')

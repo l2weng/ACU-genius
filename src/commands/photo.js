@@ -547,6 +547,8 @@ class Sync extends Command {
     const { db } = this.options
     const { force } = payload
     const { project } = yield select()
+    let syncPhotos = []
+    let syncPhotosResult = {}
     if (project.synced || force) {
       const photos = yield call(db.seq, conn =>
         mod.photo.load(conn, null, project))
@@ -589,6 +591,10 @@ class Sync extends Command {
             if (syncResult.status === 200) {
               yield call(mod.photo.syncPhoto, db, sPhoto.id, result.url,
                 syncResult.data.obj.photoId)
+              sPhoto.syncFileUrl = result.url
+              sPhoto.syncPhotoId = syncResult.data.obj.photoId
+              syncPhotos.push(sPhoto)
+              syncPhotosResult[sPhoto.id] = sPhoto
             }
             yield put(act.activity.update(this.action, { total, progress: i + 1 }))
           } catch (e) {
@@ -598,9 +604,10 @@ class Sync extends Command {
           yield put(act.activity.update(this.action, { total, progress: i + 1 }))
         }
       }
-      yield put(act.photo.upload(payload))
       yield put(act.references.sync(payload))
     }
+    const ids = syncPhotos.map(photo => photo.id)
+    return [ids, syncPhotosResult]
   }
 }
 

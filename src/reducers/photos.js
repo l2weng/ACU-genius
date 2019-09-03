@@ -1,7 +1,7 @@
 'use strict'
 
 const { METADATA, PHOTO, PROJECT } = require('../constants')
-const { bulk, insert, load, nested, touch, update } = require('./util')
+const { bulk, insert, load, nested, touch, update, bulkObj } = require('./util')
 
 module.exports = {
   // eslint-disable-next-line complexity
@@ -47,6 +47,14 @@ module.exports = {
       case PHOTO.BULK.UPDATE:
         console.log(payload)
         return bulk.update(state, payload, meta)
+
+      case PHOTO.SYNC:
+        console.log(payload)
+        if (error || !meta.done) {
+          return state
+        }  else {
+          return bulkObj.update(state, payload, meta)
+        }
 
       case METADATA.SAVE:
       case METADATA.RESTORE:
