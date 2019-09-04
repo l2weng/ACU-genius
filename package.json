@@ -1,7 +1,7 @@
 {
   "name": "labelreal",
   "productName": "LabelReal",
-  "version": "3.9.0-dev",
+  "version": "1.0.1-dev",
   "private": true,
   "description": "LabelReal is your friendly label assistant.",
   "license": "AGPL-3.0",
@@ -38,10 +38,12 @@
     "lint": "node scripts/make lint || true",
     "make": "node scripts/make",
     "purge": "npm run clean && rimraf dist",
+    "pack": "node scripts/pack",
     "prestart": "node scripts/compile",
+    "postinstall": "npm run rebuild",
+    "postbuild": "node scripts/sign",
     "start": "electron --app . --env development --data tmp --cache tmp/cache --logs tmp/log",
     "rebuild": "node scripts/rebuild",
-    "postinstall": "npm run rebuild",
     "test": "node scripts/make test",
     "watch": "node scripts/watch"
   },
