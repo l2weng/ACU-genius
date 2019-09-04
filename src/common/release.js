@@ -24,6 +24,6 @@ module.exports = {
   qualified,
   exe: (platform === 'linux') ? qualified.name : qualified.product,
   feed: (platform === 'win32') ?
-    `https://tropy.org/update/${channel}/${platform}` :
-    `https://tropy.org/update/${channel}/${platform}/${version}`
+    `https://hazel.labelreal.now.sh/update/${channel}/${platform}` :
+    `https://hazel.labelreal.now.sh/update/${channel}/${platform}/${version}`
 }

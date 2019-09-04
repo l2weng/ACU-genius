@@ -33,6 +33,7 @@ const { restrict } = require('../common/util')
 const { getLocalIP } = require('../common/serviceUtil')
 const { getNewOOSClient, getUrlFilterParams } = require('../common/dataUtil')
 const { machineIdSync } = require('node-machine-id')
+const { addIdleObserver } = require('./idle')
 const axios = require('axios')
 const __ = require('underscore')
 
@@ -83,7 +84,9 @@ class LabelReal extends EventEmitter {
 
     this.menu = new AppMenu(this)
     this.ctx = new ContextMenu(this)
-    this.updater = new Updater(this)
+    this.updater = new Updater({
+      enable: true
+    })
 
     prop(this, 'cache', {
       value: new Cache(app.getPath('userData'), 'cache')
@@ -922,7 +925,22 @@ class LabelReal extends EventEmitter {
     })
 
     dialog.start()
+    this.updater
+    .on('checking-for-updates', () => {
+      this.emit('app:reload-menu')
+    })
+    .on('update-not-available', () => {
+      this.emit('app:reload-menu')
+    })
+    .on('update-ready', (release) => {
+      this.broadcast('dispatch', act.flash.show(release))
+    })
 
+    app.whenReady().then(() => {
+      addIdleObserver((_, type, time) => {
+        this.broadcast('idle', { type, time })
+      }, 60)
+    })
     return this
   }
 

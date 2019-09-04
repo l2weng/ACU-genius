@@ -49,6 +49,7 @@ target.darwin = (args = []) => {
   check(which('spctl'), 'missing dependency: spctl')
 
   const targets = ls('-d', join(dir, 'dist', '*-darwin-*'))
+  console.log(args[0])
   const identity = args[0] || env.SIGN_DARWIN_IDENTITY
 
   check(targets.length, 'no targets found')
