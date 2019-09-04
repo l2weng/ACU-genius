@@ -3,14 +3,14 @@
 const React = require('react')
 const { PureComponent } = React
 const { connect } = require('react-redux')
-const { Row, Col, Card, List, Radio, Icon, Progress } = require('antd')
+const { Row, Col, Card, List, Radio, Icon, Progress, Button } = require('antd')
 const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
 
 const { Meta } = Card
 const { userInfo } = ARGS
 const actions = require('../../actions')
-const { func, object, array, bool, string ,number } = require('prop-types')
+const { func, object, array, bool, string, number } = require('prop-types')
 const { HEAD, LIST } = require('../../constants')
 const { resolve, join } = require('path')
 const staticRoot = resolve(__dirname, '../../../', 'static')
@@ -82,12 +82,11 @@ class Workplace extends PureComponent {
   renderTitle(item) {
     let cloudMark = ''
     if (item.syncStatus) {
-      cloudMark = <Icon type="cloud" theme="twoTone" twoToneColor="cyan" style={{ float: 'right' }}/>
+      cloudMark = <Icon type="cloud" theme="twoTone" twoToneColor={'#8da7d3'}  style={{ float: 'right', paddingTop: '4px', paddingRight: '5px' }}/>
     } else {
-      cloudMark = <Icon type="eye-invisible" style={{ float: 'right' }}/>
+      cloudMark = <Icon type="eye-invisible"theme="twoTone" twoToneColor={'#e96529'} style={{ float: 'right', paddingTop: '4px', paddingRight: '5px'  }}/>
     }
-    return (<div><a onClick={()=>this.openProject(
-      item)}>{item.name}</a>{cloudMark}</div>)
+    return (<div style={{color:'rgba(0,0,0,.65)'}}>{item.name}{cloudMark}</div>)
   }
 
 
@@ -132,7 +131,8 @@ class Workplace extends PureComponent {
                       item)}>
                       <Card
                         hoverable
-                        style={{ width: 180, height: 260 }}
+                        bodyStyle={{ padding: '10px 5px 10px 8px' }}
+                        style={{ width: 180, height: 240 }}
                         cover={
                           <div>
                             <div style={{
@@ -146,21 +146,12 @@ class Workplace extends PureComponent {
                                       ? item.syncCover
                                       : item.cover)}/>
                             </div>
-                            <div style={{ padding: '0 10px 0 5px' }}>
-                              <Progress
-                                strokeColor={{
-                                  from: '#108ee9',
-                                  to: '#87d068',
-                                }}
-                                percent={item.progress}
-                                size="small"
-                                status="active"/>
-                            </div>
                           </div>}>
                         <Meta
-                          title={
-                          this.renderTitle(item)
-                        }/>
+                          title={this.renderTitle(item)} description={
+                            <div style={{ width: (item.progress < 10 || item.progress === 100) ? '169px' : '162px' }}>
+                              <Progress percent={item.progress} size="small"/>
+                            </div>}/>
                       </Card>
                     </div>
                   </List.Item>

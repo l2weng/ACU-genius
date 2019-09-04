@@ -72,7 +72,7 @@ class UserInfoContainer extends Component {
           style={{
             backgroundColor: user.avatarColor || '#1890ff'
           }}
-          alt="avatar">{user.name.charAt(0)}</Avatar>
+          alt="avatar">{user.name.charAt(0).toUpperCase()}</Avatar>
         <span>{user.name}</span>
       </span>
     </Dropdown>)
