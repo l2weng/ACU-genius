@@ -53,8 +53,10 @@ function *open(file) {
     const fileUuid = basename(db.path, '.lbr')
     const syncResult = yield axios.post(`${ARGS.apiServer}/projects/syncProjectByUuid`, { fileUuid })
     if (syncResult.status === 200) {
-      syncProjectId = syncResult.data.project.projectId
-      syncStatus = syncResult.data.project.syncStatus
+      if (syncResult.data.project) {
+        syncProjectId = syncResult.data.project.projectId
+        syncStatus = syncResult.data.project.syncStatus
+      }
     }
     // Update window's global ARGS to allow reloading the project!
     if (db.path !== ARGS.file) {

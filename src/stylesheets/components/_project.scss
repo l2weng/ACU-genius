@@ -63,14 +63,14 @@
   justify-content: center;
   align-items: center;
 
-  .toolbar.window-draggable {
-    .frameless & {
-      position: fixed;
-      left: 0;
-      top: 0;
-      right: 0;
-    }
-  }
+  //.toolbar.window-draggable {
+  //  .frameless & {
+  //    position: fixed;
+  //    left: 0;
+  //    top: 0;
+  //    right: 0;
+  //  }
+  //}
 
   .no-project-illustration {
     flex: 0 0 auto;
