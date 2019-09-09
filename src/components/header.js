@@ -27,13 +27,14 @@ class Header extends React.Component {
   }
 
   switchTab = (tabName) => {
+    const { project } = this.props
     if (tabName === HEAD.HOME) {
-      if (!_.isEmpty(userInfo)) {
+      if (!_.isEmpty(userInfo) && !project.closing) {
         this.props.reloadProjects(true, userInfo.user.userId)
         this.props.reloadTasks(userInfo.user.userId, this.state.taskType)
       }
     }
-    this.props.switchTab(tabName, this.props.project)
+    this.props.switchTab(tabName, project)
   }
 
   switchTask = (taskTab) =>{
@@ -75,7 +76,7 @@ module.exports = {
     }),
     dispatch => ({
       switchTab(tabName, project) {
-        if (tabName === HEAD.WORKSPACE) {
+        if (tabName === HEAD.WORKSPACE && !project.closing) {
           dispatch(actions.list.load({ project: project }))
         }
         dispatch(actions.ui.headerSwitch({ activeTab: tabName }))
