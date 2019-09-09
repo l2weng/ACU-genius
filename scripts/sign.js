@@ -14,43 +14,66 @@ target.all = (...args) => {
   target[platform](...args)
 }
 
+target.linux = () => {
+  say('skipping linux code-signing...')
+}
 
 target.win32 = (args = []) => {
-  check(platform === 'win32', 'must be run on Windows')
+  if (args[0] === 'force') {
+    check(platform === 'win32', 'must be run on Windows')
 
-  let [cert, pass] = args
-  cert = cert || env.SIGN_WIN32_CERT
-  pass = pass || env.SIGN_WIN32_PASS
+    let [, cert, pass] = args
+    cert = cert || env.SIGN_WIN32_CERT
+    pass = pass || env.SIGN_WIN32_PASS
 
-  check(pass, 'missing password')
-  check(cert, 'missing certificate')
-  check(test('-f', cert), `certificate not found: ${cert}`)
+    check(pass, 'missing password')
+    check(cert, 'missing certificate')
+    check(test('-f', cert), `certificate not found: ${cert}`)
 
-  const signtool = getSignTool()
-  const params = getSignToolParams(cert, pass)
-  check(signtool, `missing dependency: ${signtool}`)
+    const signtool = getSignTool()
+    const params = getSignToolParams(cert, pass)
+    check(signtool, `missing dependency: ${signtool}`)
 
-  const targets = ls('-d', join(dir, 'dist', '*-win32-*'))
-  check(targets.length, 'no targets found')
+    const targets = ls('-d', join(dir, 'dist', '*-win32-*'))
+    check(targets.length, 'no targets found')
 
-  for (let target of targets) {
-    for (let file of ls(join(target, '*.exe'))) {
-      exec(`"${signtool}" sign ${params} "${file}"`)
-      exec(`"${signtool}" verify /pa "${file}"`)
+    for (let target of targets) {
+      for (let file of ls(join(target, '*.exe'))) {
+        exec(`"${signtool}" sign ${params} "${file}"`)
+        exec(`"${signtool}" verify /pa "${file}"`)
+      }
     }
+  } else {
+    say('win32 code-signing not forced, skipping...')
   }
 }
 
-
-target.darwin = (args = []) => {
+target.darwin = async (args = []) => {
   check(platform === 'darwin', 'must be run on macOS')
+  const { notarize } = require('electron-notarize')
 
-  check(which('codesign'), 'missing dependency: codesign')
-  check(which('spctl'), 'missing dependency: spctl')
+  let codesign = which('codesign')
+  let spctl = which('spctl')
+  let xcrun = which('xcrun')
 
-  const targets = ls('-d', join(dir, 'dist', '*-darwin-*'))
-  console.log(args[0])
-  const identity = args[0] || env.SIGN_DARWIN_IDENTITY
+  check(codesign, 'missing dependency: codesign')
+  check(spctl, 'missing dependency: spctl')
+  check(xcrun, 'missing dependency: xcrun')
+
+  let targets = ls('-d', join(dir, 'dist', '*-darwin-*'))
+  let identity = args[0] || env.SIGN_CERT
+  console.log(identity)
+  let appleId = args[1] || env.SIGN_USER
+  let entitlements = join(dir, 'res', 'darwin', 'entitlements.plist')
+
+  let options = [
+    `--sign ${identity}`,
+    '--options runtime',
+    '--force',
+    '--verbose',
+    '--timestamp',
+    `--entitlements ${entitlements}`
+  ].join(' ')
 
   check(targets.length, 'no targets found')
   check(identity, 'missing identity')
@@ -63,41 +86,58 @@ target.darwin = (args = []) => {
     cnt = join(app, 'Contents')
     check(test('-d', app), `app not found: ${app}`)
 
-    say(`signing ${relative(dir, app)} with ${identity}...`)
+    // clear temporary files from previous signing
+    for (let file of find(`"${app}" -name "*.cstemp" -type f`)) {
+      if (file) rm(file)
+    }
+
+    say(`signing ${relative(dir, app)}...`)
 
     for (let file of find(`"${join(cnt, 'Resources')}" -perm +111 -type f`)) {
       sign(file)
     }
-
+    for (let file of find(`"${join(cnt, 'Resources')}" -name "*.dylib"`)) {
+      sign(file)
+    }
     for (let file of find(`"${join(cnt, 'Frameworks')}" -perm +111 -type f`)) {
       sign(file)
     }
-
+    for (let file of find(`"${cnt}" -name "*.app" -type d`)) {
+      sign(file)
+    }
+    for (let file of find(`"${cnt}" -name "*.framework" -type d`)) {
+      sign(file)
+    }
     for (let file of find(`"${join(cnt, 'MacOS')}" -perm +111 -type f`)) {
       sign(file)
     }
 
-    for (let file of find(`"${cnt}" -name "*.framework"`)) {
-      sign(file)
-    }
-
-    for (let file of find(`"${cnt}" -name "*.app"`)) {
-      sign(file)
-    }
-
     sign(app)
+
+    if (appleId != null) {
+      say(`notarize ${relative(dir, app)}...`)
+      await notarize({
+        appBundleId: 'com.labelreal.labelreal',
+        appPath: app,
+        appleId,
+        appleIdPassword: `@keychain:"Application Loader: ${appleId}"`,
+      })
+    } else {
+      say('apple id missing, skipping notarization...')
+    }
+
+    say(`verify ${relative(dir, app)}...`)
     verify(app)
   }
 
   function sign(file) {
-    say(`${relative(app, file)}`)
-    exec(`codesign --sign ${identity} -fv "${file}"`, { silent: true })
+    say(`${app !== file ? relative(app, file) : '.'}`)
+    exec(`${codesign} ${options} "${file}"`, { silent: true })
   }
 
   function verify(file) {
-    say(`verify ${relative(app, file)}`)
-    exec(`codesign --verify --deep --display --info=2 "${file}"`)
-    exec(`spctl --ignore-cache --no-cache --assess -t execute --v "${file}"`)
+    exec(`${codesign} --verify --deep --display --verbose=2 "${file}"`)
+    exec(`${spctl} --ignore-cache --no-cache --assess -t execute --v "${file}"`)
   }
 }
 
@@ -113,9 +153,9 @@ function getSignTool() {
   ].find(signtool => test('-f', signtool))
 }
 
-function getSignToolParams(cert, pass, ts = 'http://timestamp.comodoca.com') {
+function getSignToolParams(cert, pass) {
   return [
-    `/t ${ts}`, '/fd SHA256', `/f ${cert}`, `/p ${pass}`
+    '/fd SHA256', `/f ${cert}`, `/p "${pass}"`
   ].join(' ')
 }
 
