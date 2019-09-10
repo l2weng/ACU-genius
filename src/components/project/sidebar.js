@@ -53,7 +53,6 @@ const ColleagueList = Form.create()(props => {
       destroyOnClose
       style={{ top: 10 }}
       title="分配人员"
-      centered
       maskClosable={false}
       visible={modalVisible}
       onOk={okHandle}
@@ -208,13 +207,13 @@ class ProjectSidebar extends React.PureComponent {
 
   handleAddWorkers = (type, syncTaskId, listId, defaultIdx = []) => {
     let self = this
-    self.setState({ modalVisible: true })
     let query = getUrlFilterParams({ companyId: userInfo.user.companyId }, ['companyId'])
 
     axios.get(`${ARGS.apiServer}/graphql?query={userQueryActiveContacts${query} { key: userId userId name email status phone userType userTypeDesc statusDesc avatarColor machineId prefix }}`)
     .then(function (response) {
       if (response.status === 200) {
-        self.setState({ colleagues: response.data.data.userQueryActiveContacts, defaultIdx, assignType: type, syncTaskId: syncTaskId, listId })
+        self.setState({ colleagues: response.data.data.userQueryActiveContacts, defaultIdx, modalVisible: true ,assignType: type, syncTaskId: syncTaskId, listId })
+        // self.setState({ modalVisible: true })
       }
     })
     .catch(function () {

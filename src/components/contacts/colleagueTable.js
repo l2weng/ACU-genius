@@ -124,18 +124,18 @@ class ColleagueTable extends React.Component {
     return (
       <div>
         <div style={{ marginBottom: 16 }}>
-          <Button
-            type="primary"
-            onClick={this.assignWork}
-            disabled={!hasSelected}
-            loading={loading}>
-          分配
-          </Button>
-          <span style={{ marginLeft: 8 }}>
-            {hasSelected ? `Selected ${selectedUserIds.length} users` : ''}
-          </span>
+          {/*<Button*/}
+          {/*  type="primary"*/}
+          {/*  onClick={this.assignWork}*/}
+          {/*  disabled={!hasSelected}*/}
+          {/*  loading={loading}>*/}
+          {/*分配*/}
+          {/*</Button>*/}
+          {/*<span style={{ marginLeft: 8 }}>*/}
+          {/*  {hasSelected ? `Selected ${selectedUserIds.length} users` : ''}*/}
+          {/*</span>*/}
         </div>
-        <Table columns={columns} rowSelection={rowSelection} rowKey={record=>record.userId} dataSource={this.props.data}/>
+        <Table columns={columns} rowKey={record=>record.userId} dataSource={this.props.data}/>
       </div>
     )
   }
@@ -148,3 +148,5 @@ class ColleagueTable extends React.Component {
 
 
 module.exports = { ColleagueTable }
+
+// rowSelection={rowSelection}
