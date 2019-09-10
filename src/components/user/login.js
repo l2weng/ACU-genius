@@ -60,7 +60,7 @@ class LoginForm extends Component {
         </FormItem>
         <FormItem>
 
-          <Checkbox>Remember me</Checkbox>
+          {/*<Checkbox>Remember me</Checkbox>*/}
 
           <a className="login-form-forgot" href="">Forgot password</a>
           <Button type="primary" htmlType="submit" className="login-form-button">

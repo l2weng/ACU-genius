@@ -4,7 +4,6 @@ const React = require('react')
 const { Table, Input, Button, Icon } = require('antd')
 const Highlighter = require('react-highlight-words')
 const { array, func } = require('prop-types')
-const debounce = require('lodash.debounce')
 
 class ColleagueTable extends React.Component {
   state = {
@@ -112,31 +111,31 @@ class ColleagueTable extends React.Component {
         width: '15%',
         render: (text, record) => (
           <span>
-            <a href="javascript:;" onClick={()=>debounce(this.pickUser(record.userId), 300)}>分配</a>
+            <a href="javascript:;" onClick={()=>(this.pickUser(record.userId))}>分配</a>
           </span>
         ),
       }]
-    // const { loading, selectedUserIds } = this.state
-    // const rowSelection = {
-    //   selectedRowKeys: selectedUserIds,
-    //   onChange: this.onSelectChange,
-    // }
-    // const hasSelected = selectedUserIds.length > 0
+    const { loading, selectedUserIds } = this.state
+    const rowSelection = {
+      selectedRowKeys: selectedUserIds,
+      onChange: this.onSelectChange,
+    }
+    const hasSelected = selectedUserIds.length > 0
     return (
       <div>
         <div style={{ marginBottom: 16 }}>
-          {/*<Button*/}
-          {/*  type="primary"*/}
-          {/*  onClick={this.assignWork}*/}
-          {/*  disabled={!hasSelected}*/}
-          {/*  loading={loading}>*/}
-          {/*分配*/}
-          {/*</Button>*/}
-          {/*<span style={{ marginLeft: 8 }}>*/}
-          {/*  {hasSelected ? `Selected ${selectedUserIds.length} users` : ''}*/}
-          {/*</span>*/}
+          <Button
+            type="primary"
+            onClick={this.assignWork}
+            disabled={!hasSelected}
+            loading={loading}>
+          分配
+          </Button>
+          <span style={{ marginLeft: 8 }}>
+            {hasSelected ? `Selected ${selectedUserIds.length} users` : ''}
+          </span>
         </div>
-        <Table columns={columns} rowKey={record=>record.userId} dataSource={this.props.data}/>
+        <Table columns={columns} rowSelection={rowSelection} rowKey={record=>record.userId} dataSource={this.props.data}/>
       </div>
     )
   }
