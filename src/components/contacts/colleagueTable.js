@@ -112,7 +112,7 @@ class ColleagueTable extends React.Component {
         width: '15%',
         render: (text, record) => (
           <span>
-            <a href="javascript:;" onClick={()=>debounce(this.pickUser(record.userId))}>分配</a>
+            <a href="javascript:;" onClick={()=>debounce(this.pickUser(record.userId), 300)}>分配</a>
           </span>
         ),
       }]

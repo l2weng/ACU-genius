@@ -26,7 +26,6 @@ class EsperFootToolbar extends PureComponent {
     const { photo, selections } = this.props
     let modifiedTime = ''
     if (photo) modifiedTime = moment(new Date(photo.modified)).format('MMM Do YYYY, h:mm:ss a')
-    console.log(photo)
     return (
       <Toolbar isDraggable={false}>
         <ToolbarLeft>

@@ -25,7 +25,6 @@ const { SkuForm } = require('../tag/skuForm')
 
 const { userInfo } = ARGS
 const axios = require('axios')
-const __ = require('underscore')
 
 const {
   bool, shape, string, object, arrayOf, func, number
@@ -52,9 +51,10 @@ const ColleagueList = Form.create()(props => {
   return (
     <Modal
       destroyOnClose
-      style={{ top: 20 }}
+      style={{ top: 10 }}
       title="分配人员"
       centered
+      maskClosable={false}
       visible={modalVisible}
       onOk={okHandle}
       footer={null}
@@ -208,12 +208,13 @@ class ProjectSidebar extends React.PureComponent {
 
   handleAddWorkers = (type, syncTaskId, listId, defaultIdx = []) => {
     let self = this
+    self.setState({ modalVisible: true })
     let query = getUrlFilterParams({ companyId: userInfo.user.companyId }, ['companyId'])
 
     axios.get(`${ARGS.apiServer}/graphql?query={userQueryActiveContacts${query} { key: userId userId name email status phone userType userTypeDesc statusDesc avatarColor machineId prefix }}`)
     .then(function (response) {
       if (response.status === 200) {
-        self.setState({ colleagues: response.data.data.userQueryActiveContacts, defaultIdx, modalVisible: true, assignType: type, syncTaskId: syncTaskId, listId })
+        self.setState({ colleagues: response.data.data.userQueryActiveContacts, defaultIdx, assignType: type, syncTaskId: syncTaskId, listId })
       }
     })
     .catch(function () {
@@ -331,10 +332,9 @@ class ProjectSidebar extends React.PureComponent {
     .then(function (response) {
       if (response.status === 200) {
         self.props.updateListOwner({ workers: response.data.workers, syncTaskId: syncTaskId, id: listId })
-        message.success('任务分配成功', 0.5, ()=>{
-          self.setState({ modalVisible: false })
-          ipc.send('cmd', 'app:sync-project-file')
-        })
+        message.success('任务分配成功')
+        ipc.send('cmd', 'app:sync-project-file')
+        self.setState({ modalVisible: false })
       }
     })
     .catch(function () {
