@@ -115,6 +115,7 @@ class Import extends ImportCommand {
           put(act.item.insert(item)),
           put(act.photo.insert(photo)),
           put(act.photo.load()),
+          put(act.item.load()),
           put(act.activity.update(this.action, { total, progress: i + 1 }))
         ])
 
@@ -191,7 +192,7 @@ class Load extends Command {
   *exec() {
     const { db } = this.options
     const { payload } = this.action
-    const { project } = payload
+    const { project } = yield select()
     const isOwner = project.owner === userInfo.user.userId
     let items = {}
     if (isOwner) {
