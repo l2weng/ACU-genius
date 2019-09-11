@@ -8,5 +8,6 @@ module.exports = {
   NUMBER: 'http://www.w3.org/2001/XMLSchema#integer',
   PHOTO: 'https://tropy.org/v1/tropy#Photo',
   SELECTION: 'https://tropy.org/v1/tropy#Selection',
-  TEXT: 'http://www.w3.org/2001/XMLSchema#string'
+  TEXT: 'http://www.w3.org/2001/XMLSchema#string',
+  FILE_SIZE: 'https://www.labelreal.com/v1/labelreal#List',
 }

@@ -22,8 +22,8 @@ const init = {
   syncTaskId: '',
   columns: [
     { width: 250, id: DC.title },
-    { width: 100, id: DC.creator },
-    { width: 100, id: DC.date },
+    // { width: 100, id: DC.creator },
+    // { width: 100, id: DC.date },
     { width: 100, id: DC.type },
     { width: 190, id: NAV.COLUMN.CREATED.id }
   ],

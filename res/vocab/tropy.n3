@@ -248,12 +248,6 @@ tropy:saturation a rdf:Property ;
 
 # Custom Metadata Properties
 
-tropy:box a rdf:Property ;
-	rdfs:label "Box"@en , "Carton"@fr , "Box"@de ;
-	rdfs:isDefinedBy <https://tropy.org/v1/tropy#> ;
-  rdfs:domain tropy:Item , tropy:Photo, tropy:Selection ;
-	rdfs:comment "A unit of archival organization."@en , "Une unité d'archivage."@fr .
-
 tropy:folder a rdf:Property ;
 	rdfs:label "Folder"@en , "Dossier"@fr , "Ordner"@de ;
 	rdfs:isDefinedBy <https://tropy.org/v1/tropy#> ;
@@ -267,13 +261,6 @@ tropy:piece a rdf:Property ;
   rdfs:subPropertyOf tropy:folder ;
   rdfs:domain tropy:Item , tropy:Photo, tropy:Selection ;
 	rdfs:comment "A unit of archival organization, usually within a folder."@en , "Une unité d'archivage, généralement contenue dans un dossier."@fr .
-
-tropy:collection a rdf:Property ;
-	rdfs:label "Collection"@en , "Collection"@fr ;
-	rdfs:isDefinedBy <https://tropy.org/v1/tropy#> ;
-  rdfs:domain tropy:Item , tropy:Photo, tropy:Selection ;
-	rdfs:comment "A unit of archival organizations."@en , "Un ensemble d'unités d'archivage."@fr .
-
 
 # Template Properties
 

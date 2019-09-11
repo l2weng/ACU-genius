@@ -162,8 +162,10 @@ de:
       noInfo: Unknown author
       homepage: More
   item:
+    workStatus: 状态
+    size: 文件大小
     created: 导入时间
-    modified: Modified
+    modified: 更新时间
   photo:
     file: File
     size: Size

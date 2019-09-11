@@ -168,19 +168,22 @@ module.exports = mod.item = {
     await all([
       db.each(`
         SELECT
-            id,
+            s.id as id,
             template,
+            size,
             datetime(created, "localtime") AS created,
             datetime(modified, "localtime") AS modified,
             deleted
-          FROM subjects
-            JOIN items USING (id)
+          FROM subjects as s
+            JOIN items as it USING (id)
+            LEFT JOIN photos as p on p.item_id = it.id
             LEFT OUTER JOIN trash USING (id)${
-          (ids != null) ? ` WHERE id IN (${ids}) and id != -999` : 'where id != -999'
+          (ids != null) ? ` WHERE it.id IN (${ids}) and it.id != -999` : 'where it.id != -999'
         }`,
-        ({ id, created, modified, deleted, ...data }) => {
+        ({ id, created, modified, size, deleted, ...data }) => {
           data.created = new Date(created)
           data.modified = new Date(modified)
+          data.size = size
           data.deleted = !!deleted
 
           if (id in items) assign(items[id], data)

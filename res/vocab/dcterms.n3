@@ -861,7 +861,7 @@ dcterms:source dcterms:description "The described resource may be derived from t
 	a rdf:Property ;
 	rdfs:comment "A related resource from which the described resource is derived."@en ;
 	rdfs:isDefinedBy <http://purl.org/dc/terms/> ;
-	rdfs:label "Source"@en ;
+	rdfs:label "Sku"@en ;
 	rdfs:subPropertyOf <http://purl.org/dc/elements/1.1/source> , dcterms:relation ;
 	skos:note "This term is intended to be used with non-literal values as defined in the DCMI Abstract Model (http://dublincore.org/documents/abstract-model/).  As of December 2007, the DCMI Usage Board is seeking a way to express this intention with a formal range declaration."@en .
 

@@ -69,7 +69,7 @@
       top: 1px solid $item-table-header-border-color;
       bottom: 1px solid $item-table-header-border-color;
     }
-    overflow: hidden;
+    overflow: auto;
     box-sizing: content-box; // Fix #261
 
     .scrollbar-style-old-school & {

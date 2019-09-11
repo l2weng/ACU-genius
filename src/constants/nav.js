@@ -21,6 +21,16 @@ module.exports = {
       protected: true,
       type: TYPE.DATE
     },
+    // STATUS: {
+    //   id: 'item.workStatus',
+    //   protected: true,
+    //   type: TYPE.TEXT
+    // },
+    SIZE: {
+      id: 'item.size',
+      protected: true,
+      type: TYPE.FILE_SIZE
+    },
     MODIFIED: {
       id: 'item.modified',
       protected: true,

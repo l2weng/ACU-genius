@@ -45,6 +45,8 @@ const format = {
         return format.datetime(value)
       case TYPE.NUMBER:
         return format.number(value)
+      case TYPE.FILE_SIZE:
+        return format.bytes(value)
       default:
         return value
     }

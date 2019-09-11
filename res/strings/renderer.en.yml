@@ -163,6 +163,8 @@ en:
       homepage: More
   item:
     created: Date Added
+    workStatus: Status
+    size: Size
     modified: Modified
   photo:
     file: File
