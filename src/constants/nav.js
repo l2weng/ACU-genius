@@ -21,6 +21,11 @@ module.exports = {
       protected: true,
       type: TYPE.DATE
     },
+    MIME_TYPE: {
+      id: 'item.mimetype',
+      protected: true,
+      type: TYPE.DATE
+    },
     // STATUS: {
     //   id: 'item.workStatus',
     //   protected: true,

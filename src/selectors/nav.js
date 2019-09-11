@@ -17,6 +17,7 @@ const SPECIAL_COLUMNS = [
   COLUMN.CREATED,
   COLUMN.MODIFIED,
   COLUMN.SIZE,
+  COLUMN.MIME_TYPE,
 ]
 
 const merge = (col, { label, name, prefix }) => ({

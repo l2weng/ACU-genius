@@ -24,8 +24,10 @@ const init = {
     { width: 250, id: DC.title },
     // { width: 100, id: DC.creator },
     // { width: 100, id: DC.date },
-    { width: 100, id: DC.type },
-    { width: 190, id: NAV.COLUMN.CREATED.id }
+    { width: 100, id: NAV.COLUMN.SIZE.id },
+    { width: 180, id: NAV.COLUMN.CREATED.id },
+    { width: 100, id: NAV.COLUMN.MIME_TYPE.id },
+    // { width: 100, id: DC.type }
   ],
 }
 

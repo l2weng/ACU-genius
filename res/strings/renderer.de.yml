@@ -164,6 +164,7 @@ de:
   item:
     workStatus: 状态
     size: 文件大小
+    mimetype: 文件类型
     created: 导入时间
     modified: 更新时间
   photo:

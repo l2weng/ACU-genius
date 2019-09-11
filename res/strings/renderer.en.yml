@@ -165,6 +165,7 @@ en:
     created: Date Added
     workStatus: Status
     size: Size
+    mimetype: Kind
     modified: Modified
   photo:
     file: File

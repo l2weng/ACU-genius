@@ -171,6 +171,7 @@ module.exports = mod.item = {
             s.id as id,
             template,
             size,
+            mimetype,
             datetime(created, "localtime") AS created,
             datetime(modified, "localtime") AS modified,
             deleted
@@ -180,10 +181,11 @@ module.exports = mod.item = {
             LEFT OUTER JOIN trash USING (id)${
           (ids != null) ? ` WHERE it.id IN (${ids}) and it.id != -999` : 'where it.id != -999'
         }`,
-        ({ id, created, modified, size, deleted, ...data }) => {
+        ({ id, created, modified, mimetype, size, deleted, ...data }) => {
           data.created = new Date(created)
           data.modified = new Date(modified)
           data.size = size
+          data.mimetype = mimetype
           data.deleted = !!deleted
 
           if (id in items) assign(items[id], data)
