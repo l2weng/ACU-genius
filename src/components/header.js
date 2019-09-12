@@ -55,7 +55,7 @@ class Header extends React.Component {
           <rect fill="#9ab8d6" x="40.11" y="65.98" width="36.43" height="4.77" rx="2.38" transform="translate(65.42 -21.21) rotate(45)"/>
         </g>
       </svg>
-    );
+    )
     const { activeTab, project, projects } = this.props
     const { taskType } = this.state
     const isOwner = project.owner === userInfo.user.userId

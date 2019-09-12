@@ -86,7 +86,7 @@ class Workplace extends PureComponent {
     } else {
       cloudMark = <Icon type="eye-invisible"theme="twoTone" twoToneColor={'#e96529'} style={{ float: 'right', paddingTop: '4px', paddingRight: '5px'  }}/>
     }
-    return (<div style={{color:'rgba(0,0,0,.65)'}}>{item.name}{cloudMark}</div>)
+    return (<div style={{ color: 'rgba(0,0,0,.65)' }}>{item.name}{cloudMark}</div>)
   }
 
 
