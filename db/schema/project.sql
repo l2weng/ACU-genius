@@ -65,6 +65,7 @@ CREATE TABLE photos (
   mimetype     TEXT     NOT NULL,
   checksum     TEXT     NOT NULL,
   orientation  INTEGER  NOT NULL DEFAULT 1,
+  workStatus   INTEGER  NOT NULL DEFAULT 0,
   tag_id       INTEGER  REFERENCES tags ON DELETE CASCADE,
   metadata     TEXT     NOT NULL DEFAULT '{}', size INTEGER NOT NULL DEFAULT 0,
 

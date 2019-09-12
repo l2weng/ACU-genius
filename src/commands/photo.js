@@ -632,7 +632,9 @@ class LabelSync extends Command {
       if (result.status === 200) {
         const savedLabels = result.data.obj
         yield call(mod.selection.update, db, photo.id, savedLabels)
+        yield call(mod.photo.updatePhoto, db, photo.id, PHOTO.STATUS.SUBMITTED)
         payload.photo.labelSynced = true
+        payload.photo.workStatus = PHOTO.STATUS.SUBMITTED
         let updatedPayload = {}
         updatedPayload[photo.id] = payload.photo
         yield put(act.photo.labelSyncSuccess(updatedPayload))
@@ -648,9 +650,18 @@ class LabelSkip extends Command {
 
   *exec() {
     let { payload } = this.action
+    const { db } = this.options
     let { photo, photoSpendTime, userId } = payload
     try {
-      yield axios.post(`${ARGS.apiServer}/labels/skipLabel`, { photoId: photo.syncPhotoId, spendTime: photoSpendTime, myTaskId: photo.tasks[0], userId })
+      const result  = yield axios.post(`${ARGS.apiServer}/labels/skipLabel`, { photoId: photo.syncPhotoId, spendTime: photoSpendTime, myTaskId: photo.tasks[0], userId })
+      if (result.status === 200) {
+        yield call(mod.photo.updatePhoto, db, photo.id, PHOTO.STATUS.SKIPPED)
+        payload.photo.labelSynced = true
+        payload.photo.workStatus = PHOTO.STATUS.SKIPPED
+        let updatedPayload = {}
+        updatedPayload[photo.id] = payload.photo
+        yield put(act.photo.labelSyncSuccess(updatedPayload))
+      }
     } catch (e) {
       error(e.toString())
     }

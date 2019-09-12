@@ -1,6 +1,6 @@
 'use strict'
 
-const { TYPE } = require('./constants')
+const { TYPE, PHOTO } = require('./constants')
 const edtf = require('edtf')
 const { blank } = require('./common/util')
 
@@ -39,6 +39,12 @@ const format = {
     return `${format.number(value / size[unit])} ${unit}`
   },
 
+  status(value, locale = ARGS.locale) {
+    if (typeof value === 'string') value = parseInt(value, 10)
+    if (!Number.isFinite(value)) return null
+    return PHOTO.STATUS.EN[value]
+  },
+
   auto(value, type) {
     switch (type) {
       case TYPE.DATE:
@@ -47,6 +53,8 @@ const format = {
         return format.number(value)
       case TYPE.FILE_SIZE:
         return format.bytes(value)
+      case TYPE.WORK_STATUS:
+        return format.status(value)
       default:
         return value
     }

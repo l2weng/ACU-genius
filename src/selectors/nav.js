@@ -16,6 +16,7 @@ const DEFAULT_LIST_SORT =  { column: 'added', asc: true }
 const SPECIAL_COLUMNS = [
   COLUMN.CREATED,
   COLUMN.MODIFIED,
+  COLUMN.WORK_STATUS,
   COLUMN.SIZE,
   COLUMN.MIME_TYPE,
 ]

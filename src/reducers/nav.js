@@ -25,7 +25,8 @@ const init = {
     // { width: 100, id: DC.creator },
     // { width: 100, id: DC.date },
     { width: 100, id: NAV.COLUMN.SIZE.id },
-    { width: 180, id: NAV.COLUMN.CREATED.id },
+    { width: 160, id: NAV.COLUMN.CREATED.id },
+    { width: 100, id: NAV.COLUMN.WORK_STATUS.id },
     { width: 100, id: NAV.COLUMN.MIME_TYPE.id },
     // { width: 100, id: DC.type }
   ],

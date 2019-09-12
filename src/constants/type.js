@@ -10,4 +10,5 @@ module.exports = {
   SELECTION: 'https://tropy.org/v1/tropy#Selection',
   TEXT: 'http://www.w3.org/2001/XMLSchema#string',
   FILE_SIZE: 'https://www.labelreal.com/v1/labelreal#List',
+  WORK_STATUS: 'https://www.labelreal.com/v1/labelreal#WorkStatus'
 }

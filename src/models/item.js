@@ -172,6 +172,7 @@ module.exports = mod.item = {
             template,
             size,
             mimetype,
+            workStatus,
             datetime(created, "localtime") AS created,
             datetime(modified, "localtime") AS modified,
             deleted

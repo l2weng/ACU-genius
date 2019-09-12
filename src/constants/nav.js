@@ -26,11 +26,11 @@ module.exports = {
       protected: true,
       type: TYPE.DATE
     },
-    // STATUS: {
-    //   id: 'item.workStatus',
-    //   protected: true,
-    //   type: TYPE.TEXT
-    // },
+    WORK_STATUS: {
+      id: 'item.workStatus',
+      protected: true,
+      type: TYPE.WORK_STATUS
+    },
     SIZE: {
       id: 'item.size',
       protected: true,
