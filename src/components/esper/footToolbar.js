@@ -22,12 +22,11 @@ class EsperFootToolbar extends PureComponent {
     emit(document, 'global:next-photo')
   }
 
-  render() {
-    const { photo, selections } = this.props
-    let modifiedTime = ''
-    if (photo) modifiedTime = moment(new Date(photo.modified)).format('MMM Do YYYY, h:mm:ss a')
+
+  getActionButtons(photo, selections) {
+    const submitDisable = selections.length <= 0
     const photoDisable = !__.isEmpty(photo) && !photo.syncPhotoId
-    const confirmButton = (<Button type="default" size="small" onClick={this.confirmPhoto} disabled={photoDisable}>
+    const confirmButton = (<Button type="default" size="small" onClick={this.confirmPhoto} disabled={submitDisable || photoDisable}>
       <Icon type="save"/>
       提交
     </Button>)
@@ -35,32 +34,47 @@ class EsperFootToolbar extends PureComponent {
       disabled={photoDisable}>
       跳过
     </Button>)
+
+    return (<div className="toolbar-center" style={{ margin: 'auto' }}>
+      <ToolGroup>
+        <ButtonGroup>
+          {photoDisable ?
+            <Tooltip placement="top" title={'请先同步上云'}>
+              {confirmButton}
+            </Tooltip> : submitDisable ?
+              <Tooltip placement="top" title={'请标注'}>
+                {confirmButton}
+              </Tooltip> : confirmButton }
+          {photoDisable ?
+            <Tooltip placement="top" title={'请先同步上云'}>
+              {skipButton}
+            </Tooltip> : skipButton }
+        </ButtonGroup>
+      </ToolGroup>
+    </div>)
+  }
+
+  render() {
+    const { photo, selections } = this.props
+    let modifiedTime = ''
+    if (photo) modifiedTime = moment(new Date(photo.modified)).format('MMM Do YYYY, h:mm:ss a')
+
     return (
       <Toolbar isDraggable={false}>
         <ToolbarLeft>
           <div style={{ position: 'fixed', fontSize: '12px' }}>
             <ToolGroup>
-              {(selections && selections.length > 0) ? `Date modified: ${moment(new Date(selections[selections.length - 1].updatedTime)).format('MMM Do YYYY, h:mm:ss a')}` :
-              `Date modified: ${modifiedTime}`}
+              {(selections && selections.length > 0) ? `Date modified: ${moment(
+                new Date(selections[selections.length - 1].updatedTime))
+                  .format('MMM Do YYYY, h:mm:ss a')}` :
+                `Date modified: ${modifiedTime}`}
             </ToolGroup>
           </div>
         </ToolbarLeft>
-        <div className="toolbar-center" style={{ margin: 'auto' }}>
-          <ToolGroup>
-            {photoDisable ? <ButtonGroup>
-              <Tooltip placement="top" title={'请先同步上云'}>
-                {confirmButton}
-              </Tooltip>
-              <Tooltip placement="top" title={'请先同步上云'}>
-                {skipButton}
-              </Tooltip>
-            </ButtonGroup> : <ButtonGroup>{confirmButton}{skipButton}</ButtonGroup>}
-          </ToolGroup>
-        </div>
+        {this.getActionButtons(photo, selections)}
       </Toolbar>
     )
   }
-
   static propTypes = {
     photo: object,
     onLabelSave: func.isRequired,
