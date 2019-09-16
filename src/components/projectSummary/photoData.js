@@ -3,10 +3,8 @@
 const React = require('react')
 const { PureComponent } = React
 const { Row, Col, Tree } = require('antd')
-const { ProjectViewOnly } = require('../project/viewOnly')
 const DirectoryTree = Tree.DirectoryTree
 const { TreeNode } = Tree
-const cx = require('classnames')
 const { array, bool, func, object } = require('prop-types')
 
 class PhotoData extends PureComponent {
@@ -30,14 +28,6 @@ class PhotoData extends PureComponent {
     }]
   }
   render() {
-    const {
-      columns,
-      data,
-      items,
-      nav,
-      photos,
-      ...props
-    } = this.props
     return (
       <div className="project-summary">
         <Row gutter={24}>
@@ -56,17 +46,6 @@ class PhotoData extends PureComponent {
                 <TreeNode title="Model X" key="0-1-1" isLeaf />
               </TreeNode>
             </DirectoryTree>
-          </Col>
-          <Col span={20} >
-            <div className={cx(this.classes)}>
-              <ProjectViewOnly {...props}
-                nav={nav}
-                items={items}
-                data={data}
-                isActive
-                columns={columns}
-                offset={44}
-                photos={photos}/></div>
           </Col>
         </Row>
       </div>
