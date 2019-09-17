@@ -47,6 +47,17 @@
     display: flex;
     align-items: center;
   }
+  .prev-button {
+    padding-right: 30px;
+    cursor: pointer;
+  }
+  .next-button {
+    padding-left: 30px;
+    cursor: pointer;
+  }
+  .icon-chevron17 {
+    transform: rotate(90deg);
+  }
 
   .tool-group {
     white-space: nowrap;

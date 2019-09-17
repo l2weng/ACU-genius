@@ -181,6 +181,14 @@ i('Chevron16', (
   </svg>
 ))
 
+i('Chevron17', (
+  <svg width="16" height="16">
+    <g className="line" fill="currentColor">
+      <polygon points="15.146,11.854 8,4.707 0.854,11.854 0.146,11.146 8,3.293 15.854,11.146"/>
+    </g>
+  </svg>
+))
+
 i('Clock', (
   <svg width="16" height="16">
     <g className="line" fill="currentColor">

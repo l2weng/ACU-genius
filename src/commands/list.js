@@ -241,7 +241,7 @@ class AddItems extends Command {
     let res = yield call(db.transaction, tx =>
       mod.items.add(tx, id, items))
 
-    ipc.send('cmd', 'app:sync-whole-project', { force: true })
+    ipc.send('cmd', 'app:sync-whole-project', { force: false })
     this.undo = actions.items.remove({ id, items: res.items })
     this.redo = actions.items.restore({ id, items: res.items })
 
