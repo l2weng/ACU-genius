@@ -1,61 +1,61 @@
 de:
   sidebar:
-    lists: DataSet
-    tags: Tags
+    lists: 数据源
+    tags: 标注对象
     project: 项目
-    imports: Last Import
-    trash: Deleted Items
+    imports: 最近一次导入
+    trash: 已删除
   toolbar:
-    import: Import Photos
+    import: 导入图片
     items: >
       {count, plural,
-        =0 {No items in this view}
-        one {1 item in this view}
-        other {# items in this view}}
+        =0 {没有图片(集)}
+        one {1个图片(集)}
+        other {#个图片(集)}}
     search:
-      placeholder: Search
+      placeholder: 搜索
   panel:
     metadata:
-      tab: Metadata
-      photo:  Photo
+      tab: 图片详情
+      photo:  图片
       item: >
         {count, plural,
           =0 {}
           one {Item}
           other {# Items}}
-      selection: Selection
+      selection: 标注
     tags:
-      tab: Tags
+      tab: 标注对象
       add: >
         {count, plural,
-          =0 {Add Tag}
-          one {Add Tag to 1 Item}
-          other {Add Tag to # Items}}
+          =0 {添加标注对象}
+          one {添加标注对象到1张图片}
+          other {添加标注对象到#张图片}}
     photo:
       title: >
         {count, plural,
-          =0 {No Photos}
-          one {1 Photo}
-          other {# Photos}}
-      create: Add Photos
-      selection: Selection
+          =0 {没有图片}
+          one {1张图片}
+          other {#张图片}}
+      create: 添加图片
+      selection: 标注
     reference:
       title: >
         {count, plural,
           =0 {没有参考图}
-          one {1 参考图}
-          other {# 参考图}}
+          one {1张参考图}
+          other {#张参考图}}
       create: 添加参考图
-      selection: Selection
+      selection: 标注
     note:
       title: >
         {count, plural,
-          =0 {No Notes}
-          one {1 Note}
-          other {# Notes}}
-      create: Add Note
+          =0 {没有备注}
+          one {1条备注}
+          other {#条备注}}
+      create: 添加备注
   about:
-    version: Version {version}
+    version: 当前版本 {version}
     rrchnm:
       title: 雷博睿尔科技有限公司
       url: https://www.labelreal.com
@@ -67,190 +67,191 @@ de:
       historical teaching resources, digital exhibits.
     trademark: The Label name is a registered trademark of the {cds}.
     release:
-      title: Release Notes
+      title: 版本更新公告
       url: https://www.labelreal.com/{version}
     license:
-      title: Licensing Information
+      title: 执照信息
       url: https://www.labelreal.com/license
     credits:
-      title: Credits
+      title: 信誉
       url: https://www.labelreal.com/credits
   project:
-    none: Drop a project file here or create a {newProject}
-    empty: 拖入图片到LabelReal开始
-    new: new project
+    none: 导入项目文件或创建一个新项目
+    empty: 添加图片开始项目
+    new: 新项目
   wizard:
     project:
-      title: 创建一个新项目
-      submit: 创建项目
-      name: 名称
-      save_as: 修改文件名以及文件所在位置
+      title: 创建新项目
+      submit: 创建
+      name: 项目名称
+      save_as: 自定义文件名及保存位置
       change: 修改
   prefs:
-    title: Label Real Preferences
+    title: 个性化设置
     app:
-      label: Settings
+      label: 设置
       style:
-        theme: Theme
+        theme: 主题
         themes:
-          light: Light
-          dark: Dark
+          light: 亮白
+          dark: 炫黑
       locale:
-        locale: Locale
+        locale: 语言
         locales:
           de: 中文
           en: English
-      template: Default Template
-      debug: Enable Developer Mode
+      template: 默认模板
+      debug: 启用开发者模式
       dup:
-        label: 导入期间
+        label: 导入图片时
         option:
-          skip: 跳过重复照片
-          import: 接受重复照片
-          prompt: 每次都需要确认
+          skip: 跳过重复图片
+          import: 允许重复图片
+          prompt: 每次都询问我
       ui:
-        label: Interface
+        label: 界面
         option:
-          invertScroll: Invert direction when scrolling in photos
-          invertZoom: Invert direction when zooming in photos
-          overlayToolbars: Automatically hide and show toolbars
+          invertScroll: 滚动时翻转图片
+          invertZoom: 缩放时翻转图片
+          overlayToolbars: 自动隐藏/显示工具栏
       zoomMode:
-        label: By default
+        label: 默认图片显示比例
         option:
-          fit: Zoom photos to fit
-          fill: Zoom photos to fill
+          fit: 保持图片比例，适应窗口大小
+          fill: 调整图片比例，平铺整个窗口
 
     project:
-      label: Project
+      label: 项目
     template:
-      label: Templates
-      new: New Template …
-      create: Create
-      select: Template
+      label: 模板
+      new: 新建模板…
+      create: 创建
+      select: 模板
       tools:
-        new: New
-        copy: Duplicate
-        delete: Delete
-        import: Import
-        export: Export
+        new: 新建
+        copy: 复制
+        delete: 删除
+        import: 导入
+        export: 导出
     vocab:
-      label: Vocabularies
-      export: Export
+      label: 数据字典
+      export: 导出
       classes: >
         {count, plural,
-          =0 {No Classes}
-          one {# Class}
-          other {# Classes}
+          =0 {没有层级}
+          one {1个层级}
+          other {#个层级}
         }
       datatypes: >
         {count, plural,
-          =0 {No Datatypes} one {# Datatype}
-          other {# Datatypes}
+          =0 {没有数据类型} one {1种数据类型}
+          other {#种数据类型}
         }
       properties: >
         {count, plural,
-          =0 {No Properties}
-          one {# Property}
-          other {# Properties}
+          =0 {没有属性}
+          one {1项属性}
+          other {#项属性}
         }
     plugins:
-      label: Plugins
-      enable: Enable
-      disable: Disable
-      install: Install Plugin
-      uninstall: Uninstall
-      noInfo: Unknown author
-      homepage: More
+      label: 插件
+      enable: 启用
+      disable: 禁用
+      install: 安装插件
+      uninstall: 卸载插件
+      noInfo: 未知的作者
+      homepage: 更多
   item:
     workStatus: 状态
     size: 文件大小
     mimetype: 文件类型
-    created: 导入时间
-    modified: 更新时间
+    created: 添加时间
+    modified: 修改时间
   photo:
-    file: File
-    size: Size
-    type: Type
-    created: Date Added
-    modified: Modified
+    file: 文件名
+    size: 大小
+    type: 类型
+    created: 添加时间
+    modified: 修改时间
   selection:
-    size: Size
-    created: Date Added
-    modified: Modified
+    size: 大小
+    created: 添加时间
+    modified: 修改时间
   esper:
     tool:
-      pan: Pan Tool
-      select: Selection Tool
-      rotate: Rotate
-      mirror: Mirror
-      edit: Edit Photo
+      pan: 拖拽
+      select: 矩形选择
+      polygon: 多边形选择
+      rotate: 旋转
+      mirror: 镜像
+      edit: 编辑
       save: 提交
     mode:
-      fill: Fill
-      fit: Fit
-      zoom: Zoom
+      fill: 平铺
+      fit: 适应
+      zoom: 显示比例
     panel:
-      negative: Invert colors
-      revert: Revert to Original
+      negative: 反色
+      revert: 还原
       brightness:
-        label: Brightness
+        label: 亮度
         value: "{value, number}"
       contrast:
-        label: Contrast
+        label: 对比度
         value: "{value, number}"
       hue:
-        label: Hue
+        label: 色调
         value: "{value, number}°"
       saturation:
-        label: Saturation
+        label: 饱和度
         value: "{value, number}"
   notepad:
-    placeholder: Add your notes here …
+    placeholder: 添加备注…
   completions:
-    empty: No options available
-    noMatches: No matches found
+    empty: 没有可选项
+    noMatches: 没有符合要求的结果
   select:
     column:
-      placeholder: Search
+      placeholder: 搜索
   template:
-    id: URI
-    name: Name
-    type: Type
-    creator: Creator
-    description: Description
+    id: 编号
+    name: 名称
+    type: 类型
+    creator: 作者
+    description: 描述
     types:
-      "https://tropy.org/v1/tropy#Item": Item Template
-      "https://tropy.org/v1/tropy#Photo": Photo Template
-      "https://tropy.org/v1/tropy#Selection": Photo Selection Template
+      "https://tropy.org/v1/tropy#Item": 图片集模板
+      "https://tropy.org/v1/tropy#Photo": 图片模板
+      "https://tropy.org/v1/tropy#Selection": 标注框模板
     field:
-      property: Property
-      label: Label
-      datatype: Datatype
-      isRequired: Is mandatory field
-      hint: Hint
-      value: Default Value
-      isConstant: Is read-only
+      property: 属性
+      label: 类别
+      datatype: 数据类型
+      isRequired: 是否必填
+      hint: 提示
+      value: 默认值
+      isConstant: 是否只读
 
   vocab:
-    id: URI
-    prefix: Prefix
-    title: Name
-    description: Description
-    properties: Properties
-    seeAlso: See Also
+    id: 编号
+    prefix: 前缀
+    title: 名称
+    description: 描述
+    properties: 属性
+    seeAlso: 参考
   property:
-    select: Select a Property …
+    select: 选择属性…
   datatype:
-    select: Select a Datatype …
+    select: 选择数据类型…
   resource:
-    select: Select a Resource …
-    id: URI
-    label: Label
-    description: Description
-    comment: Comment
+    select: 选择来源…
+    id: 编号
+    label: 类别
+    description: 描述
+    comment: 备注
 
-  ok: Yes
-  cancel: Cancel
+  ok: 确认
+  cancel: 取消
   dialog:
     prompt:
       item:
@@ -258,272 +259,276 @@ de:
           dialogs:
             crashed:
               buttons:
-              - Close Window
-              - Reload
-              - Keep It Open
-              message: Tropy has crashed
-              detail: Please report this issue at https://github.com/tropy/tropy
+              - 关闭
+              - 重新载入
+              - 继续等待
+              message: LabelReal遇到了一些问题
+              detail: 请帮助我们进行反馈：http://www.labelreal.com/tool/feedback
             unresponsive:
               buttons:
-              - Close
-              - Keep Waiting
-              message: Tropy is not responding
+              - 关闭
+              - 等待
+              message: LabelReal无响应
               detail: >
-                Tropy is not responding.
-                Would you like to force close it or just keep waiting?
+                LabelReal无响应
+                请选择强制关闭或继续等待：
           windows:
             prefs:
-              title: Tropy Preferences
+              title: 个性化设置
             wizard:
-              title: Welcome to LabelReal
+              title: 欢迎使用LabelReal
             about:
-              title: About Tropy
+              title: 关于LabelReal
 
-          ok: Delete
-          cancel: Cancel
+          ok: 删除
+          cancel: 取消
           message: >
-            Are your sure you want to permanently delete items?
-            This action cannot be undone.
+            是否确认彻底删除图片?
+            删除后不可恢复
       dup:
         message: >
-          This photo already exists in your project. Are you sure
-          you want to import it again?
-        checkbox: Remember this choice
-        cancel: Skip
-        ok: Import Anyway
+          图片已存在该项目中，请确认是否需要再次导入？
+        checkbox: 记住我的选择
+        cancel: 跳过
+        ok: 导入
       plugin:
         uninstall:
-          ok: Delete
-          cancel: Cancel
+          ok: 删除
+          cancel: 取消
           message: >
-            Are you sure you want to delete the plugin?
-            This will permanently remove the plugin and its configuration.
+            是否确认彻底删除插件及配置项？
+            删除后不可恢复
     filter:
-      templates: LabelReal Templates
-      images: Images
-      items: Images and LabelReal Items
-      projects: Tropy Projects
-      rdf: RDF Vocabularies
+      templates: LabelReal模板
+      images: 图片
+      items: 图片及图片集
+      projects: 项目
+      rdf: RDF 数据字典
       jsonld: JSON-LD
 
   action:
     project:
-      save: Save Project
+      save: 保存项目
     list:
-      create: Create List
-      delete: Delete List
+      create: 创建任务
+      delete: 删除任务
       item:
-        add: Add Items To Task
-        merge: Merge Items
-        remove: Remove Item From Task
-        restore: Add Item To List
-      order: Sort List
-      restore: Restore List
-      save: Save List
+        add: 添加图片至任务
+        merge: 合并图片
+        remove: 从任务中移除图片
+        restore: 添加图片至任务
+      order: 任务排序
+      restore: 恢复任务
+      save: 保存任务
     item:
-      create: Create Items
-      delete: Delete Items
-      explode: Explode Item
-      implode: Merge Items
-      merge: Merge Items
-      split: Split Items
-      import: Import Items
-      restore: Restore Items
-      save: Save Item
+      create: 创建图片集
+      delete: 删除图片集
+      explode: 拆分图片集
+      implode: 合并图片集
+      merge: 合并图片集
+      split: 拆分图片集
+      import: 导入图片集
+      restore: 恢复图片集
+      save: 保存图片集
       tag:
-        create: Sku
-        toggle: Sku
-        clear: Clear Skus
+        create: 标注对象
+        toggle: 标注对象
+        clear: 清除标注对象
     metadata:
-      save: Save Metadata
+      save: 保存图片详情
     ontology:
-      import: Import Vocabularies
+      import: 导入数据字典
       vocab:
-        save: Save Vocabulary
+        save: 保存数据字典
       label:
-        save: Save Label
+        save: 保存标注结果
       template:
-        import: Import Template
+        import: 导入模板
     photo:
-      create: Import Photo
-      delete: Delete Photo
-      duplicate: Duplicate Photo
-      move: Moving Photo
-      order: Sort Photos
-      restore: Restore Photo
-      save: Save Photo
+      create: 导入图片
+      delete: 删除图片
+      duplicate: 复制图片
+      move: 移动图片
+      order: 图片排序
+      restore: 恢复图片
+      save: 保存图片
     note:
-      create: Create Note
-      delete: Delete Note
-      order: Sort Notes
-      restore: Restore Note
-      save: Save Note
+      create: 创建备注
+      delete: 删除备注
+      order: 备注排序
+      restore: 恢复备注
+      save: 保存备注
     tag:
-      create: Create Tag
-      delete: Delete Tag
-      restore: Create Tag
-      save: Save Tag
+      create: 创建标注对象
+      delete: 删除标注对象
+      restore: 创建标注对象
+      save: 保存标注对象
     selection:
-      create: Create Selection
-      delete: Delete Selection
-      restore: Create Selection
-      save: Save Selection
-      order: Sort Selections
+      create: 创建标注框
+      delete: 删除标注框
+      restore: 创建标注框
+      save: 保存标注框
+      order: 标注框排序
 
   activity:
     project:
-      save: Saving …
+      save: 保存中…
       sync: 项目同步中…
     list:
-      create: Creating list …
-      delete: Deleting list …
+      create: 任务集创建中…
+      delete: 任务集删除中…
       item:
-        add: Adding items to list …
-        merge: Merging items …
-        remove: Removing items from list …
-        restore: Restoring items to list …
-      load: Loading lists …
-      order: Sorting list …
-      restore: Restoring list …
-      save: Saving list …
+        add: 图片集添加至任务集中…
+        merge: 图片集合并中…
+        remove: 从任务集中移除图片集…
+        restore: 图片集恢复中…
+      load: 图片集加载中…
+      order: 图片集排序中…
+      restore: 图片集恢复中…
+      save: 图片集保存中…
     tag:
-      create: Creating tag …
-      delete: Deleting tag …
-      load: Loading tags …
-      restore: Restoring tag …
-      save: Saving tag …
+      create: 标注对象创建中…
+      delete: 标注对象删除中…
+      load: 标注对象删除中…
+      restore: 标注对象恢复中…
+      save: 标注对象保存中…
     item:
-      create: Creating item …
-      delete: Deleteing item …
-      destroy: Deleting items permanently …
-      explode: Exploding item …
-      export: Exporting item …
-      implode: Restoring item …
+      create: 图片集创建中…
+      delete: 图片集删除中…
+      destroy: 图片集粉碎中…
+      explode: 图片集拆分中…
+      export: 图片集导出中…
+      implode: 图片集恢复中…
       import: >
         {hasProgressBar, select,
-          true {Importing items {progress, number} of {total, number} …}
-          other {Importing items …}
+          true {图片集导入中 {progress, number} / {total, number} …}
+          other {图片集导入中…}
         }
-      load: Loading items …
-      merge: Merging item …
-      restore: Restoring item …
-      save: Saving items …
+      load: 图片集加载中…
+      merge: 图片集合并中…
+      restore: 图片集恢复中…
+      save: 图片集保存中…
       tag:
-        create: Tagging item
-        toggle: Tagging item …
-        clear: Clearing item tags …
+        create: 标注对象添加中…
+        toggle: 标注对象切换中…
+        clear: 标注对象清除中…
     metadata:
-      load: Loading metadata …
-      save: Saving metadata …
+      load: 图片详情加载中…
+      save: 图片详情保存中…
     ontology:
-      load: Loading ontology …
-      import: Importing vocabularies …
+      load: 系统文件加载中…
+      import: 数据字典导入中…
       vocab:
-        save: Saving vocabulary …
+        save: 数据字典保存中…
       label:
-        save: Saving label …
+        save: 标注结果保存中…
       template:
-        import: Importing templates …
+        import: 模板导入中…
     photo:
       consolidate: >
         {hasProgressBar, select,
-          true {Consolidating photos {progress, number} of {total, number} …}
-          other {Consolidating photos …}
+          true {图片合并中 {progress, number} / {total, number} …}
+          other {图片合并中…}
         }
       create: >
         {hasProgressBar, select,
-          true {Importing photos {progress, number} of {total, number} …}
-          other {Importing photos …}
+          true {图片导出中 {progress, number} / {total, number} …}
+          other {图片导出中…}
         }
-      delete: Deleting photo …
+      delete: 图片删除中…
       duplicate: >
         {hasProgressBar, select,
-          true {Duplicating photos {progress, number} of {total, number} …}
-          other {Duplicating photos …}
+                  true {图片复制中 {progress, number} of {total, number} …}
+                  other {图片复制中…}
+                }
+      load: 图片加载中…
+      move: 图片移动中…
+      order: 图片排序中…
+      save: 图片保存中…
+      restore: 图片恢复中…
+      referenceCreate: 参考图导入中…
+   references:
+      sync: >
+        {hasProgressBar, select,
+          true {参考图同步中 {progress, number} / {total, number} …}
         }
-      load: Loading photos …
-      move: Moving photos …
-      order: Sorting photos …
-      save: Saving photo …
-      restore: Restoring photos …
-      referenceCreate: 导入参考图 …
     note:
-      create: Creating note …
-      delete: Deleting note …
-      load: Loading notes …
-      order: Sorting notes …
-      restore: Restoring notes …
+      create: 备注创建中…
+      delete: 备注删除中…
+      load: 备注加载中…
+      order: 备注排序中…
+      restore: 备注恢复中…
     selection:
-      load: 加载图片标注 …
-      sync: 同步标注信息 …
-      loadFromCloud: 从云加载图片标注 …
+      load: 标注信息加载中…
+      loadFromCloud: 标注信息从云端加载中…
+      sync: 标注信息同步中…
     header:
-      loadMyTasks: 加载我的任务 …
-      loadProjects: 加载项目列表 …
+      loadMyTasks: 任务加载中…
+      loadProjects: 项目加载中…
   editor:
     commands:
-      bold: Bold
-      italic: Italic
-      underline: Underline
-      overline: Overline
-      strikethrough: Strikethrough
-      subscript: Subscript
-      superscript: Superscript
-      blockquote: Insert Blockquote
-      ol: Insert Numbered List
-      ul: Insert Bulleted List
+      bold: 粗体
+      italic: 斜体
+      underline: 下划线
+      overline: 上划线
+      strikethrough: 删除线
+      subscript: 下标
+      superscript: 上标
+      blockquote: 插入引用
+      ol: 插入编号
+      ul: 插入符号
       link:
-        button: Toggle Link
-        target: Link target
-        title: Link title
-      left: Align Left
-      center: Center
-      right: Align Right
-      sinkListItem: Sink list item
-      liftListItem: Lift list item
+        button: 添加链接
+        target: 链接目标
+        title: 链接名称
+      left: 左对齐
+      center: 居中
+      right: 右对齐
+      sinkListItem: 底部对齐
+      liftListItem: 顶部对齐
   error:
     project:
-      created: Project creation failed.
+      created: 项目创建失败
     item:
-      export: Failed to export items.
-      merge: Failed to merge items.
-      import: Failed to import item.
+      export: 图片集导出失败
+      merge: 图片集合并失败
+      import: 图片集导入失败
       tag:
-        save: Failed to save tag.
-        create: Failed to tag item. Tags must be unique per item.
+        save: 标注对象保存失败
+        create: 标注失败，请确保每张图片分配的标注对象之间不重复.
     list:
-      load: Failed to load lists.
-      create: Failed to create list. List names must be unique.
-      move: Failed to move list. List names must be unique per level.
-      save: Failed to save list.
+      load: 任务加载失败
+      create: 任务创建失败。请确保任务名是唯一的，不可以重复。
+      move: 任务移动失败。请确保任务名在每一层级是唯一的。
+      save: 任务保存失败
       item:
-        add: Failed to add item(s) to list.
+        add: 添加照片集至任务失败
     photo:
-      consolidate: Failed to consolidate photos.
-      create: Failed to import photo.
-      save: Failed to save photo.
+      consolidate: 图片合并失败
+      create: 图片导入失败
+      save: 图片保存失败
     ontology:
-      import: Failed to import vocabulary.
+      import: 数据字典导入失败
       vocab:
-        save: Failed to save vocabulary. Prefix must be unique.
+        save: 数据字典保存失败。请确保前缀是唯一的。
       template:
-        import: Failed to import template.
+        import: 模板导入失败
         field:
-          add: Failed to add field to template.
-          remove: Failed to remove field from template.
+          add: 添加字段至模板失败
+          remove: 从模板中移除字段失败
     tag:
-      create: Failed to create tag. Tag names must be unique.
+      create: 标注对象创建失败。请确认标注对象名称是唯一的。
   flash:
     update:
       ready:
         message: >
-          Tropy {version} is ready to be installed.
-          Do you want to install and restart now?
-        confirm: Restart Now
+          LabelReal有可更新的版本{version}.
+          是否立即安装并重启程序?
+        confirm: 确认
   plugin:
-    name: Name
-    plugin: Plugin
-    options: Options
+    name:名称
+    plugin: 插件
+    options: 选项
     hooks:
-      export: Export
-      import: Import
+      export: 导出
+      import: 导入
