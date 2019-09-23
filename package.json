@@ -41,7 +41,7 @@
     "pack": "node scripts/pack",
     "prestart": "node scripts/compile",
     "postinstall": "npm run rebuild",
-    "postbuild": " SIGN_CERT='EE372B6EA39FD57D0ED70038A9ADC9F24465ACB9' SIGN_USER=louis396@hotmail.com node scripts/sign",
+    "postbuild": "SIGN_CERT=EE372B6EA39FD57D0ED70038A9ADC9F24465ACB9 SIGN_USER=louis396@hotmail.com node scripts/sign",
     "start": "electron --app . --env development --data tmp --cache tmp/cache --logs tmp/log",
     "rebuild": "node scripts/rebuild",
     "test": "node scripts/make test",
