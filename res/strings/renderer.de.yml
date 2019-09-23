@@ -87,7 +87,7 @@ de:
       save_as: 自定义文件名及保存位置
       change: 修改
   prefs:
-    title: 个性化设置
+    title: 个性化
     app:
       label: 设置
       style:
@@ -447,7 +447,7 @@ de:
       save: 图片保存中…
       restore: 图片恢复中…
       referenceCreate: 参考图导入中…
-   references:
+    references:
       sync: >
         {hasProgressBar, select,
           true {参考图同步中 {progress, number} / {total, number} …}
@@ -526,7 +526,7 @@ de:
           是否立即安装并重启程序?
         confirm: 确认
   plugin:
-    name:名称
+    name: 名称
     plugin: 插件
     options: 选项
     hooks:
