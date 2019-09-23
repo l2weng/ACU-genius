@@ -1,9 +1,9 @@
 en:
   sidebar:
     lists: Tasks
-    tags: Skus
+    tags: Targets
     project: Project
-    imports: Last Import
+    imports: Last Imported Items
     trash: Deleted Items
   toolbar:
     import: Import Photos
@@ -25,12 +25,12 @@ en:
           other {# Items}}
       selection: Selection
     tags:
-      tab: Skus
+      tab: Targets
       add: >
         {count, plural,
-          =0 {Add Sku}
-          one {Add Sku to 1 Item}
-          other {Add Sku to # Items}}
+          =0 {Add Target}
+          one {Add Target to 1 Item}
+          other {Add Target to # Items}}
     photo:
       title: >
         {count, plural,
@@ -87,7 +87,7 @@ en:
       save_as: Change file name and location
       change: Change
   prefs:
-    title: Label Real Preferences
+    title: Preferences
     app:
       label: Settings
       style:
@@ -96,7 +96,7 @@ en:
           light: Light
           dark: Dark
       locale:
-        locale: Locale
+        locale: Language
         locales:
           de: 中文
           en: English
@@ -117,8 +117,8 @@ en:
       zoomMode:
         label: By default
         option:
-          fit: Zoom photos to fit
-          fill: Zoom photos to fill
+          fit: Zoom to fit
+          fill: Zoom to fill
 
     project:
       label: Project
@@ -134,7 +134,7 @@ en:
         import: Import
         export: Export
     vocab:
-      label: Vocabularies
+      label: Data Dictionary
       export: Export
       classes: >
         {count, plural,
@@ -166,21 +166,21 @@ en:
     workStatus: Status
     size: Size
     mimetype: Kind
-    modified: Modified
+    modified: Date Modified
   photo:
     file: File
     size: Size
     type: Type
     created: Date Added
-    modified: Modified
+    modified: Date Modified
   selection:
     size: Size
     created: Date Added
-    modified: Modified
+    modified: Date Modified
   esper:
     tool:
       pan: Pan Tool
-      select: Selection Tool
+      select: Rectangle Tool
       polygon: Polygon Tool
       rotate: Rotate
       mirror: Mirror
@@ -220,9 +220,9 @@ en:
     creator: Creator
     description: Description
     types:
-      "https://tropy.org/v1/tropy#Item": Item Template
-      "https://tropy.org/v1/tropy#Photo": Photo Template
-      "https://tropy.org/v1/tropy#Selection": Photo Selection Template
+      "https://LabelReal.org/v1/LabelReal#Item": Item Template
+      "https://LabelReal.org/v1/LabelReal#Photo": Photo Template
+      "https://LabelReal.org/v1/LabelReal#Selection": Photo Selection Template
     field:
       property: Property
       label: Label
@@ -256,16 +256,40 @@ en:
     prompt:
       item:
         destroy:
+          dialogs:
+            crashed:
+              buttons:
+              - Close
+              - Reload
+              - Wait
+              message: LabelReal has crashed
+              detail: Please report this issue at http://www.labelreal.com/tool/feedback
+            unresponsive:
+              buttons:
+                - Close
+                - Wait
+              message: LabelReal is not responding
+              detail: >
+                LabelReal is not responding.
+                Would you like to force to close or keep waiting?
+          windows:
+            prefs:
+              title: Preferences
+            wizard:
+              title: Welcome to LabelReal
+            about:
+              title: About LabelReal
+
           ok: Delete
           cancel: Cancel
           message: >
-            Are your sure you want to permanently delete items?
+            Are your sure to permanently delete items?
             This action cannot be undone.
       dup:
         message: >
           This photo already exists in your project. Are you sure
-          you want to import it again?
-        checkbox: Remember this choice
+          to import it again?
+        checkbox: Remember my choice
         cancel: Skip
         ok: Import Anyway
       plugin:
@@ -308,9 +332,9 @@ en:
       restore: Restore Items
       save: Save Item
       tag:
-        create: Sku
-        toggle: Sku
-        clear: Clear Skus
+        create: Target
+        toggle: Target
+        clear: Clear Targets
     metadata:
       save: Save Metadata
     ontology:
@@ -336,10 +360,10 @@ en:
       restore: Restore Note
       save: Save Note
     tag:
-      create: Create Tag
-      delete: Delete Tag
-      restore: Create Tag
-      save: Save Tag
+      create: Create Target
+      delete: Delete Target
+      restore: Create Target
+      save: Save Target
     selection:
       create: Create Selection
       delete: Delete Selection
@@ -350,25 +374,25 @@ en:
   activity:
     project:
       save: Saving …
-      sync: Project sync to cloud …
+      sync: Projects sync to cloud …
     list:
-      create: Creating list …
-      delete: Deleting list …
+      create: Creating task …
+      delete: Deleting task …
       item:
-        add: Adding items to list …
+        add: Adding items to task …
         merge: Merging items …
-        remove: Removing items from list …
-        restore: Restoring items to list …
-      load: Loading lists …
-      order: Sorting list …
-      restore: Restoring list …
-      save: Saving list …
+        remove: Removing items from task …
+        restore: Restoring items to task …
+      load: Loading tasks …
+      order: Sorting task …
+      restore: Restoring task …
+      save: Saving task …
     tag:
-      create: Creating tag …
-      delete: Deleting tag …
-      load: Loading tags …
-      restore: Restoring tag …
-      save: Saving tag …
+      create: Creating Target …
+      delete: Deleting Target …
+      load: Loading Targets …
+      restore: Restoring Target …
+      save: Saving Target …
     item:
       create: Creating item …
       delete: Deleteing item …
@@ -386,9 +410,9 @@ en:
       restore: Restoring item …
       save: Saving items …
       tag:
-        create: Tagging item
-        toggle: Tagging item …
-        clear: Clearing item tags …
+        create: Targeting item
+        toggle: Targeting item …
+        clear: Clearing item targets …
     metadata:
       load: Loading metadata …
       save: Saving metadata …
@@ -456,8 +480,8 @@ en:
       subscript: Subscript
       superscript: Superscript
       blockquote: Insert Blockquote
-      ol: Insert Numbered List
-      ul: Insert Bulleted List
+      ol: Insert Numbered Task
+      ul: Insert Bulleted Task
       link:
         button: Toggle Link
         target: Link target
@@ -465,25 +489,25 @@ en:
       left: Align Left
       center: Center
       right: Align Right
-      sinkListItem: Sink list item
-      liftListItem: Lift list item
+      sinkListItem: Sink task item
+      liftListItem: Lift task item
   error:
     project:
-      created: Project creation failed.
+      created: Failed to create projects.
     item:
       export: Failed to export items.
       merge: Failed to merge items.
-      import: Failed to import item.
+      import: Failed to import items.
       tag:
-        save: Failed to save tag.
-        create: Failed to tag item. Tags must be unique per item.
+        save: Failed to save target.
+        create: Failed to target item. Targets must be unique per item.
     list:
-      load: Failed to load lists.
-      create: Failed to create list. List names must be unique.
-      move: Failed to move list. List names must be unique per level.
-      save: Failed to save list.
+      load: Failed to load tasks.
+      create: Failed to create task. Task names must be unique.
+      move: Failed to move task. Task names must be unique per level.
+      save: Failed to save task.
       item:
-        add: Failed to add item(s) to list.
+        add: Failed to add item(s) to task.
     photo:
       consolidate: Failed to consolidate photos.
       create: Failed to import photo.
@@ -498,12 +522,12 @@ en:
           add: Failed to add field to template.
           remove: Failed to remove field from template.
     tag:
-      create: Failed to create tag. Tag names must be unique.
+      create: Failed to create target. Target names must be unique.
   flash:
     update:
       ready:
         message: >
-          Tropy {version} is ready to be installed.
+          LabelReal {version} is ready to be installed.
           Do you want to install and restart now?
         confirm: Restart Now
   plugin:
