@@ -148,19 +148,19 @@ class TasksTable extends React.Component {
           <span>
             {record.category === HEAD.MY_TASKS ? <span>
               <Popconfirm placement="top" title={'审核任务'} onConfirm={()=>this.auditTask(record)} okText="通过" cancelText="取消">
-                <a href="javascript:">审核</a>
+                <a href="javascript:"><FormattedMessage id="home.task.confirm"/></a>
                 <Divider type="vertical" />
               </Popconfirm>
               <Popconfirm placement="top" title={'撤回任务'} onConfirm={()=>this.rollbackTask(record)} okText="撤回" cancelText="取消">
-                <a href="javascript:">撤回</a>
+                <a href="javascript:"><FormattedMessage id="home.task.withdraw"/></a>
                 <Divider type="vertical" />
               </Popconfirm>
             </span> : ''}
             {record.category === HEAD.JOINED_TASKS ? <Popconfirm placement="top" title={'提交任务'} onConfirm={()=>this.submitTask(record)} okText="确认" cancelText="取消">
-              {record.workStatus === 0 || record.workStatus === 1 ? <span><a href="javascript:">提交</a>             <Divider type="vertical" /></span>
+              {record.workStatus === 0 || record.workStatus === 1 ? <span><a href="javascript:"><FormattedMessage id="home.task.submit"/></a>             <Divider type="vertical" /></span>
                 : ''}
             </Popconfirm> : ''}
-            <a href="javascript:" onClick={()=>this.checkProject(record.project.projectId)}>查看</a>
+            <a href="javascript:" onClick={()=>this.checkProject(record.project.projectId)}><FormattedMessage id="home.task.details"/></a>
           </span>
         ),
       }]

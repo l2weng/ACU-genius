@@ -99,6 +99,10 @@ en:
       progress: Progress
       status: Status
       action: Action
+      submit: Submit
+      details: Details
+      withdraw: Withdraw
+      confirm: Confirm
   header:
     title:
       home: Home

@@ -161,7 +161,7 @@ class Workplace extends PureComponent {
             <Card
               bordered={false}
               title={<div>
-                <RadioGroup defaultValue={HEAD.JOINED_TASKS} onChange={this.onTaskSwitch}>
+                <RadioGroup defaultValue={HEAD.ALL_TASKS} onChange={this.onTaskSwitch}>
                   <RadioButton key={HEAD.ALL_TASKS} value={HEAD.ALL_TASKS}><FormattedMessage id="home.task.allTasks"/></RadioButton>
                   <RadioButton key={HEAD.JOINED_TASKS} value={HEAD.JOINED_TASKS}><FormattedMessage id="home.task.involvedTasks"/></RadioButton>
                   <RadioButton key={HEAD.MY_TASKS} value={HEAD.MY_TASKS}><FormattedMessage id="home.task.myTasks"/></RadioButton>

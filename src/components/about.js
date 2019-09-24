@@ -31,7 +31,7 @@ class About extends PureComponent {
       <div className="about-view">
         {this.renderToolbar()}
         <figure className="app-icon"/>
-        <div className="flex-row center">
+        <div className="flex-row center" style={{ paddingLeft: '20px' }}>
           <h1><span className="product">{product}</span></h1>
           <p className="version">
             <FormattedMessage id="about.version" values={{ version }}/>
