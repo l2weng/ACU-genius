@@ -95,6 +95,9 @@ en:
   footer:
     submit: Submit
     skip: Skip
+    nothingMessage: Nothing needs to be submitted
+    noSyncMessage: Please sync project to cloud firstly
+    modified: Date Modified
   prefs:
     title: Preferences
     app:
@@ -383,7 +386,7 @@ en:
   activity:
     project:
       save: Saving …
-      sync: Projects sync to cloud …
+      sync: Projects syncing to cloud …
     list:
       create: Creating task …
       delete: Deleting task …

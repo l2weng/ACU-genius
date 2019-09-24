@@ -95,6 +95,9 @@ de:
   footer:
     submit: 提交
     skip: 跳过
+    nothingMessage: 暂未发现标注数据需要提交
+    noSyncMessage: 请先同步项目至云端
+    modified: 修改时间
   prefs:
     title: 个性化
     app:

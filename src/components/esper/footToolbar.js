@@ -68,14 +68,14 @@ class EsperFootToolbar extends PureComponent {
           onClick={this.viewPrevPhoto}/>
         <div style={{ display: 'inline-block', paddingTop: '2px' }}>
           {photoDisable ?
-            <Tooltip placement="top" title={'请先同步上云'}>
+            <Tooltip placement="top" title={<FormattedMessage id="footer.noSyncMessage"/>}>
               {confirmButton}
             </Tooltip> : submitDisable ?
-              <Tooltip placement="top" title={'请标注'}>
+              <Tooltip placement="top" title={<FormattedMessage id="footer.nothingMessage"/>}>
                 {confirmButton}
               </Tooltip> : confirmButton }
           {photoDisable ?
-            <Tooltip placement="top" title={'请先同步上云'}>
+            <Tooltip placement="top" title={<FormattedMessage id="footer.noSyncMessage"/>}>
               {skipButton}
             </Tooltip> : skipButton }
         </div>
@@ -90,17 +90,18 @@ class EsperFootToolbar extends PureComponent {
   render() {
     const { photo, selections } = this.props
     let modifiedTime = ''
-    if (photo) modifiedTime = moment(new Date(photo.modified)).format('MMM Do YYYY, h:mm:ss a')
+    if (photo) modifiedTime = moment(new Date(photo.modified)).format('YYYY-MM-DD HH:mm:ss a')
 
     return (
       <Toolbar isDraggable={false}>
         <ToolbarLeft>
           <div style={{ position: 'fixed', fontSize: '12px' }}>
             <ToolGroup>
-              {(selections && selections.length > 0) ? `Date modified: ${moment(
+              <FormattedMessage id="footer.modified"/>:
+              {(selections && selections.length > 0) ? `${moment(
                 new Date(selections[selections.length - 1].updatedTime))
-                  .format('MMM Do YYYY, h:mm:ss a')}` :
-                `Date modified: ${modifiedTime}`}
+                  .format('YYYY-MM-DD HH:mm:ss a')}` :
+                `${modifiedTime}`}
             </ToolGroup>
           </div>
         </ToolbarLeft>
