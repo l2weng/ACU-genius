@@ -3,7 +3,7 @@
 const React = require('react')
 const { PureComponent } = React
 const { connect } = require('react-redux')
-const { Row, Col, Card, List, Radio, Icon, Progress, Button } = require('antd')
+const { Row, Col, Card, List, Radio, Icon, Progress } = require('antd')
 const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
 
@@ -20,6 +20,7 @@ const { existsSync: exists } = require('fs')
 const { openNotification } = require('../../common/uiUtil')
 const { ipcRenderer: ipc  } = require('electron')
 const debounce = require('lodash.debounce')
+const { FormattedMessage } = require('react-intl')
 
 const {
   getCachePrefix,
@@ -118,8 +119,8 @@ class Workplace extends PureComponent {
           <Col span={24}>
             <Card
               bordered={false}
-              title="进行中的项目"
-              extra={<a href="#" onClick={debounce(this.createNewProject, 300)}>新建项目</a>}>
+              title={<FormattedMessage id="home.project.ongoingProject"/>}
+              extra={<a href="#" onClick={debounce(this.createNewProject, 300)}><FormattedMessage id="home.project.new"/></a>}>
               <List
                 rowKey="id"
                 loading={false}
@@ -161,9 +162,9 @@ class Workplace extends PureComponent {
               bordered={false}
               title={<div>
                 <RadioGroup defaultValue={HEAD.JOINED_TASKS} onChange={this.onTaskSwitch}>
-                  <RadioButton key={HEAD.ALL_TASKS} value={HEAD.ALL_TASKS}>全部任务</RadioButton>
-                  <RadioButton key={HEAD.JOINED_TASKS} value={HEAD.JOINED_TASKS}>参与的任务</RadioButton>
-                  <RadioButton key={HEAD.MY_TASKS} value={HEAD.MY_TASKS}>我的任务</RadioButton>
+                  <RadioButton key={HEAD.ALL_TASKS} value={HEAD.ALL_TASKS}><FormattedMessage id="home.task.allTasks"/></RadioButton>
+                  <RadioButton key={HEAD.JOINED_TASKS} value={HEAD.JOINED_TASKS}><FormattedMessage id="home.task.involvedTasks"/></RadioButton>
+                  <RadioButton key={HEAD.MY_TASKS} value={HEAD.MY_TASKS}><FormattedMessage id="home.task.myTasks"/></RadioButton>
                 </RadioGroup>
                 {/*<Input.Search className="extraContentSearch" placeholder="请输入" onSearch={() => ({})} />*/}
               </div>}>

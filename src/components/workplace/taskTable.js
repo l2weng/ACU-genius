@@ -6,6 +6,7 @@ const Highlighter = require('react-highlight-words')
 const { array, func, number } = require('prop-types')
 const { HEAD } = require('../../constants')
 const { getTaskStatusDesc, getTaskStatusBadge } = require('../../common/dataUtil')
+const { FormattedMessage } = require('react-intl')
 
 class TasksTable extends React.Component {
   state = {
@@ -98,23 +99,23 @@ class TasksTable extends React.Component {
     const columns = [
       {
         key: 'name',
-        title: '名称',
+        title: <FormattedMessage id="home.task.name"/>,
         dataIndex: 'name',
         width: '20%',
         ...this.getColumnSearchProps('name'),
       }, {
-        title: '项目',
+        title: <FormattedMessage id="home.task.project"/>,
         dataIndex: 'project.name',
         key: 'project.name',
         width: '20%',
         ...this.getColumnSearchProps('project', 'name'),
       }, {
-        title: '进度',
+        title: <FormattedMessage id="home.task.progress"/>,
         dataIndex: 'progress',
         key: 'progress',
         width: '15%',
       }, {
-        title: '状态',
+        title: <FormattedMessage id="home.task.status"/>,
         dataIndex: 'workStatus',
         key: 'workStatus',
         width: '15%',
@@ -140,7 +141,7 @@ class TasksTable extends React.Component {
           <div><Badge status={getTaskStatusBadge(record.workStatus)} text={getTaskStatusDesc(record.workStatus)} /></div>
         ),
       }, {
-        title: '操作',
+        title: <FormattedMessage id="home.task.action"/>,
         key: 'action',
         width: '20%',
         render: (text, record) => (

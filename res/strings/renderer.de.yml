@@ -86,6 +86,19 @@ de:
       name: 项目名称
       save_as: 自定义文件名及保存位置
       change: 修改
+  home:
+    project:
+      new: 创建新项目
+      ongoingProject: 进行中的项目
+    task:
+      involvedTasks: 参与的任务
+      allTasks: 全部任务
+      myTasks: 我的任务
+      name: 名称
+      project: 项目
+      progress: 进度
+      status: 状态
+      action: 操作
   header:
     title:
       home: 首页

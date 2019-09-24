@@ -86,6 +86,19 @@ en:
       name: Name
       save_as: Change file name and location
       change: Change
+  home:
+    project:
+      new: Create new project
+      ongoingProject: Ongoing Projects
+    task:
+      involvedTasks: Involved tasks
+      allTasks: All tasks
+      myTasks: My tasks
+      name: Name
+      project: Project
+      progress: Progress
+      status: Status
+      action: Action
   header:
     title:
       home: Home
