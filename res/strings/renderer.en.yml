@@ -86,6 +86,12 @@ en:
       name: Name
       save_as: Change file name and location
       change: Change
+  header:
+    title:
+      home: Home
+      workspace: Workspace
+      dashboard: Dashboard
+      contacts: Contacts
   prefs:
     title: Preferences
     app:

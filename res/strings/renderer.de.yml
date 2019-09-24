@@ -86,6 +86,12 @@ de:
       name: 项目名称
       save_as: 自定义文件名及保存位置
       change: 修改
+  header:
+    title:
+      home: 首页
+      workspace: 工作台
+      dashboard: 项目概览
+      contacts: 联系人
   prefs:
     title: 个性化
     app:

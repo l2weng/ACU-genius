@@ -9,10 +9,11 @@ const { ProjectContainer } = require('../components/project')
 const { Contacts } = require('../components/contacts')
 const { Workplace } = require('../components/workplace')
 const { ProjectSummary } = require('../components/projectSummary')
-const actions = require('../actions')
+const { FormattedMessage } = require('react-intl')
 const { HEAD } = require('../constants')
 const { userInfo } = ARGS
 const _ = require('underscore')
+const actions = require('../actions')
 const LRSvg = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 73.38 95.84" width="1em" height="1em">
     <g id="lrLine2">
@@ -62,12 +63,12 @@ class Header extends React.Component {
     const isOwner = project.owner === userInfo.user.userId
     return (
       <Tabs defaultActiveKey={activeTab} activeKey={activeTab} onChange={this.switchTab} style={{ height: '100%' }} tabBarExtraContent={<UserInfoContainer/>} >
-        <TabPane tab={<span><Icon component={LRSvg} size="small"/>首页</span>} key={HEAD.HOME} className="tab-container">
+        <TabPane tab={<span><Icon component={LRSvg} size="small"/><FormattedMessage id="header.title.home"/></span>} key={HEAD.HOME} className="tab-container">
           <Workplace switchTab={this.switchTab} switchTask={this.switchTask} isOwner={isOwner} currentTaskType={taskType}/>
         </TabPane>
-        <TabPane tab={<span><Icon type="edit" size="small"/>工作台</span>} key={HEAD.WORKSPACE} className="tab-container"><ProjectContainer/></TabPane>
-        <TabPane tab={<span><Icon type="line-chart" size="small"/>项目</span>} key={HEAD.PROJECT} className="tab-container"><ProjectSummary activeTab={activeTab} activeProject={project} projects={projects}/></TabPane>
-        <TabPane tab={<span><Icon type="team" size="small"/>联系人</span>}  key={HEAD.FRIENDS} className="tab-container"><Contacts/></TabPane>
+        <TabPane tab={<span><Icon type="edit" size="small"/><FormattedMessage id="header.title.workspace"/></span>} key={HEAD.WORKSPACE} className="tab-container"><ProjectContainer/></TabPane>
+        <TabPane tab={<span><Icon type="line-chart" size="small"/><FormattedMessage id="header.title.dashboard"/></span>} key={HEAD.PROJECT} className="tab-container"><ProjectSummary activeTab={activeTab} activeProject={project} projects={projects}/></TabPane>
+        <TabPane tab={<span><Icon type="team" size="small"/><FormattedMessage id="header.title.contacts"/></span>}  key={HEAD.FRIENDS} className="tab-container"><Contacts/></TabPane>
       </Tabs>
     )
   }
