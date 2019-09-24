@@ -92,6 +92,9 @@ en:
       workspace: Workspace
       dashboard: Dashboard
       contacts: Contacts
+  footer:
+    submit: Submit
+    skip: Skip
   prefs:
     title: Preferences
     app:

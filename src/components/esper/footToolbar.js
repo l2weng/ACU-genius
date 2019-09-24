@@ -8,6 +8,7 @@ const { Button: LRButton } = require('../button')
 const { IconChevron16, IconChevron17 } = require('../icons')
 const { func, object, array } = require('prop-types')
 const { emit } = require('../../dom')
+const { FormattedMessage } = require('react-intl')
 const moment = require('moment')
 const __ = require('underscore')
 const SkipSvg = () => (
@@ -50,12 +51,12 @@ class EsperFootToolbar extends PureComponent {
     const confirmButton = (
       <span style={{ paddingRight: '5px' }}><Button type="default" size="small" onClick={this.confirmPhoto} disabled={submitDisable || photoDisable}>
         <Icon type="save"/>
-      提交
+        <FormattedMessage id="footer.submit"/>
       </Button></span>)
     const skipButton = (
       <span><Button type="default" size="small" onClick={this.ignorePhoto}
         disabled={photoDisable}>
-      跳过
+        <FormattedMessage id="footer.skip"/>
         <Icon component={SkipSvg}/>
       </Button></span>)
 

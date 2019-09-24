@@ -92,6 +92,9 @@ de:
       workspace: 工作台
       dashboard: 项目概览
       contacts: 联系人
+  footer:
+    submit: 提交
+    skip: 跳过
   prefs:
     title: 个性化
     app:
