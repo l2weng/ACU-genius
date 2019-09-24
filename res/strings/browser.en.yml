@@ -2,28 +2,28 @@ en:
   dialogs:
     crashed:
       buttons:
-        - Close Window
+        - Close
         - Reload
-        - Keep It Open
+        - Wait
       message: LabelReal has crashed
-      detail: Please report this issue at https://github.com/tropy/tropy
+      detail: Please report this issue at http://www.labelreal.com/tool/feedback
     unresponsive:
       buttons:
         - Close
         - Keep Waiting
-      message: Tropy is not responding
+      message: LabelReal is not responding
       detail: >
-        Tropy is not responding.
-        Would you like to force close it or just keep waiting?
+        LabelReal is not responding.
+        Would you like to force to close or keep waiting?
     removing:
       buttons:
         - Remove
-        - Keep It
-      message: Are you sure you want to remove this permanently?
+        - Keep
+      message: Are you sure to remove this permanently?
   windows:
     prefs:
-      title: Tropy Preferences
+      title: Preferences
     wizard:
       title: Welcome to LabelReal
     about:
-      title: About Tropy
+      title: About LabelReal

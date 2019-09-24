@@ -2,28 +2,28 @@ de:
   dialogs:
     crashed:
       buttons:
-      - Close Window
-      - Reload
-      - Keep It Open
-      message: LabelReal 奔溃了
-      detail: Please report this issue at https://github.com/tropy/tropy
+      - 关闭
+      - 重新载入
+      - 继续等待
+      message: LabelReal遇到了一些问题
+      detail: 请帮助我们进行反馈：http://www.labelreal.com/tool/feedback
     unresponsive:
       buttons:
-      - Close
-      - Keep Waiting
-      message: Tropy is not responding
+      - 关闭
+      - 等待
+      message: Labelreal无响应
       detail: >
-        Tropy is not responding.
-        Would you like to force close it or just keep waiting?
+        Labelreal无响应
+        请选择强制关闭或继续等待：
     removing:
           buttons:
             - 删除
             - 取消
-          message: 是否彻底删除?
+          message: 是否确认彻底删除?
   windows:
     prefs:
-      title: Tropy Preferences
+      title: 个性化设置
     wizard:
-      title: Welcome to LabelReal
+      title: 欢迎使用LabelReal
     about:
-      title: About Tropy
+      title: 关于LabelReal
