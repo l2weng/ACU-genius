@@ -100,9 +100,11 @@ de:
       status: 状态
       action: 操作
       submit: 提交
+      reset: 重置
       details: 详情
       withdraw: 撤回
       confirm: 审核
+      search: 搜索
   header:
     title:
       home: 首页

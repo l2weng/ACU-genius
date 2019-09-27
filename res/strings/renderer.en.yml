@@ -100,9 +100,11 @@ en:
       status: Status
       action: Action
       submit: Submit
+      reset: Reset
       details: Details
       withdraw: Withdraw
       confirm: Confirm
+      search: Search
   header:
     title:
       home: Home

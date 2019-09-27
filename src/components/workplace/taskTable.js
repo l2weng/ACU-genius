@@ -6,41 +6,40 @@ const Highlighter = require('react-highlight-words')
 const { array, func, number } = require('prop-types')
 const { HEAD } = require('../../constants')
 const { getTaskStatusDesc, getTaskStatusBadge } = require('../../common/dataUtil')
-const { FormattedMessage } = require('react-intl')
+const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
 
-class TasksTable extends React.Component {
+const TasksTable = injectIntl(class extends React.Component {
   state = {
     searchText: '',
   }
 
+  placeholder = (dataIndex) => {
+    return this.props.intl.formatMessage({ id: `home.task.${dataIndex}` })
+  }
+
   getColumnSearchProps = (dataIndex, subIndex = '') => ({
-    filterDropdown: ({
-                       setSelectedKeys, selectedKeys, confirm, clearFilters,
-                     }) => (
-                       <div style={{ padding: 8 }}>
-                         <Input
-                           ref={node => { this.searchInput = node }}
-                           placeholder={`Search ${dataIndex} ${subIndex}`}
-                           value={selectedKeys[0]}
-                           onChange={e => setSelectedKeys(
-            e.target.value ? [e.target.value] : [])}
-                           onPressEnter={() => this.handleSearch(selectedKeys, confirm)}
-                           style={{ width: 188, marginBottom: 8, display: 'block' }}/>
-                         <Button
-                           type="primary"
-                           onClick={() => this.handleSearch(selectedKeys, confirm)}
-                           icon="search"
-                           size="small"
-                           style={{ width: 90, marginRight: 8 }}>
-          Search
-                         </Button>
-                         <Button
-                           onClick={() => this.handleReset(clearFilters)}
-                           size="small"
-                           style={{ width: 90 }}>
-          Reset
-                         </Button>
-                       </div>
+    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+      <div style={{ padding: 8 }}>
+        <Input
+          ref={node => { this.searchInput = node }}
+          placeholder={this.placeholder(dataIndex)}
+          value={selectedKeys[0]}
+          onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+          onPressEnter={() => this.handleSearch(selectedKeys, confirm)}
+          style={{ width: 188, marginBottom: 8, display: 'block' }}/>
+        <Button
+          type="primary"
+          onClick={() => this.handleSearch(selectedKeys, confirm)}
+          icon="search"
+          size="small"
+          style={{ width: 90, marginRight: 8 }}><FormattedMessage id="home.task.search"/>
+        </Button>
+        <Button
+          onClick={() => this.handleReset(clearFilters)}
+          size="small"
+          style={{ width: 90 }}><FormattedMessage id="home.task.reset"/>
+        </Button>
+      </div>
     ),
     filterIcon: filtered => <Icon type="search" style={{
       color: filtered
@@ -167,6 +166,7 @@ class TasksTable extends React.Component {
     return <Table columns={columns} rowkey={record=>record.taskId} dataSource={tasks}/>
   }
   static propTypes = {
+    intl: intlShape.isRequired,
     tasks: array.isRequired,
     openProjectById: func.isRequired,
     onPassTask: func.isRequired,
@@ -174,7 +174,7 @@ class TasksTable extends React.Component {
     onSubmitTask: func.isRequired,
     taskType: number.isRequired
   }
-}
+})
 
 module.exports = {
   TasksTable,
