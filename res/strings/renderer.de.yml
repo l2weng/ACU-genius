@@ -105,12 +105,17 @@ de:
       withdraw: 撤回
       confirm: 审核
       search: 搜索
+      status0: 未开始
+      status1: 工作中
+      status2: 完全
+      status3: 已确认
   header:
     title:
       home: 首页
       workspace: 工作台
       dashboard: 项目概览
       contacts: 联系人
+      signOut: 账号退出
   footer:
     submit: 提交
     skip: 跳过

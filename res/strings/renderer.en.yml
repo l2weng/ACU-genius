@@ -105,12 +105,17 @@ en:
       withdraw: Withdraw
       confirm: Confirm
       search: Search
+      status0: Open
+      status1: Working
+      status2: Complete
+      status3: Confirmed
   header:
     title:
       home: Home
       workspace: Workspace
       dashboard: Dashboard
       contacts: Contacts
+      signOut: Sign out
   footer:
     submit: Submit
     skip: Skip

@@ -7,6 +7,7 @@ const _ = require('underscore')
 const { ipcRenderer: ipc } = require('electron')
 const { USER } = require('../../constants')
 const { Button, Menu, Icon, Dropdown, Avatar } = require('antd')
+const { FormattedMessage } = require('react-intl')
 
 const {
   shape, string,
@@ -43,7 +44,7 @@ class UserInfoContainer extends Component {
       <Menu className="menu" selectedKeys={[]} onClick={this.onMenuClick}>
         <Menu.Item key="logout">
           <Icon type="logout" />
-          退出登录
+          <FormattedMessage id="header.title.signOut"/>
         </Menu.Item>
       </Menu>
     )

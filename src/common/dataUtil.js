@@ -70,19 +70,6 @@ const dataUtil = {
     return stats['size']
   },
 
-  getTaskStatusDesc(status = 0, lang = 'en') {
-    switch (status) {
-      case 0:
-        return 'open'
-      case 1:
-        return 'working'
-      case 2:
-        return 'complete'
-      case 3:
-        return 'confirmed'
-    }
-  },
-
   getTaskStatusBadge(status = 0, lang = 'en') {
     switch (status) {
       case 0:

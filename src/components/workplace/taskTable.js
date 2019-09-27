@@ -5,7 +5,7 @@ const { Table, Input, Button, Icon, Badge, Divider, Popconfirm } = require('antd
 const Highlighter = require('react-highlight-words')
 const { array, func, number } = require('prop-types')
 const { HEAD } = require('../../constants')
-const { getTaskStatusDesc, getTaskStatusBadge } = require('../../common/dataUtil')
+const { getTaskStatusBadge } = require('../../common/dataUtil')
 const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
 
 const TasksTable = injectIntl(class extends React.Component {
@@ -93,6 +93,10 @@ const TasksTable = injectIntl(class extends React.Component {
     this.props.onSubmitTask(task)
   }
 
+  getTaskStatusDesc(status = 0) {
+    return this.props.intl.formatMessage({ id: `home.task.status${status}` })
+  }
+
   render() {
     const { tasks } = this.props
     const columns = [
@@ -120,24 +124,24 @@ const TasksTable = injectIntl(class extends React.Component {
         width: '15%',
         filters: [
           {
-            text: getTaskStatusDesc(0),
+            text: this.getTaskStatusDesc(0),
             value: 0,
           },
           {
-            text: getTaskStatusDesc(1),
+            text: this.getTaskStatusDesc(1),
             value: 1,
           },
           {
-            text: getTaskStatusDesc(2),
+            text: this.getTaskStatusDesc(2),
             value: 2,
           },
           {
-            text: getTaskStatusDesc(3),
+            text: this.getTaskStatusDesc(3),
             value: 3,
           }],
         onFilter: (value, record) => record.workStatus === value,
         render: (text, record) => (
-          <div><Badge status={getTaskStatusBadge(record.workStatus)} text={getTaskStatusDesc(record.workStatus)} /></div>
+          <div><Badge status={getTaskStatusBadge(record.workStatus)} text={this.getTaskStatusDesc(record.workStatus)} /></div>
         ),
       }, {
         title: <FormattedMessage id="home.task.action"/>,
