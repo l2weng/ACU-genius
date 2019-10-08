@@ -2,19 +2,17 @@
 
 const React = require('react')
 const { PureComponent } = React
-const { Row, Col, Tabs, Input } = require('antd')
+const { Row, Col, Tabs } = require('antd')
 const TabPane = Tabs.TabPane
-// const Search = Input.Search
-const { Teams } = require('./teams')
+// const { Teams } = require('./teams')
 const { CoWorkers } = require('./coWorkers')
 const { Colleague } = require('./colleague')
+const { FormattedMessage } = require('react-intl')
 
 class Contacts extends PureComponent {
   constructor(props) {
     super(props)
-
-    this.state = {
-    }
+    this.state = {}
   }
 
   render() {
@@ -25,13 +23,13 @@ class Contacts extends PureComponent {
             <Tabs style={{ textAlign: 'left' }}
               defaultActiveKey="1"
               tabPosition="left">
-              <TabPane tab="公司同事" key="1">
+              <TabPane tab={<FormattedMessage id="contacts.colleague"/>} key="1">
                 <Colleague/>
               </TabPane>
               {/*<TabPane tab="人员分组" key="2">*/}
               {/*  <Teams/>*/}
               {/*</TabPane>*/}
-              <TabPane tab="平台好友" key="3">
+              <TabPane tab={<FormattedMessage id="contacts.friend"/>} key="3">
                 <CoWorkers/>
               </TabPane>
             </Tabs>

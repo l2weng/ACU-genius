@@ -6,6 +6,7 @@ const { List, Icon,  Avatar, Card, Form, Modal, Input, message } = require('antd
 const { getUrlFilterParams } = require('../../common/dataUtil')
 const { userInfo } = ARGS
 const FormItem = Form.Item
+const { FormattedMessage } = require('react-intl')
 const axios = require('axios')
 const _ = require('underscore')
 
@@ -26,8 +27,8 @@ const ColleagueForm = Form.create()(props => {
     })
   }
   const formItemLayout = {
-    labelCol: { span: 5 },
-    wrapperCol: { span: 15 },
+    labelCol: { span: 8 },
+    wrapperCol: { span: 16 },
   }
 
   const handleConfirmBlur = (e) => {
@@ -52,25 +53,25 @@ const ColleagueForm = Form.create()(props => {
   return (
     <Modal
       destroyOnClose
-      title="添加同事"
+      title={<FormattedMessage id="contacts.addColleague"/>}
       visible={modalVisible}
       onOk={okHandle}
       onCancel={() => handleColleagueModalVisible()}>
-      <FormItem {...formItemLayout} label="名称">
+      <FormItem {...formItemLayout} label={<FormattedMessage id="contacts.form.name"/>}>
         {form.getFieldDecorator('name', {
           rules: [{ required: true, message: '请输入至少2个字符的名称！', min: 2 }],
         })(<Input placeholder="请输入" />)}
       </FormItem>
       <FormItem
         {...formItemLayout}
-        label="手机号码">
+        label={<FormattedMessage id="contacts.form.mobile"/>}>
         {form.getFieldDecorator('phone', { rules: [{ max: 11, message: '请输入合法手机号!' }] })(
           <Input placeholder="请输入"/>
         )}
       </FormItem>
       <FormItem
         {...formItemLayout}
-        label="E-mail">
+        label={<FormattedMessage id="contacts.form.email"/>}>
         {form.getFieldDecorator('email', {
           rules: [{
             type: 'email', message: '请输入合法 E-mail!',
@@ -83,7 +84,7 @@ const ColleagueForm = Form.create()(props => {
       </FormItem>
       <FormItem
         {...formItemLayout}
-        label="初始密码">
+        label={<FormattedMessage id="contacts.form.defaultPassword"/>}>
         {form.getFieldDecorator('password', {
           rules: [{
             required: true, message: '输入密码!',
@@ -91,20 +92,7 @@ const ColleagueForm = Form.create()(props => {
             validator: validateToNextPassword,
           }],
         })(
-          <Input type="password" placeholder="请输入"/>
-        )}
-      </FormItem>
-      <FormItem
-        {...formItemLayout}
-        label="确认密码">
-        {form.getFieldDecorator('confirm', {
-          rules: [{
-            required: true, message: '确认密码!',
-          }, {
-            validator: compareToFirstPassword,
-          }],
-        })(
-          <Input type="password" onBlur={handleConfirmBlur} placeholder="请输入"/>
+          <Input placeholder="请输入"/>
         )}
       </FormItem>
     </Modal>
@@ -178,7 +166,7 @@ class Colleague extends PureComponent {
     }
     return (
       <div>
-        <Card title="公司同事" bordered={false} extra={<a href="#" onClick={() => this.handleColleagueModalVisible(true)}>添加同事</a>}>
+        <Card title={<FormattedMessage id="contacts.colleague"/>} bordered={false} extra={<a href="#" onClick={() => this.handleColleagueModalVisible(true)}><FormattedMessage id="contacts.addColleague"/></a>}>
           <List
             itemLayout="vertical"
             size="large"

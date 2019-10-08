@@ -122,6 +122,16 @@ en:
     nothingMessage: Nothing needs to be submitted
     noSyncMessage: Please sync project to cloud firstly
     modified: Date Modified
+  contacts:
+    colleague: Colleagues
+    friend: Friends
+    addColleague: Add Colleague
+    addFriend: Add Friend
+    form:
+      name: Nickname
+      mobile: Mobile
+      email: E-mail
+      defaultPassword: Default Password
   prefs:
     title: Preferences
     app:

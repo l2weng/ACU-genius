@@ -122,6 +122,16 @@ de:
     nothingMessage: 暂未发现标注数据需要提交
     noSyncMessage: 请先同步项目至云端
     modified: 修改时间
+  contacts:
+    colleague: 同事
+    friend: 好友
+    addColleague: 添加同事
+    addFriend: 添加好友
+    form:
+      name: 姓名
+      mobile: 手机号码
+      email: 电子邮件
+      defaultPassword: 初始密码
   prefs:
     title: 个性化
     app:
