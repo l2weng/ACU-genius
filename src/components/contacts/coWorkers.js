@@ -2,19 +2,13 @@
 
 const React = require('react')
 const { PureComponent } = React
-const { List, Icon,  Avatar, Card, Form, Modal, Input, message, Button } = require('antd')
+const { List, Icon,  Avatar, Card, Form, Modal, message } = require('antd')
 const { getUrlFilterParams } = require('../../common/dataUtil')
+const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
 const { userInfo } = ARGS
 const _ = require('underscore')
 const axios = require('axios')
 const { WorkersTable } = require('./workersTable')
-
-const IconText = ({ type, text }) => (
-  <span>
-    <Icon type={type} style={{ marginRight: 8 }} />
-    {text}
-  </span>
-)
 
 const CoWorkerForm = Form.create()(props => {
   const { modalVisible, form, handleAdd, handleModalVisible, otherWorks } = props
@@ -28,7 +22,7 @@ const CoWorkerForm = Form.create()(props => {
   return (
     <Modal
       destroyOnClose
-      title="添加好友"
+      title={<FormattedMessage id="contacts.friend"/>}
       visible={modalVisible}
       onOk={okHandle}
       footer={null}
@@ -37,8 +31,7 @@ const CoWorkerForm = Form.create()(props => {
     </Modal>
   )
 })
-
-class CoWorkers extends PureComponent {
+const CoWorkers = injectIntl(class extends PureComponent {
   constructor(props) {
     super(props)
 
@@ -67,7 +60,6 @@ class CoWorkers extends PureComponent {
       }
     })
     .catch(function () {
-      message.warning('合作人不存在, 请重试')
       self.setState({ loading: false })
     })
   }
@@ -81,7 +73,7 @@ class CoWorkers extends PureComponent {
       }
     })
     .catch(function () {
-      message.warning('查询服务连接失败, 请重试')
+      message.warning(self.props.intl.formatMessage({ id: 'common.error' }))
     })
   }
 
@@ -93,7 +85,7 @@ class CoWorkers extends PureComponent {
     }
     return (
       <div>
-        <Card title="平台好友" bordered={false} extra={<a href="#" onClick={() => this.handleModalVisible(true)}>添加好友</a>}>
+        <Card title={<FormattedMessage id="contacts.friend"/>} bordered={false} extra={<a href="#" onClick={() => this.handleModalVisible(true)}><FormattedMessage id="contacts.addFriend"/></a>}>
           <List
             itemLayout="vertical"
             size="large"
@@ -102,8 +94,7 @@ class CoWorkers extends PureComponent {
             dataSource={coWorks}
             renderItem={item => (
               <List.Item
-                key={item.phone}
-                actions={[<IconText type="star-o" text="156" />, <IconText type="like-o" text="156" />, <IconText type="info-circle" text="详情" />]}>
+                key={item.phone}>
                 <List.Item.Meta
                   avatar={<Avatar alt="" style={{ backgroundColor: item.avatarColor || '#1890ff' }}>{item.name.charAt(0).toUpperCase()}</Avatar>}
                   title={<a href={item.href}>{item.name}</a>}
@@ -115,7 +106,10 @@ class CoWorkers extends PureComponent {
       </div>
     )
   }
-}
+  static propTypes = {
+    intl: intlShape.isRequired,
+  }
+})
 
 module.exports = {
   CoWorkers,

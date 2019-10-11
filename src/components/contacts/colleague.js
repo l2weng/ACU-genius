@@ -10,13 +10,6 @@ const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
 const axios = require('axios')
 const _ = require('underscore')
 
-const IconText = ({ type, text }) => (
-  <span>
-    <Icon type={type} style={{ marginRight: 8 }} />
-    {text}
-  </span>
-)
-
 const ColleagueForm = Form.create()(props => {
   const { modalVisible, form, intl, handleAdd, handleColleagueModalVisible, confirmDirty } = props
   const okHandle = () => {
