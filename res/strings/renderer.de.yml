@@ -129,9 +129,14 @@ de:
     addFriend: 添加好友
     form:
       name: 姓名
+      nameLengthLimit: 请输入至少2个字符的名称！
       mobile: 手机号码
       email: 电子邮件
+      emailRequired: 请输入电子邮箱!
+      emailLimit: 请输入合法电子邮箱!
       defaultPassword: 初始密码
+      passwordRequired: 请输入密码!
+      enterPlaceHolder: 请输入
   prefs:
     title: 个性化
     app:
@@ -568,7 +573,7 @@ de:
     update:
       ready:
         message: >
-          LabelReal有可更新的版本{version}.
+          LabelReal有可更新的版本{version}。
           是否立即安装并重启程序?
         confirm: 确认
   plugin:
@@ -578,3 +583,6 @@ de:
     hooks:
       export: 导出
       import: 导入
+  common:
+    addSuccess: 添加成功。
+    error: 系统错误，请联系客服

@@ -6,7 +6,7 @@ const { List, Icon,  Avatar, Card, Form, Modal, Input, message } = require('antd
 const { getUrlFilterParams } = require('../../common/dataUtil')
 const { userInfo } = ARGS
 const FormItem = Form.Item
-const { FormattedMessage } = require('react-intl')
+const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
 const axios = require('axios')
 const _ = require('underscore')
 
@@ -18,7 +18,7 @@ const IconText = ({ type, text }) => (
 )
 
 const ColleagueForm = Form.create()(props => {
-  const { modalVisible, form, handleAdd, handleColleagueModalVisible, confirmDirty } = props
+  const { modalVisible, form, intl, handleAdd, handleColleagueModalVisible, confirmDirty } = props
   const okHandle = () => {
     form.validateFields((err, fieldsValue) => {
       if (err) return
@@ -59,14 +59,14 @@ const ColleagueForm = Form.create()(props => {
       onCancel={() => handleColleagueModalVisible()}>
       <FormItem {...formItemLayout} label={<FormattedMessage id="contacts.form.name"/>}>
         {form.getFieldDecorator('name', {
-          rules: [{ required: true, message: '请输入至少2个字符的名称！', min: 2 }],
-        })(<Input placeholder="请输入" />)}
+          rules: [{ required: true, message: intl.formatMessage({ id: 'contacts.form.nameLengthLimit' }), min: 2 }],
+        })(<Input placeholder={intl.formatMessage({ id: 'contacts.form.enterPlaceHolder' })} />)}
       </FormItem>
       <FormItem
         {...formItemLayout}
         label={<FormattedMessage id="contacts.form.mobile"/>}>
-        {form.getFieldDecorator('phone', { rules: [{ max: 11, message: '请输入合法手机号!' }] })(
-          <Input placeholder="请输入"/>
+        {form.getFieldDecorator('phone')(
+          <Input placeholder={intl.formatMessage({ id: 'contacts.form.enterPlaceHolder' })} />
         )}
       </FormItem>
       <FormItem
@@ -74,12 +74,12 @@ const ColleagueForm = Form.create()(props => {
         label={<FormattedMessage id="contacts.form.email"/>}>
         {form.getFieldDecorator('email', {
           rules: [{
-            type: 'email', message: '请输入合法 E-mail!',
+            type: 'email', message: intl.formatMessage({ id: 'contacts.form.emailLimit' }),
           }, {
-            required: true, message: '请输入 E-mail!',
+            required: true, message: intl.formatMessage({ id: 'contacts.form.emailRequired' }),
           }],
         })(
-          <Input placeholder="请输入"/>
+          <Input placeholder={intl.formatMessage({ id: 'contacts.form.enterPlaceHolder' })} />
         )}
       </FormItem>
       <FormItem
@@ -87,19 +87,19 @@ const ColleagueForm = Form.create()(props => {
         label={<FormattedMessage id="contacts.form.defaultPassword"/>}>
         {form.getFieldDecorator('password', {
           rules: [{
-            required: true, message: '输入密码!',
+            required: true, message: intl.formatMessage({ id: 'contacts.form.passwordRequired' }),
           }, {
             validator: validateToNextPassword,
           }],
         })(
-          <Input placeholder="请输入"/>
+          <Input placeholder={intl.formatMessage({ id: 'contacts.form.enterPlaceHolder' })} />
         )}
       </FormItem>
     </Modal>
   )
 })
 
-class Colleague extends PureComponent {
+const Colleague = injectIntl(class extends PureComponent {
   constructor(props) {
     super(props)
 
@@ -127,12 +127,12 @@ class Colleague extends PureComponent {
     .then(function (response) {
       if (response.status === 200) {
         self.handleColleagueModalVisible()
-        message.success('添加成功', 0.5)
+        message.success(self.props.intl.formatMessage({ id: 'common.addSuccess' }), 0.5)
         self.fetchColleagues()
       }
     })
     .catch(function () {
-      message.warning('系统错误')
+      message.warning(self.props.intl.formatMessage({ id: 'common.error' }))
     })
   }
 
@@ -159,6 +159,7 @@ class Colleague extends PureComponent {
   }
 
   render() {
+
     const { loading, colleagueModalVisible, colleagueList, confirmDirty } = this.state
     const parentMethods = {
       handleAdd: this.handleAdd,
@@ -175,8 +176,7 @@ class Colleague extends PureComponent {
             dataSource={colleagueList}
             renderItem={item => (
               <List.Item
-                key={item.phone}
-                actions={[<IconText type="star-o" text="1" />, <IconText type="like-o" text="1" />, <IconText type="info-circle" text="详情" />]}>
+                key={item.phone}>
                 <List.Item.Meta
                   avatar={<Avatar alt="" style={{ backgroundColor: item.avatarColor || '#1890ff' }}>{item.name.charAt(0).toUpperCase()}</Avatar>}
                   title={<a href={item.href}>{item.name}</a>}
@@ -184,11 +184,14 @@ class Colleague extends PureComponent {
               </List.Item>
           )}/>
         </Card>
-        <ColleagueForm {...parentMethods} modalVisible={colleagueModalVisible} confirmDirty={confirmDirty}/>
+        <ColleagueForm {...parentMethods} intl={this.props.intl} modalVisible={colleagueModalVisible} confirmDirty={confirmDirty}/>
       </div>
     )
   }
-}
+  static propTypes = {
+    intl: intlShape.isRequired,
+  }
+})
 
 module.exports = {
   Colleague,
