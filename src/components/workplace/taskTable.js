@@ -32,12 +32,14 @@ const TasksTable = injectIntl(class extends React.Component {
           onClick={() => this.handleSearch(selectedKeys, confirm)}
           icon="search"
           size="small"
-          style={{ width: 90, marginRight: 8 }}><FormattedMessage id="home.task.search"/>
+          style={{ width: 90, marginRight: 8 }}>
+          <FormattedMessage id="home.task.search"/>
         </Button>
         <Button
           onClick={() => this.handleReset(clearFilters)}
           size="small"
-          style={{ width: 90 }}><FormattedMessage id="home.task.reset"/>
+          style={{ width: 90 }}>
+          <FormattedMessage id="home.task.reset"/>
         </Button>
       </div>
     ),

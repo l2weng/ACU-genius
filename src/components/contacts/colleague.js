@@ -2,7 +2,7 @@
 
 const React = require('react')
 const { PureComponent } = React
-const { List, Icon,  Avatar, Card, Form, Modal, Input, message } = require('antd')
+const { List,  Avatar, Card, Form, Modal, Input, message } = require('antd')
 const { getUrlFilterParams } = require('../../common/dataUtil')
 const { userInfo } = ARGS
 const FormItem = Form.Item
@@ -140,7 +140,6 @@ const Colleague = injectIntl(class extends PureComponent {
       }
     })
     .catch(function () {
-      message.warning('同事不存在, 请重试')
       self.setState({ loading: false })
     })
   }

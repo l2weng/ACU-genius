@@ -137,6 +137,8 @@ en:
       defaultPassword: Default Password
       passwordRequired: Please enter password
       enterPlaceHolder: Please enter
+      action: Action
+      invite: Invite
   prefs:
     title: Preferences
     app:
@@ -591,3 +593,5 @@ en:
   common:
     addSuccess: Added successfully.
     error: System error, please contact customer service.
+    search: Search
+    reset: Reset

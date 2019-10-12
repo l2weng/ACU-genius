@@ -137,6 +137,8 @@ de:
       defaultPassword: 初始密码
       passwordRequired: 请输入密码!
       enterPlaceHolder: 请输入
+      action: 操作
+      invite: 邀请
   prefs:
     title: 个性化
     app:
@@ -586,3 +588,5 @@ de:
   common:
     addSuccess: 添加成功。
     error: 系统错误，请联系客服
+    search: 搜索
+    reset: 重置

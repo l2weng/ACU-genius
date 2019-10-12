@@ -17,7 +17,7 @@ class Contacts extends PureComponent {
 
   render() {
     return (
-      <div style={{ paddingTop: '20px' }}>
+      <div style={{ paddingTop: '20px', overflowX: 'hidden' }}>
         <Row gutter={24}>
           <Col span={24}>
             <Tabs style={{ textAlign: 'left' }}
