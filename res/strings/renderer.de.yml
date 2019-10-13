@@ -150,6 +150,13 @@ de:
     remaining: 剩余
     skipped: 已跳过
     completed: 已完成
+    targets: 标注对象
+    taskCompletionRate: 任务完成率
+    activity:
+      title: 标注行为
+      lastHour: 上一个小时
+      today: 今天
+      last7days: 最近7天
   prefs:
     title: 个性化
     app:
@@ -601,3 +608,4 @@ de:
     error: 系统错误，请联系客服
     search: 搜索
     reset: 重置
+    noData: 暂无数据

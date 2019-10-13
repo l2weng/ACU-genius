@@ -150,6 +150,13 @@ en:
     remaining: Remaining
     skipped: Skipped
     completed: Completed
+    targets: Targets
+    taskCompletionRate: Task completion rate
+    activity:
+      title: Labeling Activity
+      lastHour: Last Hour
+      today: Today
+      last7days: Last 7 days
   prefs:
     title: Preferences
     app:
@@ -606,3 +613,4 @@ en:
     error: System error, please contact customer service.
     search: Search
     reset: Reset
+    noData: No Data
