@@ -139,6 +139,12 @@ de:
       enterPlaceHolder: 请输入
       action: 操作
       invite: 邀请
+  summary:
+    project: Project
+    projectOverview: Project Overview
+    taskList: Task List
+    workLog: Work Log
+    dataOutput: Data Output
   prefs:
     title: 个性化
     app:

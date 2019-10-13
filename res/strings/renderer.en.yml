@@ -139,6 +139,12 @@ en:
       enterPlaceHolder: Please enter
       action: Action
       invite: Invite
+  summary:
+    project: Project
+    projectOverview: Project Overview
+    taskList: Task List
+    workLog: Work Log
+    dataOutput: Data Output
   prefs:
     title: Preferences
     app:

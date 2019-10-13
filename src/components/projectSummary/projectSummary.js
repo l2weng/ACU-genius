@@ -14,6 +14,7 @@ const { array, object, string } = require('prop-types')
 const TabPane = Tabs.TabPane
 const Option = Select.Option
 const axios = require('axios')
+const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
 const { error } = require('../../common/log')
 
 const INIT_PAGINATION = {
@@ -175,7 +176,7 @@ class ProjectSummary extends PureComponent {
       return (
         <div>
           <Form layout="inline">
-            <Form.Item  label="项目">
+            <Form.Item  label={<FormattedMessage id="summary.project"/>}>
               <Select style={{ width: 120 }} defaultValue={cProjectId} value={cProjectId} onChange={this.handleSelectProject}>
                 {projects.map(project=>{
                   return (<Option value={project.projectId} key={project.projectId}>{project.name}</Option>)
@@ -198,7 +199,7 @@ class ProjectSummary extends PureComponent {
               <Tabs style={{ textAlign: 'left' }} onChange={this.switchProjectSummaryTab}
                 defaultActiveKey={summaryTab}
                 tabPosition="left">
-                <TabPane tab="项目概述" key="1"><Summary
+                <TabPane tab={<FormattedMessage id="summary.projectOverview"/>} key="1"><Summary
                   skuData={skuData}
                   taskStatuses={taskStatuses}
                   userPhotoStatusData={userPhotoStatusData}
@@ -213,8 +214,8 @@ class ProjectSummary extends PureComponent {
                 {/*  columns={columns}*/}
                 {/*  photos={photos}/></TabPane>*/}
                 {/*<TabPane tab="项目参与者" key="3"><Members/></TabPane>*/}
-                <TabPane tab="任务列表" key="4"><TaskList userPhotoStatusData={userPhotoStatusData}/></TabPane>
-                <TabPane tab="工作日志" key="5">
+                <TabPane tab={<FormattedMessage id="summary.taskList"/>} key="4"><TaskList userPhotoStatusData={userPhotoStatusData}/></TabPane>
+                <TabPane tab={<FormattedMessage id="summary.workLog"/>} key="5">
                   <WorkLog
                     logData={logData}
                     pagination={logPagination}
@@ -222,7 +223,7 @@ class ProjectSummary extends PureComponent {
                     onChange={this.handleLogTableChange}/>
                 </TabPane>
                 {/*<TabPane tab="质量设置" key="6"><QualitySetting/></TabPane>*/}
-                <TabPane tab="数据导出" key="7">Content of Tab Pane 6</TabPane>
+                <TabPane tab={<FormattedMessage id="summary.dataOutput"/>} key="7">Content of Tab Pane 6</TabPane>
               </Tabs>
             </Card>
           </Col>
