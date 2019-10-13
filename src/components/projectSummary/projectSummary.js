@@ -199,7 +199,7 @@ class ProjectSummary extends PureComponent {
               <Tabs style={{ textAlign: 'left' }} onChange={this.switchProjectSummaryTab}
                 defaultActiveKey={summaryTab}
                 tabPosition="left">
-                <TabPane tab={<FormattedMessage id="summary.projectOverview"/>} key="1"><Summary
+                <TabPane tab={<FormattedMessage id="summary.overview"/>} key="1"><Summary
                   skuData={skuData}
                   taskStatuses={taskStatuses}
                   userPhotoStatusData={userPhotoStatusData}

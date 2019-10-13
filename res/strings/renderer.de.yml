@@ -140,11 +140,11 @@ de:
       action: 操作
       invite: 邀请
   summary:
-    project: Project
-    projectOverview: Project Overview
-    taskList: Task List
-    workLog: Work Log
-    dataOutput: Data Output
+    project: 项目
+    overview: 项目概览
+    taskList: 任务列表
+    workLog: 工作日志
+    dataOutput: 数据导出
   prefs:
     title: 个性化
     app:

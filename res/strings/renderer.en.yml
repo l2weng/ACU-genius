@@ -141,7 +141,7 @@ en:
       invite: Invite
   summary:
     project: Project
-    projectOverview: Project Overview
+    overview: Overview
     taskList: Task List
     workLog: Work Log
     dataOutput: Data Output
