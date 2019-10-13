@@ -14,7 +14,7 @@ const { array, object, string } = require('prop-types')
 const TabPane = Tabs.TabPane
 const Option = Select.Option
 const axios = require('axios')
-const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
+const { FormattedMessage } = require('react-intl')
 const { error } = require('../../common/log')
 
 const INIT_PAGINATION = {

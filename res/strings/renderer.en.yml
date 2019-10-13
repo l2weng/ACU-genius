@@ -145,6 +145,11 @@ en:
     taskList: Task List
     workLog: Work Log
     dataOutput: Data Output
+    projectProgress: Project Progress
+    submitted: Submitted
+    remaining: Remaining
+    skipped: Skipped
+    completed: Completed
   prefs:
     title: Preferences
     app:

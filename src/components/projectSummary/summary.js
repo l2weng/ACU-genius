@@ -5,6 +5,7 @@ const { PureComponent } = React
 const { Row, Col, Radio } = require('antd')
 const { Chart, Geom, Axis, Tooltip, Coord } = require('bizcharts')
 const { array, object, func } = require('prop-types')
+const { FormattedMessage } = require('react-intl')
 
 class Summary extends PureComponent {
 
@@ -19,12 +20,12 @@ class Summary extends PureComponent {
         <Row gutter={24}>
           <Col span={12}>
             <div>
-              <div className="title">项目进度:</div>
+              <div className="title"><FormattedMessage id="summary.projectProgress"/>:</div>
               <div className="details">
-                <div className="summary-progress"><div className="label">{taskStatuses.submitted}</div><div className="val">Submitted</div></div>
-                <div className="summary-progress"><div className="label">{taskStatuses.open}</div><div className="val">Remaining</div></div>
-                <div className="summary-progress"><div className="label">{taskStatuses.skipped}</div><div className="val">Skipped</div></div>
-                <div className="summary-progress"><div className="label">{taskStatuses.progress}%</div><div className="val">Complete</div></div>
+                <div className="summary-progress"><div className="label">{taskStatuses.submitted}</div><div className="val"><FormattedMessage id="summary.submitted"/></div></div>
+                <div className="summary-progress"><div className="label">{taskStatuses.open}</div><div className="val"><FormattedMessage id="summary.remaining"/></div></div>
+                <div className="summary-progress"><div className="label">{taskStatuses.skipped}</div><div className="val"><FormattedMessage id="summary.skipped"/></div></div>
+                <div className="summary-progress"><div className="label">{taskStatuses.progress}%</div><div className="val"><FormattedMessage id="summary.completed"/></div></div>
               </div>
             </div>
             <div style={{ paddingTop: '24px' }}>

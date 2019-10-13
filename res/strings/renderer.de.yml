@@ -145,6 +145,11 @@ de:
     taskList: 任务列表
     workLog: 工作日志
     dataOutput: 数据导出
+    projectProgress: 项目进度
+    submitted: 已提交
+    remaining: 剩余
+    skipped: 已跳过
+    completed: 已完成
   prefs:
     title: 个性化
     app:
