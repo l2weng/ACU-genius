@@ -5,7 +5,6 @@ const { PureComponent } = React
 const { array, object, bool, func } = require('prop-types')
 const { Table } = require('antd')
 const moment = require('moment')
-const { ACTIVITY } = require('../../constants')
 const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
 
 const WorkLog = injectIntl(class extends PureComponent {
