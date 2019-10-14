@@ -165,6 +165,15 @@ en:
       completionRate: The completion rate
       action: Action
       details: Details
+    workLogs:
+      assigner: Assigner
+      role: Role
+      category: Category
+      event: Event
+      imageName: Image name
+      labelsNumber: Number of labels
+      spendTime: Spend Time
+      completionDate: Date of completion
   prefs:
     title: Preferences
     app:

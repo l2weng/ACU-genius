@@ -165,6 +165,15 @@ de:
       completionRate: 完成率
       action: 操作
       details: 详情
+    workLogs:
+      assigner: 执行人员
+      role: 角色
+      category: 类别
+      event: 行为
+      imageName: 图片名
+      labelsNumber: 标注数量
+      spendTime: 耗时
+      completionDate: 完成日期
   prefs:
     title: 个性化
     app:

@@ -6,50 +6,12 @@ const { array, object, bool, func } = require('prop-types')
 const { Table } = require('antd')
 const moment = require('moment')
 const { ACTIVITY } = require('../../constants')
+const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
 
-const columns = [
-  {
-    title: '工作人员',
-    dataIndex: 'userName',
-    render: text => <a href="javascript:;">{text}</a>,
-  }, {
-    title: '角色',
-    dataIndex: 'role',
-    render: role => <div>{role === 0 ? '同事' : '好友'}</div>,
-  }, {
-    title: '类型',
-    dataIndex: 'category',
-    render: category => <div>{ACTIVITY.CATEGORY[category]}</div>,
-  }, {
-    title: '行为',
-    dataIndex: 'type',
-    render: type => <div>{ACTIVITY.EVENT[type]}</div>,
-  }, {
-    title: '图片名称',
-    width: '20%',
-    dataIndex: 'photoName',
-  }, {
-    title: '标注数',
-    sorter: true,
-    dataIndex: 'count',
-  }, {
-    title: '耗时',
-    dataIndex: 'spendTime',
-    render: spendTime=><div>{(spendTime / 1000).toFixed(2)}s</div>,
-  }, {
-    title: '完成日期',
-    dataIndex: 'finishedTime',
-    render: finishedTime=><div>{moment(new Date(finishedTime)).format('YYYY-MM-DD, HH:mm:ss')}</div>,
-  }, {
-    title: '操作',
-    dataIndex: '',
-    key: 'x',
-    render: () => <a href="javascript:;">详情</a>,
-  }]
-
-class WorkLog extends PureComponent {
+const WorkLog = injectIntl(class extends PureComponent {
 
   static propTypes = {
+    intl: intlShape.isRequired,
     logData: array.isRequired,
     pagination: object.isRequired,
     loading: bool.isRequired,
@@ -62,6 +24,48 @@ class WorkLog extends PureComponent {
   }
 
   render() {
+
+    const columns = [
+      {
+        title: this.props.intl.formatMessage({ id: 'summary.workLogs.assigner' }),
+        dataIndex: 'userName',
+        render: text => <a href="javascript:;">{text}</a>,
+      }, {
+        title: this.props.intl.formatMessage({ id: 'summary.workLogs.role' }),
+        dataIndex: 'role',
+        render: role => <div>{role === 0 ? '同事' : '好友'}</div>,
+      }, {
+        title: this.props.intl.formatMessage({ id: 'summary.workLogs.category' }),
+        dataIndex: 'category',
+        render: category => <div>{ACTIVITY.CATEGORY[category]}</div>,
+      }, {
+        title: this.props.intl.formatMessage({ id: 'summary.workLogs.event' }),
+        dataIndex: 'type',
+        render: type => <div>{ACTIVITY.EVENT[type]}</div>,
+      }, {
+        title: this.props.intl.formatMessage({ id: 'summary.workLogs.imageName' }),
+        width: '20%',
+        dataIndex: 'photoName',
+      }, {
+        title: this.props.intl.formatMessage({ id: 'summary.workLogs.labelsNumber' }),
+        sorter: true,
+        dataIndex: 'count',
+      }, {
+        title: this.props.intl.formatMessage({ id: 'summary.workLogs.spendTime' }),
+        dataIndex: 'spendTime',
+        render: spendTime=><div>{(spendTime / 1000).toFixed(2)}s</div>,
+      }, {
+        title: this.props.intl.formatMessage({ id: 'summary.workLogs.completionDate' }),
+        dataIndex: 'finishedTime',
+        render: finishedTime=><div>{moment(new Date(finishedTime)).format('YYYY-MM-DD, HH:mm:ss')}</div>,
+      }
+      // , {
+      //   title: '操作',
+      //   dataIndex: '',
+      //   key: 'x',
+      //   render: () => <a href="javascript:;">详情</a>,
+      // }
+    ]
     const { logData, pagination, loading, onChange } = this.props
     if (logData && logData.length > 0) {
       for (const oneLog of logData) {
@@ -78,6 +82,6 @@ class WorkLog extends PureComponent {
       </div>
     )
   }
-}
+})
 
 module.exports = { WorkLog }
