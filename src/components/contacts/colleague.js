@@ -186,5 +186,5 @@ const Colleague = injectIntl(class extends PureComponent {
 })
 
 module.exports = {
-  Colleague,
+  Colleague
 }

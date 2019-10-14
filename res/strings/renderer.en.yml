@@ -157,6 +157,14 @@ en:
       lastHour: Last Hour
       today: Today
       last7days: Last 7 days
+    task:
+      assigner: Assigner
+      totalPicture: Total picture
+      submittedImage: Submitted image
+      remaining: Remaining
+      completionRate: The completion rate
+      action: Action
+      details: Details
   prefs:
     title: Preferences
     app:

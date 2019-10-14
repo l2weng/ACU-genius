@@ -5,43 +5,47 @@ const { PureComponent } = React
 const { Table } = require('antd')
 const { array } = require('prop-types')
 const uuid = require('uuid/v4')
-const columns = [
-  {
-    title: '工作人员',
-    dataIndex: 'name',
-    render: name => <a href="javascript:;">{name}</a>,
-  }, {
-    title: '总图片(张)',
-    dataIndex: 'total',
-  }, {
-    title: '已提交图片(张)',
-    dataIndex: 'submitted',
-  }, {
-    title: '剩余(张)',
-    dataIndex: 'open',
-  },{
-    title: '完成率',
-    dataIndex: 'percentage',
-    render: percentage => <div>{percentage}%</div>,
-  },
-  // {
-  //   title: '截止日期',
-  //   dataIndex: 'endTime',
-  // },
-  {
-    title: '操作',
-    dataIndex: '',
-    key: 'x',
-    render: () => <a href="javascript:;">详情</a>,
-  },
-]
+const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
 
-class TaskList extends PureComponent {
+const TaskList = injectIntl(class extends PureComponent {
+
   static propTypes = {
+    intl: intlShape.isRequired,
     userPhotoStatusData: array.isRequired,
   }
 
   render() {
+
+    const columns = [
+      {
+        title: this.props.intl.formatMessage({ id: 'summary.task.assigner' }),
+        dataIndex: 'name',
+        render: name => <a href="javascript:;">{name}</a>,
+      }, {
+        title: this.props.intl.formatMessage({ id: 'summary.task.totalPicture' }),
+        dataIndex: 'total',
+      }, {
+        title: this.props.intl.formatMessage({ id: 'summary.task.submittedImage' }),
+        dataIndex: 'submitted',
+      }, {
+        title: this.props.intl.formatMessage({ id: 'summary.task.remaining' }),
+        dataIndex: 'open',
+      }, {
+        title: this.props.intl.formatMessage({ id: 'summary.task.completionRate' }),
+        dataIndex: 'percentage',
+        render: percentage => <div>{percentage}%</div>,
+      },
+      // {
+      //   title: '截止日期',
+      //   dataIndex: 'endTime',
+      // },
+      {
+        title: this.props.intl.formatMessage({ id: 'summary.task.action' }),
+        dataIndex: '',
+        key: 'x',
+        render: () => <a href="javascript:;"><FormattedMessage id="summary.task.details"/></a>,
+      },
+    ]
     const { userPhotoStatusData } = this.props
     return (
       <div>
@@ -50,6 +54,6 @@ class TaskList extends PureComponent {
       </div>
     )
   }
-}
+})
 
 module.exports = { TaskList }

@@ -157,6 +157,14 @@ de:
       lastHour: 上一个小时
       today: 今天
       last7days: 最近7天
+    task:
+      assigner: 执行人员
+      totalPicture: 总图片
+      submittedImage: 已提交图片
+      remaining: 剩余
+      completionRate: 完成率
+      action: 操作
+      details: 详情
   prefs:
     title: 个性化
     app:
