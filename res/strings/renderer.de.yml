@@ -168,8 +168,18 @@ de:
     workLogs:
       assigner: 执行人员
       role: 角色
-      category: 类别
-      event: 行为
+      category:
+        title: 类别
+        c0: 图片
+        c1: 标注
+      event:
+        title: 行为
+        e0: 新建
+        e1: 移除
+        e2: 更新
+        e3: 保存
+        e998: 跳过
+        e999: 提交
       imageName: 图片名
       labelsNumber: 标注数量
       spendTime: 耗时

@@ -168,8 +168,18 @@ en:
     workLogs:
       assigner: Assigner
       role: Role
-      category: Category
-      event: Event
+      category:
+        title: Category
+        c0: Image
+        c1: Label
+      event:
+        title: Event
+        e0: New
+        e1: Remove
+        e2: Update
+        e3: Save
+        e998: Skip
+        e999: Submit
       imageName: Image name
       labelsNumber: Number of labels
       spendTime: Spend Time

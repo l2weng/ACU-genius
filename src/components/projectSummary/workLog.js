@@ -33,15 +33,15 @@ const WorkLog = injectIntl(class extends PureComponent {
       }, {
         title: this.props.intl.formatMessage({ id: 'summary.workLogs.role' }),
         dataIndex: 'role',
-        render: role => <div>{role === 0 ? '同事' : '好友'}</div>,
+        render: role => <div>{role === 0 ? this.props.intl.formatMessage({ id: 'contacts.colleague' }) : this.props.intl.formatMessage({ id: 'contacts.friend' })}</div>,
       }, {
-        title: this.props.intl.formatMessage({ id: 'summary.workLogs.category' }),
+        title: this.props.intl.formatMessage({ id: 'summary.workLogs.category.title' }),
         dataIndex: 'category',
-        render: category => <div>{ACTIVITY.CATEGORY[category]}</div>,
+        render: category => <div><FormattedMessage id={`summary.workLogs.category.c${category}`}/></div>,
       }, {
-        title: this.props.intl.formatMessage({ id: 'summary.workLogs.event' }),
+        title: this.props.intl.formatMessage({ id: 'summary.workLogs.event.title' }),
         dataIndex: 'type',
-        render: type => <div>{ACTIVITY.EVENT[type]}</div>,
+        render: type => <div><FormattedMessage id={`summary.workLogs.event.e${type}`}/></div>,
       }, {
         title: this.props.intl.formatMessage({ id: 'summary.workLogs.imageName' }),
         width: '20%',
