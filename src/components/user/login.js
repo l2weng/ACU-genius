@@ -2,13 +2,13 @@
 
 const React = require('react')
 const { PureComponent, Component } = React
-const { injectIntl, intlShape } = require('react-intl')
+const { injectIntl, intlShape, FormattedMessage } = require('react-intl')
 const { message } = require('antd')
 const { bool } = require('prop-types')
 const { Toolbar } = require('../toolbar')
 const axios = require('axios')
 const {
-  Form, Icon, Input, Button, Checkbox,
+  Form, Icon, Input, Button,
 } = require('antd')
 const { RegistrationForm } = require('./RegistrationForm')
 const { ipcRenderer: ipc  } = require('electron')
@@ -42,33 +42,36 @@ class LoginForm extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form
+    const { intl } = this.props
     return (
       <Form onSubmit={this.handleSubmit} className="login-form">
         <FormItem>
           {getFieldDecorator('username', {
             rules: [{ required: true, message: 'Please input your username!' }],
           })(
-            <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
+            <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={intl.formatMessage({ id: 'login.username' })} />
             )}
         </FormItem>
         <FormItem>
           {getFieldDecorator('password', {
             rules: [{ required: true, message: 'Please input your Password!' }],
           })(
-            <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
+            <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder={intl.formatMessage({ id: 'login.password' })} />
             )}
         </FormItem>
         <FormItem>
-
           {/*<Checkbox>Remember me</Checkbox>*/}
-
-          <a className="login-form-forgot" href="">Forgot password</a>
+          <a className="login-form-forgot" href="">{intl.formatMessage({ id: 'login.forgotPassword' })}?</a>
           <Button type="primary" htmlType="submit" className="login-form-button">
-              Log in
+            <FormattedMessage id={'login.title'}/>
           </Button>
         </FormItem>
       </Form>
     )
+  }
+
+  static propTypes = {
+    intl: intlShape.isRequired,
   }
 }
 
@@ -101,9 +104,9 @@ class Login extends PureComponent {
         {this.renderToolbar()}
         <div className="flex-row center">
           <figure className="app-icon"/>
-          {!visible ? <WrappedNormalLoginForm/> : <WrappedRegistrationForm needLogin={this.needLogin}/>}
+          {!visible ? <WrappedNormalLoginForm intl={this.props.intl}/> : <WrappedRegistrationForm needLogin={this.needLogin}/>}
           {!visible ? <FormItem>
-            <a onClick={this.needRegister}>register now!</a>
+            <a onClick={this.needRegister}>{this.props.intl.formatMessage({ id: 'login.registerNow' })}!</a>
           </FormItem> : ''}
         </div>
       </div>

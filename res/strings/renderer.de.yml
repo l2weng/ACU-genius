@@ -86,6 +86,12 @@ de:
       name: 项目名称
       save_as: 自定义文件名及保存位置
       change: 修改
+  login:
+    title: 登录
+    username: 用户名
+    password: 密码
+    registerNow: 立即注册
+    forgotPassword: 忘记密码
   home:
     project:
       new: 创建新项目

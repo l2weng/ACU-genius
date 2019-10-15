@@ -86,6 +86,12 @@ en:
       name: Name
       save_as: Change file name and location
       change: Change
+  login:
+    title: Log in
+    username: Username
+    password: Password
+    registerNow: Register now
+    forgotPassword: Forgot password
   home:
     project:
       new: Create new project
