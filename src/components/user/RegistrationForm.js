@@ -12,6 +12,7 @@ const { func } = require('prop-types')
 const { ipcRenderer: ipc  } = require('electron')
 const { USER } = require('../../constants')
 const { getLocalIP } = require('../../common/serviceUtil')
+const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
 
 class RegistrationForm extends Component {
 
@@ -106,23 +107,16 @@ class RegistrationForm extends Component {
     return (
       <div style={{ width: '485px' }}>
         <Form onSubmit={this.handleSubmit}>
-          <Form.Item label="Type"
+          <Form.Item label={this.props.intl.formatMessage({ id: 'registration.accountType' })}
             {...formItemLayout}>
             <Radio.Group value={this.state.userType} onChange={this.onUserTypeChange}>
-              <Radio value={0}>个人</Radio>
-              <Radio value={1}>公司</Radio>
+              <Radio value={0}><FormattedMessage id="registration.individual"/></Radio>
+              <Radio value={1}><FormattedMessage id="registration.enterprise"/></Radio>
             </Radio.Group>
           </Form.Item>
           <FormItem
             {...formItemLayout}
-            label={(
-              <span>
-              Username&nbsp;
-                <Tooltip title="What do you want others to call you?">
-                  <Icon type="question-circle-o" />
-                </Tooltip>
-              </span>
-            )}>
+            label={this.props.intl.formatMessage({ id: 'registration.username' })}>
             {getFieldDecorator('name', {
               rules: [{ required: true, message: 'Please input your username!', whitespace: true }],
             })(
@@ -133,7 +127,7 @@ class RegistrationForm extends Component {
             <div>
               <FormItem
                 {...formItemLayout}
-                label="E-mail">
+                label={this.props.intl.formatMessage({ id: 'registration.email' })}>
                 {getFieldDecorator('email', {
                   rules: [{
                     type: 'email', message: 'The input is not valid E-mail!',
@@ -216,10 +210,11 @@ class RegistrationForm extends Component {
   }
 
   static propTypes = {
+    intl: intlShape.isRequired,
     needLogin: func.isRequired
   }
 }
 
 module.exports = {
-  RegistrationForm
+  RegistrationForm: injectIntl(RegistrationForm)
 }

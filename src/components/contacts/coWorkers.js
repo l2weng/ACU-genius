@@ -2,7 +2,7 @@
 
 const React = require('react')
 const { PureComponent } = React
-const { List, Icon,  Avatar, Card, Form, Modal, message } = require('antd')
+const { List,  Avatar, Card, Form, Modal, message } = require('antd')
 const { getUrlFilterParams } = require('../../common/dataUtil')
 const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
 const { userInfo } = ARGS

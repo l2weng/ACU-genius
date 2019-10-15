@@ -92,6 +92,13 @@ en:
     password: Password
     registerNow: Register now
     forgotPassword: Forgot password
+  registration:
+    title: Create your account
+    username: Username
+    email: E-mail
+    accountType: Account type
+    individual: Individual
+    enterprise: Enterprise
   home:
     project:
       new: Create new project

@@ -92,6 +92,13 @@ de:
     password: 密码
     registerNow: 立即注册
     forgotPassword: 忘记密码
+  registration:
+    title: 注册
+    username: 用户名
+    email: 邮箱
+    accountType: 账户类型
+    individual: 个人
+    enterprise: 企业
   home:
     project:
       new: 创建新项目
