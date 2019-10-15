@@ -134,7 +134,7 @@
       <key>UTTypeIdentifier</key>
       <string>org.labelreal.v1.mime-types.tpy</string>
       <key>UTTypeReferenceURL</key>
-      <string>https://labelreal.org/v1/mime-types/tpy</string>
+      <string>https://labelreal.com/v1/mime-types/tpy</string>
       <key>UTTypeDescription</key>
       <string>LabelReal Project</string>
       <key>UTTypeIconFile</key>
@@ -155,7 +155,7 @@
       <key>UTTypeIdentifier</key>
       <string>org.labelreal.v1.mime-types.ttp</string>
       <key>UTTypeReferenceURL</key>
-      <string>https://labelreal.org/v1/mime-types/ttp</string>
+      <string>https://labelreal.com/v1/mime-types/ttp</string>
       <key>UTTypeDescription</key>
       <string>LabelReal Template</string>
       <key>UTTypeIconFile</key>

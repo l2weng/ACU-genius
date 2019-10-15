@@ -318,9 +318,9 @@ en:
     creator: Creator
     description: Description
     types:
-      "https://LabelReal.org/v1/LabelReal#Item": Item Template
-      "https://LabelReal.org/v1/LabelReal#Photo": Photo Template
-      "https://LabelReal.org/v1/LabelReal#Selection": Photo Selection Template
+      "https://labelreal.com/v1/LabelReal#Item": Item Template
+      "https://labelreal.com/v1/LabelReal#Photo": Photo Template
+      "https://labelreal.com/v1/LabelReal#Selection": Photo Selection Template
     field:
       property: Property
       label: Label
