@@ -3,10 +3,9 @@
 const React = require('react')
 const { Component } = React
 const {
-  Form, Input, Tooltip, Icon, Select, Row, Col, Button, notification, message
+  Form, Input, Tooltip, Icon, Checkbox, Button, notification, message, Radio
 } = require('antd')
 const FormItem = Form.Item
-const Option = Select.Option
 const axios = require('axios')
 const { machineIdSync } = require('node-machine-id')
 const { func } = require('prop-types')
@@ -15,14 +14,13 @@ const { USER } = require('../../constants')
 const { getLocalIP } = require('../../common/serviceUtil')
 
 class RegistrationForm extends Component {
-  state = {
-    confirmDirty: false,
-  };
+
+  state = { userType: 0 };
 
   handleSubmit = (e) => {
     e.preventDefault()
     this.props.form.validateFieldsAndScroll((err, values) => {
-      values = { userType: 1, status: 1, machineId: machineIdSync({ original: true }), ...values }
+      values = { userType: this.state.userType, status: 1, machineId: machineIdSync({ original: true }), ...values }
       if (!err) {
         axios.post(`${ARGS.apiServer}/users/create`, values).then(res => {
           if (res.status === 200) {
@@ -65,27 +63,19 @@ class RegistrationForm extends Component {
     })
   }
 
-  handleConfirmBlur = (e) => {
-    const value = e.target.value
-    this.setState({ confirmDirty: this.state.confirmDirty || !!value })
-  }
-
-  compareToFirstPassword = (rule, value, callback) => {
-    const form = this.props.form
-    if (value && value !== form.getFieldValue('password')) {
-      callback('Two passwords that you enter is inconsistent!')
-    } else {
-      callback()
-    }
-  }
-
   validateToNextPassword = (rule, value, callback) => {
     const form = this.props.form
-    if (value && this.state.confirmDirty) {
+    if (value) {
       form.validateFields(['confirm'], { force: true })
     }
     callback()
   }
+
+  onUserTypeChange = e => {
+    this.setState({
+      userType: e.target.value,
+    })
+  };
 
   render() {
     const { getFieldDecorator } = this.props.form
@@ -112,41 +102,60 @@ class RegistrationForm extends Component {
         },
       },
     }
-    const prefixSelector = getFieldDecorator('prefix', {
-      initialValue: '86',
-    })(
-      <Select style={{ width: 70 }}>
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
-      </Select>
-    )
 
     return (
-      <div style={{ width: '500px' }}>
+      <div style={{ width: '485px' }}>
         <Form onSubmit={this.handleSubmit}>
+          <Form.Item label="Type"
+            {...formItemLayout}>
+            <Radio.Group value={this.state.userType} onChange={this.onUserTypeChange}>
+              <Radio value={0}>个人</Radio>
+              <Radio value={1}>公司</Radio>
+            </Radio.Group>
+          </Form.Item>
           <FormItem
             {...formItemLayout}
-            label="E-mail">
-            {getFieldDecorator('email', {
-              rules: [{
-                type: 'email', message: 'The input is not valid E-mail!',
-              }, {
-                required: true, message: 'Please input your E-mail!',
-              }],
+            label={(
+              <span>
+              Username&nbsp;
+                <Tooltip title="What do you want others to call you?">
+                  <Icon type="question-circle-o" />
+                </Tooltip>
+              </span>
+            )}>
+            {getFieldDecorator('name', {
+              rules: [{ required: true, message: 'Please input your username!', whitespace: true }],
             })(
               <Input />
-          )}
-          </FormItem><FormItem
-            {...formItemLayout}
-            label="Company Name">
-            {getFieldDecorator('companyName', {
-              rules: [{
-                required: true, message: 'Please input your Company name!',
-              }],
-            })(
-              <Input />
-          )}
+            )}
           </FormItem>
+          {this.state.userType === 1 ?
+            <div>
+              <FormItem
+                {...formItemLayout}
+                label="E-mail">
+                {getFieldDecorator('email', {
+                  rules: [{
+                    type: 'email', message: 'The input is not valid E-mail!',
+                  }, {
+                    required: true, message: 'Please input your E-mail!',
+                  }],
+                })(
+                  <Input />
+                )}
+              </FormItem>
+              <FormItem
+                {...formItemLayout}
+                label="Company Name">
+                {getFieldDecorator('companyName', {
+                  rules: [{
+                    required: true, message: 'Please input your Company name!',
+                  }],
+                })(
+                  <Input />
+                )}
+              </FormItem>
+            </div> : ''}
           <FormItem
             {...formItemLayout}
             label="Password">
@@ -157,64 +166,44 @@ class RegistrationForm extends Component {
                 validator: this.validateToNextPassword,
               }],
             })(
-              <Input type="password" />
-          )}
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label="Confirm Password">
-            {getFieldDecorator('confirm', {
-              rules: [{
-                required: true, message: 'Please confirm your password!',
-              }, {
-                validator: this.compareToFirstPassword,
-              }],
-            })(
-              <Input type="password" onBlur={this.handleConfirmBlur} />
-          )}
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={(
-              <span>
-              Nickname&nbsp;
-                <Tooltip title="What do you want others to call you?">
-                  <Icon type="question-circle-o" />
-                </Tooltip>
-              </span>
-          )}>
-            {getFieldDecorator('name', {
-              rules: [{ required: true, message: 'Please input your nickname!', whitespace: true }],
-            })(
-              <Input />
+              <Input.Password/>
           )}
           </FormItem>
           <FormItem
             {...formItemLayout}
             label="Phone Number">
             {getFieldDecorator('phone', {
-              rules: [{ required: true, message: 'Please input your phone number!' }],
+              rules: [{ message: 'Please input your phone number!' }],
             })(
-              <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
+              <Input/>
           )}
           </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label="Captcha"
-            extra="We must make sure that your are a human.">
-            <Row gutter={8}>
-              <Col span={12}>
-                {getFieldDecorator('captcha', {
-                  rules: [{ required: true, message: 'Please input the captcha you got!' }],
-                })(
-                  <Input />
-              )}
-              </Col>
-              <Col span={12}>
-                <Button>Get captcha</Button>
-              </Col>
-            </Row>
-          </FormItem>
+          {/*<FormItem*/}
+          {/*  {...formItemLayout}*/}
+          {/*  label="Captcha"*/}
+          {/*  extra="We must make sure that your are a human.">*/}
+          {/*  <Row gutter={8}>*/}
+          {/*    <Col span={12}>*/}
+          {/*      {getFieldDecorator('captcha', {*/}
+          {/*        rules: [{ required: true, message: 'Please input the captcha you got!' }],*/}
+          {/*      })(*/}
+          {/*        <Input />*/}
+          {/*    )}*/}
+          {/*    </Col>*/}
+          {/*    <Col span={12}>*/}
+          {/*      <Button>Get captcha</Button>*/}
+          {/*    </Col>*/}
+          {/*  </Row>*/}
+          {/*</FormItem>*/}
+          <Form.Item {...tailFormItemLayout}>
+            {getFieldDecorator('agreement', {
+              valuePropName: 'checked',
+            })(
+              <Checkbox>
+                I have read the <a href="">agreement</a>
+              </Checkbox>,
+            )}
+          </Form.Item>
           <FormItem {...tailFormItemLayout}>
             <Button type="primary" htmlType="submit">Register</Button>
             <Button style={{ marginLeft: 8 }} onClick={this.props.needLogin}>
