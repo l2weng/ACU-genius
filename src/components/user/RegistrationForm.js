@@ -105,7 +105,7 @@ class RegistrationForm extends Component {
     }
 
     return (
-      <div style={{ width: '485px' }}>
+      <div style={{ width: '440px' }}>
         <Form onSubmit={this.handleSubmit}>
           <Form.Item label={this.props.intl.formatMessage({ id: 'registration.accountType' })}
             {...formItemLayout}>
