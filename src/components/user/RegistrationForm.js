@@ -116,9 +116,9 @@ class RegistrationForm extends Component {
           </Form.Item>
           <FormItem
             {...formItemLayout}
-            label={this.props.intl.formatMessage({ id: 'registration.username' })}>
+            label={this.props.intl.formatMessage({ id: 'registration.username.title' })}>
             {getFieldDecorator('name', {
-              rules: [{ required: true, message: 'Please input your username!', whitespace: true }],
+              rules: [{ required: true, message: this.props.intl.formatMessage({ id: 'registration.username.required' }), whitespace: true }],
             })(
               <Input />
             )}
@@ -127,23 +127,23 @@ class RegistrationForm extends Component {
             <div>
               <FormItem
                 {...formItemLayout}
-                label={this.props.intl.formatMessage({ id: 'registration.email' })}>
+                label={this.props.intl.formatMessage({ id: 'registration.email.title' })}>
                 {getFieldDecorator('email', {
                   rules: [{
-                    type: 'email', message: 'The input is not valid E-mail!',
+                    type: 'email', message: this.props.intl.formatMessage({ id: 'registration.email.noValid' }),
                   }, {
-                    required: true, message: 'Please input your E-mail!',
+                    required: true, message: this.props.intl.formatMessage({ id: 'registration.email.required' }),
                   }],
                 })(
-                  <Input />
+                  <Input/>
                 )}
               </FormItem>
               <FormItem
                 {...formItemLayout}
-                label="Company Name">
+                label={this.props.intl.formatMessage({ id: 'registration.company.title' })}>
                 {getFieldDecorator('companyName', {
                   rules: [{
-                    required: true, message: 'Please input your Company name!',
+                    required: true, message: this.props.intl.formatMessage({ id: 'registration.company.required' }),
                   }],
                 })(
                   <Input />
@@ -152,25 +152,22 @@ class RegistrationForm extends Component {
             </div> : ''}
           <FormItem
             {...formItemLayout}
-            label="Password">
+            label={this.props.intl.formatMessage({ id: 'registration.password.title' })}>
             {getFieldDecorator('password', {
               rules: [{
-                required: true, message: 'Please input your password!',
+                required: true, message: this.props.intl.formatMessage({ id: 'registration.password.required' }),
+                min: 6
               }, {
                 validator: this.validateToNextPassword,
               }],
             })(
-              <Input.Password/>
+              <Input.Password placeholder={this.props.intl.formatMessage({ id: 'registration.password.longLimit' })}/>
           )}
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label="Phone Number">
-            {getFieldDecorator('phone', {
-              rules: [{ message: 'Please input your phone number!' }],
-            })(
-              <Input/>
-          )}
+            label={this.props.intl.formatMessage({ id: 'registration.mobile' })}>
+            <Input/>
           </FormItem>
           {/*<FormItem*/}
           {/*  {...formItemLayout}*/}
@@ -192,9 +189,12 @@ class RegistrationForm extends Component {
           <Form.Item {...tailFormItemLayout}>
             {getFieldDecorator('agreement', {
               valuePropName: 'checked',
+              rules: [{
+                required: true, message: this.props.intl.formatMessage({ id: 'registration.agreementMessage' }),
+              }]
             })(
               <Checkbox>
-                I have read the <a href="">agreement</a>
+                <FormattedMessage id="registration.agreementBefore"/><a href="">{this.props.intl.formatMessage({ id: 'registration.agreementAfter' })}</a>
               </Checkbox>,
             )}
           </Form.Item>

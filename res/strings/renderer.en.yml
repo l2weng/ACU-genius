@@ -94,11 +94,27 @@ en:
     forgotPassword: Forgot password
   registration:
     title: Create your account
-    username: Username
-    email: E-mail
+    username:
+      title: Username
+      required: Please input your username。
+    email:
+      title: E-mail
+      required: Please input your E-mail.
+      noValid: The input is not valid E-mail.
     accountType: Account type
     individual: Individual
     enterprise: Enterprise
+    password:
+      title: Password
+      longLimit: At least 6 characters
+      required: Passwords must be at least 6 characters.
+    mobile: Mobile
+    company:
+      title: Company name
+      required: Please input your Company name.
+    agreementBefore: I have read the
+    agreementAfter: agreement
+    agreementMessage: Please confirm that you have read the agreement.
   home:
     project:
       new: Create new project

@@ -94,11 +94,27 @@ de:
     forgotPassword: 忘记密码
   registration:
     title: 注册
-    username: 用户名
-    email: 邮箱
+    username:
+      title: 用户名
+      required: 请输入您的用户名。
+    email:
+      title: 邮箱
+      required: 请输入您的电子邮件。
+      noValid: 输入的电子邮件无效。
     accountType: 账户类型
     individual: 个人
     enterprise: 企业
+    password:
+      title: 密码
+      longLimit: 至少6个字符
+      required: 密码必须至少包含6个字符。
+    mobile: 手机号
+    company:
+      title: 公司名
+      required: 请输入公司名称。
+    agreementBefore: 我已阅读
+    agreementAfter: 协议
+    agreementMessage: 请确认已阅读协议。
   home:
     project:
       new: 创建新项目
