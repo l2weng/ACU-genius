@@ -115,6 +115,7 @@ en:
     agreementBefore: I have read the
     agreementAfter: agreement
     agreementMessage: Please confirm that you have read the agreement.
+    back: Back to Login
   home:
     project:
       new: Create new project

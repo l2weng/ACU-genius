@@ -115,6 +115,7 @@ de:
     agreementBefore: 我已阅读
     agreementAfter: 协议
     agreementMessage: 请确认已阅读协议。
+    back: 返回登录
   home:
     project:
       new: 创建新项目

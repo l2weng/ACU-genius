@@ -8,6 +8,7 @@ const { create } = require('../stores/about')
 const { Main } = require('../components/main')
 const { Login } = require('../components/user/login')
 const act = require('../actions')
+const { win } = require('../window')
 
 const store = create()
 const { locale } = ARGS
@@ -19,6 +20,13 @@ all([
   .then(() => {
     render(<Main store={store}><Login/></Main>, $('main'))
   })
+
+win.on('settings.update', (settings) => {
+  store.dispatch(act.settings.update(settings))
+  if (settings.locale) {
+    store.dispatch(act.intl.load({ locale: settings.locale }))
+  }
+})
 
 if (ARGS.dev || ARGS.debug) {
   Object.defineProperty(window, 'store', { get: () => store })

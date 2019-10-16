@@ -194,14 +194,14 @@ class RegistrationForm extends Component {
               }]
             })(
               <Checkbox>
-                <FormattedMessage id="registration.agreementBefore"/><a href="">{this.props.intl.formatMessage({ id: 'registration.agreementAfter' })}</a>
+                <FormattedMessage id="registration.agreementBefore"/><a href=""> {this.props.intl.formatMessage({ id: 'registration.agreementAfter' })}</a>
               </Checkbox>,
             )}
           </Form.Item>
           <FormItem {...tailFormItemLayout}>
-            <Button type="primary" htmlType="submit">Register</Button>
+            <Button type="primary" htmlType="submit"><FormattedMessage id="registration.title"/></Button>
             <Button style={{ marginLeft: 8 }} onClick={this.props.needLogin}>
-              Back
+              <FormattedMessage id="registration.back"/>
             </Button>
           </FormItem>
         </Form>
