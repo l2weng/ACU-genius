@@ -671,3 +671,4 @@ en:
     search: Search
     reset: Reset
     noData: No Data
+    passwordError: The username and password are incorrect. Please try again.

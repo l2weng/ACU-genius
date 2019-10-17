@@ -8,6 +8,7 @@ const TabPane = Tabs.TabPane
 const { CoWorkers } = require('./coWorkers')
 const { Colleague } = require('./colleague')
 const { FormattedMessage } = require('react-intl')
+const { userInfo } = ARGS
 
 class Contacts extends PureComponent {
   constructor(props) {
@@ -21,15 +22,15 @@ class Contacts extends PureComponent {
         <Row gutter={24}>
           <Col span={24}>
             <Tabs style={{ textAlign: 'left' }}
-              defaultActiveKey="1"
+              defaultActiveKey={userInfo.user.userType + ''}
               tabPosition="left">
-              <TabPane tab={<FormattedMessage id="contacts.colleague"/>} key="1">
+              {userInfo.user.userType === 1 && <TabPane tab={<FormattedMessage id="contacts.colleague"/>} key="1">
                 <Colleague/>
-              </TabPane>
+              </TabPane>}
               {/*<TabPane tab="人员分组" key="2">*/}
               {/*  <Teams/>*/}
               {/*</TabPane>*/}
-              <TabPane tab={<FormattedMessage id="contacts.friend"/>} key="3">
+              <TabPane tab={<FormattedMessage id="contacts.friend"/>} key="0">
                 <CoWorkers/>
               </TabPane>
             </Tabs>

@@ -114,7 +114,7 @@ class Workplace extends PureComponent {
     const { projects, tasks, currentTaskType } = this.props
 
     return (
-      <div>
+      <div style={{marginRight:0}}>
         <Row gutter={24}>
           <Col span={24}>
             <Card

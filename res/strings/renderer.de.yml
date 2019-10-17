@@ -116,6 +116,7 @@ de:
     agreementAfter: 协议
     agreementMessage: 请确认已阅读协议。
     back: 返回登录
+    success:
   home:
     project:
       new: 创建新项目
@@ -662,7 +663,8 @@ de:
       import: 导入
   common:
     addSuccess: 添加成功。
-    error: 系统错误，请联系客服
+    error: 系统错误，请联系客服。
     search: 搜索
     reset: 重置
     noData: 暂无数据
+    passwordError: 用户名密码错误, 请重试。

@@ -3,7 +3,7 @@
 const React = require('react')
 const { Component } = React
 const {
-  Form, Input, Tooltip, Icon, Checkbox, Button, notification, message, Radio
+  Form, Input, Icon, Checkbox, Button, notification, message, Radio
 } = require('antd')
 const FormItem = Form.Item
 const axios = require('axios')
@@ -43,7 +43,7 @@ class RegistrationForm extends Component {
           }
         })
         .catch((err)=> {
-          message.error('服务器问题, 请联系客服', err)
+          message.error(this.props.intl.formatMessage({ id: 'common.error' }), err)
         })
       }
     })
@@ -60,7 +60,7 @@ class RegistrationForm extends Component {
       }
     })
     .catch(function (error) {
-      message.warning('用户名密码错误, 请重试')
+      message.warning(this.props.intl.formatMessage({ id: 'common.passwordError' }))
     })
   }
 
@@ -169,23 +169,6 @@ class RegistrationForm extends Component {
             label={this.props.intl.formatMessage({ id: 'registration.mobile' })}>
             <Input/>
           </FormItem>
-          {/*<FormItem*/}
-          {/*  {...formItemLayout}*/}
-          {/*  label="Captcha"*/}
-          {/*  extra="We must make sure that your are a human.">*/}
-          {/*  <Row gutter={8}>*/}
-          {/*    <Col span={12}>*/}
-          {/*      {getFieldDecorator('captcha', {*/}
-          {/*        rules: [{ required: true, message: 'Please input the captcha you got!' }],*/}
-          {/*      })(*/}
-          {/*        <Input />*/}
-          {/*    )}*/}
-          {/*    </Col>*/}
-          {/*    <Col span={12}>*/}
-          {/*      <Button>Get captcha</Button>*/}
-          {/*    </Col>*/}
-          {/*  </Row>*/}
-          {/*</FormItem>*/}
           <Form.Item {...tailFormItemLayout}>
             {getFieldDecorator('agreement', {
               valuePropName: 'checked',
