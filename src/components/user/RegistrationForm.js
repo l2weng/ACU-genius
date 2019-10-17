@@ -28,12 +28,12 @@ class RegistrationForm extends Component {
             const key = `open${Date.now()}`
             const btn = (
               <Button type="primary" size="small" onClick={() => this.goProject(res.data.obj, notification, key)}>
-                Go
+                {this.props.intl.formatMessage({ id: 'common.start' })}
               </Button>
             )
             notification.open({
-              message: '注册成功',
-              description: 'LabelReal带您开启AI标注大门',
+              message: this.props.intl.formatMessage({ id: 'registration.success' }),
+              description: `${this.props.intl.formatMessage({ id: 'registration.guideBefore' })} ${values.name}. ${this.props.intl.formatMessage({ id: 'registration.guideAfter' })}`,
               icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
               btn,
               key,

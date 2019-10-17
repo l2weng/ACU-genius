@@ -122,6 +122,9 @@ en:
     agreementAfter: agreement
     agreementMessage: Please confirm that you have read the agreement.
     back: Back to Login
+    success: Successfully registered.
+    guideBefore: Well, hello.
+    guideAfter: Welcome to LabelReal Smart Labeling System.
   home:
     project:
       new: Create new project
@@ -678,3 +681,4 @@ en:
     reset: Reset
     noData: No Data
     passwordError: The username and password are incorrect. Please try again.
+    start: Create your first project
