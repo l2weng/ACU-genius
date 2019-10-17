@@ -5,6 +5,10 @@ de:
     project: 项目
     imports: 最近一次导入
     trash: 已删除
+    taskAssignSuccess: 任务已分配成功。
+    taskAssignError: 任务分配失败, 请联系客服。
+    addTask: 添加任务
+    addTarget: 添加标注对象
   toolbar:
     import: 导入图片
     items: >
@@ -79,6 +83,8 @@ de:
     none: 导入项目文件或创建一个新项目
     empty: 添加图片开始项目
     new: 新项目
+    sync: 刷新
+    sync2cloud: 同步资源到云端
   wizard:
     project:
       title: 创建新项目

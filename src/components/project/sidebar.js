@@ -2,7 +2,7 @@
 
 const React = require('react')
 const { connect } = require('react-redux')
-const { FormattedMessage } = require('react-intl')
+const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
 const { Toolbar } = require('../toolbar')
 const { ActivityPane } = require('../activity')
 const { BufferedResizable } = require('../resizable')
@@ -217,7 +217,7 @@ class ProjectSidebar extends React.PureComponent {
       }
     })
     .catch(function () {
-      message.warning('服务连接失败, 请重试')
+      message.error(self.props.intl.formatMessage({ id: 'common.error' }))
     })
   }
 
@@ -331,13 +331,13 @@ class ProjectSidebar extends React.PureComponent {
     .then(function (response) {
       if (response.status === 200) {
         self.props.updateListOwner({ workers: response.data.workers, syncTaskId: syncTaskId, id: listId })
-        message.success('任务分配成功')
+        message.success(self.props.intl.formatMessage({ id: 'sidebar.taskAssignSuccess' }))
         ipc.send('cmd', 'app:sync-project-file')
         self.setState({ modalVisible: false })
       }
     })
     .catch(function () {
-      message.warning('任务分配失败, 请联系客服')
+      message.warning(self.props.intl.formatMessage({ id: 'sidebar.taskAssignError' }))
     })
   }
 
@@ -404,7 +404,7 @@ class ProjectSidebar extends React.PureComponent {
 
               <h3>
                 <FormattedMessage id="sidebar.lists"/>
-                {isOwner ? <Tooltip placement="right" title="添加任务"><span className="functionIcon" style={{ padding: 0 }}>
+                {isOwner ? <Tooltip placement="right" title={this.props.intl.formatMessage({ id: 'sidebar.addTask' })}><span className="functionIcon" style={{ padding: 0 }}>
                   <Button
                     icon={<IconPlus/>}
                     onClick={this.addNewTask}/>
@@ -450,7 +450,7 @@ class ProjectSidebar extends React.PureComponent {
             <section>
               <h2><FormattedMessage id="sidebar.tags"/>
                 {isOwner ?
-                  <Tooltip placement="right" title="添加样本"><span style={{ padding: 0 }} className="functionIcon">
+                  <Tooltip placement="right" title={this.props.intl.formatMessage({ id: 'sidebar.addTarget' })}><span style={{ padding: 0 }} className="functionIcon">
                     <Button
                       icon={<IconPlus/>}
                       onClick={this.addNewSKu}/>
@@ -479,6 +479,7 @@ class ProjectSidebar extends React.PureComponent {
   }
 
   static propTypes = {
+    intl: intlShape.isRequired,
     activities: arrayOf(object).isRequired,
     edit: object.isRequired,
     expand: object.isRequired,
@@ -608,5 +609,5 @@ module.exports = {
         }))
       }
     })
-  )(ProjectSidebar)
+  )(injectIntl(ProjectSidebar))
 }

@@ -5,6 +5,10 @@ en:
     project: Project
     imports: Last Imported Items
     trash: Deleted Items
+    taskAssignSuccess: Task has been assigned successfully.
+    taskAssignError: Task assignment failed, please contact customer service.
+    addTask: Add Task
+    addTarget: Add Target
   toolbar:
     import: Import Photos
     items: >
@@ -78,7 +82,9 @@ en:
   project:
     none: Drop a project file here or create a {newProject}
     empty: Drop your photos into LabelReal to get started
-    new: new project
+    new: New project
+    sync: Refresh
+    sync2cloud: Sync to cloud
   wizard:
     project:
       title: Create a new project

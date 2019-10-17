@@ -10,8 +10,9 @@ const { isValidImage } = require('../../image')
 const cx = require('classnames')
 const { bool, func, string, number } = require('prop-types')
 const {  Tooltip, Icon } = require('antd')
+const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
 
-class ProjectName extends React.PureComponent {
+const ProjectName = injectIntl(class extends React.PureComponent {
   get classes() {
     return {
       'project-name': true,
@@ -55,13 +56,13 @@ class ProjectName extends React.PureComponent {
               onChange={this.props.onChange}/>
           </div>
           {this.props.isOwner ? <div>
-            <span className="functionIcon" style={{ fontSize: '20px' }} onClick={this.handleSync2Cloud}><Tooltip placement="right" title="同步到云">
+            <span className="functionIcon" style={{ fontSize: '20px' }} onClick={this.handleSync2Cloud}><Tooltip placement="right" title={this.props.intl.formatMessage({ id: 'project.sync2cloud' })}>
               <Icon type="cloud" theme="twoTone" twoToneColor={this.props.synced === 1 ? '#8da7d3' : '#e96529'} />
             </Tooltip>
             </span>
           </div> : ''}
           <div>
-            <Tooltip placement="right" title="刷新">
+            <Tooltip placement="right" title={this.props.intl.formatMessage({ id: 'project.sync' })}>
               <span onClick={this.handleSyncProject} className="functionIcon" style={{ width: '20px' }}>
                 <IconSync/>
               </span>
@@ -78,6 +79,7 @@ class ProjectName extends React.PureComponent {
 
 
   static propTypes = {
+    intl: intlShape.isRequired,
     name: string.isRequired,
     projectId: string.isRequired,
     isOwner: bool.isRequired,
@@ -94,7 +96,7 @@ class ProjectName extends React.PureComponent {
     onSyncProjectData: func.isRequired,
     synced: number,
   }
-}
+})
 
 const spec = {
   drop({ onDrop }, monitor) {

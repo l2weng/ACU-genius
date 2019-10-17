@@ -125,7 +125,7 @@ const Colleague = injectIntl(class extends PureComponent {
       }
     })
     .catch(function () {
-      message.warning(self.props.intl.formatMessage({ id: 'common.error' }))
+      message.error(self.props.intl.formatMessage({ id: 'common.error' }))
     })
   }
 
