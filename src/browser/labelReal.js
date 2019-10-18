@@ -312,9 +312,9 @@ class LabelReal extends EventEmitter {
   }
 
   showWizard() {
+    if (this.login) this.login.close()
     if (this.prefs) this.prefs.close()
     if (this.gdl) this.gdl.close()
-    if (this.login) this.login.close()
     if (this.wiz) return this.wiz.show(), this
 
     this.wiz = open('wizard', this.hash, {
