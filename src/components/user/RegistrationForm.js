@@ -141,13 +141,7 @@ class RegistrationForm extends Component {
               <FormItem
                 {...formItemLayout}
                 label={this.props.intl.formatMessage({ id: 'registration.company.title' })}>
-                {getFieldDecorator('companyName', {
-                  rules: [{
-                    required: true, message: this.props.intl.formatMessage({ id: 'registration.company.required' }),
-                  }],
-                })(
-                  <Input />
-                )}
+                <Input />
               </FormItem>
             </div> : ''}
           <FormItem
