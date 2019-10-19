@@ -123,7 +123,7 @@ class ColleagueTable extends React.Component {
     const hasSelected = selectedUserIds.length > 0
     return (
       <div>
-        <div style={{ marginBottom: 16 }}>
+        {/*<div style={{ marginBottom: 16 }}>*/}
           {/*<Button*/}
           {/*  type="primary"*/}
           {/*  onClick={this.assignWork}*/}
@@ -134,7 +134,7 @@ class ColleagueTable extends React.Component {
           {/*<span style={{ marginLeft: 8 }}>*/}
           {/*  {hasSelected ? `Selected ${selectedUserIds.length} users` : ''}*/}
           {/*</span>*/}
-        </div>
+        {/*</div>*/}
         <Table columns={columns} rowKey={record=>record.userId} dataSource={this.props.data}/>
       </div>
     )

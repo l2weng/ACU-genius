@@ -11,7 +11,7 @@ const {
   Form, Icon, Input, Button,
 } = require('antd')
 const { RegistrationForm } = require('./RegistrationForm')
-const { ipcRenderer: ipc  } = require('electron')
+const { ipcRenderer: ipc, shell } = require('electron')
 const { USER } = require('../../constants')
 const { getLocalIP } = require('../../common/serviceUtil')
 
@@ -61,7 +61,7 @@ class LoginForm extends Component {
         </FormItem>
         <FormItem>
           {/*<Checkbox>Remember me</Checkbox>*/}
-          <a className="login-form-forgot" href="">{intl.formatMessage({ id: 'login.forgotPassword' })}?</a>
+          <a className="login-form-forgot" onClick={() => shell.openExternal(this.props.intl.formatMessage({ id: 'registration.password.forgot' }))}>{intl.formatMessage({ id: 'login.forgotPassword' })}?</a>
           <Button type="primary" htmlType="submit" className="login-form-button">
             <FormattedMessage id={'login.title'}/>
           </Button>
