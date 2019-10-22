@@ -9,6 +9,7 @@ de:
     taskAssignError: 任务分配失败, 请联系客服。
     addTask: 添加任务
     addTarget: 添加标注对象
+    assignTask: 分配任务
   toolbar:
     import: 导入图片
     items: >
@@ -85,6 +86,12 @@ de:
     new: 新项目
     sync: 刷新
     sync2cloud: 同步资源到云端
+    colleague:
+      name: 用户名
+      email: 邮件
+      level: 级别
+      action: 操作
+      assign: 分配
   wizard:
     project:
       title: 创建新项目

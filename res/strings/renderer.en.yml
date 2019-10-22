@@ -9,6 +9,7 @@ en:
     taskAssignError: Task assignment failed, please contact customer service.
     addTask: Add Task
     addTarget: Add Target
+    assignTask: Assign Task
   toolbar:
     import: Import Photos
     items: >
@@ -85,6 +86,12 @@ en:
     new: New project
     sync: Refresh
     sync2cloud: Sync to cloud
+    colleague:
+      name: Username
+      email: E-mail
+      level: Level
+      action: Action
+      assign: Assign
   wizard:
     project:
       title: Create a new project
@@ -167,7 +174,7 @@ en:
     addColleague: Add Colleague
     addFriend: Add Friend
     form:
-      name: Nickname
+      name: Username
       nameLengthLimit: Please enter a name of at least 2 characters!
       mobile: Mobile
       email: E-mail

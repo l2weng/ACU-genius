@@ -37,7 +37,7 @@ const {
 } = require('../../selectors')
 
 const ColleagueList = Form.create()(props => {
-  const { modalVisible, form, handleAssign, handleModalVisible, colleagues, defaultIdx } = props
+  const { modalVisible, form, handleAssign, handleModalVisible, colleagues, defaultIdx, intl } = props
   const okHandle = () => {
     form.validateFields((err, fieldsValue) => {
       if (err) return
@@ -52,7 +52,7 @@ const ColleagueList = Form.create()(props => {
     <Modal
       destroyOnClose
       style={{ top: 10 }}
-      title="分配人员"
+      title={intl.formatMessage({ id: 'sidebar.assignTask' })}
       maskClosable={false}
       visible={modalVisible}
       onOk={okHandle}
@@ -472,7 +472,7 @@ class ProjectSidebar extends React.PureComponent {
           </SidebarBody>
           <ActivityPane activities={this.props.activities}/>
         </Sidebar>
-        <ColleagueList {...parentMethods} modalVisible={modalVisible} colleagues={colleagues} defaultIdx={defaultIdx}/>
+        <ColleagueList {...parentMethods} modalVisible={modalVisible} colleagues={colleagues} defaultIdx={defaultIdx} intl={this.props.intl}/>
         <WrappedSkuForm {...skuParentMethods} skuModalVisible={skuModalVisible} tasks={this.props.lists} saveSku={onSkuSave}/>
       </BufferedResizable>
     )

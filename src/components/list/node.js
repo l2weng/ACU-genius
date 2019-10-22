@@ -15,6 +15,7 @@ const cx = require('classnames')
 const { last, noop, restrict } = require('../../common/util')
 const { getTaskStatusBadge, getTaskStatusTooltip } = require('../../common/dataUtil')
 const { Tooltip, Icon, Avatar, Badge } = require('antd')
+const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
 
 const {
   arrayOf, bool, func, number, object, shape, string, array
@@ -61,8 +62,7 @@ class NewListNode extends React.Component {
   }
 }
 
-
-class ListNode extends React.PureComponent {
+const ListNode = injectIntl(class extends React.PureComponent {
   state = {
     depth: null,
     offset: null,
@@ -239,7 +239,7 @@ class ListNode extends React.PureComponent {
     }
     return (
       <div className="functionIcon">
-        {workerView === '' ? <span className="functionIcon"><Tooltip placement="right" title="分配人员">
+        {workerView === '' ? <span className="functionIcon"><Tooltip placement="right" title={this.props.intl.formatMessage({ id: 'sidebar.assignTask' })}>
           <Icon type="user-add" size="small" onClick={() => this.props.onAddWorkers(SIDEBAR.TASK, list.syncTaskId, list.id)}/>
         </Tooltip>
         </span> : ''}
@@ -310,6 +310,7 @@ class ListNode extends React.PureComponent {
   }
 
   static propTypes = {
+    intl: intlShape.isRequired,
     canDrop: bool,
     isOwner: bool.isRequired,
     depth: number.isRequired,
@@ -350,7 +351,7 @@ class ListNode extends React.PureComponent {
     position: 0,
     isHalloween: ((d) => d.getMonth() === 9 && d.getDate() === 31)(new Date())
   }
-}
+})
 
 const DragSourceSpec = {
   beginDrag({ list, depth, position }) {

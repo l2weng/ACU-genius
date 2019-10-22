@@ -4,6 +4,7 @@ const React = require('react')
 const { Table, Input, Button, Icon } = require('antd')
 const Highlighter = require('react-highlight-words')
 const { array, func } = require('prop-types')
+const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
 
 class ColleagueTable extends React.Component {
   state = {
@@ -23,8 +24,7 @@ class ColleagueTable extends React.Component {
             ref={node => { this.searchInput = node }}
             placeholder={`Search ${dataIndex}`}
             value={selectedKeys[0]}
-            onChange={e => setSelectedKeys(
-  e.target.value ? [e.target.value] : [])}
+            onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
             onPressEnter={() => this.handleSearch(selectedKeys, confirm)}
             style={{ width: 188, marginBottom: 8, display: 'block' }}/>
           <Button
@@ -33,13 +33,13 @@ class ColleagueTable extends React.Component {
             icon="search"
             size="small"
             style={{ width: 90, marginRight: 8 }}>
-  Search
+            <FormattedMessage id="common.search"/>
           </Button>
           <Button
             onClick={() => this.handleReset(clearFilters)}
             size="small"
             style={{ width: 90 }}>
-  Reset
+            <FormattedMessage id="common.reset"/>
           </Button>
         </div>
     ),
@@ -90,56 +90,59 @@ class ColleagueTable extends React.Component {
   render() {
     const columns = [
       {
-        title: '姓名',
+        title: this.props.intl.formatMessage({ id: 'project.colleague.name' }),
         dataIndex: 'name',
         key: 'name',
         width: '35%',
         ...this.getColumnSearchProps('name'),
       }, {
-        title: '邮箱',
+        title: this.props.intl.formatMessage({ id: 'project.colleague.email' }),
         dataIndex: 'email',
         key: 'email',
         width: '35%',
         ...this.getColumnSearchProps('email'),
-      }, {
-        title: '级别',
-        key: 'level',
-        width: '15%',
-      }, {
-        title: '操作',
+      },
+      // {
+      //   title: this.props.intl.formatMessage({ id: 'project.colleague.level' }),
+      //   key: 'level',
+      //   width: '15%',
+      // },
+      {
+        title: this.props.intl.formatMessage({ id: 'project.colleague.action' }),
         key: 'action',
         width: '15%',
         render: (text, record) => (
           <span>
-            <a href="javascript:;" onClick={()=>(this.pickUser(record.userId))}>分配</a>
+            <a href="javascript:;" onClick={()=>(this.pickUser(record.userId))}>{this.props.intl.formatMessage({ id: 'project.colleague.assign' })}</a>
           </span>
         ),
       }]
-    const { loading, selectedUserIds } = this.state
-    const rowSelection = {
-      selectedRowKeys: selectedUserIds,
-      onChange: this.onSelectChange,
-    }
-    const hasSelected = selectedUserIds.length > 0
+    // const { loading, selectedUserIds } = this.state
+    // const rowSelection = {
+    //   selectedRowKeys: selectedUserIds,
+    //   onChange: this.onSelectChange,
+    // }
+    // const hasSelected = selectedUserIds.length > 0
     return (
       <div>
         {/*<div style={{ marginBottom: 16 }}>*/}
-          {/*<Button*/}
-          {/*  type="primary"*/}
-          {/*  onClick={this.assignWork}*/}
-          {/*  disabled={!hasSelected}*/}
-          {/*  loading={loading}>*/}
-          {/*分配*/}
-          {/*</Button>*/}
-          {/*<span style={{ marginLeft: 8 }}>*/}
-          {/*  {hasSelected ? `Selected ${selectedUserIds.length} users` : ''}*/}
-          {/*</span>*/}
+        {/*<Button*/}
+        {/*  type="primary"*/}
+        {/*  onClick={this.assignWork}*/}
+        {/*  disabled={!hasSelected}*/}
+        {/*  loading={loading}>*/}
+        {/*分配*/}
+        {/*</Button>*/}
+        {/*<span style={{ marginLeft: 8 }}>*/}
+        {/*  {hasSelected ? `Selected ${selectedUserIds.length} users` : ''}*/}
+        {/*</span>*/}
         {/*</div>*/}
         <Table columns={columns} rowKey={record=>record.userId} dataSource={this.props.data}/>
       </div>
     )
   }
   static propTypes = {
+    intl: intlShape.isRequired,
     data: array.isRequired,
     handleAssign: func.isRequired,
     defaultIdx: array.isRequired
@@ -147,6 +150,4 @@ class ColleagueTable extends React.Component {
 }
 
 
-module.exports = { ColleagueTable }
-
-// rowSelection={rowSelection}
+module.exports = { ColleagueTable: injectIntl(ColleagueTable) }
