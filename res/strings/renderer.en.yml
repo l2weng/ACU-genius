@@ -188,7 +188,7 @@ en:
   summary:
     project: Project
     overview: Overview
-    taskList: Task List
+    taskList: Task Resources
     workLog: Work Log
     dataOutput: Data Output
     projectProgress: Project Progress
@@ -197,6 +197,7 @@ en:
     skipped: Skipped
     completed: Completed
     targets: Targets
+    noTaskResources: No task resources that synced to cloud
     taskCompletionRate: Task completion rate
     activity:
       title: Labeling Activity

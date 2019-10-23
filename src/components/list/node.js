@@ -15,10 +15,10 @@ const cx = require('classnames')
 const { last, noop, restrict } = require('../../common/util')
 const { getTaskStatusBadge, getTaskStatusTooltip } = require('../../common/dataUtil')
 const { Tooltip, Icon, Avatar, Badge } = require('antd')
-const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
+const { intlShape, injectIntl } = require('react-intl')
 
 const {
-  arrayOf, bool, func, number, object, shape, string, array
+  arrayOf, bool, func, number, object, shape, string
 } = require('prop-types')
 
 const { INDENT, PADDING } = SASS.LIST

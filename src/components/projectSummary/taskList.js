@@ -49,7 +49,7 @@ const TaskList = injectIntl(class extends PureComponent {
     const { userPhotoStatusData } = this.props
     return (
       <div>
-        <Table rowKey={uuid()} columns={columns}
+        <Table rowKey={uuid()} columns={columns} locale={{ emptyText: this.props.intl.formatMessage({ id: 'summary.noTaskResources' }) }}
           dataSource={userPhotoStatusData}/>
       </div>
     )

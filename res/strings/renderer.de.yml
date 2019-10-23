@@ -188,7 +188,7 @@ de:
   summary:
     project: 项目
     overview: 项目概览
-    taskList: 任务列表
+    taskList: 任务资源
     workLog: 工作日志
     dataOutput: 数据导出
     projectProgress: 项目进度
@@ -197,6 +197,7 @@ de:
     skipped: 已跳过
     completed: 已完成
     targets: 标注对象
+    noTaskResources: 暂无已同步上云的任务资源
     taskCompletionRate: 任务完成率
     activity:
       title: 标注行为
