@@ -137,8 +137,8 @@ en:
     project:
       new: Create new project
       ongoingProject: Ongoing Projects
-      notSyncMessageBefore: not yet synced to the cloud, temporarily unavailable to view.
-      notSyncMessageAfter: Project
+      notSyncMessageAfter: not yet synced to the cloud, temporarily unavailable to view.
+      notSyncMessageBefore: Project
     task:
       involvedTasks: Involved tasks
       allTasks: All tasks

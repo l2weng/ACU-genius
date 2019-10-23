@@ -14,9 +14,9 @@ de:
     import: 导入图片
     items: >
       {count, plural,
-        =0 {没有图片(集)}
-        one {1个图片(集)}
-        other {#个图片(集)}}
+        =0 {没有图片}
+        one {1个图片}
+        other {#个图片}}
     search:
       placeholder: 搜索
   panel:
@@ -137,8 +137,8 @@ de:
     project:
       new: 创建新项目
       ongoingProject: 进行中的项目
-      notSyncMessageBefore: 尚未同步上云, 暂时无法查看
-      notSyncMessageAfter: 项目
+      notSyncMessageAfter: 尚未同步上云, 暂时无法查看
+      notSyncMessageBefore: 项目
     task:
       involvedTasks: 参与的任务
       allTasks: 全部任务
