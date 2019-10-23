@@ -30,7 +30,7 @@ const Summary = injectIntl(class extends PureComponent {
             </div>
             <div style={{ paddingTop: '24px' }}>
               <div style={{ paddingBottom: '5px', float: 'right' }}>
-                <Radio.Group defaultValue="HH" size="small" onChange={this.props.switchActivityData}>
+                <Radio.Group defaultValue="MM" size="small" onChange={this.props.switchActivityData}>
                   <Radio.Button value="MM"><FormattedMessage id="summary.activity.lastHour"/></Radio.Button>
                   <Radio.Button value="HH"><FormattedMessage id="summary.activity.today"/></Radio.Button>
                   <Radio.Button value="DD"><FormattedMessage id="summary.activity.last7days"/></Radio.Button>
