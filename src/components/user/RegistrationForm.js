@@ -141,7 +141,9 @@ class RegistrationForm extends Component {
               <FormItem
                 {...formItemLayout}
                 label={this.props.intl.formatMessage({ id: 'registration.company.title' })}>
-                <Input />
+                {getFieldDecorator('companyName', {})(
+                  <Input/>
+                )}
               </FormItem>
             </div> : ''}
           <FormItem
@@ -161,7 +163,9 @@ class RegistrationForm extends Component {
           <FormItem
             {...formItemLayout}
             label={this.props.intl.formatMessage({ id: 'registration.mobile' })}>
-            <Input/>
+            {getFieldDecorator('mobile', {})(
+              <Input/>
+            )}
           </FormItem>
           <Form.Item {...tailFormItemLayout}>
             {getFieldDecorator('agreement', {
