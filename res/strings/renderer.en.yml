@@ -693,3 +693,5 @@ en:
     noData: No Data
     passwordError: The username and password are incorrect. Please try again.
     tip: Tips
+    ok: Ok
+    cancel: Cancel

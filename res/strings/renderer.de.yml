@@ -688,3 +688,5 @@ de:
     noData: 暂无数据
     passwordError: 用户名密码错误, 请重试。
     tips: 提示
+    ok: 确认
+    cancel: 取消

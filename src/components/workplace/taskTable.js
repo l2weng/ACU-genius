@@ -114,6 +114,9 @@ const TasksTable = injectIntl(class extends React.Component {
         key: 'project.name',
         width: '20%',
         ...this.getColumnSearchProps('project', 'name'),
+        render: (text, record) => (
+          <div><a href="javascript:;" onClick={()=>this.checkProject(record.project.projectId)}>{record.project.name}</a></div>
+        ),
       }, {
         title: <FormattedMessage id="home.task.progress"/>,
         dataIndex: 'progress',
@@ -152,20 +155,20 @@ const TasksTable = injectIntl(class extends React.Component {
         render: (text, record) => (
           <span>
             {record.category === HEAD.MY_TASKS ? <span>
-              <Popconfirm placement="top" title={'审核任务'} onConfirm={()=>this.auditTask(record)} okText="通过" cancelText="取消">
+              <Popconfirm placement="top" title={this.props.intl.formatMessage({ id: 'home.task.confirm' })} onConfirm={()=>this.auditTask(record)} okText={this.props.intl.formatMessage({ id: 'common.ok' })} cancelText={this.props.intl.formatMessage({ id: 'common.cancel' })}>
                 <a href="javascript:"><FormattedMessage id="home.task.confirm"/></a>
                 <Divider type="vertical" />
               </Popconfirm>
-              <Popconfirm placement="top" title={'撤回任务'} onConfirm={()=>this.rollbackTask(record)} okText="撤回" cancelText="取消">
+              <Popconfirm placement="top" title={this.props.intl.formatMessage({ id: 'home.task.withdraw' })} onConfirm={()=>this.rollbackTask(record)} okText={this.props.intl.formatMessage({ id: 'common.ok' })} cancelText={this.props.intl.formatMessage({ id: 'common.cancel' })}>
                 <a href="javascript:"><FormattedMessage id="home.task.withdraw"/></a>
                 <Divider type="vertical" />
               </Popconfirm>
             </span> : ''}
-            {record.category === HEAD.JOINED_TASKS ? <Popconfirm placement="top" title={'提交任务'} onConfirm={()=>this.submitTask(record)} okText="确认" cancelText="取消">
+            {record.category === HEAD.JOINED_TASKS ? <Popconfirm placement="top" title={this.props.intl.formatMessage({ id: 'home.task.submit' })} onConfirm={()=>this.submitTask(record)} okText={this.props.intl.formatMessage({ id: 'common.ok' })} cancelText={this.props.intl.formatMessage({ id: 'common.cancel' })}>
               {record.workStatus === 0 || record.workStatus === 1 ? <span><a href="javascript:"><FormattedMessage id="home.task.submit"/></a>             <Divider type="vertical" /></span>
                 : ''}
             </Popconfirm> : ''}
-            <a href="javascript:" onClick={()=>this.checkProject(record.project.projectId)}><FormattedMessage id="home.task.details"/></a>
+            <a href="javascript:;" onClick={()=>this.checkProject(record.project.projectId)}><FormattedMessage id="home.task.details"/></a>
           </span>
         ),
       }]
