@@ -107,6 +107,7 @@ de:
     forgotPassword: 忘记密码
   registration:
     title: 注册
+    start: 创建第一个项目
     username:
       title: 用户名
       required: 请输入您的用户名。
@@ -136,6 +137,8 @@ de:
     project:
       new: 创建新项目
       ongoingProject: 进行中的项目
+      notSyncMessageBefore: 尚未同步上云, 暂时无法查看
+      notSyncMessageAfter: 项目
     task:
       involvedTasks: 参与的任务
       allTasks: 全部任务
@@ -684,4 +687,4 @@ de:
     reset: 重置
     noData: 暂无数据
     passwordError: 用户名密码错误, 请重试。
-    start: 创建第一个项目
+    tips: 提示

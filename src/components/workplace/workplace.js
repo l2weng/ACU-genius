@@ -20,7 +20,7 @@ const { existsSync: exists } = require('fs')
 const { openNotification } = require('../../common/uiUtil')
 const { ipcRenderer: ipc  } = require('electron')
 const debounce = require('lodash.debounce')
-const { FormattedMessage } = require('react-intl')
+const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
 
 const {
   getCachePrefix,
@@ -33,7 +33,7 @@ class Workplace extends PureComponent {
 
   openProject = (item) => {
     if (!item.syncStatus && !exists(item.projectFile)) {
-      openNotification('warning', '提示', `项目: ${item.name} 尚未同步上云, 暂时无法查看`)
+      openNotification('warning', this.props.intl.formatMessage({ id: 'common.tips' }), `${this.props.intl.formatMessage({ id: 'home.project.notSyncMessageBefore' })}: ${item.name} ${this.props.intl.formatMessage({ id: 'home.project.notSyncMessageAfter' })}`)
     } else {
       const { project } = this.props
       if (project.syncProjectId !== item.projectId) {
@@ -114,7 +114,7 @@ class Workplace extends PureComponent {
     const { projects, tasks, currentTaskType } = this.props
 
     return (
-      <div style={{marginRight:0}}>
+      <div style={{ marginRight: 0 }}>
         <Row gutter={24}>
           <Col span={24}>
             <Card
@@ -182,6 +182,7 @@ class Workplace extends PureComponent {
     )
   }
   static propTypes = {
+    intl: intlShape.isRequired,
     onProjectOpen: func.isRequired,
     switchTab: func.isRequired,
     switch2Workspace: func.isRequired,
@@ -227,5 +228,5 @@ module.exports = {
         dispatch(actions.list.submitTask(...args))
       }
     }),
-  )(Workplace),
+  )(injectIntl(Workplace)),
 }

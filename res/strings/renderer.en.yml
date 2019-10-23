@@ -107,6 +107,7 @@ en:
     forgotPassword: Forgot password
   registration:
     title: Create your account
+    start: Create your first project
     username:
       title: Username
       required: Please input your username。
@@ -136,6 +137,8 @@ en:
     project:
       new: Create new project
       ongoingProject: Ongoing Projects
+      notSyncMessageBefore: not yet synced to the cloud, temporarily unavailable to view.
+      notSyncMessageAfter: Project
     task:
       involvedTasks: Involved tasks
       allTasks: All tasks
@@ -689,4 +692,4 @@ en:
     reset: Reset
     noData: No Data
     passwordError: The username and password are incorrect. Please try again.
-    start: Create your first project
+    tip: Tips

@@ -28,7 +28,7 @@ class RegistrationForm extends Component {
             const key = `open${Date.now()}`
             const btn = (
               <Button type="primary" size="small" onClick={() => this.goProject(res.data.obj, notification, key)}>
-                {this.props.intl.formatMessage({ id: 'common.start' })}
+                {this.props.intl.formatMessage({ id: 'registration.start' })}
               </Button>
             )
             notification.open({
