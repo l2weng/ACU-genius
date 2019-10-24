@@ -69,7 +69,8 @@ const CoWorkers = injectIntl(class extends PureComponent {
     axios.get(`${ARGS.apiServer}/graphql?query={userQueryActiveContacts { key: userId userId name email status phone userType userTypeDesc statusDesc avatarColor }}`)
     .then(function (response) {
       if (response.status === 200) {
-        self.setState({ otherWorks: response.data.data.userQueryActiveContacts, modalVisible: !!flag })
+        let myCoWorks = response.data.data.userQueryActiveContacts
+        self.setState({ otherWorks: myCoWorks.length > 0 ? myCoWorks.filter(work=>work.userId !== userInfo.user.userId) : [], modalVisible: !!flag })
       }
     })
     .catch(function () {

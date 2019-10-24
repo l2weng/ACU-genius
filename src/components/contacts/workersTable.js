@@ -48,7 +48,7 @@ const WorkersTable = injectIntl(class extends PureComponent {
         ? '#1890ff'
         : undefined,
     }}/>,
-    onFilter: (value, record) => record[dataIndex].toString()
+    onFilter: (value, record) => record[dataIndex] ? record[dataIndex].toString() : ''
       .toLowerCase()
       .includes(value.toLowerCase()),
     onFilterDropdownVisibleChange: (visible) => {
@@ -61,7 +61,7 @@ const WorkersTable = injectIntl(class extends PureComponent {
         highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
         searchWords={[this.state.searchText]}
         autoEscape
-        textToHighlight={text.toString()}/>
+        textToHighlight={text ? text.toString() : ''}/>
     ),
   })
 
@@ -81,13 +81,13 @@ const WorkersTable = injectIntl(class extends PureComponent {
         title: this.props.intl.formatMessage({ id: 'contacts.form.name' }),
         dataIndex: 'name',
         key: 'name',
-        width: '35%',
+        width: '20%',
         ...this.getColumnSearchProps('name'),
       }, {
         title: this.props.intl.formatMessage({ id: 'contacts.form.email' }),
         dataIndex: 'email',
         key: 'email',
-        width: '40%',
+        width: '35%',
         ...this.getColumnSearchProps('email'),
       }, {
         title: this.props.intl.formatMessage({ id: 'contacts.form.action' }),

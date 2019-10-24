@@ -160,6 +160,18 @@ class RegistrationForm extends Component {
               <Input.Password placeholder={this.props.intl.formatMessage({ id: 'registration.password.longLimit' })}/>
           )}
           </FormItem>
+          {this.state.userType === 0 ?
+            <FormItem
+              {...formItemLayout}
+              label={this.props.intl.formatMessage({ id: 'registration.email.title' })}>
+              {getFieldDecorator('email', {
+                rules: [{
+                  type: 'email', message: this.props.intl.formatMessage({ id: 'registration.email.noValid' }),
+                }],
+              })(
+                <Input/>
+            )}
+            </FormItem> : ''}
           <FormItem
             {...formItemLayout}
             label={this.props.intl.formatMessage({ id: 'registration.mobile' })}>
