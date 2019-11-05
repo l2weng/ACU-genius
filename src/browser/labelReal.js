@@ -67,7 +67,7 @@ class LabelReal extends EventEmitter {
     win: {},
     userInfo: {},
     apiServer: 'http://47.105.236.123:8098/lr',
-    // apiServer: 'http://127.0.0.1:3000/lr',
+    // apiServer: 'http://10.198.198.51:3000/lr',
     projectsCache: {},
     zoom: 1.0
   }
@@ -727,19 +727,19 @@ class LabelReal extends EventEmitter {
     })
 
     this.on('app:open-license', () => {
-      shell.openExternal('https://tropy.org/license')
+      shell.openExternal('https://labelreal.org/license')
     })
 
     this.on('app:search-issues', () => {
-      shell.openExternal('https://github.com/tropy/tropy/issues')
+      shell.openExternal('https://github.com/labelreal/labelreal/issues')
     })
 
     this.on('app:open-docs', () => {
-      shell.openExternal('https://docs.tropy.org')
+      shell.openExternal('https://docs.labelreal.org')
     })
 
     this.on('app:open-forums', () => {
-      shell.openExternal('https://forums.tropy.org')
+      shell.openExternal('https://forums.labelreal.org')
     })
 
     this.on('app:open-logs', () => {
@@ -757,7 +757,7 @@ class LabelReal extends EventEmitter {
     this.on('app:install-plugin', async (win) => {
       const plugins = await dialog.show('file', darwin ? null : win, {
         defaultPath: app.getPath('downloads'),
-        filters: [{ name: 'Tropy Plugin', extensions: Plugins.ext }],
+        filters: [{ name: 'LabelReal Plugin', extensions: Plugins.ext }],
         properties: ['openFile']
       })
 

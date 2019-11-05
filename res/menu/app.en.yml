@@ -10,13 +10,13 @@ en:
             - label: 'Project'
               command: 'app:create-project'
               accelerator: 'CmdOrCtrl+Shift+P'
-            - label: 'Item'
-              command: 'app:create-item'
-              accelerator: 'CmdOrCtrl+Shift+N'
-            - label: 'List'
+#            - label: 'Item'
+#              command: 'app:create-item'
+#              accelerator: 'CmdOrCtrl+Shift+N'
+            - label: 'Task'
               command: 'app:create-list'
               accelerator: 'CmdOrCtrl+Shift+L'
-            - label: 'Sku'
+            - label: 'Target'
               command: 'app:create-tag'
               accelerator: 'CmdOrCtrl+Shift+A'
         - type: 'separator'
@@ -64,18 +64,18 @@ en:
           command: 'app:redo'
           enabled: false
         - type: 'separator'
-        - &cut
-          label: 'Cu&t'
-          accelerator: 'CmdOrCtrl+X'
-          role: 'cut'
-        - &copy
-          label: '&Copy'
-          accelerator: 'CmdOrCtrl+C'
-          role: 'copy'
-        - &paste
-          label: '&Paste'
-          accelerator: 'CmdOrCtrl+V'
-          role: 'paste'
+#        - &cut
+#          label: 'Cu&t'
+#          accelerator: 'CmdOrCtrl+X'
+#          role: 'cut'
+#        - &copy
+#          label: '&Copy'
+#          accelerator: 'CmdOrCtrl+C'
+#          role: 'copy'
+#        - &paste
+#          label: '&Paste'
+#          accelerator: 'CmdOrCtrl+V'
+#          role: 'paste'
         - &all
           label: 'Select All'
           role: 'selectall'
@@ -157,9 +157,9 @@ en:
         - &logs
           label: 'Show Log Files'
           command: 'app:open-logs'
-        - &plugins
-          label: 'Show Plugins Folder'
-          command: 'app:open-plugins-folder'
+#        - &plugins
+#          label: 'Show Plugins Folder'
+#          command: 'app:open-plugins-folder'
         - &userData
           label: 'Show User-Data Folder'
           command: 'app:open-user-data'
@@ -223,9 +223,9 @@ en:
         - *undo
         - *redo
         - type: 'separator'
-        - *cut
-        - *copy
-        - *paste
+#        - *cut
+#        - *copy
+#        - *paste
         - *all
     - label: 'View'
       submenu:
@@ -253,7 +253,7 @@ en:
         - *license
         - type: 'separator'
         - *logs
-        - *plugins
+#        - *plugins
         - *userData
         - type: 'separator'
         - *updaterCheck
@@ -271,9 +271,9 @@ en:
           command: 'app:redo'
           enabled: false
         - type: 'separator'
-        - *cut
-        - *copy
-        - *paste
+#        - *cut
+#        - *copy
+#        - *paste
         - *preferences
     - *view
     - *win

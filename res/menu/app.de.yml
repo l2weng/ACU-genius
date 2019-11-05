@@ -1,31 +1,31 @@
 de:
   linux:
   - &file
-    label: '&File'
+    label: '&文件'
     id: 'file'
     submenu:
     - &new
-      label: 'New'
+      label: '新建'
       submenu:
-      - label: 'Project'
+      - label: '项目'
         command: 'app:create-project'
         accelerator: 'CmdOrCtrl+Shift+P'
-      - label: 'Item'
-        command: 'app:create-item'
-        accelerator: 'CmdOrCtrl+Shift+N'
-      - label: 'List'
+#      - label: 'Item'
+#        command: 'app:create-item'
+#        accelerator: 'CmdOrCtrl+Shift+N'
+      - label: '任务'
         command: 'app:create-list'
         accelerator: 'CmdOrCtrl+Shift+L'
-      - label: 'Tag'
+      - label: '标注对象'
         command: 'app:create-tag'
         accelerator: 'CmdOrCtrl+Shift+A'
     - type: 'separator'
     - &open
-      label: 'Open'
+      label: '打开'
       accelerator: 'CmdOrCtrl+O'
       command: 'app:open-dialog'
     - &recent
-      label: 'Recent Projects'
+      label: '最近项目'
       id: 'recent'
       enabled: false
       submenu:
@@ -34,79 +34,79 @@ de:
         command: 'app:clear-recent-projects'
     - type: 'separator'
     - &import
-      label: 'Import Photos…'
+      label: '导入图片'
       command: 'app:import-photos'
       accelerator: 'CmdOrCtrl+Shift+I'
     - &consolidate
-      label: 'Consolidate Photo Library'
+      label: '合并图片'
       command: 'app:consolidate-photo-library'
     - type: 'separator'
-    - label: 'Close'
+    - label: '关闭'
       accelerator: 'CmdOrCtrl+W'
       role: 'close'
     - type: 'separator'
-    - label: 'Quit'
+    - label: '退出'
       accelerator: 'CmdOrCtrl+Q'
       role: 'quit'
   - &edit
-    label: '&Edit'
+    label: '&编辑'
     submenu:
     - &undo
       id: 'undo'
-      label: '&Undo'
+      label: '撤消'
       accelerator: 'CmdOrCtrl+Z'
       command: 'app:undo'
       enabled: false
     - &redo
       id: 'redo'
-      label: '&Redo'
+      label: '重做'
       accelerator: 'Shift+CmdOrCtrl+Z'
       command: 'app:redo'
       enabled: false
     - type: 'separator'
-    - &cut
-      label: 'Cu&t'
-      accelerator: 'CmdOrCtrl+X'
-      role: 'cut'
-    - &copy
-      label: '&Copy'
-      accelerator: 'CmdOrCtrl+C'
-      role: 'copy'
-    - &paste
-      label: '&Paste'
-      accelerator: 'CmdOrCtrl+V'
-      role: 'paste'
+#    - &cut
+#      label: 'Cu&t'
+#      accelerator: 'CmdOrCtrl+X'
+#      role: 'cut'
+#    - &copy
+#      label: '&Copy'
+#      accelerator: 'CmdOrCtrl+C'
+#      role: 'copy'
+#    - &paste
+#      label: '&Paste'
+#      accelerator: 'CmdOrCtrl+V'
+#      role: 'paste'
     - &all
-      label: 'Select All'
+      label: '全选'
       role: 'selectall'
     - type: 'separator'
     - &preferences
-      label: 'Prefere&nces…'
+      label: '个性化设置'
       accelerator: 'Shift+Control+S'
       command: 'app:open-preferences'
   - &view
-    label: '&View'
+    label: '显示'
     submenu:
     - &fullscreen
-      label: 'Toggle &Full Screen'
+      label: '切换全屏'
       role: 'togglefullscreen'
     - label: 'Toggle Hide &Menu Bar'
       command: 'app:toggle-menu-bar'
     - type: 'separator'
     - &zoom
-      label: 'Zoom'
+      label: '缩放'
       submenu:
-      - label: 'Zoom In'
+      - label: '放大'
         command: 'app:zoom-in'
-      - label: 'Zoom Out'
+      - label: '缩小'
         command: 'app:zoom-out'
       - type: 'separator'
-      - label: 'Reset'
+      - label: '重置'
         command: 'app:zoom-reset'
   - &win
-    label: 'Window'
+    label: '窗口'
     submenu:
-    - label: 'Minimize'
+    - label: '最小化'
       accelerator: 'CmdOrCtrl+M'
       role: 'minimize'
   - &dev
@@ -142,31 +142,31 @@ de:
         id: 'dark'
         type: 'checkbox'
   - &help
-    label: 'Help'
+    label: '帮助'
     submenu:
     - &docs
-      label: 'User Guide'
+      label: '用户指南'
       command: 'app:open-docs'
     - &forums
-      label: 'Support Forums'
+      label: '技术支持论坛'
       command: 'app:open-forums'
     - &license
-      label: 'Software &License'
+      label: '软件许可证'
       command: 'app:open-license'
     - type: 'separator'
     - &logs
-      label: 'Show Log Files'
+      label: '查看日志文件'
       command: 'app:open-logs'
-    - &plugins
-      label: 'Show Plugins Folder'
-      command: 'app:open-plugins-folder'
+#    - &plugins
+#      label: 'Show Plugins Folder'
+#      command: 'app:open-plugins-folder'
     - &userData
-      label: 'Show User-Data Folder'
+      label: '查看用户文件夹'
       command: 'app:open-user-data'
     - type: 'separator'
     - &updaterCheck
       id: 'updater-check'
-      label: 'Check for Updates…'
+      label: '检查更新'
       command: 'app:check-for-updates'
       enabled: false
     - &updaterIsChecking
@@ -181,31 +181,31 @@ de:
       enabled: false
       visible: false
     - type: 'separator'
-    - label: 'About %name'
+    - label: '关于 %name'
       command: 'app:about'
   darwin:
   - label: '%name'
     submenu:
-    - label: 'About %name'
+    - label: '关于 %name'
       command: 'app:about'
     - type: 'separator'
-    - label: 'Preferences…'
+    - label: '个性化设置'
       accelerator: 'Command+,'
       command: 'app:open-preferences'
     - type: 'separator'
-    - label: 'Hide %name'
+    - label: '隐藏 %name'
       accelerator: 'Command+H'
       role: 'hide'
-    - label: 'Hide Others'
+    - label: '隐藏其他窗口'
       accelerator: 'Command+Shift+H'
       role: 'hideothers'
-    - label: 'Show All'
+    - label: '显示全部'
       role: 'unhide'
     - type: 'separator'
-    - label: 'Quit'
+    - label: '退出'
       accelerator: 'Command+Q'
       role: 'quit'
-  - label: 'File'
+  - label: '文件'
     submenu:
     - *new
     - type: 'separator'
@@ -215,37 +215,37 @@ de:
     - *import
     - *consolidate
     - type: 'separator'
-    - label: 'Close'
+    - label: '关闭'
       accelerator: 'Command+W'
       role: 'close'
-  - label: 'Edit'
+  - label: '编辑'
     submenu:
     - *undo
     - *redo
     - type: 'separator'
-    - *cut
-    - *copy
-    - *paste
+#    - *cut
+#    - *copy
+#    - *paste
     - *all
-  - label: 'View'
+  - label: '显示'
     submenu:
     - *fullscreen
     - type: 'separator'
     - *zoom
-  - label: 'Window'
+  - label: '窗口'
     role: 'window'
     submenu:
-    - label: 'Minimize'
+    - label: '最小化'
       accelerator: 'CmdOrCtrl+M'
       role: 'minimize'
-    - label: 'Close'
+    - label: '关闭'
       accelerator: 'CmdOrCtrl+W'
       role: 'close'
     - type: 'separator'
-    - label: 'Bring All to Front'
+    - label: '前置全部窗口'
       role: 'front'
   - *dev
-  - label: 'Help'
+  - label: '帮助'
     role: 'help'
     submenu:
     - *docs
@@ -253,7 +253,7 @@ de:
     - *license
     - type: 'separator'
     - *logs
-    - *plugins
+#    - *plugins
     - *userData
     - type: 'separator'
     - *updaterCheck
@@ -262,18 +262,18 @@ de:
 
   win32:
   - *file
-  - label: '&Edit'
+  - label: '编辑'
     submenu:
     - *undo
     - id: 'redo'
-      label: '&Redo'
+      label: '重做'
       accelerator: 'Control+Y'
       command: 'app:redo'
       enabled: false
     - type: 'separator'
-    - *cut
-    - *copy
-    - *paste
+#    - *cut
+#    - *copy
+#    - *paste
     - *preferences
   - *view
   - *win
