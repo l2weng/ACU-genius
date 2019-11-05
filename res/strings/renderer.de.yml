@@ -126,9 +126,9 @@ de:
     company:
       title: 公司名
       required: 请输入公司名称。
-    agreementBefore: 我已阅读
-    agreementAfter: 协议
-    agreementMessage: 请确认已阅读协议。
+    agreementBefore: 已阅读并接受
+    agreementAfter: 用户协议与隐私政策
+    agreementMessage: 请确认已阅读并接受用户协议与隐私政策。
     back: 返回登录
     success: 注册成功
     guideBefore: 欢迎
@@ -191,7 +191,7 @@ de:
   summary:
     project: 项目
     overview: 项目概览
-    taskList: 任务资源
+    taskList: 任务与资源
     workLog: 工作日志
     dataOutput: 数据导出
     projectProgress: 项目进度
