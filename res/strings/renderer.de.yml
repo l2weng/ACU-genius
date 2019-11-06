@@ -95,6 +95,12 @@ de:
     targets:
       title: 标注对象
       add: 添加标注对象
+      name: 名称
+      labelColor: 标注颜色
+      labelType: Label Type
+      rectangle: 矩形框
+      polygon: 多边形框
+      appliedTo: 应用于任务
   wizard:
     project:
       title: 创建新项目

@@ -59,25 +59,25 @@ class TargetForm extends Component {
       <Modal
         destroyOnClose
         style={{ top: 20 }}
-        title={this.props.intl.formatMessage({ id: 'project.targets.add' })}
+        title={<FormattedMessage id="project.targets.add"/>}
         centered
         maskClosable={false}
         visible={skuModalVisible}
         onOk={this.okHandle}
         onCancel={handleSkuModalVisible}>
         <Form>
-          <FormItem {...formItemLayout} label="样本名称">
+          <FormItem {...formItemLayout} label={<FormattedMessage id="project.targets.name"/>}>
             {getFieldDecorator('name', {
               rules: [{ required: true, message: '请输入名称！', min: 1 }],
             })(<Input placeholder="请输入" />)}
           </FormItem>
-          <FormItem {...formItemLayout} label="标注颜色">
+          <FormItem {...formItemLayout} label={<FormattedMessage id="project.targets.labelColor"/>}>
             {getFieldDecorator('circlePicker', {
               rules: [{ required: true, message: '请选择颜色！' }],
               getValueFromEvent: this.onChangeComplete
             })(<CirclePicker color={getFieldValue('circlePicker')}/>)}
           </FormItem>
-          <Form.Item {...formItemLayout} label="标注类型" >
+          <Form.Item {...formItemLayout} label={<FormattedMessage id="project.targets.labelType"/>} >
             {getFieldDecorator('category', {
               rules: [{ required: true, message: '请选择标注类型！' }],
               initialValue: 'rect',
@@ -85,19 +85,15 @@ class TargetForm extends Component {
               style={{ width: '100%' }}
               placeholder="select one category"
               optionLabelProp="label">
-              <Option value="rect" label={<span><IconSelection/>矩形框</span>}>
-                <span role="img" aria-label="矩形框">
-                  <IconSelection/>&nbsp;矩形框
-                </span>
+              <Option value="rect" label={<span><FormattedMessage id="project.targets.rectangle"/></span>}>
+                <FormattedMessage id="project.targets.rectangle"/>
               </Option>
-              <Option value="polygon" label={<span><IconSelection/>多边形框</span>}>
-                <span role="img" aria-label="多边形框">
-                  <IconPolygon/>&nbsp;多边形框
-                </span>
+              <Option value="polygon" label={<span><FormattedMessage id="project.targets.polygon"/></span>}>
+                <FormattedMessage id="project.targets.polygon"/>
               </Option>
             </Select>)}
           </Form.Item>
-          <FormItem {...formItemLayout} label="应用于任务">
+          <FormItem {...formItemLayout} label={<FormattedMessage id="project.targets.appliedTo"/>}>
             {getFieldDecorator('taskSelect', {
               getValueFromEvent: this.onChange
             })(

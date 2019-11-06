@@ -9,7 +9,7 @@ en:
     taskAssignError: Task assignment failed, please contact customer service.
     addTask: Add Task
     addTarget: Add Target
-    assignTask: Assign Task
+    assignTask: Task Assignment
   toolbar:
     import: Import Photos
     items: >
@@ -92,6 +92,15 @@ en:
       level: Level
       action: Action
       assign: Assign
+    targets:
+      title: Targets
+      add: Targets Confirmation
+      name: Name
+      labelColor: Label Color
+      labelType: Label Type
+      rectangle: Rectangle
+      polygon: Polygon
+      appliedTo: Applied to tasks
   wizard:
     project:
       title: Create a new project
