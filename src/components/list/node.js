@@ -62,7 +62,7 @@ class NewListNode extends React.Component {
   }
 }
 
-const ListNode = injectIntl(class extends React.PureComponent {
+class ListNode extends React.PureComponent {
   state = {
     depth: null,
     offset: null,
@@ -351,7 +351,7 @@ const ListNode = injectIntl(class extends React.PureComponent {
     position: 0,
     isHalloween: ((d) => d.getMonth() === 9 && d.getDate() === 31)(new Date())
   }
-})
+}
 
 const DragSourceSpec = {
   beginDrag({ list, depth, position }) {
@@ -445,8 +445,8 @@ const DropTargetCollect = (connect, monitor) => ({
 module.exports.NewListNode = NewListNode
 
 module.exports.ListNode =
-  DragSource(DND.LIST, DragSourceSpec, DragSourceCollect)(
-    DropTarget([
-      DND.LIST, DND.ITEMS, NativeTypes.FILE],
-        DropTargetSpec,
-        DropTargetCollect)(ListNode))
+  DragSource(DND.LIST, DragSourceSpec, DragSourceCollect)(injectIntl(DropTarget([
+    DND.LIST, DND.ITEMS, NativeTypes.FILE],
+    DropTargetSpec,
+    DropTargetCollect)(ListNode))
+    )

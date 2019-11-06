@@ -11,9 +11,10 @@ const { bool, func, object } = require('prop-types')
 const { CirclePicker } = require('react-color')
 const { IconSelection, IconPolygon } = require('../icons')
 const { LIST } = require('../../constants')
+const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
 const __ = require('underscore')
 
-class SkuForm extends Component {
+class TargetForm extends Component {
   state = {
     confirmDirty: false,
   };
@@ -58,7 +59,7 @@ class SkuForm extends Component {
       <Modal
         destroyOnClose
         style={{ top: 20 }}
-        title="添加目标样本"
+        title={this.props.intl.formatMessage({ id: 'project.targets.add' })}
         centered
         maskClosable={false}
         visible={skuModalVisible}
@@ -109,6 +110,7 @@ class SkuForm extends Component {
   }
 
   static propTypes = {
+    intl: intlShape.isRequired,
     skuModalVisible: bool.isRequired,
     handleSkuModalVisible: func.isRequired,
     saveSku: func.isRequired,
@@ -117,5 +119,5 @@ class SkuForm extends Component {
 }
 
 module.exports = {
-  SkuForm
+  TargetForm: injectIntl(TargetForm)
 }

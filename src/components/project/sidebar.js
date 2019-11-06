@@ -21,7 +21,7 @@ const { getUrlFilterParams } = require('../../common/dataUtil')
 const { ColleagueTable } = require('../contacts/colleagueTable')
 const { IconPlus } = require('../icons')
 const { Button } = require('../button')
-const { SkuForm } = require('../tag/skuForm')
+const { TargetForm } = require('../tag/targetForm')
 
 const { userInfo } = ARGS
 const axios = require('axios')
@@ -365,7 +365,7 @@ class ProjectSidebar extends React.PureComponent {
     const skuParentMethods = {
       handleSkuModalVisible: this.handleSkuModalVisible
     }
-    const WrappedSkuForm = Form.create()(SkuForm)
+    const WrappedTargetForm = Form.create()(TargetForm)
 
     return (
       <BufferedResizable
@@ -473,7 +473,7 @@ class ProjectSidebar extends React.PureComponent {
           <ActivityPane activities={this.props.activities}/>
         </Sidebar>
         <ColleagueList {...parentMethods} modalVisible={modalVisible} colleagues={colleagues} defaultIdx={defaultIdx} intl={this.props.intl}/>
-        <WrappedSkuForm {...skuParentMethods} skuModalVisible={skuModalVisible} tasks={this.props.lists} saveSku={onSkuSave}/>
+        <WrappedTargetForm {...skuParentMethods} skuModalVisible={skuModalVisible} tasks={this.props.lists} saveSku={onSkuSave}/>
       </BufferedResizable>
     )
   }

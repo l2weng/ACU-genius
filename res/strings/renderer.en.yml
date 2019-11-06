@@ -692,6 +692,6 @@ en:
     reset: Reset
     noData: No Data
     passwordError: The username and password are incorrect. Please try again.
-    tip: Tips
+    tips: Tips
     ok: Ok
     cancel: Cancel

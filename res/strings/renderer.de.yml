@@ -92,6 +92,9 @@ de:
       level: 级别
       action: 操作
       assign: 分配
+    targets:
+      title: 标注对象
+      add: 添加标注对象
   wizard:
     project:
       title: 创建新项目
