@@ -6,7 +6,7 @@ const { connect } = require('react-redux')
 const _ = require('underscore')
 const { ipcRenderer: ipc } = require('electron')
 const { USER } = require('../../constants')
-const { Button, Menu, Icon, Dropdown, Avatar } = require('antd')
+const { Button, Menu, Icon, Dropdown, Avatar, Badge } = require('antd')
 const { FormattedMessage } = require('react-intl')
 
 const {
@@ -81,7 +81,13 @@ class UserInfoContainer extends Component {
 
   render() {
     return (
-      <div style={{ paddingRight: '12px' }} >{this.renderUserInfo()}</div>)
+      <div style={{ paddingRight: '12px' }} >
+        <Badge dot>
+          <Button icon="mail" size="small"/>
+        </Badge>
+        {this.renderUserInfo()}
+      </div>
+    )
   }
 }
 

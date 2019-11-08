@@ -81,7 +81,6 @@ class EsperView extends Component {
       this.image.cursor = props.tool
       this.pixi.render()
       this.selectionStartTime = performance.now()
-      console.log(this.selectionStartTime)
     }
   }
 
