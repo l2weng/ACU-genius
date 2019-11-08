@@ -101,9 +101,9 @@ en:
       rectangle: Rectangle
       polygon: Polygon
       appliedTo: Applied to tasks
-      colorRequired: Please Pick a color
-      nameRequired: Please enter a name
-      categoryRequired: Please select an annotation category
+      colorRequired: Please pick a color.
+      nameRequired: Please enter a name.
+      categoryRequired: Please select an annotation category.
   wizard:
     project:
       title: Create a new project
@@ -190,13 +190,13 @@ en:
     addFriend: Add Friend
     form:
       name: Username
-      nameLengthLimit: Please enter a name of at least 2 characters!
+      nameLengthLimit: Please enter a name of at least 2 characters.
       mobile: Mobile
       email: E-mail
-      emailRequired: Please enter E-mail
-      emailLimit: Please enter a valid email address!
+      emailRequired: Please enter E-mail.
+      emailLimit: Please enter a valid email address.
       defaultPassword: Default Password
-      passwordRequired: Please enter password
+      passwordRequired: Please enter password.
       enterPlaceHolder: Please enter
       action: Action
       invite: Invite
