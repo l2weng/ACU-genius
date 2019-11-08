@@ -68,18 +68,18 @@ class TargetForm extends Component {
         <Form>
           <FormItem {...formItemLayout} label={<FormattedMessage id="project.targets.name"/>}>
             {getFieldDecorator('name', {
-              rules: [{ required: true, message: '请输入名称！', min: 1 }],
+              rules: [{ required: true, message: this.props.intl.formatMessage({ id: 'project.targets.nameRequired' }), min: 1 }],
             })(<Input placeholder="请输入" />)}
           </FormItem>
           <FormItem {...formItemLayout} label={<FormattedMessage id="project.targets.labelColor"/>}>
             {getFieldDecorator('circlePicker', {
-              rules: [{ required: true, message: '请选择颜色！' }],
+              rules: [{ required: true, message: this.props.intl.formatMessage({ id: 'project.targets.colorRequired' }) }],
               getValueFromEvent: this.onChangeComplete
             })(<CirclePicker color={getFieldValue('circlePicker')}/>)}
           </FormItem>
           <Form.Item {...formItemLayout} label={<FormattedMessage id="project.targets.labelType"/>} >
             {getFieldDecorator('category', {
-              rules: [{ required: true, message: '请选择标注类型！' }],
+              rules: [{ required: true, message: this.props.intl.formatMessage({ id: 'project.targets.categoryRequired' }) }],
               initialValue: 'rect',
             })(<Select
               style={{ width: '100%' }}

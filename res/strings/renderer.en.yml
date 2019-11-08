@@ -101,6 +101,9 @@ en:
       rectangle: Rectangle
       polygon: Polygon
       appliedTo: Applied to tasks
+      colorRequired: Please Pick a color
+      nameRequired: Please enter a name
+      categoryRequired: Please select an annotation category
   wizard:
     project:
       title: Create a new project
@@ -704,3 +707,4 @@ en:
     tips: Tips
     ok: Ok
     cancel: Cancel
+    enterPlease: Please enter
