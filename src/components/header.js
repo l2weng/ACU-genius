@@ -14,6 +14,8 @@ const { HEAD } = require('../constants')
 const { userInfo } = ARGS
 const _ = require('underscore')
 const actions = require('../actions')
+const axios = require('axios')
+
 const LRSvg = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 73.38 95.84" width="1em" height="1em">
     <g id="lrLine2">
@@ -35,7 +37,9 @@ const {
 
 class Header extends React.Component {
 
-  state = { taskType: HEAD.ALL_TASKS }
+  state = { taskType: HEAD.ALL_TASKS,
+    hasMsg: false
+  }
 
   constructor(props) {
     super(props)
@@ -50,6 +54,16 @@ class Header extends React.Component {
       }
     }
     this.props.switchTab(tabName, project)
+    this.checkMsg()
+  }
+
+  checkMsg = () =>{
+    let self = this
+    if (!this.state.hasMsg) {
+      axios.post(`${ARGS.apiServer}/messages/checkNewMsg`, { userId: userInfo.user.userId }).then(res=>{
+        self.setState({ hasMsg: res.data })
+      })
+    }
   }
 
   switchTask = (taskTab) =>{
