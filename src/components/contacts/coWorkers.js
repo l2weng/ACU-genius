@@ -27,7 +27,7 @@ const CoWorkerForm = Form.create()(props => {
       onOk={okHandle}
       footer={null}
       onCancel={() => handleModalVisible()}>
-      <WorkersTable data={otherWorks}/>
+      <WorkersTable data={otherWorks} onInvited={() => handleModalVisible()}/>
     </Modal>
   )
 })

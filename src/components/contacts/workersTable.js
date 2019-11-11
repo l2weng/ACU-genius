@@ -2,10 +2,12 @@
 
 const React = require('react')
 const { PureComponent } = React
-const { Table, Input, Button, Icon } = require('antd')
+const { Table, Input, Button, Icon, message } = require('antd')
 const Highlighter = require('react-highlight-words')
 const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
-const { array } = require('prop-types')
+const { array, func } = require('prop-types')
+const axios = require('axios')
+const { userInfo } = ARGS
 
 const WorkersTable = injectIntl(class extends PureComponent {
   state = {
@@ -75,6 +77,22 @@ const WorkersTable = injectIntl(class extends PureComponent {
     this.setState({ searchText: '' })
   }
 
+  inviteFriend = (userId) => {
+    axios.post(`${ARGS.apiServer}/messages/inviteFriend`, {
+      createdBy: userInfo.user.userId,
+      userId: userId,
+      title: this.props.intl.formatMessage({ id: 'contacts.invitation.title' }),
+      content: `${userInfo.user.name} ${this.props.intl.formatMessage({ id: 'contacts.invitation.content' })}`,
+    }).then(res=>{
+      if (res.data) {
+        message.success(this.props.intl.formatMessage({ id: 'contacts.invitation.success' }))
+        this.props.onInvited()
+      } else {
+        message.error(this.props.intl.formatMessage({ id: 'common.error' }))
+      }
+    })
+  }
+
   render() {
     const columns = [
       {
@@ -95,7 +113,7 @@ const WorkersTable = injectIntl(class extends PureComponent {
         width: '15%',
         render: (text, record) => (
           <span>
-            <a href="javascript:"><FormattedMessage id="contacts.form.invite"/></a>
+            <a href="javascript:;" onClick={()=>this.inviteFriend(record.userId)}><FormattedMessage id="contacts.form.invite"/></a>
           </span>
         ),
       }]
@@ -103,7 +121,8 @@ const WorkersTable = injectIntl(class extends PureComponent {
   }
   static propTypes = {
     intl: intlShape.isRequired,
-    data: array.isRequired
+    data: array.isRequired,
+    onInvited: func.isRequired
   }
 })
 

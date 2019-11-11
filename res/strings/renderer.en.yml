@@ -200,6 +200,10 @@ en:
       enterPlaceHolder: Please enter
       action: Action
       invite: Invite
+    invitation:
+      title: Friend requests
+      content: invite you to be friends and complete projects, earning wealth
+      success: Invitation letter has been sent
   summary:
     project: Project
     overview: Overview

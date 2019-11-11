@@ -10,7 +10,7 @@ const { Button, Menu, Icon, Dropdown, Avatar, Badge } = require('antd')
 const { FormattedMessage } = require('react-intl')
 
 const {
-  shape, string,
+  shape, string, bool
 } = require('prop-types')
 
 class UserInfoContainer extends Component {
@@ -19,6 +19,10 @@ class UserInfoContainer extends Component {
     project: shape({
       file: string,
     }).isRequired,
+    hasMsg: bool,
+  }
+  static defaultProps = {
+    hasMsg: false
   }
 
   constructor(props) {
@@ -82,7 +86,7 @@ class UserInfoContainer extends Component {
   render() {
     return (
       <div style={{ paddingRight: '12px' }} >
-        <Badge dot>
+        <Badge dot={this.props.hasMsg}>
           <Button icon="mail" size="small"/>
         </Badge>
         {this.renderUserInfo()}

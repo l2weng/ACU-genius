@@ -73,10 +73,10 @@ class Header extends React.Component {
   render() {
 
     const { activeTab, project, projects } = this.props
-    const { taskType } = this.state
+    const { taskType, hasMsg } = this.state
     const isOwner = project.owner === userInfo.user.userId
     return (
-      <Tabs defaultActiveKey={activeTab} activeKey={activeTab} onChange={this.switchTab} style={{ height: '100%' }} tabBarExtraContent={<UserInfoContainer/>} >
+      <Tabs defaultActiveKey={activeTab} activeKey={activeTab} onChange={this.switchTab} style={{ height: '100%' }} tabBarExtraContent={<UserInfoContainer hasMsg={hasMsg}/>} >
         <TabPane tab={<span><Icon component={LRSvg} size="small"/><FormattedMessage id="header.title.home"/></span>} key={HEAD.HOME} className="tab-container">
           <Workplace switchTab={this.switchTab} switchTask={this.switchTask} isOwner={isOwner} currentTaskType={taskType}/>
         </TabPane>
