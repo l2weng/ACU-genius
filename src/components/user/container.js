@@ -8,6 +8,7 @@ const { ipcRenderer: ipc } = require('electron')
 const { USER } = require('../../constants')
 const { Button, Menu, Icon, Dropdown, Avatar, Badge } = require('antd')
 const { FormattedMessage } = require('react-intl')
+const {MessageBox} = require('./MessageBox')
 
 const {
   shape, string, bool
@@ -20,9 +21,11 @@ class UserInfoContainer extends Component {
       file: string,
     }).isRequired,
     hasMsg: bool,
+    messageModalVisible: bool,
   }
   static defaultProps = {
-    hasMsg: false
+    hasMsg: false,
+    messageModalVisible: false
   }
 
   constructor(props) {
@@ -83,13 +86,22 @@ class UserInfoContainer extends Component {
     </Dropdown>)
   }
 
+
+  handleMessageModalVisible = flag => {
+    this.setState({ messageModalVisible: !!flag })
+  }
+
   render() {
+    const parentMethods = {
+      handleModalVisible: this.handleMessageModalVisible,
+    }
     return (
       <div style={{ paddingRight: '12px' }} >
         <Badge dot={this.props.hasMsg}>
-          <Button icon="mail" size="small"/>
+          <Button icon="mail" size="small" onClick={()=>this.handleMessageModalVisible(true)}/>
         </Badge>
         {this.renderUserInfo()}
+        <MessageBox {...parentMethods} modalVisible={this.state.messageModalVisible}/>
       </div>
     )
   }
