@@ -218,6 +218,8 @@ en:
     status1: Read
     type0: Invitation
     type1: System
+    accept: Accept
+    reject: Reject
   summary:
     project: Project
     overview: Overview

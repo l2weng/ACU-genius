@@ -2,10 +2,11 @@
 
 const React = require('react')
 const { Component } = React
-const { Modal, Table } = require('antd')
+const { Modal, Table, Divider } = require('antd')
 const { func, bool, array } = require('prop-types')
 const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
 const moment = require('moment')
+const { userInfo } = ARGS
 
 class MessageBox extends Component {
 
@@ -50,14 +51,22 @@ class MessageBox extends Component {
         key: 'action',
         render: (text, record) => (
           <span>
-            <a href="javascript:;"><FormattedMessage id="contacts.form.invite"/></a>
+            {userInfo.user.userId !== record.createdBy ?
+              <span>
+                <a href="javascript:;"><FormattedMessage id="message.accept"/></a>
+                <Divider type="vertical" />
+                <a href="javascript:;"><FormattedMessage id="message.reject"/></a>
+              </span>
+              : ''
+            }
           </span>
         ),
       }]
     return (
       <Modal
         destroyOnClose
-        width={800}
+        width={900}
+        style={{ top: 20 }}
         title={<FormattedMessage id="message.head"/>}
         visible={this.props.modalVisible}
         footer={null}

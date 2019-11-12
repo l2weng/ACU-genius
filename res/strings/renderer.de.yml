@@ -218,6 +218,8 @@ de:
     status1: 已阅读
     type0: 邀请
     type1: 系统
+    accept: 接受
+    reject: 拒绝
   summary:
     project: 项目
     overview: 项目概览
