@@ -97,12 +97,13 @@ de:
       add: 添加标注对象
       name: 名称
       labelColor: 标注颜色
-      labelType: Label Type
+      labelType: 标注类型
       rectangle: 矩形框
       polygon: 多边形框
       appliedTo: 应用于任务
-
-
+      colorRequired: 请选择颜色!
+      nameRequired: 请输入名称!
+      categoryRequired: 请选择标注类型!
   wizard:
     project:
       title: 创建新项目
@@ -200,9 +201,23 @@ de:
       action: 操作
       invite: 邀请
     invitation:
-      title: 好友申请
-      content: 邀请您成为好友一起完成项目, 赚取财富
+      title: 好友邀请
+      content: 邀请您成为好友一起参与项目
       success: 邀请信已发送
+  message:
+    head: 消息列表
+    title: 标题
+    content: 内容
+    type: 消息类型
+    status: 状态
+    remarks: 备注
+    createdAt: 时间
+    invited: 受邀人
+    action: 操作
+    status0: 未读
+    status1: 已阅读
+    type0: 邀请
+    type1: 系统
   summary:
     project: 项目
     overview: 项目概览

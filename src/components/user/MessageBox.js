@@ -2,30 +2,76 @@
 
 const React = require('react')
 const { Component } = React
-const { Modal } = require('antd')
-
-const axios = require('axios')
-const { func, bool } = require('prop-types')
+const { Modal, Table } = require('antd')
+const { func, bool, array } = require('prop-types')
 const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
+const moment = require('moment')
 
 class MessageBox extends Component {
 
   state = { userType: 0 };
 
   render() {
+    const columns = [
+      {
+        title: this.props.intl.formatMessage({ id: 'message.title' }),
+        dataIndex: 'title',
+        key: 'title',
+        render: (text, record) => (
+          <FormattedMessage id={'contacts.invitation.title'}/>
+        ),
+      }, {
+        title: this.props.intl.formatMessage({ id: 'message.type' }),
+        dataIndex: 'type',
+        key: 'type',
+        render: (text, record) => (
+          <FormattedMessage id={`message.type${record.type}`}/>
+        ),
+      }, {
+        title: this.props.intl.formatMessage({ id: 'message.status' }),
+        dataIndex: 'status',
+        key: 'status',
+        render: (text, record) => (
+          <FormattedMessage id={`message.status${record.status}`}/>
+        ),
+      }, {
+        title: this.props.intl.formatMessage({ id: 'message.created' }),
+        dataIndex: 'createdAt',
+        key: 'createdAt',
+        render: (text, record) => (
+          <span>{moment(record.createdAt).format('YYYY-MM-DD, HH:mm:ss')}</span>
+        ),
+      }, {
+        title: this.props.intl.formatMessage({ id: 'message.invited' }),
+        dataIndex: 'invited',
+        key: 'invited'
+      }, {
+        title: this.props.intl.formatMessage({ id: 'message.action' }),
+        key: 'action',
+        render: (text, record) => (
+          <span>
+            <a href="javascript:;"><FormattedMessage id="contacts.form.invite"/></a>
+          </span>
+        ),
+      }]
     return (
       <Modal
         destroyOnClose
-        title={<FormattedMessage id="contacts.friend"/>}
+        width={800}
+        title={<FormattedMessage id="message.head"/>}
         visible={this.props.modalVisible}
         footer={null}
-        onCancel={() => this.props.handleModalVisible(false)} />
+        onCancel={() => this.props.handleModalVisible(false)} >
+        <Table columns={columns} rowKey={record=>record.userId} dataSource={this.props.messages}
+          expandedRowRender={record => <p style={{ margin: 0 }}>{record.createdByName} {this.props.intl.formatMessage({ id: 'contacts.invitation.content' })}</p>}/>
+      </Modal>
     )
   }
 
   static propTypes = {
     intl: intlShape.isRequired,
     modalVisible: bool.isRequired,
+    messages: array.isRequired,
     handleModalVisible: func.isRequired
   }
 }

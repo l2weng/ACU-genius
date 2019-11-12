@@ -77,10 +77,12 @@ const WorkersTable = injectIntl(class extends PureComponent {
     this.setState({ searchText: '' })
   }
 
-  inviteFriend = (userId) => {
+  inviteFriend = (userId, name) => {
     axios.post(`${ARGS.apiServer}/messages/inviteFriend`, {
       createdBy: userInfo.user.userId,
+      createdByName: userInfo.user.name,
       userId: userId,
+      invited: name,
       title: this.props.intl.formatMessage({ id: 'contacts.invitation.title' }),
       content: `${userInfo.user.name} ${this.props.intl.formatMessage({ id: 'contacts.invitation.content' })}`,
     }).then(res=>{
@@ -113,7 +115,7 @@ const WorkersTable = injectIntl(class extends PureComponent {
         width: '15%',
         render: (text, record) => (
           <span>
-            <a href="javascript:;" onClick={()=>this.inviteFriend(record.userId)}><FormattedMessage id="contacts.form.invite"/></a>
+            <a href="javascript:;" onClick={()=>this.inviteFriend(record.userId, record.name)}><FormattedMessage id="contacts.form.invite"/></a>
           </span>
         ),
       }]

@@ -6,9 +6,12 @@ const { connect } = require('react-redux')
 const _ = require('underscore')
 const { ipcRenderer: ipc } = require('electron')
 const { USER } = require('../../constants')
-const { Button, Menu, Icon, Dropdown, Avatar, Badge } = require('antd')
+const { Button, Menu, Icon, Dropdown, Avatar, Badge, message } = require('antd')
 const { FormattedMessage } = require('react-intl')
-const {MessageBox} = require('./MessageBox')
+const { MessageBox } = require('./MessageBox')
+const { getUrlFilterParams } = require('../../common/dataUtil')
+const { userInfo } = ARGS
+const axios = require('axios')
 
 const {
   shape, string, bool
@@ -21,17 +24,14 @@ class UserInfoContainer extends Component {
       file: string,
     }).isRequired,
     hasMsg: bool,
-    messageModalVisible: bool,
   }
   static defaultProps = {
-    hasMsg: false,
-    messageModalVisible: false
+    hasMsg: false
   }
 
   constructor(props) {
     super(props)
-
-    this.state = {}
+    this.state = { messages: [], messageModalVisible: false }
   }
 
   onMenuClick = ({ key }) => {
@@ -86,8 +86,19 @@ class UserInfoContainer extends Component {
     </Dropdown>)
   }
 
-
   handleMessageModalVisible = flag => {
+    let self = this
+    let query = getUrlFilterParams({ userId: userInfo.user.userId }, ['userId'])
+
+    axios.get(`${ARGS.apiServer}/graphql?query={ messageQuery${query} { messageId title content type status result createdBy createdByName invited } } `)
+    .then(function (response) {
+      if (response.status === 200) {
+        self.setState({ messages: response.data.data.messageQuery })
+      }
+    })
+    .catch(function () {
+      message.error(self.props.intl.formatMessage({ id: 'common.error' }))
+    })
     this.setState({ messageModalVisible: !!flag })
   }
 
@@ -95,13 +106,14 @@ class UserInfoContainer extends Component {
     const parentMethods = {
       handleModalVisible: this.handleMessageModalVisible,
     }
+    const {messageModalVisible, messages} = this.state
     return (
       <div style={{ paddingRight: '12px' }} >
         <Badge dot={this.props.hasMsg}>
           <Button icon="mail" size="small" onClick={()=>this.handleMessageModalVisible(true)}/>
         </Badge>
         {this.renderUserInfo()}
-        <MessageBox {...parentMethods} modalVisible={this.state.messageModalVisible}/>
+        <MessageBox {...parentMethods} modalVisible={messageModalVisible} messages={messages}/>
       </div>
     )
   }

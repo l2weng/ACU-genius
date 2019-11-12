@@ -201,9 +201,23 @@ en:
       action: Action
       invite: Invite
     invitation:
-      title: Friend requests
-      content: invite you to be friends and complete projects, earning wealth
+      title: Friend invitation
+      content: invite you to be friends and complete projects.
       success: Invitation letter has been sent
+  message:
+    head: Message Box
+    title: Title
+    content: Content
+    type: Message type
+    status: Status
+    remarks: Remarks
+    created: Date
+    invited: Invited
+    action: Action
+    status0: Unread
+    status1: Read
+    type0: Invitation
+    type1: System
   summary:
     project: Project
     overview: Overview
