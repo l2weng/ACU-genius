@@ -10,7 +10,7 @@ const axios = require('axios')
 const {
   Form, Icon, Input, Button,
 } = require('antd')
-const { RegistrationForm } = require('./RegistrationForm')
+const { RegistrationForm } = require('./registrationForm')
 const { ipcRenderer: ipc, shell } = require('electron')
 const { USER } = require('../../constants')
 const { getLocalIP } = require('../../common/serviceUtil')

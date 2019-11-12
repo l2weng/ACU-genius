@@ -8,9 +8,10 @@ const { ipcRenderer: ipc } = require('electron')
 const { USER } = require('../../constants')
 const { Button, Menu, Icon, Dropdown, Avatar, Badge, message } = require('antd')
 const { FormattedMessage } = require('react-intl')
-const { MessageBox } = require('./MessageBox')
+const { MessageBox } = require('./messageBox')
 const { getUrlFilterParams } = require('../../common/dataUtil')
 const { userInfo } = ARGS
+const { intlShape, injectIntl } = require('react-intl')
 const axios = require('axios')
 
 const {
@@ -24,6 +25,7 @@ class UserInfoContainer extends Component {
       file: string,
     }).isRequired,
     hasMsg: bool,
+    intl: intlShape.isRequired,
   }
   static defaultProps = {
     hasMsg: false
@@ -70,6 +72,21 @@ class UserInfoContainer extends Component {
       onClick={() => { ipc.send(USER.LOGIN) }}>登录</Button>)
   }
 
+  handleInvitation = (result, messageId) =>{
+    let self = this
+    axios.post(`${ARGS.apiServer}/messages/updateInvitation`, {
+      result,
+      messageId
+    }).then(res=>{
+      if (res.data.result === 'success') {
+        message.success(self.props.intl.formatMessage({ id: 'common.updateSuccess' }))
+        self.fitchMessages()
+      } else {
+        message.error(self.props.intl.formatMessage({ id: 'common.error' }))
+      }
+    })
+  }
+
   renderMenu(menu, user) {
     return (<Dropdown overlay={menu}>
       <span className="action account">
@@ -87,33 +104,37 @@ class UserInfoContainer extends Component {
   }
 
   handleMessageModalVisible = flag => {
+    this.fitchMessages()
+    this.setState({ messageModalVisible: !!flag })
+  }
+
+  fitchMessages = () => {
     let self = this
     let query = getUrlFilterParams({ userId: userInfo.user.userId }, ['userId'])
-
-    axios.get(`${ARGS.apiServer}/graphql?query={ messageQuery${query} { messageId title content type status result createdBy createdByName invited } } `)
-    .then(function (response) {
-      if (response.status === 200) {
-        self.setState({ messages: response.data.data.messageQuery })
-      }
-    })
-    .catch(function () {
-      message.error(self.props.intl.formatMessage({ id: 'common.error' }))
-    })
-    this.setState({ messageModalVisible: !!flag })
+    axios.get(
+      `${ARGS.apiServer}/graphql?query={ messageQuery${query} { messageId title content type status result createdBy createdByName createdAt invited result} } `)
+      .then(function (response) {
+        if (response.status === 200) {
+          self.setState({ messages: response.data.data.messageQuery })
+        }
+      })
+      .catch(function () {
+        message.error(self.props.intl.formatMessage({ id: 'common.error' }))
+      })
   }
 
   render() {
     const parentMethods = {
       handleModalVisible: this.handleMessageModalVisible,
     }
-    const {messageModalVisible, messages} = this.state
+    const { messageModalVisible, messages } = this.state
     return (
       <div style={{ paddingRight: '12px' }} >
         <Badge dot={this.props.hasMsg}>
           <Button icon="mail" size="small" onClick={()=>this.handleMessageModalVisible(true)}/>
         </Badge>
         {this.renderUserInfo()}
-        <MessageBox {...parentMethods} modalVisible={messageModalVisible} messages={messages}/>
+        <MessageBox {...parentMethods} modalVisible={messageModalVisible} messages={messages} onUpdateInvitation={this.handleInvitation}/>
       </div>
     )
   }
@@ -124,5 +145,5 @@ module.exports = {
     state => ({
       project: state.project,
     }),
-  )(UserInfoContainer),
+  )(injectIntl(UserInfoContainer)),
 }

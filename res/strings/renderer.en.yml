@@ -211,11 +211,14 @@ en:
     type: Message type
     status: Status
     remarks: Remarks
-    created: Date
+    createdAt: Date
     invited: Invited
     action: Action
     status0: Unread
     status1: Read
+    result: Result
+    result0: Accepted
+    result1: Rejected
     type0: Invitation
     type1: System
     accept: Accept
@@ -719,6 +722,7 @@ en:
       import: Import
   common:
     addSuccess: Added successfully.
+    updateSuccess: Update successfully.
     error: System error, please contact customer service.
     search: Search
     reset: Reset

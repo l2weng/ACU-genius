@@ -36,11 +36,18 @@ class MessageBox extends Component {
           <FormattedMessage id={`message.status${record.status}`}/>
         ),
       }, {
-        title: this.props.intl.formatMessage({ id: 'message.created' }),
+        title: this.props.intl.formatMessage({ id: 'message.result' }),
+        dataIndex: 'result',
+        key: 'result',
+        render: (text, record) => (
+          <span>{record.result !== null ? <FormattedMessage id={`message.result${record.result}`}/> : ''}</span>
+        ),
+      }, {
+        title: this.props.intl.formatMessage({ id: 'message.createdAt' }),
         dataIndex: 'createdAt',
         key: 'createdAt',
         render: (text, record) => (
-          <span>{moment(record.createdAt).format('YYYY-MM-DD, HH:mm:ss')}</span>
+          <span>{moment(new Date(record.createdAt)).format('YYYY-MM-DD, HH:mm:ss')}</span>
         ),
       }, {
         title: this.props.intl.formatMessage({ id: 'message.invited' }),
@@ -51,11 +58,11 @@ class MessageBox extends Component {
         key: 'action',
         render: (text, record) => (
           <span>
-            {userInfo.user.userId !== record.createdBy ?
+            {(userInfo.user.userId !== record.createdBy && record.result === null) ?
               <span>
-                <a href="javascript:;"><FormattedMessage id="message.accept"/></a>
+                <a href="javascript:;" onClick={()=>this.props.onUpdateInvitation(0, record.messageId)}><FormattedMessage id="message.accept"/></a>
                 <Divider type="vertical" />
-                <a href="javascript:;"><FormattedMessage id="message.reject"/></a>
+                <a href="javascript:;" onClick={()=>this.props.onUpdateInvitation(1, record.messageId)}><FormattedMessage id="message.reject"/></a>
               </span>
               : ''
             }
@@ -65,13 +72,13 @@ class MessageBox extends Component {
     return (
       <Modal
         destroyOnClose
-        width={900}
-        style={{ top: 20 }}
+        width={1000}
+        style={{ top: 60 }}
         title={<FormattedMessage id="message.head"/>}
         visible={this.props.modalVisible}
         footer={null}
         onCancel={() => this.props.handleModalVisible(false)} >
-        <Table columns={columns} rowKey={record=>record.userId} dataSource={this.props.messages}
+        <Table columns={columns} rowKey={record=>record.messageId} dataSource={this.props.messages}
           expandedRowRender={record => <p style={{ margin: 0 }}>{record.createdByName} {this.props.intl.formatMessage({ id: 'contacts.invitation.content' })}</p>}/>
       </Modal>
     )
@@ -81,7 +88,8 @@ class MessageBox extends Component {
     intl: intlShape.isRequired,
     modalVisible: bool.isRequired,
     messages: array.isRequired,
-    handleModalVisible: func.isRequired
+    handleModalVisible: func.isRequired,
+    onUpdateInvitation: func.isRequired
   }
 }
 
