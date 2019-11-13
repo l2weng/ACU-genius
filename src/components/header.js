@@ -57,7 +57,7 @@ class Header extends React.Component {
   }
 
   fetchCoWorks = () => {
-    let query = getUrlFilterParams({ userId: userInfo.user.userId, isOwner: true }, ['userId', 'isOwner'])
+    let query = getUrlFilterParams({ userId: userInfo.user.userId }, ['userId'])
     let self = this
     this.setState({ loading: true })
     axios.get(`${ARGS.apiServer}/graphql?query={userQueryContacts${query} { key: userId name email avatarColor }}`)
@@ -72,6 +72,7 @@ class Header extends React.Component {
   }
 
   switchTab = (tabName) => {
+    this.checkMsg()
     const { project } = this.props
     if (tabName === HEAD.HOME) {
       if (!_.isEmpty(userInfo) && !project.closing) {
@@ -80,16 +81,13 @@ class Header extends React.Component {
       }
     }
     this.props.switchTab(tabName, project)
-    this.checkMsg()
   }
 
   checkMsg = () =>{
     let self = this
-    if (!this.state.hasMsg) {
-      axios.post(`${ARGS.apiServer}/messages/checkNewMsg`, { userId: userInfo.user.userId }).then(res=>{
-        self.setState({ hasMsg: res.data })
-      })
-    }
+    axios.post(`${ARGS.apiServer}/messages/checkNewMsg`, { userId: userInfo.user.userId }).then(res=>{
+      self.setState({ hasMsg: res.data })
+    })
   }
 
   switchTask = (taskTab) =>{
