@@ -4,11 +4,11 @@ const React = require('react')
 const { PureComponent } = React
 const { Row, Col, Tabs } = require('antd')
 const TabPane = Tabs.TabPane
-// const { Teams } = require('./teams')
 const { CoWorkers } = require('./coWorkers')
 const { Colleague } = require('./colleague')
 const { FormattedMessage } = require('react-intl')
 const { userInfo } = ARGS
+const { array } = require('prop-types')
 
 class Contacts extends PureComponent {
   constructor(props) {
@@ -17,6 +17,7 @@ class Contacts extends PureComponent {
   }
 
   render() {
+    const { coWorks } = this.props
     return (
       <div style={{ paddingTop: '20px', overflowX: 'hidden' }}>
         <Row gutter={24}>
@@ -31,13 +32,17 @@ class Contacts extends PureComponent {
               {/*  <Teams/>*/}
               {/*</TabPane>*/}
               <TabPane tab={<FormattedMessage id="contacts.friend"/>} key="0">
-                <CoWorkers/>
+                <CoWorkers coWorks={coWorks}/>
               </TabPane>
             </Tabs>
           </Col>
         </Row>
       </div>
     )
+  }
+
+  static propTypes = {
+    coWorks: array.isRequired,
   }
 }
 

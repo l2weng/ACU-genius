@@ -15,21 +15,10 @@ const { intlShape, injectIntl } = require('react-intl')
 const axios = require('axios')
 
 const {
-  shape, string, bool
+  shape, string, bool, func
 } = require('prop-types')
 
 class UserInfoContainer extends Component {
-
-  static propTypes = {
-    project: shape({
-      file: string,
-    }).isRequired,
-    hasMsg: bool,
-    intl: intlShape.isRequired,
-  }
-  static defaultProps = {
-    hasMsg: false
-  }
 
   constructor(props) {
     super(props)
@@ -73,7 +62,6 @@ class UserInfoContainer extends Component {
   }
 
   handleInvitation = (result, messageId, createdBy, userId) =>{
-    console.log('userId',userId)
     let self = this
     axios.post(`${ARGS.apiServer}/messages/updateInvitation`, {
       result,
@@ -84,6 +72,7 @@ class UserInfoContainer extends Component {
       if (res.data.result === 'success') {
         message.success(self.props.intl.formatMessage({ id: 'common.updateSuccess' }))
         self.fitchMessages()
+        self.props.fetchCoWorks()
       } else {
         message.error(self.props.intl.formatMessage({ id: 'common.error' }))
       }
@@ -140,6 +129,18 @@ class UserInfoContainer extends Component {
         <MessageBox {...parentMethods} modalVisible={messageModalVisible} messages={messages} onUpdateInvitation={this.handleInvitation}/>
       </div>
     )
+  }
+
+  static propTypes = {
+    intl: intlShape.isRequired,
+    project: shape({
+      file: string,
+    }).isRequired,
+    hasMsg: bool.isRequired,
+    fetchCoWorks: func.isRequired
+  }
+  static defaultProps = {
+    hasMsg: false
   }
 }
 

@@ -3,12 +3,12 @@
 const React = require('react')
 const { PureComponent } = React
 const { List,  Avatar, Card, Form, Modal, message } = require('antd')
-const { getUrlFilterParams } = require('../../common/dataUtil')
 const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
 const { userInfo } = ARGS
 const _ = require('underscore')
 const axios = require('axios')
 const { WorkersTable } = require('./workersTable')
+const { array } = require('prop-types')
 
 const CoWorkerForm = Form.create()(props => {
   const { modalVisible, form, handleAdd, handleModalVisible, otherWorks } = props
@@ -37,31 +37,9 @@ const CoWorkers = injectIntl(class extends PureComponent {
 
     this.state = {
       loading: false,
-      coWorks: [],
       otherWorks: [],
       modalVisible: false,
     }
-  }
-
-  componentDidMount() {
-    if (!_.isEmpty(userInfo.user)) {
-      this.fetchCoWorks()
-    }
-  }
-
-  fetchCoWorks = () => {
-    let query = getUrlFilterParams({ userId: userInfo.user.userId, isOwner: true }, ['userId', 'isOwner'])
-    let self = this
-    this.setState({ loading: true })
-    axios.get(`${ARGS.apiServer}/graphql?query={userQueryContacts${query} { key: userId name email avatarColor }}`)
-    .then(function (response) {
-      if (response.status === 200) {
-        self.setState({ coWorks: response.data.data.userQueryContacts, loading: false })
-      }
-    })
-    .catch(function () {
-      self.setState({ loading: false })
-    })
   }
 
   handleModalVisible = flag => {
@@ -79,7 +57,8 @@ const CoWorkers = injectIntl(class extends PureComponent {
   }
 
   render() {
-    const { loading, modalVisible, coWorks, otherWorks } = this.state
+    const { loading, modalVisible, otherWorks } = this.state
+    const { coWorks } = this.props
     const parentMethods = {
       handleAdd: this.handleAdd,
       handleModalVisible: this.handleModalVisible,
@@ -109,6 +88,7 @@ const CoWorkers = injectIntl(class extends PureComponent {
   }
   static propTypes = {
     intl: intlShape.isRequired,
+    coWorks: array.isRequired,
   }
 })
 

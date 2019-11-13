@@ -15,6 +15,7 @@ const { userInfo } = ARGS
 const _ = require('underscore')
 const actions = require('../actions')
 const axios = require('axios')
+const { getUrlFilterParams } = require('../common/dataUtil')
 
 const LRSvg = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 73.38 95.84" width="1em" height="1em">
@@ -37,12 +38,37 @@ const {
 
 class Header extends React.Component {
 
-  state = { taskType: HEAD.ALL_TASKS,
-    hasMsg: false
+  state = {
+    loading: false,
+    taskType: HEAD.ALL_TASKS,
+    hasMsg: false,
+    coWorks: []
   }
 
   constructor(props) {
     super(props)
+  }
+
+  componentDidMount() {
+    if (!_.isEmpty(userInfo.user)) {
+      this.checkMsg()
+      this.fetchCoWorks()
+    }
+  }
+
+  fetchCoWorks = () => {
+    let query = getUrlFilterParams({ userId: userInfo.user.userId, isOwner: true }, ['userId', 'isOwner'])
+    let self = this
+    this.setState({ loading: true })
+    axios.get(`${ARGS.apiServer}/graphql?query={userQueryContacts${query} { key: userId name email avatarColor }}`)
+    .then(function (response) {
+      if (response.status === 200) {
+        self.setState({ coWorks: response.data.data.userQueryContacts, loading: false })
+      }
+    })
+    .catch(function () {
+      self.setState({ loading: false })
+    })
   }
 
   switchTab = (tabName) => {
@@ -73,16 +99,16 @@ class Header extends React.Component {
   render() {
 
     const { activeTab, project, projects } = this.props
-    const { taskType, hasMsg } = this.state
+    const { taskType, hasMsg, coWorks } = this.state
     const isOwner = project.owner === userInfo.user.userId
     return (
-      <Tabs defaultActiveKey={activeTab} activeKey={activeTab} onChange={this.switchTab} style={{ height: '100%' }} tabBarExtraContent={<UserInfoContainer hasMsg={hasMsg}/>} >
+      <Tabs defaultActiveKey={activeTab} activeKey={activeTab} onChange={this.switchTab} style={{ height: '100%' }} tabBarExtraContent={<UserInfoContainer hasMsg={hasMsg} fetchCoWorks={this.fetchCoWorks}/>} >
         <TabPane tab={<span><Icon component={LRSvg} size="small"/><FormattedMessage id="header.title.home"/></span>} key={HEAD.HOME} className="tab-container">
           <Workplace switchTab={this.switchTab} switchTask={this.switchTask} isOwner={isOwner} currentTaskType={taskType}/>
         </TabPane>
         <TabPane tab={<span><Icon type="edit" size="small"/><FormattedMessage id="header.title.workspace"/></span>} key={HEAD.WORKSPACE} className="tab-container"><ProjectContainer/></TabPane>
         <TabPane tab={<span><Icon type="line-chart" size="small"/><FormattedMessage id="header.title.dashboard"/></span>} key={HEAD.PROJECT} className="tab-container"><ProjectSummary activeTab={activeTab} activeProject={project} projects={projects}/></TabPane>
-        <TabPane tab={<span><Icon type="team" size="small"/><FormattedMessage id="header.title.contacts"/></span>}  key={HEAD.FRIENDS} className="tab-container"><Contacts/></TabPane>
+        <TabPane tab={<span><Icon type="team" size="small"/><FormattedMessage id="header.title.contacts"/></span>}  key={HEAD.FRIENDS} className="tab-container"><Contacts coWorks={coWorks}/></TabPane>
       </Tabs>
     )
   }
