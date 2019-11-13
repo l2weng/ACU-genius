@@ -60,9 +60,9 @@ class MessageBox extends Component {
           <span>
             {(userInfo.user.userId !== record.createdBy && record.result === null) ?
               <span>
-                <a href="javascript:;" onClick={()=>this.props.onUpdateInvitation(0, record.messageId)}><FormattedMessage id="message.accept"/></a>
+                <a href="javascript:;" onClick={()=>this.props.onUpdateInvitation(0, record.messageId, record.createdBy, record.userId)}><FormattedMessage id="message.accept"/></a>
                 <Divider type="vertical" />
-                <a href="javascript:;" onClick={()=>this.props.onUpdateInvitation(1, record.messageId)}><FormattedMessage id="message.reject"/></a>
+                <a href="javascript:;" onClick={()=>this.props.onUpdateInvitation(1, record.messageId, record.createdBy, record.userId)}><FormattedMessage id="message.reject"/></a>
               </span>
               : ''
             }

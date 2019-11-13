@@ -72,11 +72,14 @@ class UserInfoContainer extends Component {
       onClick={() => { ipc.send(USER.LOGIN) }}>登录</Button>)
   }
 
-  handleInvitation = (result, messageId) =>{
+  handleInvitation = (result, messageId, createdBy, userId) =>{
+    console.log('userId',userId)
     let self = this
     axios.post(`${ARGS.apiServer}/messages/updateInvitation`, {
       result,
-      messageId
+      messageId,
+      createdBy,
+      userId
     }).then(res=>{
       if (res.data.result === 'success') {
         message.success(self.props.intl.formatMessage({ id: 'common.updateSuccess' }))
@@ -112,7 +115,7 @@ class UserInfoContainer extends Component {
     let self = this
     let query = getUrlFilterParams({ userId: userInfo.user.userId }, ['userId'])
     axios.get(
-      `${ARGS.apiServer}/graphql?query={ messageQuery${query} { messageId title content type status result createdBy createdByName createdAt invited result} } `)
+      `${ARGS.apiServer}/graphql?query={ messageQuery${query} { messageId title content type status result createdBy createdByName createdAt invited result userId} } `)
       .then(function (response) {
         if (response.status === 200) {
           self.setState({ messages: response.data.data.messageQuery })

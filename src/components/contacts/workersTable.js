@@ -88,7 +88,6 @@ const WorkersTable = injectIntl(class extends PureComponent {
     }).then(res=>{
       if (res.data) {
         message.success(this.props.intl.formatMessage({ id: 'contacts.invitation.success' }))
-        this.props.onInvited()
       } else {
         message.error(this.props.intl.formatMessage({ id: 'common.error' }))
       }
