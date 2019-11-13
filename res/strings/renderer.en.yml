@@ -208,11 +208,12 @@ en:
     head: Message Box
     title: Title
     content: Content
-    type: Message type
+    type: Type
     status: Status
     remarks: Remarks
     createdAt: Date
     invited: Invited
+    invitor: Invitor
     action: Action
     status0: Unread
     status1: Read

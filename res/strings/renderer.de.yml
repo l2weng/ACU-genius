@@ -208,11 +208,12 @@ de:
     head: 消息列表
     title: 标题
     content: 内容
-    type: 消息类型
+    type: 类型
     status: 状态
     remarks: 备注
     createdAt: 时间
     invited: 受邀人
+    invitor: 邀请人
     action: 操作
     status0: 未读
     status1: 已阅读

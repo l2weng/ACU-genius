@@ -50,6 +50,10 @@ class MessageBox extends Component {
           <span>{moment(new Date(record.createdAt)).format('YYYY-MM-DD, HH:mm:ss')}</span>
         ),
       }, {
+        title: this.props.intl.formatMessage({ id: 'message.invitor' }),
+        dataIndex: 'createdByName',
+        key: 'createdByName'
+      }, {
         title: this.props.intl.formatMessage({ id: 'message.invited' }),
         dataIndex: 'invited',
         key: 'invited'
