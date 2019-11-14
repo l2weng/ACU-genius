@@ -192,7 +192,7 @@ de:
     addColleague: 添加同事
     addFriend: 添加好友
     form:
-      name: 姓名
+      name: 用户名
       nameLengthLimit: 请输入至少2个字符的名称！
       mobile: 手机号码
       email: 电子邮件

@@ -32,7 +32,7 @@ const WorkLog = injectIntl(class extends PureComponent {
       }, {
         title: this.props.intl.formatMessage({ id: 'summary.workLogs.role' }),
         dataIndex: 'role',
-        render: role => <div>{role}====={role === 0 ? this.props.intl.formatMessage({ id: 'contacts.friend' }) : this.props.intl.formatMessage({ id: 'contacts.colleague' })}</div>,
+        render: role => <div>{role === 0 ? this.props.intl.formatMessage({ id: 'contacts.friend' }) : this.props.intl.formatMessage({ id: 'contacts.colleague' })}</div>,
       }, {
         title: this.props.intl.formatMessage({ id: 'summary.workLogs.category.title' }),
         dataIndex: 'category',
