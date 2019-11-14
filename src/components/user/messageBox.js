@@ -82,7 +82,7 @@ class MessageBox extends Component {
         visible={this.props.modalVisible}
         footer={null}
         onCancel={() => this.props.handleModalVisible(false)} >
-        <Table columns={columns} rowKey={record=>record.messageId} dataSource={this.props.messages}
+        <Table columns={columns} rowKey={record=>record.messageId} dataSource={this.props.messages} size="middle"
           expandedRowRender={record => <p style={{ margin: 0 }}>{record.createdByName} {this.props.intl.formatMessage({ id: 'contacts.invitation.content' })}</p>}/>
       </Modal>
     )

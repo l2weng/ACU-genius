@@ -90,6 +90,9 @@ de:
       name: 用户名
       email: 邮件
       level: 级别
+      role: 角色
+      role0: 好友
+      role1: 同事
       action: 操作
       assign: 分配
     targets:

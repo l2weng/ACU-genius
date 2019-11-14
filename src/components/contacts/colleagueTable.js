@@ -93,24 +93,27 @@ class ColleagueTable extends React.Component {
         title: this.props.intl.formatMessage({ id: 'project.colleague.name' }),
         dataIndex: 'name',
         key: 'name',
-        width: '35%',
         ...this.getColumnSearchProps('name'),
       }, {
         title: this.props.intl.formatMessage({ id: 'project.colleague.email' }),
         dataIndex: 'email',
         key: 'email',
-        width: '35%',
         ...this.getColumnSearchProps('email'),
       },
-      // {
-      //   title: this.props.intl.formatMessage({ id: 'project.colleague.level' }),
-      //   key: 'level',
-      //   width: '15%',
-      // },
+      {
+        title: this.props.intl.formatMessage({ id: 'project.colleague.role' }),
+        key: 'userType',
+        filters: [{ text: this.props.intl.formatMessage({ id: 'project.colleague.role0' }), value: 0 }, { text: this.props.intl.formatMessage({ id: 'project.colleague.role1' }), value: 1 }],
+        onFilter: (value, record) => record.userType === value,
+        render: (text, record) => (
+          <span>
+            <FormattedMessage id={`project.colleague.role${record.userType}`}/>
+          </span>
+        ),
+      },
       {
         title: this.props.intl.formatMessage({ id: 'project.colleague.action' }),
         key: 'action',
-        width: '15%',
         render: (text, record) => (
           <span>
             <a href="javascript:;" onClick={()=>(this.pickUser(record.userId))}>{this.props.intl.formatMessage({ id: 'project.colleague.assign' })}</a>
@@ -137,7 +140,7 @@ class ColleagueTable extends React.Component {
         {/*  {hasSelected ? `Selected ${selectedUserIds.length} users` : ''}*/}
         {/*</span>*/}
         {/*</div>*/}
-        <Table columns={columns} rowKey={record=>record.userId} dataSource={this.props.data}/>
+        <Table columns={columns} size="middle" rowKey={record=>record.userId} dataSource={this.props.data}/>
       </div>
     )
   }

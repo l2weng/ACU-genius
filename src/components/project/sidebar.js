@@ -51,7 +51,7 @@ const ColleagueList = Form.create()(props => {
   return (
     <Modal
       destroyOnClose
-      style={{ top: 10 }}
+      style={{ top: 60 }}
       title={intl.formatMessage({ id: 'sidebar.assignTask' })}
       maskClosable={false}
       visible={modalVisible}
@@ -207,12 +207,12 @@ class ProjectSidebar extends React.PureComponent {
 
   handleAddWorkers = (type, syncTaskId, listId, defaultIdx = []) => {
     let self = this
-    let query = getUrlFilterParams({ companyId: userInfo.user.companyId }, ['companyId'])
+    let query = getUrlFilterParams({ companyId: userInfo.user.companyId, userId: userInfo.user.userId }, ['companyId', 'userId'])
 
-    axios.get(`${ARGS.apiServer}/graphql?query={userQueryActiveContacts${query} { key: userId userId name email status phone userType userTypeDesc statusDesc avatarColor machineId prefix }}`)
+    axios.get(`${ARGS.apiServer}/graphql?query={queryColleaguesAndFriends${query} { key: userId userId name email status phone userType userTypeDesc statusDesc avatarColor machineId prefix }}`)
     .then(function (response) {
       if (response.status === 200) {
-        self.setState({ colleagues: response.data.data.userQueryActiveContacts, defaultIdx, modalVisible: true ,assignType: type, syncTaskId: syncTaskId, listId })
+        self.setState({ colleagues: response.data.data.queryColleaguesAndFriends, defaultIdx, modalVisible: true ,assignType: type, syncTaskId: syncTaskId, listId })
         // self.setState({ modalVisible: true })
       }
     })

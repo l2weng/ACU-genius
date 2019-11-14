@@ -90,6 +90,9 @@ en:
       name: Username
       email: E-mail
       level: Level
+      role: Role
+      role0: Friend
+      role1: Colleague
       action: Action
       assign: Assign
     targets:

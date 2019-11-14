@@ -69,7 +69,7 @@ class TargetForm extends Component {
           <FormItem {...formItemLayout} label={<FormattedMessage id="project.targets.name"/>}>
             {getFieldDecorator('name', {
               rules: [{ required: true, message: this.props.intl.formatMessage({ id: 'project.targets.nameRequired' }), min: 1 }],
-            })(<Input placeholder="请输入" />)}
+            })(<Input placeholder={this.props.intl.formatMessage({ id: 'common.enterPlease' })} />)}
           </FormItem>
           <FormItem {...formItemLayout} label={<FormattedMessage id="project.targets.labelColor"/>}>
             {getFieldDecorator('circlePicker', {
