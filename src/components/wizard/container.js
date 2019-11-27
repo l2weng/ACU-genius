@@ -12,10 +12,19 @@ const actions = require('../../actions')
 const sanitize = require('sanitize-filename')
 const { blank } = require('../../common/util')
 const { existsSync: exists } = require('fs')
+const { Spin } = require('antd')
 const { userInfo } = ARGS
 const uuid = require('uuid/v4')
 
 class WizardContainer extends PureComponent {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      loading: false,
+    }
+  }
+
   get hasDefaultFilename() {
     return this.props.project.file === this.getDefaultFilename()
   }
@@ -34,8 +43,11 @@ class WizardContainer extends PureComponent {
 
   handleComplete = () => {
     const { file } = this.props.project
-    this.props.project.file = resolve(dirname(file), `${uuid()}.lbr`)
-    this.props.onComplete({ ...this.props.project, owner: userInfo.user.userId }, { truncate: true })
+    if(this.state.loading===false){
+      this.props.project.file = resolve(dirname(file), `${uuid()}.lbr`)
+      this.props.onComplete({ ...this.props.project, owner: userInfo.user.userId }, { truncate: true })
+      this.setState({loading:true})
+    }
   }
 
   handleNameChange = (name) => {
@@ -58,6 +70,7 @@ class WizardContainer extends PureComponent {
   render() {
     return (
       <div className="wizard">
+        <Spin spinning={this.state.loading}>
         <Toolbar/>
         <Steps>
           <ProjectStep {...this.props.project}
@@ -67,6 +80,7 @@ class WizardContainer extends PureComponent {
             onFileSelect={this.handleFileSelect}
             onComplete={this.handleComplete}/>
         </Steps>
+        </Spin>
       </div>
     )
   }
