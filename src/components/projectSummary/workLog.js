@@ -4,7 +4,7 @@ const React = require('react')
 const { PureComponent } = React
 const { array, object, bool, func } = require('prop-types')
 const { Table } = require('antd')
-const moment = require('moment')
+const moment = require('moment-timezone')
 const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
 
 const WorkLog = injectIntl(class extends PureComponent {
@@ -56,7 +56,7 @@ const WorkLog = injectIntl(class extends PureComponent {
       }, {
         title: this.props.intl.formatMessage({ id: 'summary.workLogs.completionDate' }),
         dataIndex: 'finishedTime',
-        render: finishedTime=><div>{moment(new Date(finishedTime)).format('YYYY-MM-DD, HH:mm:ss')}</div>,
+        render: finishedTime=><div>{moment(new Date(finishedTime)).tz(moment.tz.guess()).format('YYYY-MM-DD HH:mm:ss a')}</div>,
       }
       // , {
       //   title: '操作',

@@ -9,7 +9,7 @@ const { IconChevron16, IconChevron17 } = require('../icons')
 const { func, object, array } = require('prop-types')
 const { emit } = require('../../dom')
 const { FormattedMessage } = require('react-intl')
-const moment = require('moment')
+const moment = require('moment-timezone')
 const __ = require('underscore')
 const SkipSvg = () => (
   <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -90,7 +90,7 @@ class EsperFootToolbar extends PureComponent {
   render() {
     const { photo, selections } = this.props
     let modifiedTime = ''
-    if (photo) modifiedTime = moment(new Date(photo.modified)).format('YYYY-MM-DD HH:mm:ss a')
+    if (photo) modifiedTime = moment(new Date(photo.modified)).tz(moment.tz.guess()).format('YYYY-MM-DD HH:mm:ss a')
 
     return (
       <Toolbar isDraggable={false}>
@@ -99,7 +99,7 @@ class EsperFootToolbar extends PureComponent {
             <ToolGroup>
               <FormattedMessage id="footer.modified"/>:
               {(selections && selections.length > 0) ? `${moment(
-                new Date(selections[selections.length - 1].updatedTime))
+                new Date(selections[selections.length - 1].updatedTime)).tz(moment.tz.guess())
                   .format('YYYY-MM-DD HH:mm:ss a')}` :
                 `${modifiedTime}`}
             </ToolGroup>

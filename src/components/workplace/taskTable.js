@@ -7,6 +7,7 @@ const { array, func, number } = require('prop-types')
 const { HEAD } = require('../../constants')
 const { getTaskStatusBadge } = require('../../common/dataUtil')
 const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
+const moment = require('moment-timezone')
 
 const TasksTable = injectIntl(class extends React.Component {
   state = {
@@ -117,12 +118,7 @@ const TasksTable = injectIntl(class extends React.Component {
         render: (text, record) => (
           <div><a href="javascript:;" onClick={()=>this.checkProject(record.project.projectId)}>{record.project.name}</a></div>
         ),
-      }, {
-        title: <FormattedMessage id="home.task.progress"/>,
-        dataIndex: 'progress',
-        key: 'progress',
-        width: '15%',
-      }, {
+      },  {
         title: <FormattedMessage id="home.task.status"/>,
         dataIndex: 'workStatus',
         key: 'workStatus',
@@ -147,6 +143,14 @@ const TasksTable = injectIntl(class extends React.Component {
         onFilter: (value, record) => record.workStatus === value,
         render: (text, record) => (
           <div><Badge status={getTaskStatusBadge(record.workStatus)} text={this.getTaskStatusDesc(record.workStatus)} /></div>
+        ),
+      }, {
+        title: <FormattedMessage id="home.task.createdAt"/>,
+        dataIndex: 'createdAt',
+        key: 'createdAt',
+        width: '15%',
+        render: (text, record) => (
+          <div>{moment(record.createdAt).tz(moment.tz.guess()).format('YYYY-MM-DD HH:mm:ss a')}</div>
         ),
       }, {
         title: <FormattedMessage id="home.task.action"/>,

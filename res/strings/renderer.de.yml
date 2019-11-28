@@ -157,6 +157,7 @@ de:
     task:
       involvedTasks: 参与的任务
       allTasks: 全部任务
+      createdAt: 创建时间
       myTasks: 我的任务
       name: 名称
       project: 项目
