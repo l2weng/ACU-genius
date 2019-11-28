@@ -120,6 +120,7 @@ en:
     password: Password
     registerNow: Register now
     forgotPassword: Forgot password
+    loginError: Username or password is incorrect.
   registration:
     title: Create your account
     start: Create your first project

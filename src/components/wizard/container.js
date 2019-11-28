@@ -43,10 +43,10 @@ class WizardContainer extends PureComponent {
 
   handleComplete = () => {
     const { file } = this.props.project
-    if(this.state.loading===false){
+    if (this.state.loading === false) {
       this.props.project.file = resolve(dirname(file), `${uuid()}.lbr`)
       this.props.onComplete({ ...this.props.project, owner: userInfo.user.userId }, { truncate: true })
-      this.setState({loading:true})
+      this.setState({ loading: true })
     }
   }
 
@@ -71,15 +71,15 @@ class WizardContainer extends PureComponent {
     return (
       <div className="wizard">
         <Spin spinning={this.state.loading}>
-        <Toolbar/>
-        <Steps>
-          <ProjectStep {...this.props.project}
-            hasDefaultFilename={this.hasDefaultFilename}
-            onBaseChange={this.handleBaseChange}
-            onNameChange={this.handleNameChange}
-            onFileSelect={this.handleFileSelect}
-            onComplete={this.handleComplete}/>
-        </Steps>
+          <Toolbar/>
+          <Steps>
+            <ProjectStep {...this.props.project}
+              hasDefaultFilename={this.hasDefaultFilename}
+              onBaseChange={this.handleBaseChange}
+              onNameChange={this.handleNameChange}
+              onFileSelect={this.handleFileSelect}
+              onComplete={this.handleComplete}/>
+          </Steps>
         </Spin>
       </div>
     )

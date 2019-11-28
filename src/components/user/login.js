@@ -3,7 +3,7 @@
 const React = require('react')
 const { PureComponent, Component } = React
 const { injectIntl, intlShape, FormattedMessage } = require('react-intl')
-const { message } = require('antd')
+const { message, Spin } = require('antd')
 const { bool } = require('prop-types')
 const { Toolbar } = require('../toolbar')
 const axios = require('axios')
@@ -20,21 +20,29 @@ const FormItem = Form.Item
 
 class LoginForm extends Component {
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      loading: false,
+    }
+  }
+
   handleSubmit = (e) => {
     e.preventDefault()
+    this.setState({ loading: true })
+    let self = this
     this.props.form.validateFields((err, values) => {
       if (!err) {
         values.ip = getLocalIP()
         axios.post(`${ARGS.apiServer}/auth`, values)
         .then(function (response) {
           if (response.status === 200) {
-            message.success('Login Success', 0.5, ()=>{
-              ipc.send(USER.LOGINED, { data: response.data })
-            })
+            ipc.send(USER.LOGINED, { data: response.data })
           }
         })
         .catch(function (error) {
-          message.warning('用户名密码错误, 请重试')
+          self.setState({ loading: false })
+          message.error(self.props.intl.formatMessage({ id: 'login.loginError' }))
         })
       }
     })
@@ -44,29 +52,31 @@ class LoginForm extends Component {
     const { getFieldDecorator } = this.props.form
     const { intl } = this.props
     return (
-      <Form onSubmit={this.handleSubmit} className="login-form">
-        <FormItem>
-          {getFieldDecorator('username', {
-            rules: [{ required: true, message: this.props.intl.formatMessage({ id: 'registration.username.required' }) }],
-          })(
-            <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={intl.formatMessage({ id: 'login.username' })} />
+      <Spin spinning={this.state.loading}>
+        <Form onSubmit={this.handleSubmit} className="login-form">
+          <FormItem>
+            {getFieldDecorator('username', {
+              rules: [{ required: true, message: this.props.intl.formatMessage({ id: 'registration.username.required' }) }],
+            })(
+              <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={intl.formatMessage({ id: 'login.username' })} />
             )}
-        </FormItem>
-        <FormItem>
-          {getFieldDecorator('password', {
-            rules: [{ required: true, message: this.props.intl.formatMessage({ id: 'registration.password.required' }) }],
-          })(
-            <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder={intl.formatMessage({ id: 'login.password' })} />
+          </FormItem>
+          <FormItem>
+            {getFieldDecorator('password', {
+              rules: [{ required: true, message: this.props.intl.formatMessage({ id: 'registration.password.required' }) }],
+            })(
+              <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder={intl.formatMessage({ id: 'login.password' })} />
             )}
-        </FormItem>
-        <FormItem>
-          {/*<Checkbox>Remember me</Checkbox>*/}
-          <a className="login-form-forgot" onClick={() => shell.openExternal(this.props.intl.formatMessage({ id: 'registration.password.forgot' }))}>{intl.formatMessage({ id: 'login.forgotPassword' })}?</a>
-          <Button type="primary" htmlType="submit" className="login-form-button">
-            <FormattedMessage id={'login.title'}/>
-          </Button>
-        </FormItem>
-      </Form>
+          </FormItem>
+          <FormItem>
+            {/*<Checkbox>Remember me</Checkbox>*/}
+            <a className="login-form-forgot" onClick={() => shell.openExternal(this.props.intl.formatMessage({ id: 'registration.password.forgot' }))}>{intl.formatMessage({ id: 'login.forgotPassword' })}?</a>
+            <Button type="primary" htmlType="submit" className="login-form-button">
+              <FormattedMessage id={'login.title'}/>
+            </Button>
+          </FormItem>
+        </Form>
+      </Spin>
     )
   }
 
