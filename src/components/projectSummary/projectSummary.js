@@ -10,7 +10,7 @@ const { WorkLog } = require('./workLog')
 // const { Members } = require('./members')
 const __ = require('underscore')
 const { PHOTO, HEAD } = require('../../constants')
-const { array, object, string } = require('prop-types')
+const { array, object, string, bool } = require('prop-types')
 const TabPane = Tabs.TabPane
 const Option = Select.Option
 const axios = require('axios')
@@ -164,8 +164,12 @@ class ProjectSummary extends PureComponent {
   }
 
   componentWillReceiveProps(props) {
-    if (props.activeTab === HEAD.PROJECT && this.state.cProjectId !== props.activeProject.syncProjectId) {
-      this.handleSelectProject(props.activeProject.syncProjectId)
+    if (props.activeTab === HEAD.PROJECT) {
+      if (this.state.cProjectId !== props.activeProject.syncProjectId) {
+        this.handleSelectProject(props.activeProject.syncProjectId)
+      } else if (props.needRefresh && this.props.needRefresh !== props.needRefresh) {
+        this.fetchSummary(this.state.cProjectId)
+      }
     }
   }
 
@@ -234,7 +238,8 @@ class ProjectSummary extends PureComponent {
   static propTypes = {
     projects: array,
     activeProject: object,
-    activeTab: string
+    activeTab: string,
+    needRefresh: bool
   }
 }
 

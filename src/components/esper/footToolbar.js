@@ -49,15 +49,15 @@ class EsperFootToolbar extends PureComponent {
     const submitDisable = selections.length <= 0
     const photoDisable = !__.isEmpty(photo) && !photo.syncPhotoId
     const confirmButton = (
-      <span style={{ paddingRight: '5px' }}><Button type="default" size="small" onClick={this.confirmPhoto} disabled={submitDisable || photoDisable}>
+      <span><Button type="default" size="small" onClick={this.confirmPhoto} disabled={submitDisable || photoDisable}>
         <Icon type="save"/>
         <FormattedMessage id="footer.submit"/>
       </Button></span>)
     const skipButton = (
-      <span><Button type="default" size="small" onClick={this.ignorePhoto}
+      <span style={{ paddingRight: '10px' }}><Button type="default" size="small" onClick={this.ignorePhoto}
         disabled={photoDisable}>
-        <FormattedMessage id="footer.skip"/>
         <Icon component={SkipSvg}/>
+        <FormattedMessage id="footer.skip"/>
       </Button></span>)
 
     return (<div className="toolbar-center" style={{ margin: 'auto' }}>
@@ -69,15 +69,15 @@ class EsperFootToolbar extends PureComponent {
         <div style={{ display: 'inline-block', paddingTop: '2px' }}>
           {photoDisable ?
             <Tooltip placement="top" title={<FormattedMessage id="footer.noSyncMessage"/>}>
+              {skipButton}
+            </Tooltip> : skipButton }
+          {photoDisable ?
+            <Tooltip placement="top" title={<FormattedMessage id="footer.noSyncMessage"/>}>
               {confirmButton}
             </Tooltip> : submitDisable ?
               <Tooltip placement="top" title={<FormattedMessage id="footer.nothingMessage"/>}>
                 {confirmButton}
               </Tooltip> : confirmButton }
-          {photoDisable ?
-            <Tooltip placement="top" title={<FormattedMessage id="footer.noSyncMessage"/>}>
-              {skipButton}
-            </Tooltip> : skipButton }
         </div>
         <LRButton
           className="next-button"
