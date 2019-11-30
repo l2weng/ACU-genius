@@ -83,9 +83,9 @@ class Workplace extends PureComponent {
   renderTitle(item) {
     let cloudMark = ''
     if (item.syncStatus) {
-      cloudMark = <Icon type="cloud" theme="twoTone" twoToneColor={'#8da7d3'}  style={{ float: 'right', paddingTop: '4px', paddingRight: '5px' }}/>
+      cloudMark = <Icon type="cloud" theme="twoTone" style={{ float: 'right', paddingTop: '4px', paddingRight: '5px' }}/>
     } else {
-      cloudMark = <Icon type="eye-invisible"theme="twoTone" twoToneColor={'#e96529'} style={{ float: 'right', paddingTop: '4px', paddingRight: '5px'  }}/>
+      cloudMark = <Icon type="eye-invisible" theme="twoTone" twoToneColor={'#e96529'} style={{ float: 'right', paddingTop: '4px', paddingRight: '5px'  }}/>
     }
     return (<div style={{ color: 'rgba(0,0,0,.65)' }}>{item.name}{cloudMark}</div>)
   }
@@ -141,10 +141,10 @@ class Workplace extends PureComponent {
                             }}>
                               {item.isOwner ?
                                 <Tooltip placement="right" title={this.props.intl.formatMessage({ id: 'home.project.myProject' })}>
-                                  <Icon type="crown" theme="twoTone" style={{ position: 'absolute', top: '0px', right: '3px', fontSize: '20px' }} twoToneColor="#ffbb48" />
+                                  <Icon type="crown" theme="twoTone" style={{ position: 'absolute', top: '3px', right: '3px', fontSize: '18px' }} twoToneColor="#ffbb48" />
                                 </Tooltip> :
                                 <Tooltip placement="right" title={this.props.intl.formatMessage({ id: 'home.project.involvedProject' })}>
-                                  <Icon type="flag" theme="twoTone" style={{ position: 'absolute', top: '0px', right: '3px', fontSize: '20px' }} />
+                                  <Icon type="flag" theme="twoTone" style={{ position: 'absolute', top: '3px', right: '3px', fontSize: '18px' }} twoToneColor="#e96529"  />
                                 </Tooltip>
                               }
                               <img style={{
