@@ -142,8 +142,11 @@ class Workplace extends PureComponent {
                               {item.isOwner ?
                                 <Tooltip placement="right" title={this.props.intl.formatMessage({ id: 'home.project.myProject' })}>
                                   <Icon type="crown" theme="twoTone" style={{ position: 'absolute', top: '0px', right: '3px', fontSize: '20px' }} twoToneColor="#ffbb48" />
+                                </Tooltip> :
+                                <Tooltip placement="right" title={this.props.intl.formatMessage({ id: 'home.project.involvedProject' })}>
+                                  <Icon type="flag" theme="twoTone" style={{ position: 'absolute', top: '0px', right: '3px', fontSize: '20px' }} />
                                 </Tooltip>
-                                : ''}
+                              }
                               <img style={{
                                 width: 180,
                                 height: 180,

@@ -156,6 +156,7 @@ de:
       notSyncMessageAfter: 尚未同步上云, 暂时无法查看
       notSyncMessageBefore: 项目
       myProject: 我的项目
+      involvedProject: 参与的项目
     task:
       involvedTasks: 参与的任务
       allTasks: 全部任务
