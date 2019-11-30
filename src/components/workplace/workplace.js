@@ -3,7 +3,7 @@
 const React = require('react')
 const { PureComponent } = React
 const { connect } = require('react-redux')
-const { Row, Col, Card, List, Radio, Icon, Progress } = require('antd')
+const { Row, Col, Card, List, Radio, Icon, Progress, Tooltip } = require('antd')
 const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
 
@@ -138,12 +138,18 @@ class Workplace extends PureComponent {
                           <div>
                             <div style={{
                               overflow: 'hidden',
-                            }}><img style={{
-                              width: 180,
-                              height: 180,
-                              objectFit: 'cover',
-                            }} alt={item.name}
-                              src={this.getCacheCover(item.syncCover
+                            }}>
+                              {item.isOwner ?
+                                <Tooltip placement="right" title={this.props.intl.formatMessage({ id: 'home.project.myProject' })}>
+                                  <Icon type="crown" theme="twoTone" style={{ position: 'absolute', top: '0px', right: '3px', fontSize: '20px' }} twoToneColor="#ffbb48" />
+                                </Tooltip>
+                                : ''}
+                              <img style={{
+                                width: 180,
+                                height: 180,
+                                objectFit: 'cover',
+                              }} alt={item.name}
+                                src={this.getCacheCover(item.syncCover
                                       ? item.syncCover
                                       : item.cover)}/>
                             </div>

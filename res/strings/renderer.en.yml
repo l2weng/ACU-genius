@@ -155,6 +155,7 @@ en:
       ongoingProject: Ongoing Projects
       notSyncMessageAfter: not yet synced to the cloud, temporarily unavailable to view.
       notSyncMessageBefore: Project
+      myProject: My Project
     task:
       involvedTasks: Involved tasks
       allTasks: All tasks

@@ -53,15 +53,15 @@ class AppPrefs extends PureComponent {
             options={this.props.dupOptions}
             onChange={this.props.onSettingsUpdate}/>
           <hr/>
-          <FormSelect
-            id="prefs.app.style.theme"
-            name="theme"
-            isRequired
-            isSelectionHidden
-            value={this.props.settings.theme}
-            options={this.props.themes}
-            onChange={this.handleThemeChange}/>
-          <hr/>
+          {/*<FormSelect*/}
+          {/*  id="prefs.app.style.theme"*/}
+          {/*  name="theme"*/}
+          {/*  isRequired*/}
+          {/*  isSelectionHidden*/}
+          {/*  value={this.props.settings.theme}*/}
+          {/*  options={this.props.themes}*/}
+          {/*  onChange={this.handleThemeChange}/>*/}
+          {/*<hr/>*/}
           <FormSelect
             id="prefs.app.locale.locale"
             name="locale"
