@@ -40,6 +40,8 @@ module.exports = {
 
   STATUS: {
     OPEN: 0, SKIPPED: 1, SUBMITTED: 2,
+    en: { 0: 'Open', 1: 'Skipped', 2: 'Submitted' },
+    de: { 0: '未提交', 1: '已跳过', 2: '已提交' }
   },
 
   TEMPLATE: 'https://tropy.org/v1/templates/photo'

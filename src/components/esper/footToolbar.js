@@ -89,7 +89,6 @@ class EsperFootToolbar extends PureComponent {
 
   render() {
     const { photo, selections } = this.props
-    console.log(photo)
     let modifiedTime = ''
     if (photo) modifiedTime = moment(new Date(photo.modified)).tz(moment.tz.guess()).format('YYYY-MM-DD HH:mm:ss')
 

@@ -42,7 +42,7 @@ const format = {
   status(value, locale = ARGS.locale) {
     if (typeof value === 'string') value = parseInt(value, 10)
     if (!Number.isFinite(value)) return null
-    return PHOTO.STATUS.EN[value]
+    return PHOTO.STATUS[locale][value]
   },
 
   auto(value, type) {
