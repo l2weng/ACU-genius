@@ -190,6 +190,10 @@ de:
     nothingMessage: 暂未发现标注数据需要提交
     noSyncMessage: 请先同步项目至云端
     modified: 修改时间
+    status: 状态
+    photoWorkStatus0: 未提交
+    photoWorkStatus1: 已跳过
+    photoWorkStatus2: 已提交
   contacts:
     colleague: 同事
     friend: 好友

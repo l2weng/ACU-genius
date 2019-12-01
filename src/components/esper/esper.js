@@ -679,7 +679,7 @@ class Esper extends PureComponent {
   render() {
     const { isDisabled, isSelectionActive, tabIndex } = this
     const tool = this.state.quicktool || this.state.tool
-console.log(this.props.photo)
+
     return (
       <section
         ref={this.setContainer}

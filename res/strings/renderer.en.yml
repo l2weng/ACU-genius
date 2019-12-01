@@ -190,6 +190,10 @@ en:
     nothingMessage: Nothing needs to be submitted
     noSyncMessage: Please sync project to cloud firstly
     modified: Date Modified
+    status: Status
+    photoWorkStatus0: Unsubmitted
+    photoWorkStatus1: Skipped
+    photoWorkStatus2: submitted
   contacts:
     colleague: Colleagues
     friend: Friends

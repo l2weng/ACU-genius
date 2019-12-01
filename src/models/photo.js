@@ -160,7 +160,8 @@ module.exports = {
             protocol,
             mimetype,
             checksum,
-            orientation
+            orientation,
+            workStatus
           FROM subjects
             JOIN images USING (id)
             JOIN photos USING (id)${

@@ -2,8 +2,8 @@
 
 const React = require('react')
 const { PureComponent } = React
-const { Toolbar, ToolGroup, ToolbarLeft } = require('../toolbar')
-const { Button, Icon, Tooltip } = require('antd')
+const { Toolbar, ToolGroup, ToolbarLeft, ToolbarRight } = require('../toolbar')
+const { Button, Icon, Tooltip, Tag } = require('antd')
 const { Button: LRButton } = require('../button')
 const { IconChevron16, IconChevron17 } = require('../icons')
 const { func, object, array } = require('prop-types')
@@ -89,19 +89,21 @@ class EsperFootToolbar extends PureComponent {
 
   render() {
     const { photo, selections } = this.props
+    console.log(photo)
     let modifiedTime = ''
-    if (photo) modifiedTime = moment(new Date(photo.modified)).tz(moment.tz.guess()).format('YYYY-MM-DD HH:mm:ss a')
+    if (photo) modifiedTime = moment(new Date(photo.modified)).tz(moment.tz.guess()).format('YYYY-MM-DD HH:mm:ss')
 
     return (
       <Toolbar isDraggable={false}>
         <ToolbarLeft>
-          <div style={{ position: 'fixed', fontSize: '12px' }}>
+          <div style={{ position: 'fixed', fontSize: '12px', display: 'flex' }}>
+            <FormattedMessage id="footer.modified"/>:
+            {(selections && selections.length > 0) ? `${moment(
+              new Date(selections[selections.length - 1].updatedTime)).tz(moment.tz.guess())
+              .format('YYYY-MM-DD HH:mm:ss')}` :
+              `${modifiedTime}`}
             <ToolGroup>
-              <FormattedMessage id="footer.modified"/>:
-              {(selections && selections.length > 0) ? `${moment(
-                new Date(selections[selections.length - 1].updatedTime)).tz(moment.tz.guess())
-                  .format('YYYY-MM-DD HH:mm:ss a')}` :
-                `${modifiedTime}`}
+              {photo ? <span>&nbsp;&nbsp;<Tag style={{ lineHeight: '16px', height: '18px' }} color={photo.workStatus === 0 ? '#f50' : photo.workStatus === 1 ? '#2db7f5' : '#87d068'}>    <FormattedMessage id={`footer.photoWorkStatus${photo.workStatus}`}/></Tag></span> : ''}
             </ToolGroup>
           </div>
         </ToolbarLeft>
