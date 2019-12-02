@@ -316,15 +316,6 @@
   }
 }
 
-.newButton {
-  background-color: #fff;
-  border-color: hsv(0, 0, 85%);
-  border-radius: 2px;
-  color: fade(#000, 45%);
-  width: 100%;
-  height: 142px;
-}
-
 .cardAvatar {
   width: 48px;
   height: 48px;
@@ -370,6 +361,22 @@
 .extraContentSearch {
   margin-left: 16px;
   width: 272px;
+}
+
+.newButton {
+  background-color: #fff;
+  border-color: #40a9ff;
+  border-radius: 2px;
+  color: #40a9ff;
+  width: 100%;
+  height: 188px;
+}
+
+.coverIcon {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  font-size: 18px;
 }
 
 .ant-card-meta-detail>div:not(:last-child){

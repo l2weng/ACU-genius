@@ -3,7 +3,7 @@
 const React = require('react')
 const { PureComponent } = React
 const { connect } = require('react-redux')
-const { Row, Col, Card, List, Radio, Icon, Progress, Tooltip } = require('antd')
+const { Row, Col, Card, List, Radio, Icon, Progress, Tooltip, Button } = require('antd')
 const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
 
@@ -119,52 +119,56 @@ class Workplace extends PureComponent {
           <Col span={24}>
             <Card
               bordered={false}
-              title={<FormattedMessage id="home.project.ongoingProject"/>}
-              extra={<a href="#" onClick={debounce(this.createNewProject, 300)}><FormattedMessage id="home.project.new"/></a>}>
+              title={<FormattedMessage id="home.project.ongoingProject"/>}>
               <List
                 rowKey="id"
                 loading={false}
                 grid={{ gutter: 24, lg: 6, md: 3, sm: 2, xs: 1 }}
-                dataSource={[...projects]}
+                dataSource={['', ...projects]}
                 renderItem={item =>
-                  <List.Item key={item.projectId}>
-                    <div onClick={()=>this.openProject(
+                  item ? (
+                    <List.Item key={item.projectId}>
+                      <div onClick={()=>this.openProject(
                       item)}>
-                      <Card
-                        hoverable
-                        bodyStyle={{ padding: '10px 5px 10px 8px' }}
-                        style={{ width: 180, height: 240 }}
-                        cover={
-                          <div>
-                            <div style={{
-                              overflow: 'hidden',
-                            }}>
-                              {item.isOwner ?
-                                <Tooltip placement="right" title={this.props.intl.formatMessage({ id: 'home.project.myProject' })}>
-                                  <Icon type="crown" theme="twoTone" style={{ position: 'absolute', top: '3px', right: '3px', fontSize: '18px' }} twoToneColor="#ffbb48" />
-                                </Tooltip> :
-                                <Tooltip placement="right" title={this.props.intl.formatMessage({ id: 'home.project.involvedProject' })}>
-                                  <Icon type="flag" theme="twoTone" style={{ position: 'absolute', top: '3px', right: '3px', fontSize: '18px' }} twoToneColor="#e96529"  />
-                                </Tooltip>
+                        <Card
+                          hoverable
+                          bodyStyle={{ padding: '10px 5px 10px 8px' }}
+                          style={{ width: 180, height: 240 }}
+                          cover={
+                            <div>
+                              <div style={{
+                                overflow: 'hidden',
+                              }}>
+                                {item.isOwner ?
+                                  <Tooltip placement="right" title={this.props.intl.formatMessage({ id: 'home.project.myProject' })}>
+                                    <Icon type="crown" theme="twoTone" className="coverIcon" twoToneColor="#ffbb48" />
+                                  </Tooltip> :
+                                  <Tooltip placement="right" title={this.props.intl.formatMessage({ id: 'home.project.involvedProject' })}>
+                                    <Icon type="flag" theme="twoTone" className="coverIcon" twoToneColor="#e96529"  />
+                                  </Tooltip>
                               }
-                              <img style={{
-                                width: 180,
-                                height: 180,
-                                objectFit: 'cover',
-                              }} alt={item.name}
-                                src={this.getCacheCover(item.syncCover
+                                <img style={{
+                                  width: 180,
+                                  height: 180,
+                                  objectFit: 'cover',
+                                }} alt={item.name}
+                                  src={this.getCacheCover(item.syncCover
                                       ? item.syncCover
                                       : item.cover)}/>
-                            </div>
-                          </div>}>
-                        <Meta
-                          title={this.renderTitle(item)} description={
-                            <div style={{ width: (item.progress < 10 || item.progress === 100) ? '169px' : '162px' }}>
-                              <Progress percent={item.progress} size="small"/>
-                            </div>}/>
-                      </Card>
-                    </div>
-                  </List.Item>
+                              </div>
+                            </div>}>
+                          <Meta
+                            title={this.renderTitle(item)} description={
+                              <div style={{ width: (item.progress < 10 || item.progress === 100) ? '169px' : '162px' }}>
+                                <Progress percent={item.progress} size="small"/>
+                              </div>}/>
+                        </Card>
+                      </div>
+                    </List.Item>) : (<List.Item>
+                      <Button type="dashed" className="newButton" onClick={debounce(this.createNewProject, 300)} style={{ width: 180, height: 240 }}>
+                        <Icon type="plus" /> <FormattedMessage id="home.project.new"/>
+                      </Button>
+                    </List.Item>)
                 }/>
             </Card>
             <Card
