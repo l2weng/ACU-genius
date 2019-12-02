@@ -165,7 +165,7 @@ class Workplace extends PureComponent {
                         </Card>
                       </div>
                     </List.Item>) : (<List.Item>
-                      <Button type="dashed" className="newButton" onClick={debounce(this.createNewProject, 300)} style={{ width: 176, height: 236 }}>
+                      <Button type="dashed" className="newButton" onClick={debounce(this.createNewProject, 300)} style={{ width: 178, height: 238 }}>
                         <Icon type="plus" /> <FormattedMessage id="home.project.new"/>
                       </Button>
                     </List.Item>)
