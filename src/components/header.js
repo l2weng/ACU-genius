@@ -43,7 +43,6 @@ class Header extends React.Component {
     taskType: HEAD.ALL_TASKS,
     hasMsg: false,
     coWorks: [],
-    needRefresh: false
   }
 
   constructor(props) {
@@ -79,12 +78,12 @@ class Header extends React.Component {
         this.props.reloadProjects(true, userInfo.user.userId)
         this.props.reloadTasks(userInfo.user.userId, this.state.taskType)
       }
-      this.setState({ needRefresh: false })
+      this.needRefresh = false
     } else if (tabName === HEAD.FRIENDS) {
       this.fetchCoWorks()
-      this.setState({ needRefresh: false })
+      this.needRefresh = false
     } else if (tabName === HEAD.PROJECT) {
-      this.setState({ needRefresh: true })
+      this.needRefresh = true
     }
     this.props.switchTab(tabName, project)
   }
@@ -103,7 +102,7 @@ class Header extends React.Component {
   render() {
 
     const { activeTab, project, projects } = this.props
-    const { taskType, hasMsg, coWorks, needRefresh } = this.state
+    const { taskType, hasMsg, coWorks } = this.state
     const isOwner = project.owner === userInfo.user.userId
     return (
       <Tabs defaultActiveKey={activeTab} activeKey={activeTab} onChange={this.switchTab} style={{ height: '100%' }} tabBarExtraContent={<UserInfoContainer hasMsg={hasMsg} fetchCoWorks={this.fetchCoWorks}/>} >
@@ -111,7 +110,7 @@ class Header extends React.Component {
           <Workplace switchTab={this.switchTab} switchTask={this.switchTask} isOwner={isOwner} currentTaskType={taskType}/>
         </TabPane>
         <TabPane tab={<span><Icon type="edit" size="small"/><FormattedMessage id="header.title.workspace"/></span>} key={HEAD.WORKSPACE} className="tab-container"><ProjectContainer/></TabPane>
-        <TabPane tab={<span><Icon type="line-chart" size="small"/><FormattedMessage id="header.title.dashboard"/></span>} key={HEAD.PROJECT} className="tab-container"><ProjectSummary activeTab={activeTab} activeProject={project} projects={projects} needRefresh={needRefresh}/></TabPane>
+        <TabPane tab={<span><Icon type="line-chart" size="small"/><FormattedMessage id="header.title.dashboard"/></span>} key={HEAD.PROJECT} className="tab-container"><ProjectSummary activeTab={activeTab} activeProject={project} projects={projects} needRefresh={this.needRefresh}/></TabPane>
         <TabPane tab={<span><Icon type="team" size="small"/><FormattedMessage id="header.title.contacts"/></span>}  key={HEAD.FRIENDS} className="tab-container"><Contacts coWorks={coWorks}/></TabPane>
       </Tabs>
     )
