@@ -2,7 +2,7 @@
 
 const React = require('react')
 const { PureComponent } = React
-const { Toolbar, ToolGroup, ToolbarLeft, ToolbarRight } = require('../toolbar')
+const { Toolbar, ToolGroup, ToolbarLeft } = require('../toolbar')
 const { Button, Icon, Tooltip, Tag } = require('antd')
 const { Button: LRButton } = require('../button')
 const { IconChevron16, IconChevron17 } = require('../icons')
@@ -49,10 +49,10 @@ class EsperFootToolbar extends PureComponent {
     const submitDisable = selections.length <= 0
     const photoDisable = !__.isEmpty(photo) && !photo.syncPhotoId
     const confirmButton = (
-      <span><Button type="default" size="small" onClick={this.confirmPhoto} disabled={submitDisable || photoDisable}>
+      <Button type="default" size="small" onClick={this.confirmPhoto} disabled={submitDisable || photoDisable}>
         <Icon type="save"/>
         <FormattedMessage id="footer.submit"/>
-      </Button></span>)
+      </Button>)
     const skipButton = (
       <span style={{ paddingRight: '10px' }}><Button type="default" size="small" onClick={this.ignorePhoto}
         disabled={photoDisable}>
@@ -63,23 +63,25 @@ class EsperFootToolbar extends PureComponent {
     return (<div className="toolbar-center" style={{ margin: 'auto' }}>
       <ToolGroup>
         <LRButton
+          title="Alt+ArrowLeft"
           className="prev-button"
           icon={<IconChevron16/>}
           onClick={this.viewPrevPhoto}/>
         <div style={{ display: 'inline-block', paddingTop: '2px' }}>
           {photoDisable ?
-            <Tooltip placement="top" title={<FormattedMessage id="footer.noSyncMessage"/>}>
+            <Tooltip mouseLeaveDelay={0.01} mouseEnterDelay={0.01} arrowPointAtCenter placement="top" title={<FormattedMessage id="footer.noSyncMessage"/>}>
               {skipButton}
             </Tooltip> : skipButton }
           {photoDisable ?
-            <Tooltip placement="top" title={<FormattedMessage id="footer.noSyncMessage"/>}>
+            <Tooltip mouseLeaveDelay={0.01} mouseEnterDelay={0.01} arrowPointAtCenter placement="top" title={<FormattedMessage id="footer.noSyncMessage"/>}>
               {confirmButton}
             </Tooltip> : submitDisable ?
-              <Tooltip placement="top" title={<FormattedMessage id="footer.nothingMessage"/>}>
+              <Tooltip mouseLeaveDelay={0.01} mouseEnterDelay={0.01} arrowPointAtCenter placement="top" title={<FormattedMessage id="footer.nothingMessage"/>}>
                 {confirmButton}
               </Tooltip> : confirmButton }
         </div>
         <LRButton
+          title="Alt+ArrowRight"
           className="next-button"
           icon={<IconChevron17/>}
           onClick={this.viewNextPhoto}/>
