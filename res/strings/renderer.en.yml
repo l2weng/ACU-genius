@@ -186,6 +186,8 @@ en:
       signOut: Sign out
   footer:
     submit: Submit
+    altLeft: Alt+ArrowLeft
+    altRight: Alt+ArrowRight
     skip: Skip
     nothingMessage: Nothing needs to be submitted
     noSyncMessage: Please sync project to cloud firstly

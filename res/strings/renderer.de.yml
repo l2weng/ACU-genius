@@ -186,6 +186,8 @@ de:
       signOut: 账号退出
   footer:
     submit: 提交
+    altLeft: Alt+左方向键
+    altRight: Alt+右方向键
     skip: 跳过
     nothingMessage: 暂未发现标注数据需要提交
     noSyncMessage: 请先同步项目至云端

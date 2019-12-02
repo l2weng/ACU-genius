@@ -63,7 +63,7 @@ class EsperFootToolbar extends PureComponent {
     return (<div className="toolbar-center" style={{ margin: 'auto' }}>
       <ToolGroup>
         <LRButton
-          title="Alt+ArrowLeft"
+          title="footer.altLeft"
           className="prev-button"
           icon={<IconChevron16/>}
           onClick={this.viewPrevPhoto}/>
@@ -81,7 +81,7 @@ class EsperFootToolbar extends PureComponent {
               </Tooltip> : confirmButton }
         </div>
         <LRButton
-          title="Alt+ArrowRight"
+          title="footer.altRight"
           className="next-button"
           icon={<IconChevron17/>}
           onClick={this.viewNextPhoto}/>

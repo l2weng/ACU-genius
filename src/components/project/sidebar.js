@@ -22,6 +22,7 @@ const { ColleagueTable } = require('../contacts/colleagueTable')
 const { IconPlus } = require('../icons')
 const { Button } = require('../button')
 const { TargetForm } = require('../tag/targetForm')
+const WrappedTargetForm = Form.create()(TargetForm)
 
 const { userInfo } = ARGS
 const axios = require('axios')
@@ -365,7 +366,6 @@ class ProjectSidebar extends React.PureComponent {
     const skuParentMethods = {
       handleSkuModalVisible: this.handleSkuModalVisible
     }
-    const WrappedTargetForm = Form.create()(TargetForm)
 
     return (
       <BufferedResizable
