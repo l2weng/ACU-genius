@@ -53,6 +53,9 @@ class Header extends React.Component {
     if (!_.isEmpty(userInfo.user)) {
       this.checkMsg()
     }
+    if (this.props.activeTab === HEAD.FRIENDS) {
+      this.fetchCoWorks()
+    }
   }
 
   fetchCoWorks = () => {
