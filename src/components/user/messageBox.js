@@ -5,7 +5,7 @@ const { Component } = React
 const { Modal, Table, Divider } = require('antd')
 const { func, bool, array } = require('prop-types')
 const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
-const moment = require('moment-timezone')
+const moment = require('moment')
 const { userInfo } = ARGS
 
 class MessageBox extends Component {
@@ -47,7 +47,7 @@ class MessageBox extends Component {
         dataIndex: 'createdAt',
         key: 'createdAt',
         render: (text, record) => (
-          <span>{moment(record.createdAt).tz(moment.tz.guess()).format('YYYY-MM-DD HH:mm:ss a')}</span>
+          <span>{moment(new Date(record.createdAt)).format('YYYY-MM-DD HH:mm:ss')}</span>
         ),
       }, {
         title: this.props.intl.formatMessage({ id: 'message.invitor' }),

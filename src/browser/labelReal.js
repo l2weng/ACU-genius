@@ -134,7 +134,7 @@ class LabelReal extends EventEmitter {
             return this.showWizard()
           }
         }
-        let client = getNewOOSClient()
+        const client = getNewOOSClient()
         let newPath = app.getPath('userData')
         newPath = join(newPath, `project/${project.fileUuid}`)
         if (!fs.existsSync(newPath)) {
@@ -239,7 +239,7 @@ class LabelReal extends EventEmitter {
   }
 
   hasOpened({ file, name }) {
-    if (this.wiz) this.wiz.close()
+    if (this.about) this.about.close()
     if (this.prefs) this.prefs.close()
     if (this.login) this.login.close()
     if (this.recent) this.recent.close()

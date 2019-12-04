@@ -7,7 +7,7 @@ const { array, func, number } = require('prop-types')
 const { HEAD } = require('../../constants')
 const { getTaskStatusBadge } = require('../../common/dataUtil')
 const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
-const moment = require('moment-timezone')
+const moment = require('moment')
 
 const TasksTable = injectIntl(class extends React.Component {
   state = {
@@ -150,7 +150,7 @@ const TasksTable = injectIntl(class extends React.Component {
         key: 'createdAt',
         width: '15%',
         render: (text, record) => (
-          <div>{moment(record.createdAt).tz(moment.tz.guess()).format('YYYY-MM-DD HH:mm:ss a')}</div>
+          <div>{moment(new Date(record.createdAt)).format('YYYY-MM-DD HH:mm:ss')}</div>
         ),
       }, {
         title: <FormattedMessage id="home.task.action"/>,
