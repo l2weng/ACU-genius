@@ -141,10 +141,11 @@ class Consolidate extends ImportCommand {
                 }
               }
 
-              let data = { id: photo.id, ...image.toJSON() }
+              let data = { id: photo.id, path: photo.path, ...image.toJSON() }
 
               yield call(mod.photo.save, db, data, project)
               yield put(act.photo.update({
+                path: photo.path,
                 broken: false,
                 consolidated: new Date(),
                 ...data
