@@ -96,8 +96,8 @@ class EsperFootToolbar extends PureComponent {
 
     return (
       <Toolbar isDraggable={false}>
-        <ToolbarLeft>
-          <div style={{ position: 'fixed', fontSize: '12px', display: 'flex' }}>
+        <div style={{ display: 'flex', alignItems: 'center', fontSize: '12px' }}>
+          <div style={{ position: 'fixed', display: 'flex' }}>
             <FormattedMessage id="footer.modified"/>:
             {(selections && selections.length > 0) ? `${moment(
               new Date(selections[selections.length - 1].updatedTime)).tz(moment.tz.guess())
@@ -107,7 +107,7 @@ class EsperFootToolbar extends PureComponent {
               {photo ? <span>&nbsp;&nbsp;<Tag style={{ lineHeight: '16px', height: '18px' }} color={photo.workStatus === 0 ? '#f50' : photo.workStatus === 1 ? '#2db7f5' : '#87d068'}>    <FormattedMessage id={`footer.photoWorkStatus${photo.workStatus}`}/></Tag></span> : ''}
             </ToolGroup>
           </div>
-        </ToolbarLeft>
+        </div>
         {this.getActionButtons(photo, selections)}
       </Toolbar>
     )
