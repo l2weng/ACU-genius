@@ -12,6 +12,7 @@ const { getNewOOSClient, getFilesizeInBytes } = require('../common/dataUtil')
 const { error } = require('../common/log')
 const axios = require('axios')
 const uuid = require('uuid/v4')
+const { info } = require('../common/log')
 const { ipcRenderer: ipc  } = require('electron')
 const { existsSync: exists } = require('fs')
 
@@ -133,7 +134,7 @@ class SyncProjectFile extends Command {
     let client = getNewOOSClient()
     let { userInfo } = ARGS
     if (project.synced) {
-      console.log('sync project file start!!')
+      info('sync project file start!!')
       try {
         let result = yield client.put(basename(project.file, '.lbr'), project.file)
         if (result.res.status === 200) {
@@ -153,7 +154,7 @@ class SyncProjectFile extends Command {
               call(mod.project.save, db, { id: project.id, synced: true, syncVersion: syncResult.data.obj.syncVersion }),
               put(act.project.updateSyncStatus({ ...payload, synced: 1 })),
             ])
-            console.log('sync project file end!!')
+            info('sync project file end!!')
           }
         }
       } catch (e) {

@@ -1,6 +1,5 @@
 'use strict'
 
-const { basename } = require('path')
 const { DuplicateError } = require('../common/error')
 const { call, put, select } = require('redux-saga/effects')
 const { Command } = require('./command')
@@ -65,7 +64,6 @@ class ImportCommand extends Command {
   *checkPhoto(photo, force) {
     let useLocalTimezone = false
     return yield call(Image.check, photo, { force, useLocalTimezone })
-
   }
 
   *setDuplicateHandler(handler) {

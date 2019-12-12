@@ -22,7 +22,6 @@ const uuid = require('uuid/v4')
 const { basename, dirname, join, relative, resolve } = require('path')
 const nodePath = require('path')
 const axios = require('axios')
-const { ipcRenderer: ipc  } = require('electron')
 const { existsSync: exists } = require('fs')
 const { stat } = require('fs').promises
 
