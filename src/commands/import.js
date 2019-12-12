@@ -81,8 +81,7 @@ class ImportCommand extends Command {
       switch (handler) {
         case 'prompt': {
           this.isInteractive = true
-          const { ok, isChecked } = yield call(prompt, 'dup', {
-            message: basename(image.path)
+          const { ok, isChecked } = yield call(prompt.dup, image.path, {
           })
 
           if (isChecked) {
