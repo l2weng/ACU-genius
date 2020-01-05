@@ -122,57 +122,50 @@ class LabelReal extends EventEmitter {
       }
     }
 
+    let syncFolder = function (newPath, cloudProject) {
+      newPath = join(newPath, `project/${cloudProject.fileUuid}`)
+      if (!fs.existsSync(newPath)) {
+        fs.mkdirSync(newPath, { recursive: true }, (err) => {
+          if (err) throw err
+        })
+      }
+      newPath = join(newPath, `${cloudProject.fileUuid}.lbr`)
+      return newPath
+    }
+
     if (!file) {
       const { apiServer } = this.state
       if (this.state.userInfo.hasProject) {
-        let project = this.state.userInfo.lastOwnProject
-        const lastCloudProject = this.state.userInfo.lastCloudProject
-        if (!project.syncStatus) {
-          if (fs.existsSync(project.projectFile)) {
-            return this.open(project.projectFile)
-          } else {
-            if(!__.isEmpty(lastCloudProject)){
-              project = lastCloudProject
-            }else{
-              return this.showWizard()
-            }
-          }
-        }
+        const ownProject = this.state.userInfo.lastOwnProject
+        const cloudProject = this.state.userInfo.lastCloudProject
         const client = getNewOOSClient()
         let newPath = app.getPath('userData')
-        newPath = join(newPath, `project/${project.fileUuid}`)
-        if (!fs.existsSync(newPath)) {
-          fs.mkdir(newPath, { recursive: true }, (err) => {
-            if (err) throw err
-          })
+        if (ownProject) {
+          if (fs.existsSync(ownProject.projectFile)) {
+            return this.open(ownProject.projectFile)
+          } else {
+            if (ownProject.syncStatus) {
+              newPath = syncFolder(newPath, ownProject)
+              const result = await client.get(ownProject.fileUuid, newPath)
+              if (result.res.status === 200) return this.open(newPath)
+            }
+          }
         }
-        newPath = join(newPath, `${project.fileUuid}.lbr`)
-        //if project file is his own
-        if (fs.existsSync(project.projectFile)) {
-          //未同步
-          if (project.syncProjectSize === null) {
-            return this.open(project.projectFile)
-          }
-          let query = getUrlFilterParams({ projectId: project.projectId }, ['projectId'])
-          const response = await axios.post(`${apiServer}/graphql?query={projectQueryById${query} { syncVersion fileUuid }}`).catch(err=>{ warn(err) })
-          const freshProject = response.data.data
-          info('fresh project', freshProject)
-          if (freshProject.projectQueryById.syncVersion !== project.syncVersion) {
-            let result = await client.get(project.fileUuid, newPath)
-            if (result.res.status === 200) {
-              return this.open(newPath)
+        if (cloudProject) {
+          if (fs.existsSync(cloudProject.projectFile)) {
+            let query = getUrlFilterParams({ projectId: cloudProject.projectId }, ['projectId'])
+            const response = await axios.post(`${apiServer}/graphql?query={projectQueryById${query} { syncVersion fileUuid }}`).catch(err=>{ warn(err) })
+            const freshProject = response.data.data
+            if (freshProject.projectQueryById.syncVersion !== cloudProject.syncVersion) {
+              const result = await client.get(cloudProject.fileUuid, newPath)
+              if (result.res.status === 200) return this.open(newPath)
+            } else {
+              return this.open(cloudProject.projectFile)
             }
           } else {
-            return this.open(project.projectFile)
-          }
-        } else {
-          if (!fs.existsSync(newPath)) {
-            let result = await client.get(project.fileUuid, newPath)
-            if (result.res.status === 200) {
-              return this.open(newPath)
-            }
-          } else {
-            return this.open(newPath)
+            newPath = syncFolder(newPath, cloudProject)
+            const result = await client.get(cloudProject.fileUuid, newPath)
+            if (result.res.status === 200) return this.open(newPath)
           }
         }
       }
