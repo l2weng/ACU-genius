@@ -66,8 +66,8 @@ class LabelReal extends EventEmitter {
     webgl: true,
     win: {},
     userInfo: {},
-    apiServer: 'http://47.105.236.123:8098/lr',
-    // apiServer: 'http://127.0.0.1:3000/lr',
+    // apiServer: 'http://101.132.45.191:3000/lr',
+    apiServer: 'http://127.0.0.1:3000/lr',
     projectsCache: {},
     zoom: 1.0
   }
@@ -125,13 +125,17 @@ class LabelReal extends EventEmitter {
     if (!file) {
       const { apiServer } = this.state
       if (this.state.userInfo.hasProject) {
-        const project = this.state.userInfo.lastProject
-        info(`User has project (${project.projectId}) already, sync status: ${project.syncStatus}`)
+        let project = this.state.userInfo.lastOwnProject
+        const lastCloudProject = this.state.userInfo.lastCloudProject
         if (!project.syncStatus) {
           if (fs.existsSync(project.projectFile)) {
             return this.open(project.projectFile)
           } else {
-            return this.showWizard()
+            if(!__.isEmpty(lastCloudProject)){
+              project = lastCloudProject
+            }else{
+              return this.showWizard()
+            }
           }
         }
         const client = getNewOOSClient()
