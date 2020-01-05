@@ -89,7 +89,7 @@
     "@tweenjs/tween.js": "^17.2.0",
     "ali-oss": "^6.1.0",
     "antd": "^3.21.2",
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "bizcharts": "^3.5.5",
     "bluebird": "^3.5.2",
     "classnames": "^2.2.6",
