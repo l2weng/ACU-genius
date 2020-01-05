@@ -9,6 +9,7 @@ const { toId } = require('../../common/util')
 const { TABS } = require('../../constants')
 const { match } = require('../../keymap')
 const { on, off } = require('../../dom')
+const { ipcRenderer: ipc  } = require('electron')
 const {
   arrayOf, bool, func, number, object, shape, string
 } = require('prop-types')
@@ -91,6 +92,7 @@ class TagPanel extends PureComponent {
     this.props.items.map(item=>{
       this.props.onItemTagsAdd({ id: item.id, tags: tags })
     })
+    ipc.send('cmd', 'app:sync-project-file')
   }
 
   handleTagCreate = (tag) => {
