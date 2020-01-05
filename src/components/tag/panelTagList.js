@@ -6,9 +6,6 @@ const PropTypes = require('prop-types')
 const { arrayOf, bool, number, string, shape, object, func } = PropTypes
 const { Tag } = require('./tag')
 const { get, noop } = require('../../common/util')
-const { match } = require('../../keymap')
-const __ = require('underscore')
-
 
 class PanelTagList extends PureComponent {
 

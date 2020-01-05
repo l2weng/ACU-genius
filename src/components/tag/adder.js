@@ -75,7 +75,7 @@ class TagAdder extends PureComponent {
         {/*  onCommit={this.handleChange}/>*/}
         {isOwner && (MODE.ITEM !== mode) ? <Select
           key={defaultTag}
-          mode="tags"
+          mode="multiple"
           size="small"
           tabIndex={-1}
           defaultValue={defaultTag}
