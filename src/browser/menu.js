@@ -26,7 +26,7 @@ const CHECK = {
     return !CHECK.hasMultipleItems(...args)
   },
 
-  async isManager(_, args, isOwner) {
+  isManager(_, args, isOwner) {
     return isOwner
   }
 }

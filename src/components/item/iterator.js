@@ -95,8 +95,7 @@ class ItemIterator extends Iterator {
 
     if (list) context.push('list')
     if (isDisabled) context.push('deleted')
-    const isOwner = this.props.isOwner
-    onContextMenu(event, context.join('-'), target, isOwner)
+    onContextMenu(event, context.join('-'), target, this.props.isOwner)
   }
 
   handleItemDelete(items) {
