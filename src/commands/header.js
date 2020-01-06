@@ -12,7 +12,6 @@ const { join } = require('path')
 const { apiServer } = ARGS
 const { error } = require('../common/log')
 const args = require('../args')
-const __ = require('underscore')
 
 class LoadProjects extends Command {
   static get ACTION() { return HEAD.PROJECTS }

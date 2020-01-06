@@ -309,7 +309,7 @@ class ItemTable extends ItemIterator {
   }
 
   renderTableBody() {
-    const { data, edit } = this.props
+    const { data, edit, isOwner } = this.props
     const onEdit = this.props.selection.length === 1 ? this.props.onEdit : noop
 
     const { columns, colwidth, height, minWidth } = this.state
@@ -342,6 +342,7 @@ class ItemTable extends ItemIterator {
                     drag={this.state.drag}
                     drop={this.state.drop}
                     edit={edit}
+                    isOwner={isOwner}
                     hasPositionColumn={hasPositionColumn}
                     item={item}
                     position={this.getPosition(index)}
@@ -408,6 +409,7 @@ class ItemTable extends ItemIterator {
     hasScrollbars: bool.isRequired,
     minColWidth: number.isRequired,
     minMainColWidth: number.isRequired,
+    isOwner: bool,
     onColumnInsert: func.isRequired,
     onColumnOrder: func.isRequired,
     onColumnRemove: func.isRequired,

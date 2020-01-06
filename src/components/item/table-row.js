@@ -102,6 +102,7 @@ class ItemTableRow extends ItemIterable {
     drag: number,
     drop: number,
     edit: object,
+    isOwner: bool,
     hasPositionColumn: bool,
     position: number.isRequired
   }

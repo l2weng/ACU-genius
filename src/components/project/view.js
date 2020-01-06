@@ -128,6 +128,7 @@ class ProjectView extends Component {
               list={nav.list}
               selection={nav.items}
               size={size}
+              isOwner={isOwner}
               tags={tags}
               isDisabled={nav.trash}
               isOver={isOver && canDrop}

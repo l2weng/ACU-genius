@@ -5,7 +5,6 @@ const { basename } = require('path')
 const { warn, info } = require('../common/log')
 const { transduce, map, transformer } = require('transducers.js')
 const { BrowserWindow, Menu: M } = require('electron')
-const __ = require('underscore')
 
 function withWindow(win, cmd, fn) {
   return (_, w) => {
@@ -25,11 +24,15 @@ const CHECK = {
 
   hasSingleItem(...args) {
     return !CHECK.hasMultipleItems(...args)
+  },
+
+  async isManager(_, args, isOwner) {
+    return isOwner
   }
 }
 
-function check(item, event) {
-  return CHECK[item.condition] && CHECK[item.condition](item, event)
+function check(item, event, isOwner) {
+  return CHECK[item.condition] && CHECK[item.condition](item, event, isOwner)
 }
 
 
@@ -99,7 +102,8 @@ class Menu {
       }
 
       if (item.condition) {
-        item.enabled = check(item, ...params)
+        const isOwner = params[1]
+        item.enabled = check(item, ...params, isOwner)
         if (item.visible === false) item.visible = item.enabled
       }
 
@@ -321,12 +325,13 @@ class ContextMenu extends Menu {
     ).slice(1)
   }
 
-  show({ scope, event }, win, options) {
+  show({ scope, event, isOwner }, win, options) {
     try {
       this.build(
         this.prepare(this.template, ContextMenu.scopes[scope]),
         win,
-        event
+        event,
+        isOwner
       ).popup(win, { ...options, async: true })
 
     } catch (error) {

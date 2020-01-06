@@ -3,7 +3,7 @@
 const { CONTEXT } = require('../constants')
 
 module.exports = {
-  show(event, scope = 'global', target, meta) {
+  show(event, scope = 'global', target, isOwner, meta) {
     return {
       type: CONTEXT.SHOW,
       payload: {
@@ -12,7 +12,8 @@ module.exports = {
           target,
           x: event.clientX,
           y: event.clientY
-        }
+        },
+        isOwner: isOwner
       },
       meta: { ipc: true, ...meta }
     }

@@ -250,7 +250,6 @@ class ProjectContainer extends Component {
       notes,
       photo,
       photos,
-      visiblePhotos,
       visibleAllPhotos,
       selection,
       selections,

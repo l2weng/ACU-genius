@@ -104,13 +104,15 @@ en:
 #        condition: 'hasMultiplePhotos'
       - label: 'Export Item'
         id: 'export'
+        condition: 'isManager'
         submenu:
           - label: 'JSON-LD'
             command: 'app:export-item'
 #      - label: 'Add Photo …'
 #        command: 'app:create-item-photo'
-      - label: 'Skus'
+      - label: 'Targets'
         id: 'tag'
+        condition: 'isManager'
         submenu:
           - label: 'None'
             type: checkbox
@@ -119,6 +121,7 @@ en:
           - type: separator
       - label: 'Delete Item'
         command: 'app:delete-item'
+        condition: 'isManager'
     item-bulk: &item-bulk
 #      - label: 'Merge Selected Items'
 #        command: 'app:merge-item'
@@ -127,21 +130,28 @@ en:
         submenu:
           - label: 'JSON-LD'
             command: 'app:export-item'
+        condition: 'isManager'
       - label: 'Delete Selected Items'
         command: 'app:delete-item'
+        condition: 'isManager'
     item-list: &item-list
       - label: 'Remove Item From Task'
         command: 'app:list-item-remove'
+        condition: 'isManager'
     item-bulk-list: &item-bulk-list
       - label: 'Remove Selected Items From List'
         command: 'app:list-item-remove'
+        condition: 'isManager'
     photo: &photo
       - label: 'Delete Photo'
         command: 'app:delete-photo'
+        condition: 'isManager'
       - label: 'Duplicate Photo'
         command: 'app:duplicate-photo'
+        condition: 'isManager'
       - label: 'Move Photo to New Item'
         command: 'app:explode-photo'
+        condition: 'isManager'
       - label: 'Show Photo in Folder…'
         command: 'app:show-in-folder'
       - label: 'Use Photo as Cover Image'
