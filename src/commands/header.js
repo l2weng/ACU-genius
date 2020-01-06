@@ -1,6 +1,6 @@
 'use strict'
 
-const { put } = require('redux-saga/effects')
+const { put, select } = require('redux-saga/effects')
 const { Command } = require('./command')
 const { HEAD } = require('../constants')
 const { remote } = require('electron')
@@ -12,6 +12,7 @@ const { join } = require('path')
 const { apiServer } = ARGS
 const { error } = require('../common/log')
 const args = require('../args')
+const __ = require('underscore')
 
 class LoadProjects extends Command {
   static get ACTION() { return HEAD.PROJECTS }
@@ -24,6 +25,7 @@ class LoadProjects extends Command {
       getUrlFilterParams({ userId: id }, ['userId']) :
       getUrlFilterParams({ machineId: id }, ['machineId'])
     let projects = []
+    let { project } = yield select()
     try {
       let response = yield axios.get(
         `${apiServer}/graphql?query={projectQueryByUser${query} { projectId name desc deadline projectFile type progress cover itemCount syncStatus syncCover remoteProjectFile localProjectId syncProjectFileName syncProjectFile syncProjectSize syncVersion isOwner fileUuid } } `)
@@ -32,24 +34,27 @@ class LoadProjects extends Command {
         const app = remote.app
         const client = getNewOOSClient()
         for (let i = 0; i < projects.length; i++) {
-          const project = projects[i]
-          let newPath = join(app.getPath('userData'), `project/${project.fileUuid}`)
-          //if project file is his own
-          if (!fs.existsSync(project.projectFile)) {
-            if (project.syncStatus) {
-              if (!fs.existsSync(newPath)) {
+          const cloudProject = projects[i]
+          if (cloudProject.fileUuid !== project.fileUuid) {
+            let newPath = join(app.getPath('userData'), `project/${cloudProject.fileUuid}`)
+            //if project file is his own
+            if (!fs.exists(cloudProject.projectFile) &&
+              cloudProject.syncStatus) {
+              if (!fs.exists(newPath)) {
                 fs.mkdir(newPath, { recursive: true }, (err) => {
                   if (err) throw err
                 })
               }
-              newPath = join(newPath, `${project.fileUuid}.lbr`)
-              if (!fs.existsSync(newPath) || projectsCache[project.projectId] !== project.syncVersion) {
-                yield client.get(project.fileUuid, newPath)
-                projectsCache[project.projectId] = project.syncVersion
+              newPath = join(newPath, `${cloudProject.fileUuid}.lbr`)
+              if (!fs.existsSync(newPath) ||
+                projectsCache[cloudProject.projectId] !==
+                cloudProject.syncVersion) {
+                yield client.get(cloudProject.fileUuid, newPath)
+                projectsCache[cloudProject.projectId] = cloudProject.syncVersion
                 args.update({ ...projectsCache })
                 yield put(act.project.cacheProjects(projectsCache))
               }
-              project.projectFile = newPath
+              cloudProject.projectFile = newPath
             }
           }
         }
