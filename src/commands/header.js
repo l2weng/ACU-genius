@@ -37,9 +37,9 @@ class LoadProjects extends Command {
           if (cloudProject.fileUuid !== project.fileUuid) {
             let newPath = join(app.getPath('userData'), `project/${cloudProject.fileUuid}`)
             //if project file is his own
-            if (!fs.exists(cloudProject.projectFile) &&
+            if (!fs.existsSync(cloudProject.projectFile) &&
               cloudProject.syncStatus) {
-              if (!fs.exists(newPath)) {
+              if (!fs.existsSync(newPath)) {
                 fs.mkdir(newPath, { recursive: true }, (err) => {
                   if (err) throw err
                 })
