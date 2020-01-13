@@ -72,6 +72,20 @@ class RegistrationForm extends Component {
     callback()
   }
 
+  validateNameExists = (rule, value, callback) => {
+    let self = this
+    if (value) {
+      axios.post(`${ARGS.apiServer}/users/checkName`, { name: value })
+      .then(function (response) {
+        if (!response.data) {
+          callback(self.props.intl.formatMessage({ id: 'registration.userExisted' }))
+        }
+      })
+    } else {
+      callback()
+    }
+  }
+
   onUserTypeChange = e => {
     this.setState({
       userType: e.target.value,
@@ -118,7 +132,9 @@ class RegistrationForm extends Component {
             {...formItemLayout}
             label={this.props.intl.formatMessage({ id: 'registration.username.title' })}>
             {getFieldDecorator('name', {
-              rules: [{ required: true, message: this.props.intl.formatMessage({ id: 'registration.username.required' }), whitespace: true }],
+              rules: [{ required: true, message: this.props.intl.formatMessage({ id: 'registration.username.required' }), whitespace: true },
+                { validator: this.validateNameExists }],
+              validateTrigger: 'onBlur'
             })(
               <Input />
             )}

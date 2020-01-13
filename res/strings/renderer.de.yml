@@ -145,6 +145,7 @@ de:
     agreementBefore: 已阅读并接受
     agreementAfter: 用户协议与隐私政策
     agreementMessage: 请确认已阅读并接受用户协议与隐私政策。
+    userExisted: 该用户名已存在。
     back: 返回登录
     success: 注册成功
     guideBefore: 欢迎

@@ -145,6 +145,7 @@ en:
     agreementBefore: I have read the
     agreementAfter: agreement
     agreementMessage: Please confirm that you have read the agreement.
+    userExisted: This username already exists.
     back: Back to Login
     success: Successfully registered.
     guideBefore: Well, hello.
