@@ -10,7 +10,6 @@ const { SELECTION } = require('../constants')
 const { pick, splice } = require('../common/util')
 const { keys } = Object
 const axios = require('axios')
-const _ = require('underscore')
 
 class Create extends ImportCommand {
   static get ACTION() { return SELECTION.CREATE }
