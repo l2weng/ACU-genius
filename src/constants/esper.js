@@ -15,6 +15,7 @@ module.exports = {
     ARROW: 'arrow',
     PAN: 'pan',
     SELECT: 'select',
+    POLYGON: 'polygon',
     ZOOM_IN: 'zoomIn',
     ZOOM_OUT: 'zoomOut'
   },
