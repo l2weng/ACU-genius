@@ -68,26 +68,7 @@
   }
 }
 
-.icon-selection {
-  @if $theme == "light" {
-    @each $key, $val in $tag-colors {
-      &.#{$key} {
-        .line {
-          color: map-get($val, "color-base");
-        }
-      }
-    }
-  } @else {
-    @each $key, $val in $tag-colors {
-      &.#{$key} {
-        .line {
-          color: map-get($val, "color-dark");
-        }
-      }
-    }
-  }
-}
-.icon-polygon {
+.icon-selection,.icon-polygon {
   @if $theme == "light" {
     @each $key, $val in $tag-colors {
       &.#{$key} {
