@@ -505,6 +505,9 @@ class EsperView extends Component {
           case TOOL.SELECT:
             this.handleSelectStop(wasCancelled)
             break
+          case TOOL.POLYGON:
+            this.handlePolygonStop(wasCancelled)
+            break
           case TOOL.ZOOM_IN:
             if (!wasCancelled) this.props.onZoomIn(origin.mov)
             break
@@ -600,6 +603,10 @@ class EsperView extends Component {
       status: SELECTION.STATUS.NEW,
       spendTime: (performance.now() - this.selectionStartTime).toFixed(2)
     })
+  }
+
+  handlePolygonStop(wasCancelled) {
+    console.log('polygon')
   }
 
   drag = createDragHandler(this)

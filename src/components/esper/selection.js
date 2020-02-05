@@ -45,7 +45,7 @@ class SelectionLayer extends Container {
 
   isVisible({ selection, tool }) {
     return selection == null && (
-      tool === TOOL.ARROW || tool === TOOL.SELECT
+      tool === TOOL.ARROW || tool === TOOL.SELECT || tool === TOOL.POLYGON
     )
   }
 
