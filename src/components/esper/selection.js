@@ -16,7 +16,6 @@ class SelectionLayer extends Container {
 
   update({ selection } = BLANK) {
     if (!this.children.length) return
-
     const scale = 1 / this.parent.scale.y
     let i = 0
 
@@ -25,6 +24,11 @@ class SelectionLayer extends Container {
     }
     this.children[i].update(this.children[i].data.color ? this.children[i].data.color : this.color, scale, selection,
         'live')
+  }
+
+  addPolygonPoint(point) {
+    const scale = 1 / this.parent.scale.y
+    this.children[0].addPoint(this.children[0].data.color ? this.children[0].data.color : this.color, scale, point)
   }
 
   destroy() {
@@ -122,6 +126,18 @@ class Selection extends Graphics {
       .lineStyle(scale, ...colors.line)
       .beginFill(...colors.fill)
       .drawRect(x, y, width, height)
+  }
+
+  addPoint(
+    color,
+    scale = 1,
+    point,
+    state = this.state,
+  ) {
+    this.lineStyle(scale, '0xDE3249', 1)
+    this.beginFill('0xDE3249')
+    this.drawCircle(point.x, point.y, 8)
+    this.endFill()
   }
 
   sync(data = BLANK) {

@@ -201,6 +201,12 @@ const ESPER = {
       x: '7',
       y: '7'
     },
+    polygon: {
+      default: 'crosshairs',
+      active: 'crosshairs',
+      x: '7',
+      y: '7'
+    },
     zoomIn: {
       default: 'zoom-in',
       active: 'zoom-in',

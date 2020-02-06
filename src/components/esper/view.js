@@ -143,7 +143,7 @@ class EsperView extends Component {
         this.image.bg.texture = await this.load(props.src)
         this.image.interactive = true
         this.image.on('mousedown', this.handleMouseDown)
-
+        this.image.on('mouseup', this.handleMouseUp)
       } catch (_) {
         this.props.onPhotoError(props.photo)
       }
@@ -461,6 +461,8 @@ class EsperView extends Component {
 
   handleMouseDown = (event) => {
     const { data, target } = event
+    // polygon will stop dragging event
+    if (target.cursor === TOOL.POLYGON) return
 
     if (this.isDragging) this.drag.stop()
     if (!data.isPrimary) return
@@ -491,6 +493,11 @@ class EsperView extends Component {
     }
   }
 
+  handleMouseUp = (event) =>{
+    const { data, target } = event
+    this.addPolygonPoint(data.getLocalPosition(target))
+  }
+
   handleDragStop = (_, wasCancelled) => {
     try {
       if (this.isDragging) {
@@ -504,9 +511,6 @@ class EsperView extends Component {
             break
           case TOOL.SELECT:
             this.handleSelectStop(wasCancelled)
-            break
-          case TOOL.POLYGON:
-            this.handlePolygonStop(wasCancelled)
             break
           case TOOL.ZOOM_IN:
             if (!wasCancelled) this.props.onZoomIn(origin.mov)
@@ -605,8 +609,8 @@ class EsperView extends Component {
     })
   }
 
-  handlePolygonStop(wasCancelled) {
-    console.log('polygon')
+  addPolygonPoint(point) {
+    this.image.selections.addPolygonPoint(point)
   }
 
   drag = createDragHandler(this)
