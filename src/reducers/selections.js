@@ -12,6 +12,8 @@ module.exports = {
 
       case SELECTION.LOAD:
         return (error || !meta.done) ? state : replace(state, payload)
+      case SELECTION.ADD_POLYGON_POINT:
+        return (error || !meta.done) ? state : insert(state, payload)
       case SELECTION.SYNC:
         if (error || !meta.done) {
           return state

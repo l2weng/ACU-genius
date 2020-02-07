@@ -26,11 +26,6 @@ class SelectionLayer extends Container {
         'live')
   }
 
-  addPolygonPoint(point) {
-    const scale = 1 / this.parent.scale.y
-    this.children[0].addPoint(this.children[0].data.color ? this.children[0].data.color : this.color, scale, point)
-  }
-
   destroy() {
     super.destroy({ children: true })
   }
@@ -128,21 +123,8 @@ class Selection extends Graphics {
       .drawRect(x, y, width, height)
   }
 
-  addPoint(
-    color,
-    scale = 1,
-    point,
-    state = this.state,
-  ) {
-    this.lineStyle(scale, '0xDE3249', 1)
-    this.beginFill('0xDE3249')
-    this.drawCircle(point.x, point.y, 8)
-    this.endFill()
-  }
-
   sync(data = BLANK) {
     this.data = data
-
     if (this.isBlank || !this.parent.interactive) {
       this.interactive = false
       this.hitArea = null

@@ -5,6 +5,7 @@ module.exports = {
   DELETE: 'selection.delete',
   SYNC_DELETE: 'selection.syncDelete',
   LOAD: 'selection.load',
+  ADD_POLYGON_POINT: 'selection.addPolygonPoint',
   ORDER: 'selection.order',
   RESTORE: 'selection.restore',
   SAVE: 'selection.save',

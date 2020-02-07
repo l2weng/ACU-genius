@@ -114,4 +114,12 @@ module.exports = {
     }
   },
 
+  addPolygonPoint(payload, meta) {
+    return {
+      type: SELECTION.ADD_POLYGON_POINT,
+      payload,
+      meta: { cmd: 'project', history: 'merge', ...meta }
+    }
+  },
+
 }

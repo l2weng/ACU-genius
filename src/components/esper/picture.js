@@ -5,6 +5,7 @@ const { Container, Sprite, Rectangle } = PIXI
 const { ColorMatrixFilter } = PIXI.filters
 const { AdjustmentFilter } = require('@pixi/filter-adjustment')
 const { SelectionLayer, SelectionOverlay } = require('./selection')
+const { PolygonLayer } = require('./polygon')
 const { restrict } = require('../../common/util')
 const { deg, isHorizontal } = require('../../common/math')
 const { floor, max } = Math
@@ -38,6 +39,9 @@ class Picture extends Container {
 
     this.overlay = new SelectionOverlay({ width, height })
     this.addChild(this.overlay)
+
+    this.polygons = new PolygonLayer(color)
+    this.addChild(this.polygons)
   }
 
   get isHorizontal() {

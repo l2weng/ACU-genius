@@ -561,6 +561,9 @@ class Esper extends PureComponent {
     this.setState(state, this.update)
   }
 
+  handlePolygonPointAdded = (point) =>{
+    this.props.onChange({ point: { point } })
+  }
 
   handleKeyDown = (event) => {
     if (this.state.quicktool != null) {
@@ -716,6 +719,7 @@ class Esper extends PureComponent {
             tool={tool}
             shapeColor={this.props.shapeColor}
             onChange={this.handleViewChange}
+            onPolygonPointAdd={this.handlePolygonPointAdded}
             onSelectionActivate={this.handleSelectionActivate}
             onSelectionCreate={this.handleSelectionCreate}
             onDoubleClick={this.handleDoubleClick}

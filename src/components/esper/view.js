@@ -78,6 +78,7 @@ class EsperView extends Component {
     if (this.image != null) {
       this.image.overlay.sync(props)
       this.image.selections.sync(props)
+      this.image.polygons.sync(props)
       this.image.cursor = props.tool
       this.pixi.render()
       this.selectionStartTime = performance.now()
@@ -143,7 +144,7 @@ class EsperView extends Component {
         this.image.bg.texture = await this.load(props.src)
         this.image.interactive = true
         this.image.on('mousedown', this.handleMouseDown)
-        this.image.on('mouseup', this.handleMouseUp)
+        this.image.on('mousemove', this.handleMouseMove)
       } catch (_) {
         this.props.onPhotoError(props.photo)
       }
@@ -461,13 +462,17 @@ class EsperView extends Component {
 
   handleMouseDown = (event) => {
     const { data, target } = event
-    // polygon will stop dragging event
-    if (target.cursor === TOOL.POLYGON) return
 
     if (this.isDragging) this.drag.stop()
     if (!data.isPrimary) return
 
     this.start()
+
+    // polygon will stop dragging event
+    if (target.cursor === TOOL.POLYGON) {
+      let point = data.getLocalPosition(target)
+      return this.image.polygons.update({ point: point })
+    }
 
     if (target instanceof Selection) {
       return this.props.onSelectionActivate(target.data)
@@ -493,9 +498,13 @@ class EsperView extends Component {
     }
   }
 
-  handleMouseUp = (event) =>{
+  handleMouseMove = (event) => {
     const { data, target } = event
-    this.addPolygonPoint(data.getLocalPosition(target))
+
+    if (target && target.cursor === TOOL.POLYGON) {
+      let point = data.getLocalPosition(target)
+      return this.image.polygons.updateLine({ point: point })
+    }
   }
 
   handleDragStop = (_, wasCancelled) => {
@@ -609,10 +618,6 @@ class EsperView extends Component {
     })
   }
 
-  addPolygonPoint(point) {
-    this.image.selections.addPolygonPoint(point)
-  }
-
   drag = createDragHandler(this)
 
   render() {
@@ -627,6 +632,7 @@ class EsperView extends Component {
     tool: string.isRequired,
     shapeColor: string.isRequired,
     onChange: func.isRequired,
+    onPolygonPointAdd: func.isRequired,
     onDoubleClick: func.isRequired,
     onLoadError: func,
     onPhotoError: func.isRequired,
