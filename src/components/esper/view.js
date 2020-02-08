@@ -46,6 +46,8 @@ class EsperView extends Component {
       height
     })
 
+    this.isDoubleClick()
+
     this.m = matchMedia('(max-resolution: 1dppx)')
     this.m.addListener(this.handleResolutionChange)
 
@@ -468,7 +470,6 @@ class EsperView extends Component {
 
     this.start()
 
-    // polygon will stop dragging event
     if (target.cursor === TOOL.POLYGON) {
       let point = data.getLocalPosition(target)
       return this.image.polygons.update({ point: point })

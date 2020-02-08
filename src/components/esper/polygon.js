@@ -3,15 +3,12 @@
 const PIXI = require('pixi.js/dist/pixi.js')
 const { Container, Graphics } = PIXI
 const BLANK = Object.freeze({})
-const BLANK_ARRAY = []
-const { COLOR, TOOL, getSelectionColors } = require('../../constants/esper')
+const { TOOL, getSelectionColors } = require('../../constants/esper')
 
 class Polygon extends Graphics {
   constructor(color) {
     super()
     this.data = BLANK
-    this.polygonArray = BLANK_ARRAY
-    this.lineArray = BLANK_ARRAY
     this.color = color
   }
 
@@ -38,25 +35,50 @@ class Polygon extends Graphics {
     scale = 1,
     point,
   ) {
+    this.beginFill('0xFFFFFF')
+    this.lineStyle(scale, '0xFFFFFF', 0)
+    this.drawCircle(point.x, point.y, 6)
+    this.endFill()
+  }
+
+  updateFirst(
+    color,
+    scale = 1,
+    point,
+    points,
+  ) {
     this.beginFill('0xFF0000')
     this.lineStyle(scale, '0xFF0000', 0)
-    this.drawCircle(point.x, point.y, 5)
-    this.polygonArray.push(point.x)
-    this.polygonArray.push(point.y)
+    this.drawCircle(point.x, point.y, 6)
+    this.interactive = true
+    this.buttonMode = true
+    this.on('pointerdown', ()=>this.handlePolygonClose(color, scale, points))
+  }
+
+  handlePolygonClose(color, scale, points) {
+    const colors = getSelectionColors(color ? color : this.color).selection[this.state]
+    for (let i = 0; i < this.parent.children.length; i++) {
+      this.parent.children[i].clear()
+    }
+    this.parent.startPolygon = false
+    this.beginFill(...colors.fill)
+    this.lineStyle(scale, ...colors.line, 0)
+    this.drawPolygon([...points, points[0], points[1]])
     this.endFill()
+    this.parent.points = []
+    this.interactive = false
   }
 
   updateLine(
     color,
     scale = 1,
-    point,
+    points,
   ) {
     const colors = getSelectionColors(color ? color : this.color).selection[this.state]
     this.clear()
     this.beginFill(...colors.fill)
     this.lineStyle(scale, ...colors.line, 0)
-    this.drawPolygon(this.polygonArray.concat([point.x, point.y]))
-    this.endFill()
+    this.drawPolygon(points)
   }
 }
 
@@ -65,16 +87,27 @@ class PolygonLayer extends Container {
     super()
     this.visible = false
     this.color = color
+    this.points = []
+    this.startPolygon = false
   }
 
   update({ point } = BLANK) {
     const scale = 1 / this.parent.scale.y
-    this.children[0].update(this.color, scale, point)
+    if (this.points.length === 0) {
+      this.startPolygon = true
+      this.children[0].updateFirst(this.color, scale, point, this.points)
+    } else {
+      this.children[1].update(this.color, scale, point, this.points)
+    }
+    this.points.push(point.x)
+    this.points.push(point.y)
   }
 
   updateLine({ point } = BLANK) {
-    const scale = 1 / this.parent.scale.y
-    this.children[1].updateLine(this.color, scale, point)
+    if (this.startPolygon) {
+      const scale = 1 / this.parent.scale.y
+      this.children[2].updateLine(this.color, scale, [...this.points, point.x, point.y])
+    }
   }
 
   destroy() {
