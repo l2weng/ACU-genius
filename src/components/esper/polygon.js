@@ -30,7 +30,7 @@ class Polygon extends Graphics {
     super.destroy({ children: true })
   }
 
-  update(
+  drawPoint(
     color,
     scale = 1,
     point,
@@ -41,7 +41,7 @@ class Polygon extends Graphics {
     this.endFill()
   }
 
-  updateFirst(
+  drawFirstPoint(
     color,
     scale = 1,
     point,
@@ -69,7 +69,7 @@ class Polygon extends Graphics {
     this.interactive = false
   }
 
-  updateLine(
+  drawLine(
     color,
     scale = 1,
     points,
@@ -91,22 +91,22 @@ class PolygonLayer extends Container {
     this.startPolygon = false
   }
 
-  update({ point } = BLANK) {
+  drawLayerPoint({ point } = BLANK) {
     const scale = 1 / this.parent.scale.y
     if (this.points.length === 0) {
       this.startPolygon = true
-      this.children[0].updateFirst(this.color, scale, point, this.points)
+      this.children[0].drawFirstPoint(this.color, scale, point, this.points)
     } else {
-      this.children[1].update(this.color, scale, point, this.points)
+      this.children[1].drawPoint(this.color, scale, point, this.points)
     }
     this.points.push(point.x)
     this.points.push(point.y)
   }
 
-  updateLine({ point } = BLANK) {
+  drawLayerLine({ point } = BLANK) {
     if (this.startPolygon) {
       const scale = 1 / this.parent.scale.y
-      this.children[2].updateLine(this.color, scale, [...this.points, point.x, point.y])
+      this.children[2].drawLine(this.color, scale, [...this.points, point.x, point.y])
     }
   }
 

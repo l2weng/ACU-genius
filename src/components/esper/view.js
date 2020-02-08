@@ -472,7 +472,7 @@ class EsperView extends Component {
 
     if (target.cursor === TOOL.POLYGON) {
       let point = data.getLocalPosition(target)
-      return this.image.polygons.update({ point: point })
+      return this.image.polygons.drawLayerPoint({ point: point })
     }
 
     if (target instanceof Selection) {
@@ -504,7 +504,7 @@ class EsperView extends Component {
 
     if (target && target.cursor === TOOL.POLYGON) {
       let point = data.getLocalPosition(target)
-      return this.image.polygons.updateLine({ point: point })
+      return this.image.polygons.drawLayerLine({ point: point })
     }
   }
 
