@@ -65,7 +65,7 @@ class Polygon extends Graphics {
     this.lineStyle(scale, ...colors.line, 0)
     this.drawPolygon([...points, points[0], points[1]])
     this.endFill()
-    this.parent.points = []
+    this.parent.finishPolygon()
     this.interactive = false
   }
 
@@ -89,6 +89,7 @@ class PolygonLayer extends Container {
     this.color = color
     this.points = []
     this.startPolygon = false
+    this.complete = false
   }
 
   drawLayerPoint({ point } = BLANK) {
@@ -108,6 +109,10 @@ class PolygonLayer extends Container {
       const scale = 1 / this.parent.scale.y
       this.children[2].drawLine(this.color, scale, [...this.points, point.x, point.y])
     }
+  }
+
+  finishPolygon() {
+    this.complete = true
   }
 
   destroy() {

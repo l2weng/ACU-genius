@@ -146,7 +146,6 @@ class EsperView extends Component {
         this.image.bg.texture = await this.load(props.src)
         this.image.interactive = true
         this.image.on('mousedown', this.handleMouseDown)
-        this.image.on('mousemove', this.handleMouseMove)
       } catch (_) {
         this.props.onPhotoError(props.photo)
       }
@@ -292,6 +291,10 @@ class EsperView extends Component {
         this.image.y = m.y
       })
       .start()
+  }
+
+  savePolygon(points = []) {
+    console.log(points)
   }
 
   rotate({ angle }, duration = 0) {
@@ -471,6 +474,8 @@ class EsperView extends Component {
     this.start()
 
     if (target.cursor === TOOL.POLYGON) {
+      this.image.on('mousemove', this.handleMouseMove)
+      this.image.on('mouseup', this.handleMouseUp)
       let point = data.getLocalPosition(target)
       return this.image.polygons.drawLayerPoint({ point: point })
     }
@@ -502,11 +507,22 @@ class EsperView extends Component {
   handleMouseMove = (event) => {
     const { data, target } = event
 
+    console.log('mouse move')
     if (target && target.cursor === TOOL.POLYGON) {
       let point = data.getLocalPosition(target)
       return this.image.polygons.drawLayerLine({ point: point })
     }
   }
+
+  handleMouseUp = debounce(() => {
+    if (this.image.polygons.complete) {
+      console.log(this.image.polygons.complete)
+      this.image.polygons.complete = false
+      this.image.polygons.points = []
+      this.image.off('mousemove')
+      this.image.off('mouseup')
+    }
+  }, 200)
 
   handleDragStop = (_, wasCancelled) => {
     try {
