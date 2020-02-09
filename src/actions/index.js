@@ -28,6 +28,7 @@ module.exports = {
   references: require('./references'),
   settings: require('./settings'),
   selection: require('./selection'),
+  polygon: require('./polygon'),
   shell: require('./shell'),
   sidebar: require('./sidebar'),
   storage: require('./storage'),

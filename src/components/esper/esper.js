@@ -719,7 +719,7 @@ class Esper extends PureComponent {
             tool={tool}
             shapeColor={this.props.shapeColor}
             onChange={this.handleViewChange}
-            onPolygonPointAdd={this.handlePolygonPointAdded}
+            onPolygonCreate={this.handlePolygonPointAdded}
             onSelectionActivate={this.handleSelectionActivate}
             onSelectionCreate={this.handleSelectionCreate}
             onDoubleClick={this.handleDoubleClick}

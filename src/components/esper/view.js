@@ -33,6 +33,7 @@ class EsperView extends Component {
 
     this.tweens = new TWEEN.Group()
     this.selectionStartTime = 0
+    this.polygonStartTime = 0
 
     skipHello()
 
@@ -477,6 +478,7 @@ class EsperView extends Component {
       this.image.on('mousemove', this.handleMouseMove)
       this.image.on('mouseup', this.handleMouseUp)
       let point = data.getLocalPosition(target)
+      this.polygonStartTime = performance.now()
       return this.image.polygons.drawLayerPoint({ point: point })
     }
 
@@ -507,7 +509,6 @@ class EsperView extends Component {
   handleMouseMove = (event) => {
     const { data, target } = event
 
-    console.log('mouse move')
     if (target && target.cursor === TOOL.POLYGON) {
       let point = data.getLocalPosition(target)
       return this.image.polygons.drawLayerLine({ point: point })
@@ -516,7 +517,12 @@ class EsperView extends Component {
 
   handleMouseUp = debounce(() => {
     if (this.image.polygons.complete) {
-      console.log(this.image.polygons.complete)
+      this.props.onPolygonCreate({
+        points: this.image.polygons.points,
+        color: this.props.shapeColor,
+        status: SELECTION.STATUS.NEW,
+        spendTime: (performance.now() - this.polygonStartTime).toFixed(2)
+      })
       this.image.polygons.complete = false
       this.image.polygons.points = []
       this.image.off('mousemove')
@@ -649,7 +655,7 @@ class EsperView extends Component {
     tool: string.isRequired,
     shapeColor: string.isRequired,
     onChange: func.isRequired,
-    onPolygonPointAdd: func.isRequired,
+    onPolygonCreate: func.isRequired,
     onDoubleClick: func.isRequired,
     onLoadError: func,
     onPhotoError: func.isRequired,
