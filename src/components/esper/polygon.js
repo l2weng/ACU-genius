@@ -177,8 +177,8 @@ class PolygonLayer extends Container {
     super.destroy({ children: true })
   }
 
-  isVisible({ polygons, tool }) {
-    return polygons.length === 0 && (
+  isVisible({ polygon, tool }) {
+    return polygon == null && (
       tool === TOOL.ARROW || tool === TOOL.SELECT || tool === TOOL.POLYGON
     )
   }
@@ -189,8 +189,9 @@ class PolygonLayer extends Container {
 
   sync(props) {
     this.color = props.shapeColor
+    console.log(props)
     this.visible = this.isVisible(props)
-    console.log(this.visible)
+    console.log('polygon',this.visible)
     this.interactive = this.isInteractive(props)
 
     const { polygons } = props
