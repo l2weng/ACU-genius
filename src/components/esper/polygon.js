@@ -3,7 +3,7 @@
 const PIXI = require('pixi.js/dist/pixi.js')
 const { Container, Graphics, Polygon: PixiPolygon } = PIXI
 const BLANK = Object.freeze({})
-const { TOOL, getSelectionColors } = require('../../constants/esper')
+const { COLOR, TOOL, getSelectionColors } = require('../../constants/esper')
 const { round } = Math
 
 class Polygon extends Graphics {
@@ -48,19 +48,20 @@ class Polygon extends Graphics {
     point,
     points,
   ) {
-    this.beginFill('0xFF0000')
-    this.lineStyle(scale, '0xFF0000', 0)
-    this.drawCircle(point.x, point.y, 6)
-    this.interactive = true
-    this.buttonMode = true
-    this.once('pointerdown', ()=>this.handlePolygonClose(color, scale, points))
+    this.addChild(new Graphics(), new Graphics())
+    this.children[0].beginFill('0xFF0000')
+    this.children[0].lineStyle(scale, '0xFF0000', 0)
+    this.children[0].drawCircle(point.x, point.y, 6)
+    this.children[0].interactive = true
+    this.children[0].buttonMode = true
+    this.children[0].once('pointerdown', ()=>this.handlePolygonClose(color, scale, points))
   }
 
   handlePolygonClose(color, scale, points) {
     const colors = getSelectionColors(color ? color : this.color).selection[this.state]
-    for (let i = 0; i < this.parent.children.length; i++) {
-      this.parent.children[i].clear()
-    }
+    this.clear()
+    this.children[0].clear()
+    this.children[1].clear()
     this.parent.startPolygon = false
     this.beginFill(...colors.fill)
     this.lineStyle(scale, ...colors.line, 0)
@@ -77,10 +78,10 @@ class Polygon extends Graphics {
     points,
   ) {
     const colors = getSelectionColors(color ? color : this.color).selection[this.state]
-    this.clear()
-    this.beginFill(...colors.fill)
-    this.lineStyle(scale, ...colors.line, 0)
-    this.drawPolygon(points)
+    this.children[1].clear()
+    this.children[1].beginFill(...colors.fill)
+    this.children[1].lineStyle(scale, ...colors.line, 0)
+    this.children[1].drawPolygon(points)
   }
 
   update(
@@ -90,12 +91,13 @@ class Polygon extends Graphics {
     state = this.state,
   ) {
     this.clear()
-    if (polygon.length === 0) return
+    if (polygon === undefined || polygon.length === 0) return
     const colors = getSelectionColors(color ? color : this.color).selection[state]
-
-    this.beginFill(...colors.fill)
-    this.lineStyle(scale, ...colors.line, 0)
-    this.drawPolygon([...polygon, polygon[0], polygon[1]])
+    this
+    .lineStyle(scale, ...colors.line)
+    .beginFill(...colors.fill)
+    .lineStyle(scale, ...colors.line, 0)
+    .drawPolygon([...polygon, polygon[0], polygon[1]])
   }
 
   sync(data = BLANK) {
@@ -139,19 +141,18 @@ class PolygonLayer extends Container {
   drawLayerPoint({ point } = BLANK) {
     const scale = 1 / this.parent.scale.y
     if (this.points.length === 0) {
-      this.startPolygon = true
-      this.children[0].drawFirstPoint(this.color, scale, point, this.points)
+      this.children[this.children.length - 1].drawFirstPoint(this.color, scale, point, this.points)
     } else {
-      this.children[0].drawPoint(this.color, scale, point, this.points)
+      this.children[this.children.length - 1].drawPoint(this.color, scale, point, this.points)
     }
     this.points.push(round(point.x))
     this.points.push(round(point.y))
   }
 
   drawLayerLine({ point } = BLANK) {
-    if (this.startPolygon) {
+    if (this.points.length > 0) {
       const scale = 1 / this.parent.scale.y
-      this.children[1].drawLine(this.color, scale, [...this.points, point.x, point.y])
+      this.children[this.children.length - 1].drawLine(this.color, scale, [...this.points, point.x, point.y])
     }
   }
 
@@ -217,7 +218,57 @@ class PolygonLayer extends Container {
   }
 }
 
-
+// class PolygonOverlay extends Graphics {
+//   constructor({ width, height }) {
+//     super()
+//
+//     this.beginFill(...COLOR.mask.fill)
+//     this.drawRect(0, 0, width, height)
+//
+//     this.cacheAsBitmap = false
+//     this.visible = false
+//
+//     this.addChild(new Graphics(), new Graphics())
+//     this.mask = this.children[0]
+//     this.line = this.children[1]
+//   }
+//
+//   update() {
+//     this.line.clear()
+//     this.mask.clear()
+//
+//     if (this.active === null || this.parent === null) return
+//
+//     const scale = 1 / this.parent.scale.y
+//     const { polygon, color } = this.active
+//
+//     this.line
+//     .lineStyle(scale, ...getSelectionColors(color).mask.line)
+//     .beginFill(...getSelectionColors(color).mask.line)
+//     .lineStyle(scale, ...getSelectionColors(color).mask.line, 0)
+//     .drawPolygon([...polygon, polygon[0], polygon[1]])
+//
+//     this.mask
+//     .beginFill(0xFFFFFF)
+//     .moveTo(0, 0)
+//     .lineTo(this.width, 0)
+//     .lineTo(this.width, this.height)
+//     .lineTo(0, this.height)
+//     .moveTo(polygon[0] + scale, polygon[1] + scale)
+//     for (let i = 2; i < polygon.length; i += 2) {
+//       const pointX = polygon[i]
+//       const pointY = polygon[i + 1]
+//       this.mask.lineTo(pointX, pointY)
+//     }
+//     this.mask.addHole()
+//   }
+//
+//   sync({ selection }) {
+//     this.active = selection
+//     this.mask.clear()
+//     this.visible = (selection != null)
+//   }
+// }
 
 module.exports = {
   Polygon,
