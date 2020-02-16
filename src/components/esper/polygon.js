@@ -4,6 +4,7 @@ const PIXI = require('pixi.js/dist/pixi.js')
 const { Container, Graphics } = PIXI
 const BLANK = Object.freeze({})
 const { TOOL, getSelectionColors } = require('../../constants/esper')
+const { round } = Math
 
 class Polygon extends Graphics {
   constructor(color) {
@@ -102,8 +103,8 @@ class PolygonLayer extends Container {
     } else {
       this.children[0].drawPoint(this.color, scale, point, this.points)
     }
-    this.points.push(point.x)
-    this.points.push(point.y)
+    this.points.push(round(point.x))
+    this.points.push(round(point.y))
   }
 
   drawLayerLine({ point } = BLANK) {

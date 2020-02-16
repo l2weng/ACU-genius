@@ -519,7 +519,7 @@ class EsperView extends Component {
         y: round(rect.y),
         width: round(rect.width),
         height: round(rect.height),
-        polygon: this.image.polygons.points,
+        polygon: JSON.stringify(this.image.polygons.points),
         color: this.props.shapeColor,
         status: SELECTION.STATUS.NEW,
         spendTime: (performance.now() - this.polygonStartTime).toFixed(2)
