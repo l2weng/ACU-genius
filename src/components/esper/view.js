@@ -294,10 +294,6 @@ class EsperView extends Component {
       .start()
   }
 
-  savePolygon(points = []) {
-    console.log(points)
-  }
-
   rotate({ angle }, duration = 0) {
     if (duration > 0) {
       const cur = this.image.rotation
@@ -517,8 +513,13 @@ class EsperView extends Component {
 
   handleMouseUp = debounce(() => {
     if (this.image.polygons.complete) {
-      this.props.onPolygonCreate({
-        points: this.image.polygons.points,
+      let rect = this.image.polygons.rect
+      this.props.onSelectionCreate({
+        x: round(rect.x),
+        y: round(rect.y),
+        width: round(rect.width),
+        height: round(rect.height),
+        polygon: this.image.polygons.points,
         color: this.props.shapeColor,
         status: SELECTION.STATUS.NEW,
         spendTime: (performance.now() - this.polygonStartTime).toFixed(2)
@@ -655,7 +656,6 @@ class EsperView extends Component {
     tool: string.isRequired,
     shapeColor: string.isRequired,
     onChange: func.isRequired,
-    onPolygonCreate: func.isRequired,
     onDoubleClick: func.isRequired,
     onLoadError: func,
     onPhotoError: func.isRequired,

@@ -72,7 +72,7 @@ CREATE TABLE photos (
   CHECK (orientation > 0 AND orientation < 9)
 ) WITHOUT ROWID;
 CREATE TABLE items (
-  id              INTEGER  PRIMARY KEY REFERENCES subjects ON DELETE CASCADE,
+  id              INTEGER  PRIMARY KEY,
   cover_image_id  INTEGER  REFERENCES images ON DELETE SET NULL
 ) WITHOUT ROWID;
 INSERT INTO items (id, cover_image_id) VALUES (-999, null);
@@ -204,6 +204,7 @@ CREATE TABLE selections (
   spendTime  INTEGER,
   labelId   TEXT,
   color   TEXT,
+  polygon   TEXT,
   updatedTime INTEGER
 
 ) WITHOUT ROWID;

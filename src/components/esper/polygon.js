@@ -52,7 +52,7 @@ class Polygon extends Graphics {
     this.drawCircle(point.x, point.y, 6)
     this.interactive = true
     this.buttonMode = true
-    this.on('pointerdown', ()=>this.handlePolygonClose(color, scale, points))
+    this.once('pointerdown', ()=>this.handlePolygonClose(color, scale, points))
   }
 
   handlePolygonClose(color, scale, points) {
@@ -65,7 +65,8 @@ class Polygon extends Graphics {
     this.lineStyle(scale, ...colors.line, 0)
     this.drawPolygon([...points, points[0], points[1]])
     this.endFill()
-    this.parent.finishPolygon()
+    this.calculateBounds()
+    this.parent.finishPolygon(this._localBounds.getRectangle())
     this.interactive = false
   }
 
@@ -88,6 +89,7 @@ class PolygonLayer extends Container {
     this.visible = false
     this.color = color
     this.points = []
+    this.rect = null
     this.startPolygon = false
     this.complete = false
   }
@@ -98,7 +100,7 @@ class PolygonLayer extends Container {
       this.startPolygon = true
       this.children[0].drawFirstPoint(this.color, scale, point, this.points)
     } else {
-      this.children[1].drawPoint(this.color, scale, point, this.points)
+      this.children[0].drawPoint(this.color, scale, point, this.points)
     }
     this.points.push(point.x)
     this.points.push(point.y)
@@ -107,11 +109,12 @@ class PolygonLayer extends Container {
   drawLayerLine({ point } = BLANK) {
     if (this.startPolygon) {
       const scale = 1 / this.parent.scale.y
-      this.children[2].drawLine(this.color, scale, [...this.points, point.x, point.y])
+      this.children[1].drawLine(this.color, scale, [...this.points, point.x, point.y])
     }
   }
 
-  finishPolygon() {
+  finishPolygon(rect) {
+    this.rect = rect
     this.complete = true
   }
 

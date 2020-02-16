@@ -27,10 +27,7 @@ class ItemContainer extends React.PureComponent {
     this.notepad = notepad
   }
 
-  handleEsperChange = ({ photo, selection, image, esper, point }) => {
-    if (point != null) {
-      this.props.onPolygonCreate({ point })
-    }
+  handleEsperChange = ({ photo, selection, image, esper }) => {
     if (esper != null) {
       this.props.onUiUpdate({ esper })
     }
@@ -132,7 +129,6 @@ class ItemContainer extends React.PureComponent {
     onPhotoSelect: func.isRequired,
     onSelectionCreate: func.isRequired,
     onSelectionSave: func.isRequired,
-    onPolygonCreate: func.isRequired,
     onUiUpdate: func.isRequired
   }
 }
@@ -165,10 +161,6 @@ module.exports = {
 
       onSelectionSave(...args) {
         dispatch(act.selection.save(...args))
-      },
-
-      onPolygonCreate(...args) {
-        dispatch(act.selection.addPolygonPoint(...args))
       },
 
       onEsperChange(...args) {
