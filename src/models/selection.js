@@ -34,6 +34,7 @@ const mod = {
               hue,
               saturation,
               template,
+              polygon,
               datetime(created, "localtime") AS created,
               datetime(modified, "localtime") AS modified
             FROM subjects
@@ -41,11 +42,12 @@ const mod = {
               JOIN selections USING (id)${
           (ids != null) ? ` WHERE id IN (${list(ids)})` : ''
         }`,
-        ({ id, created, modified, mirror, negative, ...data }) => {
+        ({ id, created, modified, mirror, negative, polygon, ...data }) => {
           data.created = new Date(created)
           data.modified = new Date(modified)
           data.mirror = !!mirror
           data.negative = !!negative
+          data.polygon = polygon ? JSON.parse(polygon) : polygon
 
           if (id in selections) assign(selections[id], data)
           else selections[id] = assign({ id, notes: [] }, data)

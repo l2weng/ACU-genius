@@ -395,6 +395,7 @@ class EsperView extends Component {
 
     if (this.image.selections.visible) {
       this.image.selections.update(this.drag.current)
+      this.image.polygons.update()
     }
 
     if (this.image.overlay.visible) {
@@ -653,6 +654,7 @@ class EsperView extends Component {
   static propTypes = {
     selection: object,
     selections: array.isRequired,
+    polygons: array.isRequired,
     tool: string.isRequired,
     shapeColor: string.isRequired,
     onChange: func.isRequired,

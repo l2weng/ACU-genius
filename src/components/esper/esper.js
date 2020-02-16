@@ -682,6 +682,17 @@ class Esper extends PureComponent {
   render() {
     const { isDisabled, isSelectionActive, tabIndex } = this
     const tool = this.state.quicktool || this.state.tool
+    let polygons = []
+    let selections = []
+    if (this.props.selections.length > 0) {
+      for (const selectionShape of this.props.selections) {
+        if (selectionShape.polygon !== '') {
+          polygons.push(selectionShape)
+        } else {
+          selections.push(selectionShape)
+        }
+      }
+    }
 
     return (
       <section
@@ -715,7 +726,8 @@ class Esper extends PureComponent {
           <EsperView
             ref={this.setView}
             selection={this.props.selection}
-            selections={this.props.selections}
+            selections={selections}
+            polygons={polygons}
             tool={tool}
             shapeColor={this.props.shapeColor}
             onChange={this.handleViewChange}

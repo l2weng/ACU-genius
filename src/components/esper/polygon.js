@@ -1,7 +1,7 @@
 'use strict'
 
 const PIXI = require('pixi.js/dist/pixi.js')
-const { Container, Graphics } = PIXI
+const { Container, Graphics, Polygon:PixiPolygon } = PIXI
 const BLANK = Object.freeze({})
 const { TOOL, getSelectionColors } = require('../../constants/esper')
 const { round } = Math
@@ -82,6 +82,34 @@ class Polygon extends Graphics {
     this.lineStyle(scale, ...colors.line, 0)
     this.drawPolygon(points)
   }
+
+  update(
+    color,
+    scale = 1,
+    { polygon } = this.data,
+    state = this.state,
+  ) {
+    this.clear()
+    if (polygon.length === 0) return
+    const colors = getSelectionColors(color ? color : this.color).selection[state]
+
+    this.beginFill(...colors.fill)
+    this.lineStyle(scale, ...colors.line, 0)
+    this.drawPolygon([...polygon, polygon[0], polygon[1]])
+  }
+
+  sync(data = BLANK) {
+    this.data = data
+    if (this.isBlank || !this.parent.interactive) {
+      this.interactive = false
+      this.hitArea = null
+    } else {
+      this.interactive = true
+      this.hitArea = new PixiPolygon(
+        data.polygon
+      )
+    }
+  }
 }
 
 class PolygonLayer extends Container {
@@ -114,6 +142,18 @@ class PolygonLayer extends Container {
     }
   }
 
+  update({ polygon } = BLANK) {
+    if (!this.children.length) return
+    const scale = 1 / this.parent.scale.y
+    let i = 0
+
+    for (; i < this.children.length - 1; ++i) {
+      this.children[i].update(this.children[i].data.color ? this.children[i].data.color : this.color, scale)
+    }
+    this.children[i].update(this.children[i].data.color ? this.children[i].data.color : this.color, scale, polygon,
+      'live')
+  }
+
   finishPolygon(rect) {
     this.rect = rect
     this.complete = true
@@ -139,7 +179,26 @@ class PolygonLayer extends Container {
     this.interactive = this.isInteractive(props)
 
     const { polygons } = props
-    this.addChild(new Polygon(props.shapeColor))
+
+    for (let i = 0; i < polygons.length; ++i) {
+      if (i >= this.children.length) {
+        this.addChild(new Polygon(props.shapeColor))
+      }
+
+      this.children[i].sync(polygons[i])
+    }
+
+    if (this.children.length <= polygons.length) {
+      this.addChild(new Polygon(props.shapeColor))
+    }
+
+    this.children[polygons.length].sync(BLANK)
+
+    if (this.children.length > polygons.length + 1) {
+      for (let s of this.removeChildren(polygons.length + 1)) {
+        s.destroy()
+      }
+    }
   }
 }
 
