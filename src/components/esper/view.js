@@ -393,9 +393,16 @@ class EsperView extends Component {
     this.tweens.update(performance.now())
     if (this.image == null) return
 
+    if (this.image.polygons.visible) {
+      this.image.polygons.update()
+    }
+
+    if (this.image.polygonOverlay.visible) {
+      this.image.polygonOverlay.update()
+    }
+
     if (this.image.selections.visible) {
       this.image.selections.update(this.drag.current)
-      this.image.polygons.update()
     }
 
     if (this.image.overlay.visible) {

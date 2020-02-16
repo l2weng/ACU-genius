@@ -62,7 +62,6 @@ class Polygon extends Graphics {
     this.clear()
     this.children[0].clear()
     this.children[1].clear()
-    this.parent.startPolygon = false
     this.beginFill(...colors.fill)
     this.lineStyle(scale, ...colors.line, 0)
     this.drawPolygon([...points, points[0], points[1]])
@@ -122,7 +121,6 @@ class PolygonLayer extends Container {
     this.color = color
     this.points = []
     this.rect = null
-    this.startPolygon = false
     this.complete = false
   }
 
@@ -179,8 +177,8 @@ class PolygonLayer extends Container {
     super.destroy({ children: true })
   }
 
-  isVisible({ selection, tool }) {
-    return selection == null && (
+  isVisible({ polygons, tool }) {
+    return polygons.length === 0 && (
       tool === TOOL.ARROW || tool === TOOL.SELECT || tool === TOOL.POLYGON
     )
   }
@@ -192,6 +190,7 @@ class PolygonLayer extends Container {
   sync(props) {
     this.color = props.shapeColor
     this.visible = this.isVisible(props)
+    console.log(this.visible)
     this.interactive = this.isInteractive(props)
 
     const { polygons } = props
@@ -218,59 +217,60 @@ class PolygonLayer extends Container {
   }
 }
 
-// class PolygonOverlay extends Graphics {
-//   constructor({ width, height }) {
-//     super()
-//
-//     this.beginFill(...COLOR.mask.fill)
-//     this.drawRect(0, 0, width, height)
-//
-//     this.cacheAsBitmap = false
-//     this.visible = false
-//
-//     this.addChild(new Graphics(), new Graphics())
-//     this.mask = this.children[0]
-//     this.line = this.children[1]
-//   }
-//
-//   update() {
-//     this.line.clear()
-//     this.mask.clear()
-//
-//     if (this.active === null || this.parent === null) return
-//
-//     const scale = 1 / this.parent.scale.y
-//     const { polygon, color } = this.active
-//
-//     this.line
-//     .lineStyle(scale, ...getSelectionColors(color).mask.line)
-//     .beginFill(...getSelectionColors(color).mask.line)
-//     .lineStyle(scale, ...getSelectionColors(color).mask.line, 0)
-//     .drawPolygon([...polygon, polygon[0], polygon[1]])
-//
-//     this.mask
-//     .beginFill(0xFFFFFF)
-//     .moveTo(0, 0)
-//     .lineTo(this.width, 0)
-//     .lineTo(this.width, this.height)
-//     .lineTo(0, this.height)
-//     .moveTo(polygon[0] + scale, polygon[1] + scale)
-//     for (let i = 2; i < polygon.length; i += 2) {
-//       const pointX = polygon[i]
-//       const pointY = polygon[i + 1]
-//       this.mask.lineTo(pointX, pointY)
-//     }
-//     this.mask.addHole()
-//   }
-//
-//   sync({ selection }) {
-//     this.active = selection
-//     this.mask.clear()
-//     this.visible = (selection != null)
-//   }
-// }
+class PolygonOverlay extends Graphics {
+  constructor({ width, height }) {
+    super()
+
+    this.beginFill(...COLOR.mask.fill)
+    this.drawRect(0, 0, width, height)
+
+    this.cacheAsBitmap = false
+    this.visible = false
+
+    this.addChild(new Graphics(), new Graphics())
+    this.mask = this.children[0]
+    this.line = this.children[1]
+  }
+
+  update() {
+    this.line.clear()
+    this.mask.clear()
+
+    if (this.active === null || this.parent === null) return
+
+    const scale = 1 / this.parent.scale.y
+    const { polygon, color } = this.active
+
+    this.line
+    .lineStyle(scale, ...getSelectionColors(color).mask.line)
+    .beginFill(...getSelectionColors(color).mask.line)
+    .lineStyle(scale, ...getSelectionColors(color).mask.line, 0)
+    .drawPolygon([...polygon, polygon[0], polygon[1]])
+
+    this.mask
+    .beginFill(0xFFFFFF)
+    .moveTo(0, 0)
+    .lineTo(this.width, 0)
+    .lineTo(this.width, this.height)
+    .lineTo(0, this.height)
+    .moveTo(polygon[0] + scale, polygon[1] + scale)
+    for (let i = 2; i < polygon.length; i += 2) {
+      const pointX = polygon[i]
+      const pointY = polygon[i + 1]
+      this.mask.lineTo(pointX, pointY)
+    }
+    this.mask.addHole()
+  }
+
+  sync({ polygon }) {
+    this.active = polygon
+    this.mask.clear()
+    this.visible = (polygon != null)
+  }
+}
 
 module.exports = {
   Polygon,
+  PolygonOverlay,
   PolygonLayer
 }
