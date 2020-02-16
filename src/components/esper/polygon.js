@@ -189,9 +189,7 @@ class PolygonLayer extends Container {
 
   sync(props) {
     this.color = props.shapeColor
-    console.log(props)
     this.visible = this.isVisible(props)
-    console.log('polygon',this.visible)
     this.interactive = this.isInteractive(props)
 
     const { polygons } = props

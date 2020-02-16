@@ -11,6 +11,7 @@ const PIXI = require('pixi.js/dist/pixi.js')
 const { TextureCache, skipHello } = PIXI.utils
 const { constrain, Picture } = require('./picture')
 const { Selection  } = require('./selection')
+const { Polygon  } = require('./polygon')
 const TWEEN = require('@tweenjs/tween.js')
 const { TOOL } = require('../../constants/esper')
 const { SELECTION } = require('../../constants')
@@ -484,6 +485,10 @@ class EsperView extends Component {
       let point = data.getLocalPosition(target)
       this.polygonStartTime = performance.now()
       return this.image.polygons.drawLayerPoint({ point: point })
+    }
+
+    if (target instanceof Polygon) {
+      return this.props.onSelectionActivate(target.data)
     }
 
     if (target instanceof Selection) {
