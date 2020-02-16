@@ -1,7 +1,7 @@
 'use strict'
 
 const PIXI = require('pixi.js/dist/pixi.js')
-const { Container, Graphics, Polygon:PixiPolygon } = PIXI
+const { Container, Graphics, Polygon: PixiPolygon } = PIXI
 const BLANK = Object.freeze({})
 const { TOOL, getSelectionColors } = require('../../constants/esper')
 const { round } = Math
@@ -115,12 +115,25 @@ class Polygon extends Graphics {
 class PolygonLayer extends Container {
   constructor(color) {
     super()
+    this.on('mousemove', this.handleMouseMove)
     this.visible = false
     this.color = color
     this.points = []
     this.rect = null
     this.startPolygon = false
     this.complete = false
+  }
+
+  handleMouseMove(event) {
+    const { target } = event
+
+    if (target instanceof Polygon) {
+      event.stopPropagation()
+      this.active = target
+
+    } else {
+      this.active = null
+    }
   }
 
   drawLayerPoint({ point } = BLANK) {
@@ -150,8 +163,10 @@ class PolygonLayer extends Container {
     for (; i < this.children.length - 1; ++i) {
       this.children[i].update(this.children[i].data.color ? this.children[i].data.color : this.color, scale)
     }
-    this.children[i].update(this.children[i].data.color ? this.children[i].data.color : this.color, scale, polygon,
+    if (polygon !== undefined) {
+      this.children[i].update(this.children[i].data.color ? this.children[i].data.color : this.color, scale, polygon,
       'live')
+    }
   }
 
   finishPolygon(rect) {
