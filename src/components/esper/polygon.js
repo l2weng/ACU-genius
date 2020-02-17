@@ -38,7 +38,7 @@ class Polygon extends Graphics {
   ) {
     this.beginFill('0xFFFFFF')
     this.lineStyle(scale, '0xFFFFFF', 0)
-    this.drawCircle(point.x, point.y, 6)
+    this.drawCircle(point.x, point.y, 5 * scale)
     this.endFill()
   }
 
@@ -48,10 +48,11 @@ class Polygon extends Graphics {
     point,
     points,
   ) {
+    console.log('scale', scale)
     this.addChild(new Graphics(), new Graphics())
     this.children[0].beginFill('0xFF0000')
     this.children[0].lineStyle(scale, '0xFF0000', 0)
-    this.children[0].drawCircle(point.x, point.y, 6)
+    this.children[0].drawCircle(point.x, point.y, 5 * scale)
     this.children[0].interactive = true
     this.children[0].buttonMode = true
     this.children[0].once('pointerdown', ()=>this.handlePolygonClose(color, scale, points))
