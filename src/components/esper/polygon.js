@@ -93,7 +93,6 @@ class Polygon extends Graphics {
     if (polygon === undefined || polygon.length === 0) return
     const colors = getSelectionColors(color ? color : this.color).selection[state]
     this
-    .lineStyle(scale, ...colors.line)
     .beginFill(...colors.fill)
     .lineStyle(scale, ...colors.line, 0)
     .drawPolygon([...polygon, polygon[0], polygon[1]])
