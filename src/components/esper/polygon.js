@@ -177,8 +177,8 @@ class PolygonLayer extends Container {
     super.destroy({ children: true })
   }
 
-  isVisible({ polygon, tool }) {
-    return polygon == null && (
+  isVisible({ selection, tool }) {
+    return selection == null && (
       tool === TOOL.ARROW || tool === TOOL.SELECT || tool === TOOL.POLYGON
     )
   }
@@ -241,9 +241,8 @@ class PolygonOverlay extends Graphics {
     const { polygon, color } = this.active
 
     this.line
-    .lineStyle(scale, ...getSelectionColors(color).mask.line)
+    .lineStyle(2 * scale, ...getSelectionColors(color).mask.line)
     .beginFill(...getSelectionColors(color).mask.line)
-    .lineStyle(scale, ...getSelectionColors(color).mask.line, 0)
     .drawPolygon([...polygon, polygon[0], polygon[1]])
 
     this.mask
@@ -252,19 +251,19 @@ class PolygonOverlay extends Graphics {
     .lineTo(this.width, 0)
     .lineTo(this.width, this.height)
     .lineTo(0, this.height)
-    .moveTo(polygon[0] + scale, polygon[1] + scale)
+    .moveTo(polygon[0], polygon[1])
     for (let i = 2; i < polygon.length; i += 2) {
       const pointX = polygon[i]
       const pointY = polygon[i + 1]
-      this.mask.lineTo(pointX, pointY)
+      this.mask.lineTo(pointX, pointY )
     }
     this.mask.addHole()
   }
 
-  sync({ polygon }) {
-    this.active = polygon
+  sync({ selection }) {
+    this.active = selection
     this.mask.clear()
-    this.visible = (polygon != null)
+    this.visible = (selection.polygon.length !== 0)
   }
 }
 

@@ -80,7 +80,11 @@ class EsperView extends Component {
 
   componentWillReceiveProps(props) {
     if (this.image != null) {
-      this.image.overlay.sync(props)
+      if (props.selection !== null && props.selection !== undefined && props.selection.polygon.length !== 0) {
+        this.image.polygonOverlay.sync(props)
+      } else {
+        this.image.overlay.sync(props)
+      }
       this.image.selections.sync(props)
       this.image.polygons.sync(props)
       this.image.cursor = props.tool
