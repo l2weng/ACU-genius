@@ -48,7 +48,6 @@ class Polygon extends Graphics {
     point,
     points,
   ) {
-    console.log('scale', scale)
     this.addChild(new Graphics(), new Graphics())
     this.children[0].beginFill('0xFF0000')
     this.children[0].lineStyle(scale, '0xFF0000', 0)
@@ -173,8 +172,16 @@ class PolygonLayer extends Container {
     this.complete = true
   }
 
+  cancelPolygonDraw() {
+    this.points = []
+    this.complete = false
+    this.children[this.children.length - 1].clear()
+    this.children[this.children.length - 1].children[0].clear()
+    this.children[this.children.length - 1].children[1].clear()
+  }
+
   destroy() {
-    super.destroy({ children: true })
+    super.destroy({ children: false })
   }
 
   isVisible({ selection, tool }) {

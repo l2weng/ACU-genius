@@ -488,6 +488,7 @@ class EsperView extends Component {
     if (target.cursor === TOOL.POLYGON) {
       this.image.on('mousemove', this.handleMouseMove)
       this.image.on('mouseup', this.handleMouseUp)
+      on(document.body, 'keydown', this.onPolygonKeyDown)
       let point = data.getLocalPosition(target)
       this.polygonStartTime = performance.now()
       return this.image.polygons.drawLayerPoint({ point: point })
@@ -530,6 +531,13 @@ class EsperView extends Component {
     }
   }
 
+  onPolygonKeyDown = (event) => {
+    if (event.key === 'Escape') {
+      event.stopPropagation()
+      return this.image.polygons.cancelPolygonDraw()
+    }
+  }
+
   handleMouseUp = debounce(() => {
     if (this.image.polygons.complete) {
       let rect = this.image.polygons.rect
@@ -547,6 +555,7 @@ class EsperView extends Component {
       this.image.polygons.points = []
       this.image.off('mousemove')
       this.image.off('mouseup')
+      off('keydown')
     }
   }, 200)
 
