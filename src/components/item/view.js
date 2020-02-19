@@ -193,14 +193,17 @@ class ItemView extends PureComponent {
     const { activeTag } = this.state
     let shapeColor = '5c93e5'
     let skuId = 0
+    let shapeType = ''
     if (tags.length > 0 && activeTag === 0) {
       shapeColor = tags[0].color
       skuId = tags[0].syncSkuId
+      shapeType = tags[0].shapeType
     } else {
       for (const tag of tags) {
         if (tag.id === activeTag) {
           shapeColor = tag.color
           skuId = tag.syncSkuId
+          shapeType = tag.shapeType
         }
       }
     }
@@ -237,6 +240,7 @@ class ItemView extends PureComponent {
           photo={photo}
           skuId={skuId}
           shapeColor={shapeColor}
+          shapeType={shapeType}
           isDisabled={isTrashSelected || isProjectClosing}
           isOpen={isItemOpen}
           onContextMenu={this.props.onContextMenu}

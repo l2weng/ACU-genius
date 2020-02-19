@@ -686,7 +686,7 @@ class Esper extends PureComponent {
     let selections = []
     if (this.props.selections.length > 0) {
       for (const selectionShape of this.props.selections) {
-        if (selectionShape.polygon !== '') {
+        if (selectionShape.polygon) {
           polygons.push(selectionShape)
         } else {
           selections.push(selectionShape)
@@ -706,6 +706,7 @@ class Esper extends PureComponent {
         <EsperHeader>
           <EsperToolbar
             shapeColor={this.props.shapeColor}
+            shapeType={this.props.shapeType}
             photo={this.props.photo}
             isDisabled={isDisabled}
             isSelectionActive={isSelectionActive}
@@ -786,6 +787,7 @@ class Esper extends PureComponent {
     tool: string.isRequired,
     selection: object,
     shapeColor: string.isRequired,
+    shapeType: string.isRequired,
     skuId: number.isRequired,
     selections: arrayOf(shape({
       id: number.isRequired,

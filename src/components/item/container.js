@@ -77,6 +77,7 @@ class ItemContainer extends React.PureComponent {
             photo={this.props.photo}
             selection={this.props.selection}
             shapeColor={this.props.shapeColor}
+            shapeType={this.props.shapeType}
             skuId={this.props.skuId}
             selections={this.props.selections}
             tool={this.props.esper.tool}
@@ -118,6 +119,7 @@ class ItemContainer extends React.PureComponent {
     selections: arrayOf(object).isRequired,
     settings: object.isRequired,
     shapeColor: string.isRequired,
+    shapeType: string.isRequired,
     skuId: number.isRequired,
     onContextMenu: func.isRequired,
     onEsperChange: func.isRequired,

@@ -9,8 +9,7 @@ const FormItem = Form.Item
 const Option = Select.Option
 const { bool, func, object } = require('prop-types')
 const { CirclePicker } = require('react-color')
-const { IconSelection, IconPolygon } = require('../icons')
-const { LIST } = require('../../constants')
+const { LIST, TAG } = require('../../constants')
 const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
 const __ = require('underscore')
 
@@ -80,15 +79,16 @@ class TargetForm extends Component {
           <Form.Item {...formItemLayout} label={<FormattedMessage id="project.targets.labelType"/>} >
             {getFieldDecorator('category', {
               rules: [{ required: true, message: this.props.intl.formatMessage({ id: 'project.targets.categoryRequired' }) }],
-              initialValue: 'rect',
+              initialValue: [TAG.SHAPE_TYPE.RECT, TAG.SHAPE_TYPE.POLYGON],
             })(<Select
+              mode="multiple"
               style={{ width: '100%' }}
               placeholder="select one category"
               optionLabelProp="label">
-              <Option value="rect" label={<span><FormattedMessage id="project.targets.rectangle"/></span>}>
+              <Option value={TAG.SHAPE_TYPE.RECT} label={<span><FormattedMessage id="project.targets.rectangle"/></span>}>
                 <FormattedMessage id="project.targets.rectangle"/>
               </Option>
-              <Option value="polygon" label={<span><FormattedMessage id="project.targets.polygon"/></span>}>
+              <Option value={TAG.SHAPE_TYPE.POLYGON} label={<span><FormattedMessage id="project.targets.polygon"/></span>}>
                 <FormattedMessage id="project.targets.polygon"/>
               </Option>
             </Select>)}

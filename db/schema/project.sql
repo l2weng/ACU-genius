@@ -143,7 +143,7 @@ CREATE TABLE tags (
   name        TEXT     NOT NULL COLLATE NOCASE,
   color       TEXT,
   syncSkuId   INTEGER,
-  shapeType   INTEGER,
+  shapeType   TEXT,
   created     NUMERIC  NOT NULL DEFAULT CURRENT_TIMESTAMP,
   modified    NUMERIC  NOT NULL DEFAULT CURRENT_TIMESTAMP,
 

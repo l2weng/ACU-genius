@@ -11,7 +11,7 @@ module.exports = mod.tag = {
     const tags = {}
 
     await db.each(`
-      SELECT tag_id AS id, name, color, syncSkuId, created, modified
+      SELECT tag_id AS id, name, color, syncSkuId, created, modified, shapeType
         FROM tags${
           (ids != null) ? ` WHERE tag_id IN (${list(ids)})` : ''
         }`,

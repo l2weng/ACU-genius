@@ -90,7 +90,7 @@ class Polygon extends Graphics {
     state = this.state,
   ) {
     this.clear()
-    if (polygon === undefined || polygon.length === 0) return
+    if (polygon === null || polygon === undefined || polygon.length === 0) return
     const colors = getSelectionColors(color ? color : this.color).selection[state]
     this
     .beginFill(...colors.fill)
@@ -270,7 +270,7 @@ class PolygonOverlay extends Graphics {
   sync({ selection }) {
     this.active = selection
     this.mask.clear()
-    this.visible = (selection.polygon.length !== 0)
+    this.visible = selection !== null && selection.polygon.length !== 0
   }
 }
 
