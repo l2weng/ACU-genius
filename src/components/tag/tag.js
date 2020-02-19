@@ -5,13 +5,13 @@ const { PureComponent } = React
 const PropTypes = require('prop-types')
 const { shape, number, string, bool, func } = PropTypes
 const { Editable } = require('../editable')
-const { IconTag, IconSelection } = require('../icons')
+const { IconTag, IconSelection, IconPolygon } = require('../icons')
 const { isMeta } = require('../../keymap')
 const { toId } = require('../../common/util')
 const { hasFocus } = require('../../dom')
 const cx = require('classnames')
 const { DropTarget } = require('react-dnd')
-const { DND } = require('../../constants')
+const { DND, TAG } = require('../../constants')
 const { pure } = require('../util')
 
 
@@ -89,12 +89,16 @@ class Tag extends PureComponent {
             onCancel={onEditCancel}
             onChange={this.handleChange}/>
         </div>
-        {hasShapeIcon ? <span className="btn btn-icon">
-          <IconSelection/>
-        </span> : ''}
-        {/*<span className="btn btn-icon">*/}
-        {/*  <IconSetting/>*/}
-        {/*</span>*/}
+        {hasShapeIcon ? <div>
+          {tag.shapeType.includes(TAG.SHAPE_TYPE.RECT) &&
+          <span className="btn btn-icon">
+            <IconSelection/>
+          </span>}
+          {tag.shapeType.includes(TAG.SHAPE_TYPE.POLYGON) &&
+          <span className="btn btn-icon">
+            <IconPolygon/>
+          </span>}
+        </div> : ''}
       </li>
     )
   }
