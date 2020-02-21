@@ -8,7 +8,7 @@ const { ImportCommand } = require('./import')
 const { fail, open } = require('../dialog')
 const mod = require('../models')
 const act = require('../actions')
-const { PHOTO } = require('../constants')
+const { PHOTO, SELECTION } = require('../constants')
 const { Image: OldImage } = require('../image')
 const { Image } = require('../image/image')
 const { DuplicateError } = require('../common/error')
@@ -24,6 +24,7 @@ const nodePath = require('path')
 const axios = require('axios')
 const { existsSync: exists } = require('fs')
 const { stat } = require('fs').promises
+const _ = require('underscore')
 
 class Consolidate extends ImportCommand {
   static get ACTION() { return PHOTO.CONSOLIDATE }
@@ -621,9 +622,13 @@ class LabelSync extends Command {
       mod.selection.load(conn, photo.selections))
     const labels = []
     for (let i in selections) {
-      selections[i].photoId = photo.syncPhotoId
-      selections[i].userId = userInfo.user.userId
-      labels.push(selections[i])
+      let selection = selections[i]
+      selection.type = !_.isEmpty(selection.polygon) ?
+        SELECTION.SHAPE_TYPE.POLYGON :
+        SELECTION.SHAPE_TYPE.RECT
+      selection.photoId = photo.syncPhotoId
+      selection.userId = userInfo.user.userId
+      labels.push(selection)
     }
     try {
       const result  = yield axios.post(`${ARGS.apiServer}/labels/savePhotoLabels`, { photoId: photo.syncPhotoId, spendTime: photoSpendTime, labels, myTaskId: photo.tasks[0], userId })

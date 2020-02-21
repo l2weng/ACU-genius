@@ -27,7 +27,6 @@ module.exports = {
   QR: require('./qr'),
   SASS: require('./sass'),
   SELECTION: require('./selection'),
-  POLYGON: require('./polygon'),
   SETTINGS: require('./settings'),
   SHELL: require('./shell'),
   SIDEBAR: require('./sidebar'),

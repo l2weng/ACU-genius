@@ -11,7 +11,7 @@ const { toId } = require('../../common/util')
 const { hasFocus } = require('../../dom')
 const cx = require('classnames')
 const { DropTarget } = require('react-dnd')
-const { DND, TAG } = require('../../constants')
+const { DND, SELECTION } = require('../../constants')
 const { pure } = require('../util')
 
 
@@ -90,11 +90,11 @@ class Tag extends PureComponent {
             onChange={this.handleChange}/>
         </div>
         {hasShapeIcon ? <div>
-          {tag.shapeType.includes(TAG.SHAPE_TYPE.RECT) &&
+          {tag.shapeType.includes(SELECTION.SHAPE_TYPE.RECT) &&
           <span className="btn btn-icon">
             <IconSelection/>
           </span>}
-          {tag.shapeType.includes(TAG.SHAPE_TYPE.POLYGON) &&
+          {tag.shapeType.includes(SELECTION.SHAPE_TYPE.POLYGON) &&
           <span className="btn btn-icon">
             <IconPolygon/>
           </span>}

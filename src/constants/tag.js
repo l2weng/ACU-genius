@@ -10,5 +10,4 @@ module.exports = {
   UPDATE: 'tag.update',
   LOAD: 'tag.load',
   CHANGED: 'tag.changed',
-  SHAPE_TYPE: { RECT: '0', POLYGON: '1' }
 }
