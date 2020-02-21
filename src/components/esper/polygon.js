@@ -270,7 +270,7 @@ class PolygonOverlay extends Graphics {
   sync({ selection }) {
     this.active = selection
     this.mask.clear()
-    this.visible = selection !== null && selection.polygon.length !== 0
+    this.visible = selection !== undefined && selection !== null && selection.polygon.length !== 0
   }
 }
 
