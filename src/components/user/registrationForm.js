@@ -20,6 +20,7 @@ class RegistrationForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
+    console.log('收到表单值：', this.props.form.getFieldsValue());
     this.props.form.validateFieldsAndScroll((err, values) => {
       values = { userType: this.state.userType, status: 1, machineId: machineIdSync({ original: true }), ...values }
       if (!err) {
@@ -72,15 +73,16 @@ class RegistrationForm extends Component {
     callback()
   }
 
-  validateNameExists = (rule, value, callback) => {
+  validateNameExists = async (rule, value, callback) => {
     let self = this
     if (value) {
-      axios.post(`${ARGS.apiServer}/users/checkName`, { name: value })
-      .then(function (response) {
-        if (!response.data) {
-          callback(self.props.intl.formatMessage({ id: 'registration.userExisted' }))
-        }
-      })
+      await axios.post(`${ARGS.apiServer}/users/checkName`, {name: value}).
+        then(function (response) {
+          if (!response.data) {
+            callback(
+              self.props.intl.formatMessage({id: 'registration.userExisted'}))
+          }
+        })
     } else {
       callback()
     }

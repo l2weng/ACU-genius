@@ -22,7 +22,7 @@ const CoWorkerForm = Form.create()(props => {
   return (
     <Modal
       destroyOnClose
-      title={<FormattedMessage id="contacts.friend"/>}
+      title={<FormattedMessage id="contacts.addFriend"/>}
       visible={modalVisible}
       onOk={okHandle}
       footer={null}
