@@ -94,20 +94,20 @@ class EsperToolbar extends PureComponent {
               isActive={this.isToolActive(TOOL.ARROW)}
               isDisabled={this.props.isDisabled}
               onClick={this.setArrowTool}/>
-            {this.props.shapeType.includes(SELECTION.SHAPE_TYPE.RECT) && <Button
+            <Button
               noFocus
               icon={<IconSelection className={`color-${this.props.shapeColor.replace(/\#/g, '')}`}/>}
               title="esper.tool.select"
               isActive={this.isToolActive(TOOL.SELECT)}
               isDisabled={this.props.isDisabled || this.props.isSelectionActive}
-              onClick={this.setSelectTool}/>}
-            {this.props.shapeType.includes(SELECTION.SHAPE_TYPE.POLYGON) && <Button
+              onClick={this.setSelectTool}/>
+            <Button
               noFocus
               icon={<IconPolygon className={`color-${this.props.shapeColor.replace(/\#/g, '')}`}/>}
               title="esper.tool.polygon"
               isActive={this.isToolActive(TOOL.POLYGON)}
               isDisabled={this.props.isDisabled || this.props.isSelectionActive}
-              onClick={this.setPolygonTool}/>}
+              onClick={this.setPolygonTool}/>
           </ToolGroup>
           <ToolGroup>
             <Button

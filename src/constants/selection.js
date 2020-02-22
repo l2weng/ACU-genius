@@ -23,7 +23,7 @@ module.exports = {
     SAVED: 3
   },
 
-  SHAPE_TYPE: { RECT: '0', POLYGON: '1' },
+  SHAPE_TYPE: { RECT: 0, POLYGON: 1 },
 
   TEMPLATE: 'https://www.labelreal.org/v1/templates/selection'
 }

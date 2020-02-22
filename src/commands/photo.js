@@ -628,6 +628,7 @@ class LabelSync extends Command {
         SELECTION.SHAPE_TYPE.RECT
       selection.photoId = photo.syncPhotoId
       selection.userId = userInfo.user.userId
+      selection.polygon = JSON.stringify(selection.polygon)
       labels.push(selection)
     }
     try {
