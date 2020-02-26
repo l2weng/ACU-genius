@@ -204,7 +204,6 @@ CREATE TABLE selections (
   spendTime  INTEGER,
   labelId   TEXT,
   color   TEXT,
-  polygon   TEXT,
   updatedTime INTEGER
 
 ) WITHOUT ROWID;
