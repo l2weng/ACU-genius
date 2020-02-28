@@ -262,6 +262,7 @@ en:
       totalPicture: Total picture
       submittedImage: Submitted image
       remaining: Remaining
+      targetCount: Labelling amount
       completionRate: The completion rate
       action: Action
       details: Details

@@ -56,7 +56,13 @@ const Summary = injectIntl(class extends PureComponent {
                 <Tooltip />
                 <Geom type="interval" color={['color', (color)=>{
                   return color
-                }]} position="name*count" />
+                }]}
+                  tooltip={['name*count', (name, count)=>{
+                    return {
+                      name: `对象数量: ${count}`
+                    }
+                  }]}
+                  position="name*count" />
               </Chart>
             </div>
             <div>
@@ -64,9 +70,14 @@ const Summary = injectIntl(class extends PureComponent {
               <Chart height={300} data={userPhotoStatusData} forceFit placeholder={this.props.intl.formatMessage({ id: 'common.noData' })}>
                 <Coord transpose />
                 <Axis name="name" label={{ offset: 12 }} />
-                <Axis name="percentage" />
+                <Axis name="percentage"/>
                 <Tooltip />
-                <Geom type="interval"  position="name*percentage" />
+                <Geom type="interval"  position="name*percentage"
+                  tooltip={['name*percentage', (name, percentage)=>{
+                    return {
+                      name: `${this.props.intl.formatMessage({ id: 'summary.task.completionRate' })}: ${percentage}%`
+                    }
+                  }]}/>
               </Chart>
             </div>
           </Col>

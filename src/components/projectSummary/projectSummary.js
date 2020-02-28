@@ -76,7 +76,7 @@ class ProjectSummary extends PureComponent {
   }
 
   fetchSkuCount = (projectId) =>{
-    axios.post(`${ARGS.apiServer}/summaries/countSkus`, { projectId }).then((result) =>{
+    axios.post(`${ARGS.apiServer}/summaries/countTargets`, { projectId }).then((result) =>{
       this.setState({ skuData: result.data })
     }).catch(function (err) {
       error(err.toString())

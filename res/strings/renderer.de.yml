@@ -262,6 +262,7 @@ de:
       totalPicture: 总图片
       submittedImage: 已提交图片
       remaining: 剩余
+      targetCount: 标注数量
       completionRate: 完成率
       action: 操作
       details: 详情
