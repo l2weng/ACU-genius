@@ -4,8 +4,9 @@ const React = require('react')
 const { PureComponent } = React
 const { Row, Col, Radio } = require('antd')
 const { Chart, Geom, Axis, Tooltip, Coord } = require('bizcharts')
-const { array, object, func } = require('prop-types')
+const { array, string, object, func } = require('prop-types')
 const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
+const moment = require('moment-timezone')
 
 const Summary = injectIntl(class extends PureComponent {
 
@@ -14,7 +15,7 @@ const Summary = injectIntl(class extends PureComponent {
       value: { min: 0 },
       year: { range: [0, 1] }
     }
-    const { skuData, taskStatuses, activityData, userPhotoStatusData } = this.props
+    const { skuData, taskStatuses, activityData, userPhotoStatusData, activityType } = this.props
     return (
       <div className="project-summary">
         <Row gutter={24}>
@@ -30,15 +31,25 @@ const Summary = injectIntl(class extends PureComponent {
             </div>
             <div style={{ paddingTop: '24px' }}>
               <div style={{ paddingBottom: '5px', float: 'right' }}>
-                <Radio.Group defaultValue="MM" size="small" onChange={this.props.switchActivityData}>
-                  <Radio.Button value="MM"><FormattedMessage id="summary.activity.lastHour"/></Radio.Button>
-                  <Radio.Button value="HH"><FormattedMessage id="summary.activity.today"/></Radio.Button>
-                  <Radio.Button value="DD"><FormattedMessage id="summary.activity.last7days"/></Radio.Button>
+                <Radio.Group defaultValue="HH" size="small" onChange={this.props.switchActivityData}>
+                  <Radio.Button value="HH"><FormattedMessage id="summary.activity.lastHour"/></Radio.Button>
+                  <Radio.Button value="DD"><FormattedMessage id="summary.activity.today"/></Radio.Button>
+                  <Radio.Button value="7D"><FormattedMessage id="summary.activity.last7days"/></Radio.Button>
+                  <Radio.Button value="MM"><FormattedMessage id="summary.activity.month"/></Radio.Button>
+                  <Radio.Button value="YY"><FormattedMessage id="summary.activity.year"/></Radio.Button>
                 </Radio.Group>
               </div>
               <div className="title"><FormattedMessage id="summary.activity.title"/>:</div>
               <Chart height={400} data={activityData} scale={cols} forceFit placeholder={this.props.intl.formatMessage({ id: 'common.noData' })}>
-                <Axis name="Time" />
+                <Axis name="Time" label={{ formatter(text, item, index) {
+                  if (activityType === 'HH') {
+                    return moment(text).tz(moment.tz.guess()).format('HH:mm:ss')
+                  } else if (activityType === 'DD') {
+                    return moment(text).tz(moment.tz.guess()).format('YYYY-MM-DD HH:mm:ss')
+                  } else {
+                    return text
+                  }
+                } }}/>
                 <Axis name="SumCount" />
                 <Tooltip crosshairs={{ type: 'y' }}/>
                 <Geom type="line" position="Time*SumCount" size={2} />
@@ -59,7 +70,7 @@ const Summary = injectIntl(class extends PureComponent {
                 }]}
                   tooltip={['name*count', (name, count)=>{
                     return {
-                      name: `对象数量: ${count}`
+                      name: `${this.props.intl.formatMessage({ id: 'summary.task.targetCount' })}:  ${count}`
                     }
                   }]}
                   position="name*count" />
@@ -90,9 +101,11 @@ const Summary = injectIntl(class extends PureComponent {
     skuData: array.isRequired,
     taskStatuses: object.isRequired,
     activityData: array.isRequired,
+    activityType: string.isRequired,
     switchActivityData: func.isRequired,
     userPhotoStatusData: array.isRequired
   }
+
 })
 
 module.exports = { Summary }

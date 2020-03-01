@@ -254,9 +254,11 @@ de:
     taskCompletionRate: 任务完成率
     activity:
       title: 标注行为
-      lastHour: 上一个小时
-      today: 今天
-      last7days: 最近7天
+      lastHour: 上个小时
+      today: 最近一天
+      last7days: 本周
+      month: 本月
+      year: 今年
     task:
       assigner: 执行人员
       totalPicture: 总图片

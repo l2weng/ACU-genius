@@ -32,6 +32,7 @@ class ProjectSummary extends PureComponent {
       logData: [],
       cProjectId: props.activeProject.syncProjectId,
       activityData: [],
+      activityType: '',
       userPhotoStatusData: [],
       taskStatuses: {},
       logPagination: INIT_PAGINATION,
@@ -96,7 +97,7 @@ class ProjectSummary extends PureComponent {
       this.cActivityType = type
     }
     axios.post(`${ARGS.apiServer}/activities/queryByDate`, { projectId, type: this.cActivityType }).then((result) =>{
-      this.setState({ activityData: result.data })
+      this.setState({ activityData: result.data.activityData, activityType: result.data.activityType })
     }).catch(function (err) {
       error(err.toString())
     })
@@ -194,7 +195,7 @@ class ProjectSummary extends PureComponent {
   }
 
   render() {
-    const { summaryTab, skuData, logData, logPagination, taskStatuses, activityData, userPhotoStatusData } = this.state
+    const { summaryTab, skuData, logData, logPagination, taskStatuses, activityData, activityType, userPhotoStatusData } = this.state
     return (
       <div>
         <Row gutter={24}>
@@ -206,6 +207,7 @@ class ProjectSummary extends PureComponent {
                 <TabPane tab={<FormattedMessage id="summary.overview"/>} key="1"><Summary
                   skuData={skuData}
                   taskStatuses={taskStatuses}
+                  activityType={activityType}
                   userPhotoStatusData={userPhotoStatusData}
                   switchActivityData={this.handleSwitchActivity}
                   activityData={activityData}/></TabPane>
