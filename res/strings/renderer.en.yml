@@ -103,10 +103,12 @@ en:
       labelType: Label Type
       rectangle: Rectangle
       polygon: Polygon
+      bizId: Bussiness ID
       appliedTo: Applied to tasks
       colorRequired: Please pick a color.
       nameRequired: Please enter a name.
       categoryRequired: Please select an annotation category.
+      enterBizPlease: Bussiness ID is used to link your own business logic.
   wizard:
     project:
       title: Create a new project

@@ -93,6 +93,9 @@ class TargetForm extends Component {
               </Option>
             </Select>)}
           </Form.Item>
+          <FormItem {...formItemLayout} label={<FormattedMessage id="project.targets.bizId"/>}>
+            {getFieldDecorator('bizId', {})(<Input placeholder={this.props.intl.formatMessage({ id: 'project.targets.enterBizPlease' })} />)}
+          </FormItem>
           <FormItem {...formItemLayout} label={<FormattedMessage id="project.targets.appliedTo"/>}>
             {getFieldDecorator('taskSelect', {
               getValueFromEvent: this.onChange

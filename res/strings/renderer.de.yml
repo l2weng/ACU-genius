@@ -103,10 +103,13 @@ de:
       labelType: 标注类型
       rectangle: 矩形框
       polygon: 多边形框
+      bizId: 业务ID
       appliedTo: 应用于任务
       colorRequired: 请选择颜色!
       nameRequired: 请输入名称!
       categoryRequired: 请选择标注类型!
+      enterBizPlease: 业务ID是对接您自有业务的唯一标识
+
   wizard:
     project:
       title: 创建新项目
