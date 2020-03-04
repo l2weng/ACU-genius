@@ -58,17 +58,21 @@ class Polygon extends Graphics {
   }
 
   handlePolygonClose(color, scale, points) {
-    const colors = getSelectionColors(color ? color : this.color).selection[this.state]
-    this.clear()
-    this.children[0].clear()
-    this.children[1].clear()
-    this.beginFill(...colors.fill)
-    this.lineStyle(scale, ...colors.line, 0)
-    this.drawPolygon([...points, points[0], points[1]])
-    this.endFill()
-    this.calculateBounds()
-    this.parent.finishPolygon(this._localBounds.getRectangle())
-    this.interactive = false
+    if (points.length > 4) {
+      const colors = getSelectionColors(color ? color : this.color).selection[this.state]
+      this.clear()
+      this.children[0].clear()
+      this.children[1].clear()
+      this.beginFill(...colors.fill)
+      this.lineStyle(scale, ...colors.line, 0)
+      this.drawPolygon([...points, points[0], points[1]])
+      this.endFill()
+      this.calculateBounds()
+      this.parent.finishPolygon(this._localBounds.getRectangle())
+      this.interactive = false
+    } else {
+      this.parent.cancelPolygonDraw()
+    }
   }
 
   drawLine(
