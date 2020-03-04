@@ -56,7 +56,7 @@ const WorkLog = injectIntl(class extends PureComponent {
       }, {
         title: this.props.intl.formatMessage({ id: 'summary.workLogs.completionDate' }),
         dataIndex: 'finishedTime',
-        render: finishedTime=><div>{moment(new Date(finishedTime)).tz(moment.tz.guess()).format('YYYY-MM-DD HH:mm:ss a')}</div>,
+        render: finishedTime=><div>{moment(new Date(finishedTime)).tz(moment.tz.guess()).format('YYYY-MM-DD HH:mm:ss')}</div>,
       }
       // , {
       //   title: '操作',

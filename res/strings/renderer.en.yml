@@ -273,8 +273,9 @@ en:
       role: Role
       category:
         title: Category
-        c0: Image
-        c1: Label
+        c999: Image
+        c0: Rectangle
+        c1: Polygon
       event:
         title: Event
         e0: New

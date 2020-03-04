@@ -273,8 +273,9 @@ de:
       role: 角色
       category:
         title: 类别
-        c0: 图片
-        c1: 标注
+        c999: 图片
+        c0: 矩形框
+        c1: 多边形
       event:
         title: 行为
         e0: 新建
