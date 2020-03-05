@@ -257,10 +257,10 @@ en:
     activity:
       title: Labeling Activity
       lastHour: Last Hour
-      today: Last Day
-      last7days: This Week
-      month: This Month
-      year: This Year
+      today: Day
+      last7days: Week
+      month: Month
+      year: Year
     task:
       assigner: Assigner
       totalPicture: Total picture
