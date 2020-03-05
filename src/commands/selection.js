@@ -84,6 +84,7 @@ class Sync extends ImportCommand {
             updatedTime: cloudLabel.updatedTime,
             labelId: cloudLabel.labelId,
             skuId: cloudLabel.skuId,
+            polygon: cloudLabel.polygon,
           }
           const selection = yield call(db.transaction, tx =>
             mod.selection.create(tx, null, nPayload))
