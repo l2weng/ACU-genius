@@ -288,7 +288,7 @@ en:
         e999: Submit
       imageName: Image name
       labelsNumber: Number of labels
-      spendTime: Spend Time
+      spendTime: Total Spend Time
       completionDate: Date of completion
   prefs:
     title: Preferences

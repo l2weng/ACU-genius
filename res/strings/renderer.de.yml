@@ -289,7 +289,7 @@ de:
         e999: 提交
       imageName: 图片名
       labelsNumber: 标注数量
-      spendTime: 耗时
+      spendTime: 总耗时
       completionDate: 完成日期
   prefs:
     title: 个性化
