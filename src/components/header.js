@@ -85,6 +85,8 @@ class Header extends React.Component {
     } else if (tabName === HEAD.FRIENDS) {
       this.fetchCoWorks()
       this.needRefresh = false
+    } else if (tabName === HEAD.WORKSPACE) {
+      this.needRefresh = false
     } else if (tabName === HEAD.PROJECT) {
       this.needRefresh = true
     }
@@ -113,7 +115,7 @@ class Header extends React.Component {
           <Workplace switchTab={this.switchTab} switchTask={this.switchTask} isOwner={isOwner} currentTaskType={taskType}/>
         </TabPane>
         <TabPane tab={<span><Icon type="edit" size="small"/><FormattedMessage id="header.title.workspace"/></span>} key={HEAD.WORKSPACE} className="tab-container"><ProjectContainer/></TabPane>
-        <TabPane tab={<span><Icon type="line-chart" size="small"/><FormattedMessage id="header.title.dashboard"/></span>} key={HEAD.PROJECT} className="tab-container"><ProjectSummary activeTab={activeTab} activeProject={project} projects={projects} needRefresh={this.needRefresh}/></TabPane>
+        <TabPane tab={<span><Icon type="line-chart" size="small"/><FormattedMessage id="header.title.dashboard"/></span>} key={HEAD.PROJECT} className="tab-container"><ProjectSummary activeTab={activeTab} activeProject={project} projects={projects} needRefresh={this.needRefresh || false}/></TabPane>
         <TabPane tab={<span><Icon type="team" size="small"/><FormattedMessage id="header.title.contacts"/></span>}  key={HEAD.FRIENDS} className="tab-container"><Contacts coWorks={coWorks}/></TabPane>
       </Tabs>
     )

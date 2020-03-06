@@ -39,12 +39,12 @@ const TaskList = injectIntl(class extends PureComponent {
       //   title: '截止日期',
       //   dataIndex: 'endTime',
       // },
-      {
-        title: this.props.intl.formatMessage({ id: 'summary.task.action' }),
-        dataIndex: '',
-        key: 'x',
-        render: () => <a href="javascript:;"><FormattedMessage id="summary.task.details"/></a>,
-      },
+      // {
+      //   title: this.props.intl.formatMessage({ id: 'summary.task.action' }),
+      //   dataIndex: '',
+      //   key: 'x',
+      //   render: () => <a href="javascript:;"><FormattedMessage id="summary.task.details"/></a>,
+      // },
     ]
     const { userPhotoStatusData } = this.props
     return (
