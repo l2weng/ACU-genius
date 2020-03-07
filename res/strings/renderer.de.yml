@@ -253,7 +253,7 @@ de:
     skipped: 已跳过
     completed: 已完成
     targets: 标注对象
-    noTaskResources: 暂无已同步上云的任务资源
+    noTaskResources: 暂无分配的任务资源
     taskCompletionRate: 任务完成率
     activity:
       title: 标注行为

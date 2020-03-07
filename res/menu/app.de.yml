@@ -16,9 +16,9 @@ de:
       - label: '任务'
         command: 'app:create-list'
         accelerator: 'CmdOrCtrl+Shift+L'
-      - label: '标注对象'
-        command: 'app:create-tag'
-        accelerator: 'CmdOrCtrl+Shift+A'
+#      - label: '标注对象'
+#        command: 'app:create-tag'
+#        accelerator: 'CmdOrCtrl+Shift+A'
     - type: 'separator'
     - &open
       label: '打开'

@@ -642,6 +642,7 @@ class LabelSync extends Command {
         let updatedPayload = {}
         updatedPayload[photo.id] = payload.photo
         yield put(act.photo.labelSyncSuccess(updatedPayload))
+        yield put(act.item.update({ id: photo.item, workStatus: PHOTO.STATUS.SUBMITTED }))
       }
     } catch (e) {
       error(e.toString())
@@ -665,6 +666,7 @@ class LabelSkip extends Command {
         let updatedPayload = {}
         updatedPayload[photo.id] = payload.photo
         yield put(act.photo.labelSyncSuccess(updatedPayload))
+        yield put(act.item.update({ id: photo.item, workStatus: PHOTO.STATUS.SKIPPED }))
       }
     } catch (e) {
       error(e.toString())

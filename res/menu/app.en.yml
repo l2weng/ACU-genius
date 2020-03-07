@@ -16,9 +16,9 @@ en:
             - label: 'Task'
               command: 'app:create-list'
               accelerator: 'CmdOrCtrl+Shift+L'
-            - label: 'Target'
-              command: 'app:create-tag'
-              accelerator: 'CmdOrCtrl+Shift+A'
+#            - label: 'Target'
+#              command: 'app:create-tag'
+#              accelerator: 'CmdOrCtrl+Shift+A'
         - type: 'separator'
         - &open
           label: 'Open'

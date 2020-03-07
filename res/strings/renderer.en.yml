@@ -252,7 +252,7 @@ en:
     skipped: Skipped
     completed: Completed
     targets: Targets
-    noTaskResources: No task resources that synced to cloud
+    noTaskResources: No assigned task resources
     taskCompletionRate: Task completion rate
     activity:
       title: Labeling Activity
