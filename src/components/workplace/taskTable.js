@@ -102,7 +102,7 @@ const TasksTable = injectIntl(class extends React.Component {
 
   render() {
     const { tasks } = this.props
-    console.log('...',tasks)
+    console.log('...', tasks)
     const columns = [
       {
         key: 'name',
@@ -161,11 +161,11 @@ const TasksTable = injectIntl(class extends React.Component {
           <span>
             {record.category === HEAD.MY_TASKS ? <span>
               <Popconfirm placement="top" title={this.props.intl.formatMessage({ id: 'home.task.confirm' })} onConfirm={()=>this.auditTask(record)} okText={this.props.intl.formatMessage({ id: 'common.ok' })} cancelText={this.props.intl.formatMessage({ id: 'common.cancel' })}>
-                <a href="javascript:"><FormattedMessage id="home.task.confirm"/></a>
+                <Button size="small" disabled={record.workStatus === 3}><FormattedMessage id="home.task.confirm"/></Button>
                 <Divider type="vertical" />
               </Popconfirm>
               <Popconfirm placement="top" title={this.props.intl.formatMessage({ id: 'home.task.withdraw' })} onConfirm={()=>this.rollbackTask(record)} okText={this.props.intl.formatMessage({ id: 'common.ok' })} cancelText={this.props.intl.formatMessage({ id: 'common.cancel' })}>
-                <a href="javascript:"><FormattedMessage id="home.task.withdraw"/></a>
+                <Button size="small" disabled={record.workStatus !== 3}><FormattedMessage id="home.task.withdraw"/></Button>
                 <Divider type="vertical" />
               </Popconfirm>
             </span> : ''}
