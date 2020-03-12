@@ -90,8 +90,8 @@ en:
         - &fullscreen
           label: 'Toggle &Full Screen'
           role: 'togglefullscreen'
-        - label: 'Toggle Hide &Menu Bar'
-          command: 'app:toggle-menu-bar'
+#        - label: 'Toggle Hide &Menu Bar'
+#          command: 'app:toggle-menu-bar'
         - type: 'separator'
         - &zoom
           label: 'Zoom'

@@ -20,6 +20,8 @@ class PhotoIterator extends Iterator {
     super.componentDidMount()
     on(document, 'global:next-photo', this.handleNextPhoto)
     on(document, 'global:prev-photo', this.handlePrevPhoto)
+    on(document, 'global:next-whole-photo', this.handleNextWholePhoto)
+    on(document, 'global:prev-whole-photo', this.handlePrevWholePhoto)
   }
 
   componentWillUnmount() {
@@ -27,6 +29,8 @@ class PhotoIterator extends Iterator {
     this.props.onBlur()
     off(document, 'global:next-photo', this.handleNextPhoto)
     off(document, 'global:prev-photo', this.handlePrevPhoto)
+    off(document, 'global:next-whole-photo', this.handleNextWholePhoto)
+    off(document, 'global:prev-whole-photo', this.handlePrevWholePhoto)
   }
 
   componentWillReceiveProps(props) {
@@ -221,8 +225,16 @@ class PhotoIterator extends Iterator {
     this.select(this.next(), { scrollIntoView: true, throttle: true })
   }
 
+  handleNextWholePhoto = () => {
+    this.select(this.nextWhole(1), { scrollIntoView: true, throttle: true })
+  }
+
   handlePrevPhoto = () => {
     this.select(this.prev(), { scrollIntoView: true, throttle: true })
+  }
+
+  handlePrevWholePhoto = () => {
+    this.select(this.prevWhole(), { scrollIntoView: true, throttle: true })
   }
 
 

@@ -27,7 +27,6 @@ module.exports = {
       case ITEM.REMOVE:
         return remove(state, payload)
       case ITEM.UPDATE:
-        console.log(state,payload)
         return update(state, payload)
       case ITEM.EXPLODE:
         return (!meta.done || error) ?

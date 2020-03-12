@@ -296,8 +296,30 @@ class Iterator extends PureComponent {
     return this.getIterableAt(idx + offset, items)
   }
 
+  nextWhole(offset = 1) {
+    const items = this.getIterables()
+    if (!items.length) return null
+
+    const head = this.head()
+    if (head == null) {
+      return (offset < 0) ? items[items.length - 1] : items[0]
+    }
+
+    const idx = this.indexOf(head)
+    if (idx == null || idx < 0) {
+      return (offset > 0) ? items[0] : items[items.length - 1]
+    }
+
+    console.log(idx, offset)
+    return this.getIterableAt(idx + offset, items)
+  }
+
   prev(offset = 1) {
     return this.next(-offset)
+  }
+
+  prevWhole(offset = 1) {
+    return this.nextWhole(-offset)
   }
 
   current() {

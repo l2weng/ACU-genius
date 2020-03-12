@@ -29,20 +29,20 @@ class EsperFootToolbar extends PureComponent {
 
   confirmPhoto = () => {
     this.props.onLabelSave(this.props.photo)
-    emit(document, 'global:next-photo')
+    emit(document, 'global:next-whole-photo')
   }
 
   ignorePhoto = () => {
     this.props.onLabelSkip(this.props.photo)
-    emit(document, 'global:next-photo')
+    emit(document, 'global:next-whole-photo')
   }
 
   viewNextPhoto = () =>{
-    emit(document, 'global:next-photo')
+    emit(document, 'global:next-whole-photo')
   }
 
   viewPrevPhoto = () =>{
-    emit(document, 'global:prev-photo')
+    emit(document, 'global:prev-whole-photo')
   }
 
   getActionButtons(photo, selections) {

@@ -90,8 +90,8 @@ de:
     - &fullscreen
       label: '切换全屏'
       role: 'togglefullscreen'
-    - label: 'Toggle Hide &Menu Bar'
-      command: 'app:toggle-menu-bar'
+#    - label: 'Toggle Hide &Menu Bar'
+#      command: 'app:toggle-menu-bar'
     - type: 'separator'
     - &zoom
       label: '缩放'

@@ -169,7 +169,6 @@ class ProjectSummary extends PureComponent {
       if (this.state.cProjectId !== props.activeProject.syncProjectId) {
         this.handleSelectProject(props.activeProject.syncProjectId)
       } else if (props.needRefresh && this.props.needRefresh === props.needRefresh) {
-        console.log('fetch new')
         this.fetchSummary(this.state.cProjectId)
       }
     }

@@ -161,7 +161,7 @@ en:
       myProject: My Project
       involvedProject: Involved Project
     task:
-      involvedTasks: Involved tasks
+      involvedTasks: My tasks
       allTasks: All tasks
       createdAt: Date
       myTasks: My tasks
