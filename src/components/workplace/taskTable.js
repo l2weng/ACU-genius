@@ -4,7 +4,7 @@ const React = require('react')
 const { Table, Input, Button, Icon, Badge, Divider, Popconfirm } = require('antd')
 const Highlighter = require('react-highlight-words')
 const { array, func, number } = require('prop-types')
-const { HEAD } = require('../../constants')
+const { HEAD, LIST } = require('../../constants')
 const { getTaskStatusBadge } = require('../../common/dataUtil')
 const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
 const moment = require('moment')
@@ -102,6 +102,7 @@ const TasksTable = injectIntl(class extends React.Component {
 
   render() {
     const { tasks } = this.props
+    console.log('...',tasks)
     const columns = [
       {
         key: 'name',

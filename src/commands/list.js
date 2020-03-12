@@ -51,12 +51,9 @@ class SubmitTask extends Command {
   *exec() {
     const { payload } = this.action
     const { id, syncTaskId, workStatus, taskType } = payload
-
     const updateResult = yield axios.post(`${ARGS.apiServer}/tasks/updateUserTaskStatus`, { taskId: syncTaskId, userId: userInfo.user.userId, workStatus })
-    if (updateResult.status === 200) {
-      if (taskType) {
-        yield put(actionsHeader.loadMyTasks({ userId: userInfo.user.userId, type: taskType }))
-      }
+    if (updateResult.data.result === 'success') {
+      yield put(actionsHeader.loadMyTasks({ userId: userInfo.user.userId, type: taskType }))
       yield put(actions.update({ id, syncTaskId, workStatus }))
     }
   }
