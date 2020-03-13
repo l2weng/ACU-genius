@@ -93,7 +93,11 @@ const TasksTable = injectIntl(class extends React.Component {
   }
 
   submitTask = (task)=>{
-    this.props.onSubmitTask(task)
+    if (task.isOwner) {
+      this.props.onPassTask(task)
+    } else {
+      this.props.onSubmitTask(task)
+    }
   }
 
   getTaskStatusDesc(status = 0) {
@@ -170,7 +174,9 @@ const TasksTable = injectIntl(class extends React.Component {
               </Popconfirm>
             </span> : ''}
             {record.category === HEAD.JOINED_TASKS ? <Popconfirm placement="top" title={this.props.intl.formatMessage({ id: 'home.task.submit' })} onConfirm={()=>this.submitTask(record)} okText={this.props.intl.formatMessage({ id: 'common.ok' })} cancelText={this.props.intl.formatMessage({ id: 'common.cancel' })}>
-              {record.workStatus === 0 || record.workStatus === 1 ? <span><a href="javascript:"><FormattedMessage id="home.task.submit"/></a>             <Divider type="vertical" /></span>
+              {record.workStatus === 0 || record.workStatus === 1 ? <span>
+                <Button size="small"><FormattedMessage id="home.task.submit"/></Button>
+                <Divider type="vertical" /></span>
                 : ''}
             </Popconfirm> : ''}
             <a href="javascript:;" onClick={()=>this.checkProject(record.project.projectId)}><FormattedMessage id="home.task.details"/></a>

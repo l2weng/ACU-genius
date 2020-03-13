@@ -310,7 +310,6 @@ class Iterator extends PureComponent {
       return (offset > 0) ? items[0] : items[items.length - 1]
     }
 
-    console.log(idx, offset)
     return this.getIterableAt(idx + offset, items)
   }
 

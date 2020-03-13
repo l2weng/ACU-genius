@@ -92,7 +92,7 @@ en:
       level: Level
       role: Role
       role0: Friend
-      role1: Colleague
+      role1: Enterprise User
       action: Action
       assign: Assign
     targets:

@@ -74,7 +74,7 @@ class LoadMyTasks extends Command {
     let tasks = []
     try {
       let response = yield axios.get(
-        `${apiServer}/graphql?query={taskQuery${query}  { taskId key:taskId name type category localTaskId progress projectId createdAt workStatus project { projectId name deadline } }} `)
+        `${apiServer}/graphql?query={taskQuery${query}  { taskId key:taskId name isOwner type category localTaskId progress projectId createdAt workStatus project { projectId name deadline } }} `)
       if (response.status === 200) {
         tasks = response.data.data.taskQuery
       }
