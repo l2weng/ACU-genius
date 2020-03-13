@@ -33,6 +33,8 @@ module.exports = {
       case PHOTO.REFERENCE_UPLOAD:
         return update(state, payload, meta)
       case PHOTO.LABEL_SYNC_SUCCESS:
+        console.log(state,payload)
+        console.log(update(state, payload, meta))
         return update(state, payload, meta)
       case PHOTO.NOTE.ADD:
         return nested.add('notes', state, payload, meta)
