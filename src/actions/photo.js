@@ -108,12 +108,6 @@ module.exports = {
     }
   },
 
-  labelSyncSuccess(payload, meta) {
-    return {
-      type: PHOTO.LABEL_SYNC_SUCCESS, payload, meta
-    }
-  },
-
   load(payload, meta) {
     return {
       type: PHOTO.LOAD,

@@ -20,7 +20,6 @@ module.exports = {
   SYNC: 'photo.sync',
   LABEL_SYNC: 'photo.labelSync',
   LABEL_SKIP: 'photo.labelSkip',
-  LABEL_SYNC_SUCCESS: 'photo.labelSyncSuccess',
   UPLOAD: 'photo.upload',
   REFERENCE_UPLOAD: 'photo.referenceUpload',
 
