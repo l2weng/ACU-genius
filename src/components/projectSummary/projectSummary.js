@@ -211,15 +211,6 @@ class ProjectSummary extends PureComponent {
                   userPhotoStatusData={userPhotoStatusData}
                   switchActivityData={this.handleSwitchActivity}
                   activityData={activityData}/></TabPane>
-                {/*<TabPane tab="图片数据" key="2"><PhotoData {...props}*/}
-                {/*  nav={nav}*/}
-                {/*  items={items}*/}
-                {/*  data={data}*/}
-                {/*  isActive*/}
-                {/*  isEmpty={isEmpty}*/}
-                {/*  columns={columns}*/}
-                {/*  photos={photos}/></TabPane>*/}
-                {/*<TabPane tab="项目参与者" key="3"><Members/></TabPane>*/}
                 <TabPane tab={<FormattedMessage id="summary.taskList"/>} key="4"><TaskList userPhotoStatusData={userPhotoStatusData}/></TabPane>
                 <TabPane tab={<FormattedMessage id="summary.workLog"/>} key="5">
                   <WorkLog

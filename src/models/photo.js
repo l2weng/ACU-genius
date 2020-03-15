@@ -382,6 +382,18 @@ module.exports = {
         id, ...photos), { concurrency })
   },
 
+  async updatePhotos(db, updatePhotos) {
+    if (updatePhotos.length > 0) {
+      return db.run(`
+          UPDATE photos
+            SET workStatus = CASE syncPhotoId
+              ${updatePhotos.map(updatePhoto =>
+        (`WHEN '${updatePhoto.syncPhotoId}' THEN ${updatePhoto.workStatus}`)).join(' ')}
+              END
+              WHERE syncPhotoId IN (${updatePhotos.map(st=>`'${st.syncPhotoId}'`).join(',')})`, updatePhotos)
+    }
+  },
+
   async delete(db, ids) {
     return db.run(`
       INSERT INTO trash (id)

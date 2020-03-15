@@ -97,6 +97,17 @@ module.exports = {
     }
   },
 
+  syncWorkStatus(payload, meta) {
+    return {
+      type: PHOTO.SYNC_WORKSTATUS,
+      payload,
+      meta: {
+        cmd: 'project',
+        ...meta
+      }
+    }
+  },
+
   skipLabel(payload, meta) {
     return {
       type: PHOTO.LABEL_SKIP,

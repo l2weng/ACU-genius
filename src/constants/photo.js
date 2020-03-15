@@ -19,6 +19,7 @@ module.exports = {
   UPDATE: 'photo.update',
   SYNC: 'photo.sync',
   LABEL_SYNC: 'photo.labelSync',
+  SYNC_WORKSTATUS: 'photo.syncWorkStatus',
   LABEL_SKIP: 'photo.labelSkip',
   UPLOAD: 'photo.upload',
   REFERENCE_UPLOAD: 'photo.referenceUpload',

@@ -187,6 +187,7 @@ class LoadFromCloud extends Command {
           if (labelArr.length > 0) {
             const photos = yield call(mod.photo.loadSome, db, labeledPhotos )
             yield all([
+              put(act.photo.syncWorkStatus({ cloudPhotos: labelArr })),
               put(act.selection.sync({ photos, labelArr: labelArr })),
               put(act.activity.update(this.action, { total: labelArr.length, progress: i + 1 }))
             ])

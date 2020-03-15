@@ -55,7 +55,6 @@ class ItemContainer extends React.PureComponent {
   }
 
   render() {
-    console.log(this.props.photo)
     return (
       <div className="item-container">
         <BufferedResizable

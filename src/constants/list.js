@@ -9,7 +9,6 @@ module.exports = {
   EXPAND: 'list.expand',
   INSERT: 'list.insert',
   LOAD: 'list.load',
-  LOAD_FROM_CLOUD: 'list.loadFromCloud',
   MOVE: 'list.move',
   PRUNE: 'list.prune',
   REMOVE: 'list.remove',
