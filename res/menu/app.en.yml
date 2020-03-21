@@ -64,21 +64,21 @@ en:
           command: 'app:redo'
           enabled: false
         - type: 'separator'
-        - &cut
-          label: 'Cu&t'
-          accelerator: 'CmdOrCtrl+X'
-          role: 'cut'
-        - &copy
-          label: '&Copy'
-          accelerator: 'CmdOrCtrl+C'
-          role: 'copy'
-        - &paste
-          label: '&Paste'
-          accelerator: 'CmdOrCtrl+V'
-          role: 'paste'
-        - &all
-          label: 'Select All'
-          role: 'selectall'
+#        - &cut
+#          label: 'Cu&t'
+#          accelerator: 'CmdOrCtrl+X'
+#          role: 'cut'
+#        - &copy
+#          label: '&Copy'
+#          accelerator: 'CmdOrCtrl+C'
+#          role: 'copy'
+#        - &paste
+#          label: '&Paste'
+#          accelerator: 'CmdOrCtrl+V'
+#          role: 'paste'
+#        - &all
+#          label: 'Select All'
+#          role: 'selectall'
         - type: 'separator'
         - &preferences
           label: 'Prefere&nces…'
@@ -223,10 +223,10 @@ en:
         - *undo
         - *redo
         - type: 'separator'
-        - *cut
-        - *copy
-        - *paste
-        - *all
+#        - *cut
+#        - *copy
+#        - *paste
+#        - *all
     - label: 'View'
       submenu:
         - *fullscreen

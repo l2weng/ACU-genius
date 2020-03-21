@@ -8,6 +8,7 @@ const { TaskList } = require('./taskList')
 const { WorkLog } = require('./workLog')
 // const { QualitySetting } = require('./qualitySetting')
 // const { Members } = require('./members')
+const { Export } = require('./export')
 const __ = require('underscore')
 const { PHOTO, HEAD } = require('../../constants')
 const { array, object, string, bool } = require('prop-types')
@@ -220,7 +221,7 @@ class ProjectSummary extends PureComponent {
                     onChange={this.handleLogTableChange}/>
                 </TabPane>
                 {/*<TabPane tab="质量设置" key="6"><QualitySetting/></TabPane>*/}
-                <TabPane tab={<FormattedMessage id="summary.dataOutput"/>} key="7">Content of Tab Pane 6</TabPane>
+                <TabPane tab={<FormattedMessage id="summary.dataOutput"/>} key="7"><Export projects={this.props.projects} cProjectId={this.state.cProjectId}/></TabPane>
               </Tabs>
             </Card>
           </Col>

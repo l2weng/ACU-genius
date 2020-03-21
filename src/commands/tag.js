@@ -77,7 +77,6 @@ class SaveTag extends Command {
     const { db } = this.options
     const { data, project } = this.action.payload
     const { category, circlePicker, name, taskSelect, bizId } = data
-    console.log('bizId',bizId)
     const skuData = { name, shapeType: category.toString(), color: circlePicker }
     if (data.id != null) data['tag_id'] = data.id
     let changedItems = []

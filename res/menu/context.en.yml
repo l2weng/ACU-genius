@@ -55,10 +55,10 @@ en:
 #          - label: 'Gray'
 #            color: 'gray'
 #            type: checkbox
-      - label: 'Rename Sku'
-        command: 'app:rename-tag'
-      - label: 'Delete Sku'
-        command: 'app:delete-tag'
+#      - label: 'Rename Sku'
+#        command: 'app:rename-tag'
+#      - label: 'Delete Sku'
+#        command: 'app:delete-tag'
     item-tag: &item-tag
       - label: 'Remove Sku From This Item'
         command: 'app:delete-item-tag'
@@ -70,9 +70,9 @@ en:
         condition: 'hasMultipleItems'
     notes: &notes
       []
-    note: &note
-      - label: 'Delete Note'
-        command: 'app:delete-note'
+#    note: &note
+#      - label: 'Delete Note'
+#        command: 'app:delete-note'
     notepad: &notepad
       - label: 'Writing Mode'
         id: 'writing-mode'
@@ -194,11 +194,11 @@ en:
     project: *project
     lists: *lists
     list: *list
-    tags: *tags
+#    tags: *tags
     tag: *tag
     item-tag: *item-tag
     notes: *notes
-    note: *note
+#    note: *note
     notepad: *notepad
     items: *items
     item: *item
@@ -218,11 +218,11 @@ en:
     project: *project
     lists: *lists
     list: *list
-    tags: *tags
+#    tags: *tags
     tag: *tag
     item-tag: *item-tag
     notes: *notes
-    note: *note
+#    note: *note
     notepad: *notepad
     items: *items
     item: *item

@@ -16,19 +16,19 @@ de:
     project: &project
     - label: '重命名项目'
       command: 'app:rename-project'
-    - label: 'Show Project File…'
+    - label: '打开项目文件…'
       command: 'app:show-project-file'
     lists: &lists
-    - label: 'New List'
+    - label: '新建任务'
       command: 'app:create-list'
     list: &list
-    - label: 'Rename List'
+    - label: '重命名任务'
       command: 'app:rename-list'
-    - label: 'Delete List'
+    - label: '删除任务'
       command: 'app:delete-list'
-    tags: &tags
-    - label: 'New Sku'
-      command: 'app:create-tag'
+#    tags: &tags
+#    - label: 'New Sku'
+#      command: 'app:create-tag'
     tag: &tag
 #    - label: 'Tag Color'
 #      submenu:
@@ -57,10 +57,10 @@ de:
 #      - label: 'Gray'
 #        color: 'gray'
 #        type: checkbox
-    - label: 'Rename Tag'
-      command: 'app:rename-tag'
-    - label: 'Delete Tag'
-      command: 'app:delete-tag'
+#    - label: 'Rename Tag'
+#      command: 'app:rename-tag'
+#    - label: 'Delete Tag'
+#      command: 'app:delete-tag'
     item-tag: &item-tag
     - label: 'Remove Tag From This Item'
       command: 'app:delete-item-tag'
@@ -72,9 +72,9 @@ de:
       condition: 'hasMultipleItems'
     notes: &notes
       []
-    note: &note
-    - label: 'Delete Note'
-      command: 'app:delete-note'
+#    note: &note
+#    - label: 'Delete Note'
+#      command: 'app:delete-note'
     notepad: &notepad
     - label: 'Writing Mode'
       id: 'writing-mode'
@@ -186,11 +186,11 @@ de:
     project: *project
     lists: *lists
     list: *list
-    tags: *tags
+#    tags: *tags
     tag: *tag
     item-tag: *item-tag
     notes: *notes
-    note: *note
+#    note: *note
     notepad: *notepad
     items: *items
     item: *item
@@ -210,11 +210,11 @@ de:
     project: *project
     lists: *lists
     list: *list
-    tags: *tags
+#    tags: *tags
     tag: *tag
     item-tag: *item-tag
     notes: *notes
-    note: *note
+#    note: *note
     notepad: *notepad
     items: *items
     item: *item
