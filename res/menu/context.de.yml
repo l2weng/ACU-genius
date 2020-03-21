@@ -104,14 +104,14 @@ de:
 #    - label: 'Explode Item'
 #      command: 'app:explode-item'
 #      condition: 'hasMultiplePhotos'
-    - label: 'Export Item'
-      id: 'export'
-      submenu:
-      - label: 'JSON-LD'
-        command: 'app:export-item'
+#    - label: 'Export Item'
+#      id: 'export'
+#      submenu:
+#      - label: 'JSON-LD'
+#        command: 'app:export-item'
 #    - label: 'Add Photo …'
 #      command: 'app:create-item-photo'
-    - label: 'Tags'
+    - label: '标注对象'
       id: 'tag'
       submenu:
       - label: 'None'
@@ -119,7 +119,7 @@ de:
         checked: true
         enabled: false
       - type: separator
-    - label: 'Delete Item'
+    - label: '删除'
       command: 'app:delete-item'
     item-bulk: &item-bulk
 #    - label: 'Merge Selected Items'
@@ -132,7 +132,7 @@ de:
     - label: 'Delete Selected Items'
       command: 'app:delete-item'
     item-list: &item-list
-    - label: 'Remove Item From Task'
+    - label: '从任务中删除'
       command: 'app:list-item-remove'
     item-bulk-list: &item-bulk-list
     - label: 'Remove Selected Items From List'
