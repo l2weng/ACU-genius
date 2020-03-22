@@ -254,6 +254,9 @@ en:
     targets: Targets
     noTaskResources: No assigned task resources
     taskCompletionRate: Task completion rate
+    currentProject: Current Project
+    export: Export Data
+    format: File Format
     activity:
       title: Labeling Activity
       lastHour: Last Hour

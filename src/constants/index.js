@@ -38,5 +38,6 @@ module.exports = {
   WIZARD: require('./wizard'),
   REFERENCES: require('./references'),
   HEAD: require('./header'),
+  EXPORT: require('./export'),
   ...require('./rdf')
 }

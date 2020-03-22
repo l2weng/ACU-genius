@@ -255,6 +255,9 @@ de:
     targets: 标注对象
     noTaskResources: 暂无分配的任务资源
     taskCompletionRate: 任务完成率
+    currentProject: 当前项目
+    export: 导出数据
+    format: 文件格式
     activity:
       title: 标注行为
       lastHour: 上个小时
@@ -519,7 +522,7 @@ de:
       delete: 删除任务
       item:
         add: 添加图片至任务
-        merge: 合并图片
+        merge: 加载图片
         remove: 从任务中移除图片
         restore: 添加图片至任务
       order: 任务排序
@@ -529,8 +532,8 @@ de:
       create: 创建图片集
       delete: 删除图片集
       explode: 拆分图片集
-      implode: 合并图片集
-      merge: 合并图片集
+      implode: 加载图片集
+      merge: 加载图片集
       split: 拆分图片集
       import: 导入图片集
       restore: 恢复图片集
@@ -584,7 +587,7 @@ de:
       delete: 任务集删除中…
       item:
         add: 图片集添加至任务集中…
-        merge: 图片集合并中…
+        merge: 图片集加载中…
         remove: 从任务集中移除图片集…
         restore: 图片集恢复中…
       load: 图片集加载中…
@@ -610,7 +613,7 @@ de:
           other {图片集导入中…}
         }
       load: 图片集加载中…
-      merge: 图片集合并中…
+      merge: 图片集加载中…
       restore: 图片集恢复中…
       save: 图片集保存中…
       tag:
@@ -632,8 +635,8 @@ de:
     photo:
       consolidate: >
         {hasProgressBar, select,
-          true {图片合并中 {progress, number} / {total, number} …}
-          other {图片合并中…}
+          true {图片加载中 {progress, number} / {total, number} …}
+          other {图片加载中…}
         }
       create: >
         {hasProgressBar, select,
@@ -701,7 +704,7 @@ de:
       created: 项目创建失败
     item:
       export: 图片集导出失败
-      merge: 图片集合并失败
+      merge: 图片集加载失败
       import: 图片集导入失败
       tag:
         save: 标注对象保存失败
@@ -714,7 +717,7 @@ de:
       item:
         add: 添加照片集至任务失败
     photo:
-      consolidate: 图片合并失败
+      consolidate: 图片加载失败
       create: 图片导入失败
       save: 图片保存失败
     ontology:
