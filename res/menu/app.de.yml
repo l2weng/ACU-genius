@@ -64,21 +64,21 @@ de:
       command: 'app:redo'
       enabled: false
     - type: 'separator'
-#    - &cut
-#      label: 'Cu&t'
-#      accelerator: 'CmdOrCtrl+X'
-#      role: 'cut'
-#    - &copy
-#      label: '&Copy'
-#      accelerator: 'CmdOrCtrl+C'
-#      role: 'copy'
-#    - &paste
-#      label: '&Paste'
-#      accelerator: 'CmdOrCtrl+V'
-#      role: 'paste'
-#    - &all
-#      label: '全选'
-#      role: 'selectall'
+    - &cut
+      label: '剪切'
+      accelerator: 'CmdOrCtrl+X'
+      role: 'cut'
+    - &copy
+      label: '拷贝'
+      accelerator: 'CmdOrCtrl+C'
+      role: 'copy'
+    - &paste
+      label: '黏贴'
+      accelerator: 'CmdOrCtrl+V'
+      role: 'paste'
+    - &all
+      label: '全选'
+      role: 'selectall'
     - type: 'separator'
     - &preferences
       label: '个性化设置'
@@ -223,10 +223,10 @@ de:
     - *undo
     - *redo
     - type: 'separator'
-#    - *cut
-#    - *copy
-#    - *paste
-#    - *all
+    - *cut
+    - *copy
+    - *paste
+    - *all
   - label: '显示'
     submenu:
     - *fullscreen
@@ -271,9 +271,9 @@ de:
       command: 'app:redo'
       enabled: false
     - type: 'separator'
-#    - *cut
-#    - *copy
-#    - *paste
+    - *cut
+    - *copy
+    - *paste
     - *preferences
   - *view
   - *win

@@ -13,8 +13,8 @@ const format = {
       if (date.getUTCFullYear() < 1300) {
         options = { ...options, era: 'short' }
       }
-
-      return edtf.format(date, ARGS.locale, options)
+      //todo temporarily use de for zh
+      return edtf.format(date, ARGS.locale === 'de' ? 'zh' : ARGS.locale, options)
 
     } catch (error) {
       return value

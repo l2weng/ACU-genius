@@ -81,10 +81,12 @@ class Polygon extends Graphics {
     points,
   ) {
     const colors = getSelectionColors(color ? color : this.color).selection[this.state]
-    this.children[1].clear()
-    this.children[1].beginFill(...colors.fill)
-    this.children[1].lineStyle(scale, ...colors.line, 0)
-    this.children[1].drawPolygon(points)
+    if (this.children[1]) {
+      this.children[1].clear()
+      this.children[1].beginFill(...colors.fill)
+      this.children[1].lineStyle(scale, ...colors.line, 0)
+      this.children[1].drawPolygon(points)
+    }
   }
 
   update(
