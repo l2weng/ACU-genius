@@ -9,6 +9,8 @@ const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
 const { dialog } = require('electron').remote
 const fs = require('fs')
 const axios = require('axios')
+const XLSX = require('xlsx')
+const _ = require('underscore')
 
 const Export = injectIntl(class extends PureComponent {
 
@@ -33,7 +35,6 @@ const Export = injectIntl(class extends PureComponent {
 
   exportData = () => {
     const { currentProjectId, exportFormat } = this.state
-    console.log(exportFormat)
     let self = this
     axios.post(`${ARGS.apiServer}/reports/export`, { projectId: currentProjectId })
     .then(function (response) {
@@ -43,11 +44,33 @@ const Export = injectIntl(class extends PureComponent {
               { name: 'JSON Files', extensions: ['json'] }
           ]
           })
-          fs.writeFile(savePath, JSON.stringify(response.data.data.exportResult), 'utf8', () => {
-            console.log(`Wrote export' json data to "${savePath}"`)
-          })
+          if (savePath !== undefined) {
+            fs.writeFile(savePath, JSON.stringify(response.data.data.exportResult), 'utf8', (err) => {
+              console.log(`Wrote export' json data to "${savePath}"`)
+            })
+          }
         } else if (exportFormat === EXPORT.EXCEL) {
-
+          let excelData = []
+          const reportHeader = response.data.data.exportHeader
+          excelData.push(reportHeader)
+          const reportResult = response.data.data.exportResult
+          for (const reportLabel of reportResult) {
+            let { label, ...oneRow } = reportLabel
+            for (const rLabel of reportLabel.label) {
+              oneRow = { ...oneRow, ...rLabel }
+              excelData.push(_.values(oneRow))
+            }
+          }
+          const excelReport = XLSX.utils.aoa_to_sheet(excelData)
+          const wb = XLSX.utils.book_new()
+          XLSX.utils.book_append_sheet(wb, excelReport, 'export data')
+          let savePath = dialog.showSaveDialog({ filters: [
+              { name: 'Excel Files', extensions: ['xlsx'] }
+          ]
+          })
+          if (savePath !== undefined) {
+            XLSX.writeFile(wb, savePath)
+          }
         }
       } else {
         message.error(self.props.intl.formatMessage({ id: 'summary.exportError' }))
