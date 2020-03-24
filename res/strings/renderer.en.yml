@@ -257,6 +257,7 @@ en:
     currentProject: Current Project
     export: Export Data
     format: File Format
+    exportError: File export failed. Please feedback to http://www.labelreal.com/tool/feedback, thank you!
     activity:
       title: Labeling Activity
       lastHour: Last Hour
@@ -470,7 +471,7 @@ en:
               - Reload
               - Wait
               message: LabelReal has crashed
-              detail: Please report this issue at http://www.labelreal.com/tool/feedback
+              detail: Please report this issue at http://www.labelreal.com/feedback
             unresponsive:
               buttons:
                 - Close

@@ -6,7 +6,7 @@ de:
       - 重新载入
       - 继续等待
       message: LabelReal遇到了一些问题
-      detail: 请帮助我们进行反馈：http://www.labelreal.com/tool/feedback
+      detail: 请帮助我们进行反馈：http://www.labelreal.com/feedback
     unresponsive:
       buttons:
       - 关闭

@@ -6,7 +6,7 @@ en:
         - Reload
         - Wait
       message: LabelReal has crashed
-      detail: Please report this issue at http://www.labelreal.com/tool/feedback
+      detail: Please report this issue at http://www.labelreal.com/feedback
     unresponsive:
       buttons:
         - Close

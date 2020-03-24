@@ -3,9 +3,12 @@
 const React = require('react')
 const { PureComponent } = React
 const { array, string } = require('prop-types')
-const { Form, Select, Button } = require('antd')
+const { Form, Select, Button, message } = require('antd')
 const { EXPORT } = require('../../constants')
 const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
+const { dialog } = require('electron').remote
+const fs = require('fs')
+const axios = require('axios')
 
 const Export = injectIntl(class extends PureComponent {
 
@@ -20,10 +23,6 @@ const Export = injectIntl(class extends PureComponent {
     this.state = { currentProjectId: props.cProjectId, exportFormat: EXPORT.JSON }
   }
 
-  exportData = () =>{
-
-  }
-
   onExportProjectChange = (value)=>{
     this.setState({ currentProjectId: value })
   }
@@ -34,7 +33,26 @@ const Export = injectIntl(class extends PureComponent {
 
   exportData = () => {
     const { currentProjectId, exportFormat } = this.state
-    console.log(currentProjectId, exportFormat)
+    console.log(exportFormat)
+    let self = this
+    axios.post(`${ARGS.apiServer}/reports/export`, { projectId: currentProjectId })
+    .then(function (response) {
+      if (response.status === 200) {
+        if (exportFormat === EXPORT.JSON) {
+          let savePath = dialog.showSaveDialog({ filters: [
+              { name: 'JSON Files', extensions: ['json'] }
+          ]
+          })
+          fs.writeFile(savePath, JSON.stringify(response.data.data.exportResult), 'utf8', () => {
+            console.log(`Wrote export' json data to "${savePath}"`)
+          })
+        } else if (exportFormat === EXPORT.EXCEL) {
+
+        }
+      } else {
+        message.error(self.props.intl.formatMessage({ id: 'summary.exportError' }))
+      }
+    })
   }
 
   render() {
