@@ -113,15 +113,15 @@ const TasksTable = injectIntl(class extends React.Component {
         dataIndex: 'name',
         width: '20%',
         ...this.getColumnSearchProps('name'),
+        render: (text, record) => (
+          <div><a href="javascript:;" onClick={()=>this.checkProject(record.project.projectId)}>{record.name}</a></div>
+        ),
       }, {
         title: <FormattedMessage id="home.task.project"/>,
         dataIndex: 'project.name',
         key: 'project.name',
         width: '20%',
         ...this.getColumnSearchProps('project', 'name'),
-        render: (text, record) => (
-          <div><a href="javascript:;" onClick={()=>this.checkProject(record.project.projectId)}>{record.project.name}</a></div>
-        ),
       },  {
         title: <FormattedMessage id="home.task.status"/>,
         dataIndex: 'workStatus',
