@@ -182,16 +182,17 @@ class LoadFromCloud extends Command {
         const oList = listArr[i]
         if (oList.id !== 0) {
           const labels = yield axios.post(`${ARGS.apiServer}/labels/queryLabels`, { taskId: oList.syncTaskId })
-          const labelArr = labels.data
-          const labeledPhotos = labelArr.map(obj=>`'${obj.photoId}'`)
+          const labelPhotos = labels.data
+          let labelArr = labelPhotos.filter(lbl=>lbl.Labels.length > 0)
           if (labelArr.length > 0) {
+            const labeledPhotos = labelArr.map(obj=>`'${obj.photoId}'`)
             const photos = yield call(mod.photo.loadSome, db, labeledPhotos )
             yield all([
-              put(act.photo.syncWorkStatus({ cloudPhotos: labelArr })),
               put(act.selection.sync({ photos, labelArr: labelArr })),
               put(act.activity.update(this.action, { total: labelArr.length, progress: i + 1 }))
             ])
           }
+          yield put(act.photo.syncWorkStatus({ cloudPhotos: labelPhotos }))
         }
       }
     }

@@ -27,7 +27,6 @@ module.exports = {
       case PHOTO.INSERT:
         return insert(state, payload, meta)
       case PHOTO.UPDATE:
-        console.log(update(state, payload, meta))
         return update(state, payload, meta)
       case PHOTO.UPLOAD:
         return update(state, payload, meta)

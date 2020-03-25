@@ -13,6 +13,15 @@ const {  Tooltip, Icon } = require('antd')
 const { FormattedMessage, intlShape, injectIntl } = require('react-intl')
 
 const ProjectName = injectIntl(class extends React.PureComponent {
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      isUploading: false
+    }
+  }
+
   get classes() {
     return {
       'project-name': true,
@@ -22,24 +31,26 @@ const ProjectName = injectIntl(class extends React.PureComponent {
   }
 
   handleSync2Cloud = ()=>{
-    ipc.send('cmd', 'app:sync-whole-project', { force: true })
+    if (!this.state.isUploading) {
+      ipc.send('cmd', 'app:sync-whole-project', { force: true })
+      this.setState({ isUploading: true })
+    }
   }
 
   handleSyncProject = ()=>{
     if (this.props.isOwner) {
       this.props.onSyncProjectData()
     } else {
-      console.log('reload windows')
       ipc.send('win-reload')
     }
   }
 
-  // componentWillReceiveProps(props) {
-  //   if (this.props.synced !== undefined && (this.props.synced !== props.synced) &&
-  //     (props.synced === 1)) {
-  //     message.success('Sync successfully', 0.5)
-  //   }
-  // }
+  componentWillReceiveProps(props) {
+    if (this.props.synced !== undefined && (this.props.synced !== props.synced) &&
+      (props.synced === 1)) {
+      this.setState({ isUploading: false })
+    }
+  }
 
   render() {
     return this.props.dt(
