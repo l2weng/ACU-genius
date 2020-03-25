@@ -258,6 +258,7 @@ en:
     export: Export Data
     format: File Format
     exportError: File export failed. Please feedback to http://www.labelreal.com/tool/feedback, thank you!
+    exportNoData: No labeled data can be exported
     activity:
       title: Labeling Activity
       lastHour: Last Hour
@@ -749,6 +750,7 @@ en:
   common:
     addSuccess: Added successfully.
     updateSuccess: Update successfully.
+    exportSuccess: Export successfully.
     error: System error, please contact customer service.
     search: Search
     reset: Reset

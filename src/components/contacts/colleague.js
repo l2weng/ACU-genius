@@ -120,7 +120,7 @@ const Colleague = injectIntl(class extends PureComponent {
     .then(function (response) {
       if (response.status === 200) {
         self.handleColleagueModalVisible()
-        message.success(self.props.intl.formatMessage({ id: 'common.addSuccess' }), 0.5)
+        message.success(self.props.intl.formatMessage({ id: 'common.addSuccess' }))
         self.fetchColleagues()
       }
     })

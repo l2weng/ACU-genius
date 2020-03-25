@@ -39,29 +39,36 @@ const Export = injectIntl(class extends PureComponent {
     axios.post(`${ARGS.apiServer}/reports/export`, { projectId: currentProjectId })
     .then(function (response) {
       if (response.status === 200) {
+        const reportResult = response.data.data.exportResult
         if (exportFormat === EXPORT.JSON) {
           let savePath = dialog.showSaveDialog({ filters: [
               { name: 'JSON Files', extensions: ['json'] }
           ]
           })
           if (savePath !== undefined) {
-            fs.writeFile(savePath, JSON.stringify(response.data.data.exportResult), 'utf8', (err) => {
-              console.log(`Wrote export' json data to "${savePath}"`)
+            fs.writeFile(savePath, JSON.stringify(reportResult), 'utf8', (err) => {
+              message.success(self.props.intl.formatMessage({ id: 'common.exportSuccess' }))
             })
           }
         } else if (exportFormat === EXPORT.EXCEL) {
           let excelData = []
-          const reportHeader = response.data.data.exportHeader
-          excelData.push(reportHeader)
-          const reportResult = response.data.data.exportResult
+          let reportHeader = []
           for (const reportLabel of reportResult) {
             let { label, ...oneRow } = reportLabel
             for (const rLabel of reportLabel.label) {
               oneRow = { ...oneRow, ...rLabel }
+              if (reportHeader.length === 0) {
+                reportHeader = _.keys(oneRow)
+                excelData.push(reportHeader)
+              }
               excelData.push(_.values(oneRow))
             }
           }
           const excelReport = XLSX.utils.aoa_to_sheet(excelData)
+          if (excelData.length === 0) {
+            message.warning(self.props.intl.formatMessage({ id: 'summary.exportNoData' }))
+            return
+          }
           const wb = XLSX.utils.book_new()
           XLSX.utils.book_append_sheet(wb, excelReport, 'export data')
           let savePath = dialog.showSaveDialog({ filters: [
@@ -69,7 +76,9 @@ const Export = injectIntl(class extends PureComponent {
           ]
           })
           if (savePath !== undefined) {
-            XLSX.writeFile(wb, savePath)
+            XLSX.writeFileAsync(savePath, wb, ()=>{
+              message.success(self.props.intl.formatMessage({ id: 'common.exportSuccess' }))
+            })
           }
         }
       } else {
