@@ -658,8 +658,9 @@ class WorkStatusSync extends Command {
       updatePhotos.push({ syncPhotoId: cloudPhoto.TaskPhotos.photoId, workStatus: cloudPhoto.TaskPhotos.photoStatus })
     }
     yield call(mod.photo.updatePhotos, db, updatePhotos)
-    const photos = yield call(mod.photo.loadUpdatePhotos, db, updatePhotos )
-    yield put(act.item.update(photos))
+    const result = yield call(mod.photo.loadUpdatePhotos, db, updatePhotos )
+    yield put(act.photo.update(result.photos))
+    yield put(act.item.update(result.items))
   }
 }
 

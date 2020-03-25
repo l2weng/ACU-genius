@@ -254,7 +254,7 @@ module.exports = {
   },
 
   async loadUpdatePhotos(db, updatePhotos) {
-    let photos = []
+    let result = { items: [], photos: [] }
     await db.each(`
         SELECT
             id,
@@ -262,10 +262,11 @@ module.exports = {
             from photos
            WHERE syncPhotoId in (${updatePhotos.map(st=>`'${st.syncPhotoId}'`).join(',')})`,
         ({ id, workStatus, ...data }) => {
-          photos.push({ id: id - 1, workStatus, ...data })
+          result.photos.push({ id: id, workStatus, ...data })
+          result.items.push({ id: id - 1, workStatus, ...data })
         }
       )
-    return photos
+    return result
   },
 
   async loadReference(db, tag = null, { base } = {}) {
