@@ -98,12 +98,12 @@ class AppPrefs extends PureComponent {
             options={this.props.zoomModes}
             onChange={this.props.onSettingsUpdate}/>
           <hr/>
-          <FormToggle
-            id="prefs.app.debug"
-            name="debug"
-            isDisabled={ARGS.dev}
-            value={this.props.settings.debug || ARGS.dev}
-            onChange={this.handleDebugChange}/>
+          {/*<FormToggle*/}
+          {/*  id="prefs.app.debug"*/}
+          {/*  name="debug"*/}
+          {/*  isDisabled={ARGS.dev}*/}
+          {/*  value={this.props.settings.debug || ARGS.dev}*/}
+          {/*  onChange={this.handleDebugChange}/>*/}
         </div>
       </div>
     )

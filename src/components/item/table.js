@@ -327,7 +327,7 @@ class ItemTable extends ItemIterator {
           ref={this.setContainer}
           tabIndex={this.tabIndex}
           onKeyDown={this.handleKeyDown}>
-          <div className="runway click-catcher" style={{ height }}>
+          <div className="runway click-catcher" style={{ height: height + 35 }}>
             <table className="viewport" style={{ transform }}>
               <ItemTableSpacer
                 columns={columns}

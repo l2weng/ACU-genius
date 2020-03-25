@@ -38,7 +38,7 @@ de:
       command: 'app:import-photos'
       accelerator: 'CmdOrCtrl+Shift+I'
     - &consolidate
-      label: '合并图片'
+      label: '加载图片'
       command: 'app:consolidate-photo-library'
     - type: 'separator'
     - label: '关闭'
