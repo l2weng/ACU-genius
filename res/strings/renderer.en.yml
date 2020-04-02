@@ -164,6 +164,8 @@ en:
       involvedTasks: My tasks
       allTasks: All tasks
       createdAt: Date
+      updatedAt: Updated At
+      creator: Creator
       myTasks: My tasks
       name: Name
       project: Project

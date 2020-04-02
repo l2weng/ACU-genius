@@ -111,7 +111,6 @@ const TasksTable = injectIntl(class extends React.Component {
         key: 'name',
         title: <FormattedMessage id="home.task.name"/>,
         dataIndex: 'name',
-        width: '20%',
         ...this.getColumnSearchProps('name'),
         render: (text, record) => (
           <div><a href="javascript:;" onClick={()=>this.checkProject(record.project.projectId)}>{record.name}</a></div>
@@ -120,13 +119,16 @@ const TasksTable = injectIntl(class extends React.Component {
         title: <FormattedMessage id="home.task.project"/>,
         dataIndex: 'project.name',
         key: 'project.name',
-        width: '20%',
         ...this.getColumnSearchProps('project', 'name'),
+      }, {
+        title: <FormattedMessage id="home.task.creator"/>,
+        dataIndex: 'project.creator',
+        key: 'project.creator',
+        ...this.getColumnSearchProps('project', 'creator'),
       },  {
         title: <FormattedMessage id="home.task.status"/>,
         dataIndex: 'workStatus',
         key: 'workStatus',
-        width: '15%',
         filters: [
           {
             text: this.getTaskStatusDesc(0),
@@ -149,12 +151,11 @@ const TasksTable = injectIntl(class extends React.Component {
           <div><Badge status={getTaskStatusBadge(record.workStatus)} text={this.getTaskStatusDesc(record.workStatus)} /></div>
         ),
       }, {
-        title: <FormattedMessage id="home.task.createdAt"/>,
-        dataIndex: 'createdAt',
-        key: 'createdAt',
-        width: '15%',
+        title: <FormattedMessage id="home.task.updatedAt"/>,
+        dataIndex: 'updatedAt',
+        key: 'updatedAt',
         render: (text, record) => (
-          <div>{moment(new Date(record.createdAt)).format('YYYY-MM-DD HH:mm:ss')}</div>
+          <div>{moment(new Date(record.updatedAt)).format('YYYY-MM-DD HH:mm:ss')}</div>
         ),
       }, {
         title: <FormattedMessage id="home.task.action"/>,
