@@ -11,6 +11,7 @@ const fs = require('fs')
 const axios = require('axios')
 const XLSX = require('xlsx')
 const _ = require('underscore')
+const { parse } = require('json2csv')
 
 const Export = injectIntl(class extends PureComponent {
 
@@ -80,6 +81,34 @@ const Export = injectIntl(class extends PureComponent {
               message.success(self.props.intl.formatMessage({ id: 'common.exportSuccess' }))
             })
           }
+        } else if (exportFormat === EXPORT.CSV) {
+          let csvData = []
+          let fields = []
+          for (const reportLabel of reportResult) {
+            let { label, ...oneRow } = reportLabel
+            for (const rLabel of reportLabel.label) {
+              oneRow = { ...oneRow, ...rLabel }
+              if (fields.length === 0) {
+                fields = _.keys(oneRow)
+              }
+              csvData.push(oneRow)
+            }
+          }
+          console.log(csvData)
+          const csv = parse(csvData, { fields })
+          if (csvData.length === 0) {
+            message.warning(self.props.intl.formatMessage({ id: 'summary.exportNoData' }))
+            return
+          }
+          let savePath = dialog.showSaveDialog({ filters: [
+              { name: 'Excel Files', extensions: ['csv'] }
+          ]
+          })
+          if (savePath !== undefined) {
+            fs.writeFile(savePath, csv, 'utf8', (err) => {
+              message.success(self.props.intl.formatMessage({ id: 'common.exportSuccess' }))
+            })
+          }
         }
       } else {
         message.error(self.props.intl.formatMessage({ id: 'summary.exportError' }))
@@ -95,16 +124,17 @@ const Export = injectIntl(class extends PureComponent {
       <div>
         <Form layout={'inline'}>
           <Form.Item  label={<FormattedMessage id="summary.currentProject"/>}>
-            <Select style={{ width: 120 }} defaultValue={currentProjectId} value={currentProjectId}  onChange={this.onExportProjectChange}>
+            <Select style={{ width: 180 }} defaultValue={currentProjectId} value={currentProjectId}  onChange={this.onExportProjectChange}>
               {projects.map(project=>{
                 return (<Select.Option value={project.projectId} key={project.projectId}>{project.name}</Select.Option>)
               })}
             </Select>
           </Form.Item>
           <Form.Item  label={<FormattedMessage id="summary.format"/>}>
-            <Select style={{ width: 120 }} defaultValue={EXPORT.JSON} vlue={exportFormat} onChange={this.onExportFormatChange}>
+            <Select style={{ width: 180 }} defaultValue={EXPORT.JSON} value={exportFormat} onChange={this.onExportFormatChange}>
               <Select.Option value={EXPORT.JSON} key={EXPORT.JSON}>JSON</Select.Option>
               <Select.Option value={EXPORT.EXCEL} key={EXPORT.EXCEL}>Excel</Select.Option>
+              <Select.Option value={EXPORT.CSV} key={EXPORT.CSV}>CSV</Select.Option>
             </Select>
           </Form.Item>
           <Form.Item>

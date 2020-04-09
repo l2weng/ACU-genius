@@ -165,17 +165,17 @@ const TasksTable = injectIntl(class extends React.Component {
           <span>
             {record.category === HEAD.MY_TASKS ? <span>
               <Popconfirm placement="top" title={this.props.intl.formatMessage({ id: 'home.task.confirm' })} onConfirm={()=>this.auditTask(record)} okText={this.props.intl.formatMessage({ id: 'common.ok' })} cancelText={this.props.intl.formatMessage({ id: 'common.cancel' })}>
-                <Button size="small" disabled={record.workStatus === 3}><FormattedMessage id="home.task.confirm"/></Button>
+                <Button size="small" type="primary" disabled={record.workStatus === 3}><FormattedMessage id="home.task.confirm"/></Button>
                 <Divider type="vertical" />
               </Popconfirm>
               <Popconfirm placement="top" title={this.props.intl.formatMessage({ id: 'home.task.withdraw' })} onConfirm={()=>this.rollbackTask(record)} okText={this.props.intl.formatMessage({ id: 'common.ok' })} cancelText={this.props.intl.formatMessage({ id: 'common.cancel' })}>
-                <Button size="small" disabled={record.workStatus !== 3}><FormattedMessage id="home.task.withdraw"/></Button>
+                <Button size="small" type="primary" disabled={record.workStatus !== 3}><FormattedMessage id="home.task.withdraw"/></Button>
                 <Divider type="vertical" />
               </Popconfirm>
             </span> : ''}
             {record.category === HEAD.JOINED_TASKS ? <Popconfirm placement="top" title={this.props.intl.formatMessage({ id: 'home.task.submit' })} onConfirm={()=>this.submitTask(record)} okText={this.props.intl.formatMessage({ id: 'common.ok' })} cancelText={this.props.intl.formatMessage({ id: 'common.cancel' })}>
               {record.workStatus === 0 || record.workStatus === 1 ? <span>
-                <Button size="small"><FormattedMessage id="home.task.submit"/></Button>
+                <Button size="small"  type="primary"><FormattedMessage id="home.task.submit"/></Button>
                 <Divider type="vertical" /></span>
                 : ''}
             </Popconfirm> : ''}

@@ -183,7 +183,7 @@ class ProjectSummary extends PureComponent {
         <div>
           <Form layout="inline">
             <Form.Item  label={<FormattedMessage id="summary.project"/>}>
-              <Select style={{ width: 120 }} defaultValue={cProjectId} value={cProjectId} onChange={this.handleSelectProject}>
+              <Select style={{ width: 180 }} defaultValue={cProjectId} value={cProjectId} onChange={this.handleSelectProject}>
                 {projects.map(project=>{
                   return (<Option value={project.projectId} key={project.projectId}>{project.name}</Option>)
                 })}
