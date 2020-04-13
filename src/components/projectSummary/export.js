@@ -94,7 +94,6 @@ const Export = injectIntl(class extends PureComponent {
               csvData.push(oneRow)
             }
           }
-          console.log(csvData)
           const csv = parse(csvData, { fields })
           if (csvData.length === 0) {
             message.warning(self.props.intl.formatMessage({ id: 'summary.exportNoData' }))
