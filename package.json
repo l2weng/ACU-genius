@@ -99,7 +99,7 @@
     "exif-reader": "github:inukshuk/exif-reader#patched",
     "express": "^4.16.4",
     "generic-pool": "^3.4.2",
-    "js-yaml": "^3.12.0",
+    "js-yaml": "^3.13.1",
     "json2csv": "^5.0.0",
     "jsonld": "^1.1.0",
     "lodash.debounce": "^4.0.7",
