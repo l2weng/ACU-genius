@@ -189,7 +189,7 @@ de:
     - label: '关于 %name'
       command: 'app:about'
     - type: 'separator'
-    - label: '个性化设置'
+    - label: '个性化设置 Prefere&nces…'
       accelerator: 'Command+,'
       command: 'app:open-preferences'
     - type: 'separator'

@@ -20,7 +20,6 @@ class RegistrationForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    console.log('收到表单值：', this.props.form.getFieldsValue());
     this.props.form.validateFieldsAndScroll((err, values) => {
       values = { userType: this.state.userType, status: 1, machineId: machineIdSync({ original: true }), ...values }
       if (!err) {
@@ -38,8 +37,9 @@ class RegistrationForm extends Component {
               icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
               btn,
               key,
+              duration:0,
               placement: 'bottomRight',
-              onClose: this.close,
+              onClose: ()=>this.goProject(res.data.obj, notification, key),
             })
           }
         })

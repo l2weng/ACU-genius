@@ -1,7 +1,7 @@
 {
   "name": "labelreal",
   "productName": "LabelReal",
-  "version": "1.0.4-beta",
+  "version": "1.0.1-beta",
   "private": true,
   "description": "LabelReal is your friendly label assistant.",
   "license": "AGPL-3.0",
