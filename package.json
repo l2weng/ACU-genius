@@ -142,7 +142,7 @@
     "sanitize-filename": "^1.6.1",
     "sharp": "0.22.1",
     "shortid": "^2.2.13",
-    "socket.io": "^2.2.0",
+    "socket.io": "^2.4.0",
     "sqlite3": "^4.0.9",
     "string.prototype.padstart": "^3.0.0",
     "tiff": "^3.0.1",
