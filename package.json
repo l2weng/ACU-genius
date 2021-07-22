@@ -153,7 +153,7 @@
     "winreg": "^1.2.4",
     "winston": "^2.4.4",
     "write-file-atomic": "^2.3.0",
-    "xlsx": "^0.15.6",
+    "xlsx": "^0.17.0",
     "yargs": "^13.2.4"
   },
   "yargs": {
