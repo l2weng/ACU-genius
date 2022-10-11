@@ -101,7 +101,7 @@
     "generic-pool": "^3.4.2",
     "js-yaml": "^3.12.0",
     "json2csv": "^5.0.0",
-    "jsonld": "^1.1.0",
+    "jsonld": "^8.1.0",
     "lodash.debounce": "^4.0.7",
     "lodash.throttle": "^4.1.1",
     "mkdirp": "^0.5.1",
