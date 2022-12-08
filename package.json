@@ -97,7 +97,7 @@
     "decompress": "^4.2.0",
     "edtf": "^2.4.0",
     "exif-reader": "github:inukshuk/exif-reader#patched",
-    "express": "^4.16.4",
+    "express": "^4.18.2",
     "generic-pool": "^3.4.2",
     "js-yaml": "^3.12.0",
     "json2csv": "^5.0.0",
